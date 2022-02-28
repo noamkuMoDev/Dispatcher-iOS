@@ -13,15 +13,19 @@
 		43F08D4827C7C9A6003FFA7D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43F08D4627C7C9A6003FFA7D /* Main.storyboard */; };
 		43F08D4A27C7C9C3003FFA7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43F08D4927C7C9C3003FFA7D /* Assets.xcassets */; };
 		43F08D4D27C7C9C3003FFA7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43F08D4B27C7C9C3003FFA7D /* LaunchScreen.storyboard */; };
-		43F08D5927CB6455003FFA7D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43F08D5827CB6455003FFA7D /* GoogleService-Info.plist */; };
 		CB849B991A2334793DE226D6 /* Pods_Dispatcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2928F8E52EBA08C200C027F9 /* Pods_Dispatcher.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1796F0D4093EE8586417C8A6 /* Pods-Dispatcher.dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dispatcher.dev.xcconfig"; path = "Target Support Files/Pods-Dispatcher/Pods-Dispatcher.dev.xcconfig"; sourceTree = "<group>"; };
+		24877B637A14BF9136B839F0 /* Pods-Dispatcher.releaseprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dispatcher.releaseprod.xcconfig"; path = "Target Support Files/Pods-Dispatcher/Pods-Dispatcher.releaseprod.xcconfig"; sourceTree = "<group>"; };
 		2928F8E52EBA08C200C027F9 /* Pods_Dispatcher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dispatcher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D9A14A3AABC05B7E9E8BAFF /* Pods-Dispatcher.prod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dispatcher.prod.xcconfig"; path = "Target Support Files/Pods-Dispatcher/Pods-Dispatcher.prod.xcconfig"; sourceTree = "<group>"; };
 		3E320D33BAC2DB1DFFBD50B7 /* Pods-Dispatcher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dispatcher.release.xcconfig"; path = "Target Support Files/Pods-Dispatcher/Pods-Dispatcher.release.xcconfig"; sourceTree = "<group>"; };
 		3F51A4C89E75671CF0847D35 /* Pods-Dispatcher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dispatcher.debug.xcconfig"; path = "Target Support Files/Pods-Dispatcher/Pods-Dispatcher.debug.xcconfig"; sourceTree = "<group>"; };
-		43F08D3D27C7C9A6003FFA7D /* Dispatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dispatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		43DCD2AE27CCAC8F00020D8A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		43DCD2AF27CCACCA00020D8A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		43F08D3D27C7C9A6003FFA7D /* Dispatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Dispatcher.app; path = "Dispatcher Development.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		43F08D4027C7C9A6003FFA7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43F08D4227C7C9A6003FFA7D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		43F08D4427C7C9A6003FFA7D /* HomepageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageViewController.swift; sourceTree = "<group>"; };
@@ -29,7 +33,9 @@
 		43F08D4927C7C9C3003FFA7D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		43F08D4C27C7C9C3003FFA7D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		43F08D4E27C7C9C3003FFA7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		43F08D5827CB6455003FFA7D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BFBED2009C5D7989F622C9AA /* Pods-Dispatcher.debugdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dispatcher.debugdev.xcconfig"; path = "Target Support Files/Pods-Dispatcher/Pods-Dispatcher.debugdev.xcconfig"; sourceTree = "<group>"; };
+		CBD13AC632C781AB02D5CA58 /* Pods-Dispatcher.debugprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dispatcher.debugprod.xcconfig"; path = "Target Support Files/Pods-Dispatcher/Pods-Dispatcher.debugprod.xcconfig"; sourceTree = "<group>"; };
+		DBEC2867B26B504D5EE88D8A /* Pods-Dispatcher.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dispatcher.releasedev.xcconfig"; path = "Target Support Files/Pods-Dispatcher/Pods-Dispatcher.releasedev.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +50,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		43DCD2AB27CCAC3000020D8A /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				43DCD2AD27CCAC4A00020D8A /* Prod */,
+				43DCD2AC27CCAC4100020D8A /* Dev */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		43DCD2AC27CCAC4100020D8A /* Dev */ = {
+			isa = PBXGroup;
+			children = (
+				43DCD2AF27CCACCA00020D8A /* GoogleService-Info.plist */,
+			);
+			path = Dev;
+			sourceTree = "<group>";
+		};
+		43DCD2AD27CCAC4A00020D8A /* Prod */ = {
+			isa = PBXGroup;
+			children = (
+				43DCD2AE27CCAC8F00020D8A /* GoogleService-Info.plist */,
+			);
+			path = Prod;
+			sourceTree = "<group>";
+		};
 		43F08D3427C7C9A6003FFA7D = {
 			isa = PBXGroup;
 			children = (
@@ -65,13 +96,13 @@
 		43F08D3F27C7C9A6003FFA7D /* Dispatcher */ = {
 			isa = PBXGroup;
 			children = (
+				43DCD2AB27CCAC3000020D8A /* Firebase */,
 				43F08D5727C7CA06003FFA7D /* Supporting Files */,
 				43F08D5627C7C9F5003FFA7D /* Controllers */,
 				43F08D5527C7C9EB003FFA7D /* Views */,
 				43F08D5427C7C9E5003FFA7D /* Models */,
 				43F08D4B27C7C9C3003FFA7D /* LaunchScreen.storyboard */,
 				43F08D4E27C7C9C3003FFA7D /* Info.plist */,
-				43F08D5827CB6455003FFA7D /* GoogleService-Info.plist */,
 			);
 			path = Dispatcher;
 			sourceTree = "<group>";
@@ -114,6 +145,12 @@
 			children = (
 				3F51A4C89E75671CF0847D35 /* Pods-Dispatcher.debug.xcconfig */,
 				3E320D33BAC2DB1DFFBD50B7 /* Pods-Dispatcher.release.xcconfig */,
+				BFBED2009C5D7989F622C9AA /* Pods-Dispatcher.debugdev.xcconfig */,
+				CBD13AC632C781AB02D5CA58 /* Pods-Dispatcher.debugprod.xcconfig */,
+				DBEC2867B26B504D5EE88D8A /* Pods-Dispatcher.releasedev.xcconfig */,
+				24877B637A14BF9136B839F0 /* Pods-Dispatcher.releaseprod.xcconfig */,
+				1796F0D4093EE8586417C8A6 /* Pods-Dispatcher.dev.xcconfig */,
+				2D9A14A3AABC05B7E9E8BAFF /* Pods-Dispatcher.prod.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -136,9 +173,10 @@
 				DA5775380A51EB4C3D9D23B4 /* [CP] Check Pods Manifest.lock */,
 				43F08D3927C7C9A6003FFA7D /* Sources */,
 				43F08D3A27C7C9A6003FFA7D /* Frameworks */,
+				43DCD2B027CCAD4400020D8A /* Setup Firebase plist files */,
 				43F08D3B27C7C9A6003FFA7D /* Resources */,
 				8057DC7EF2ABDE9DCA108707 /* [CP] Embed Pods Frameworks */,
-				43BA16BB27CB8684002BD8F1 /* ShellScript */,
+				43DCD2B127CCB97100020D8A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -188,7 +226,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				43F08D4D27C7C9C3003FFA7D /* LaunchScreen.storyboard in Resources */,
-				43F08D5927CB6455003FFA7D /* GoogleService-Info.plist in Resources */,
 				43F08D4A27C7C9C3003FFA7D /* Assets.xcassets in Resources */,
 				43F08D4827C7C9A6003FFA7D /* Main.storyboard in Resources */,
 			);
@@ -197,7 +234,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		43BA16BB27CB8684002BD8F1 /* ShellScript */ = {
+		43DCD2B027CCAD4400020D8A /* Setup Firebase plist files */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -205,7 +242,25 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+			);
+			name = "Setup Firebase plist files";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Name of the resource to copy\nINFO_PLIST_FILE=GoogleService-Info.plist\n\n# Get references to debug and release versions of the plist file\nDEV_INFO_PLIST_FILE=${PROJECT_DIR}/${TARGET_NAME}/Firebase/Dev/${INFO_PLIST_FILE}\nPROD_INFO_PLIST_FILE=${PROJECT_DIR}/${TARGET_NAME}/Firebase/Prod/${INFO_PLIST_FILE}\n\n# Make sure the debug version exists\necho \"Looking for ${INFO_PLIST_FILE} in ${DEV_INFO_PLIST_FILE}\"\nif [ ! -f $DEV_INFO_PLIST_FILE ] ; then\n    echo \"File GoogleService-Info.plist (debug) not found.\"\n    exit 1\nfi\n\n# Make sure the release version exists\necho \"Looking for ${INFO_PLIST_FILE} in ${PROD_INFO_PLIST_FILE}\"\nif [ ! -f $PROD_INFO_PLIST_FILE ] ; then\n    echo \"File GoogleService-Info.plist (release) not found.\"\n    exit 1\nfi\n\n# Get a reference to the destination location for the plist file\nPLIST_DESTINATION=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\necho \"Copying ${INFO_PLIST_FILE} to final destination: ${PLIST_DESTINATION}\"\n\n# Copy the appropiate file to app bundle\nif [ \"${CONFIGURATION}\" == \"Dev\" ] ; then\n    echo \"File ${DEV_INFO_PLIST_FILE} copied\"\n    cp \"${DEV_INFO_PLIST_FILE}\" \"${PLIST_DESTINATION}\"\nelse\n    echo \"File ${PROD_INFO_PLIST_FILE} copied\"\n    cp \"${PROD_INFO_PLIST_FILE}\" \"${PLIST_DESTINATION}\"\nfi\n";
+		};
+		43DCD2B127CCB97100020D8A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
 				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
 			);
 			outputFileListPaths = (
@@ -214,7 +269,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		8057DC7EF2ABDE9DCA108707 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -290,7 +345,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		43F08D4F27C7C9C3003FFA7D /* Debug */ = {
+		43DCD2A327CBC4CC00020D8A /* Dev */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -324,7 +379,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -349,9 +404,39 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
-			name = Debug;
+			name = Dev;
 		};
-		43F08D5027C7C9C3003FFA7D /* Release */ = {
+		43DCD2A427CBC4CC00020D8A /* Dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1796F0D4093EE8586417C8A6 /* Pods-Dispatcher.dev.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Dispatcher/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = il.co.moveo.noamkurtzer.Dispatcher.dev;
+				PRODUCT_NAME = "$(TARGET_NAME) Development";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Dev;
+		};
+		43DCD2A927CBC4FD00020D8A /* Prod */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -404,40 +489,11 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
-			name = Release;
+			name = Prod;
 		};
-		43F08D5227C7C9C3003FFA7D /* Debug */ = {
+		43DCD2AA27CBC4FD00020D8A /* Prod */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3F51A4C89E75671CF0847D35 /* Pods-Dispatcher.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Dispatcher/Info.plist;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = il.co.moveo.noamkurtzer.Dispatcher;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		43F08D5327C7C9C3003FFA7D /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3E320D33BAC2DB1DFFBD50B7 /* Pods-Dispatcher.release.xcconfig */;
+			baseConfigurationReference = 2D9A14A3AABC05B7E9E8BAFF /* Pods-Dispatcher.prod.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -455,13 +511,14 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = il.co.moveo.noamkurtzer.Dispatcher;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = il.co.moveo.noamkurtzer.Dispatcher.prod;
+				PRODUCT_NAME = "$(TARGET_NAME) Production";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = PROD;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = Release;
+			name = Prod;
 		};
 /* End XCBuildConfiguration section */
 
@@ -469,20 +526,20 @@
 		43F08D3827C7C9A6003FFA7D /* Build configuration list for PBXProject "Dispatcher" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				43F08D4F27C7C9C3003FFA7D /* Debug */,
-				43F08D5027C7C9C3003FFA7D /* Release */,
+				43DCD2A327CBC4CC00020D8A /* Dev */,
+				43DCD2A927CBC4FD00020D8A /* Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Dev;
 		};
 		43F08D5127C7C9C3003FFA7D /* Build configuration list for PBXNativeTarget "Dispatcher" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				43F08D5227C7C9C3003FFA7D /* Debug */,
-				43F08D5327C7C9C3003FFA7D /* Release */,
+				43DCD2A427CBC4CC00020D8A /* Dev */,
+				43DCD2AA27CBC4FD00020D8A /* Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Dev;
 		};
 /* End XCConfigurationList section */
 	};
