@@ -2,14 +2,6 @@ import UIKit
 
 class HomepageViewController: UIViewController {
     
-    /**Outlets**/
-    
-    
-    /**Variables**/
-    
-    
-    
-    /**OnLoad**/
     override func viewDidLoad() {
         super.viewDidLoad()
         
