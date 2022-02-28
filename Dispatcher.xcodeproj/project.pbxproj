@@ -101,8 +101,6 @@
 				43F08D5627C7C9F5003FFA7D /* Controllers */,
 				43F08D5527C7C9EB003FFA7D /* Views */,
 				43F08D5427C7C9E5003FFA7D /* Models */,
-				43F08D4B27C7C9C3003FFA7D /* LaunchScreen.storyboard */,
-				43F08D4E27C7C9C3003FFA7D /* Info.plist */,
 			);
 			path = Dispatcher;
 			sourceTree = "<group>";
@@ -117,6 +115,7 @@
 		43F08D5527C7C9EB003FFA7D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				43F08D4B27C7C9C3003FFA7D /* LaunchScreen.storyboard */,
 				43F08D4627C7C9A6003FFA7D /* Main.storyboard */,
 			);
 			path = Views;
@@ -133,6 +132,7 @@
 		43F08D5727C7CA06003FFA7D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				43F08D4E27C7C9C3003FFA7D /* Info.plist */,
 				43F08D4927C7C9C3003FFA7D /* Assets.xcassets */,
 				43F08D4227C7C9A6003FFA7D /* SceneDelegate.swift */,
 				43F08D4027C7C9A6003FFA7D /* AppDelegate.swift */,

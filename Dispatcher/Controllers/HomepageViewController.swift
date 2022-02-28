@@ -1,44 +1,12 @@
 import UIKit
 
 class HomepageViewController: UIViewController {
-    
-//    enum Environment: String { // 1
-//        case debugDevelopment = "Dev"
-//        case releaseDevelopment = "ReleaseDev"
-//
-//        case debugProduction = "DebugProd"
-//        case releaseProduction = "ReleaseProd"
-//    }
-//
-//    class BuildConfiguration { // 2
-//        static let shared = BuildConfiguration()
-//
-//        var environment: Environment
-//
-//        init() {
-//            let currentConfiguration = Bundle.main.object(forInfoDictionaryKey: "Configuration") as! String
-//
-//            environment = Environment(rawValue: currentConfiguration)!
-//        }
-//    }
-    
-    
-    /**Outlets**/
-    
-    
-    /**Variables**/
-    
-    
-    
-    /**OnLoad**/
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Set the header's buttons:
+        //Set header's buttons:
         configureItems()
-        
-        //print("Current configuration: \(BuildConfiguration.shared.environment)")
-        
         
         //Crash button
         let button = UIButton(type: .roundedRect)
@@ -54,9 +22,6 @@ class HomepageViewController: UIViewController {
         let numbers = [0]
         let _ = numbers[1]
     }
-    
-    
-    
     
     
     /**Methods**/
@@ -91,7 +56,7 @@ class HomepageViewController: UIViewController {
         //Left side logo:
         let logoImage = UIImage.init(named: "logo")
         let logoImageView = UIImageView.init(image: logoImage)
-        //logoImageView.frame = CGRect(x:0.0,y:0.0, width:10,height:25.0)
+        logoImageView.frame = CGRect(x:0.0,y:0.0, width:10,height:25.0)
         logoImageView.contentMode = .scaleAspectFill
         let imageItem = UIBarButtonItem.init(customView: logoImageView)
         let widthConstraint = logoImageView.widthAnchor.constraint(equalToConstant: 60)
@@ -101,7 +66,5 @@ class HomepageViewController: UIViewController {
         navigationItem.leftBarButtonItem =  imageItem
 
     }
-    
-    
 }
 
