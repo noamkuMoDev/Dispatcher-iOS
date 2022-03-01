@@ -10,6 +10,8 @@ struct Constants {
     
     struct Segues {
         static let homepageToNotifications = "homepageToNotifications"
+        static let homepageToSearch = "homepageToSearch"
         static let favoritesToNotifications = "favoritesToNotifications"
+        static let favoritesToSearch = "favoritesToSearch"
     }
 }

@@ -66,7 +66,7 @@ class BaseViewController: UIViewController {
                 image: UIImage(systemName: "magnifyingglass"),
                 style: .done,
                 target: self,
-                action: nil
+                action: #selector(goToSearch)
             ),
             UIBarButtonItem(
                 customView: avatar
@@ -83,6 +83,22 @@ class BaseViewController: UIViewController {
             break
         case Constants.ScreenNames.favorites:
             self.performSegue(withIdentifier: Constants.Segues.favoritesToNotifications, sender: self)
+            break
+        default:
+            break
+        }
+    }
+    
+    
+    @objc func goToSearch() {
+        
+        switch self.screenName {
+        case Constants.ScreenNames.homepage:
+            self.performSegue(withIdentifier: Constants.Segues.homepageToSearch, sender: self)
+            break
+        case Constants.ScreenNames.favorites:
+            self.performSegue(withIdentifier: Constants.Segues.favoritesToSearch
+                              , sender: self)
             break
         default:
             break

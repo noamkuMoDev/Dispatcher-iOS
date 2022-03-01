@@ -25,9 +25,16 @@ extension HomepageViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = newsArray[indexPath.row].title
-        return cell
+        
+        if let instance = newsArray[indexPath.row] as? ArticleModel {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) //as! specificCustomCell
+            cell.textLabel?.text = instance.title
+            return cell
+        }
+        else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            return cell
+        }
     }
 }
 

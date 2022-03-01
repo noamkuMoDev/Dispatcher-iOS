@@ -154,6 +154,7 @@
                     <connections>
                         <outlet property="tableView" destination="aXi-Bs-RAZ" id="9Dw-j3-ePA"/>
                         <segue destination="tUC-ru-eE1" kind="show" identifier="homepageToNotifications" id="f5P-ad-VVd"/>
+                        <segue destination="Qi2-cd-MPv" kind="show" identifier="homepageToSearch" id="U37-Fe-alY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NmD-95-HIW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -183,7 +184,32 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="62g-Ra-EIk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1765" y="1961"/>
+            <point key="canvasLocation" x="1371" y="1971"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="mnj-MB-0od">
+            <objects>
+                <viewController id="Qi2-cd-MPv" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="HHP-kx-cT4">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PfP-rL-OPU">
+                                <rect key="frame" x="180" y="438" width="54" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="kFF-ww-lsR"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="AK4-FK-4ZU"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9bZ-FH-Klt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2199" y="1971"/>
         </scene>
         <!--Favorites View Controller-->
         <scene sceneID="Dl1-zV-D4S">
@@ -210,6 +236,7 @@
                     <navigationItem key="navigationItem" id="2YF-rK-IpJ"/>
                     <connections>
                         <segue destination="tUC-ru-eE1" kind="show" identifier="favoritesToNotifications" id="Tvg-NK-Rg2"/>
+                        <segue destination="Qi2-cd-MPv" kind="show" identifier="favoritesToSearch" id="SwU-X3-8Hj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fhH-oy-gqj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -218,7 +245,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="f5P-ad-VVd"/>
+        <segue reference="SwU-X3-8Hj"/>
+        <segue reference="Tvg-NK-Rg2"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="house" catalog="system" width="128" height="106"/>
