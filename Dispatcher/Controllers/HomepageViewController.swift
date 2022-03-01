@@ -2,8 +2,39 @@ import UIKit
 
 class HomepageViewController: BaseViewController {
     
+    @IBOutlet weak var tableView: UITableView!
+    
+    var newsArray: [Article] = [
+        ArticleModel(title: "Title Article 1", date: Date(), content: "Content of the article", url: "http://noamkurtzer.co.il", isFavorite: false)
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar(for: Constants.ScreenNames.homepage)
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+    }
+}
+
+//MARK: - UITableViewDataSource
+extension HomepageViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return newsArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = newsArray[indexPath.row].title
+        return cell
+    }
+}
+
+//MARK: - UITableViewDelegate
+extension HomepageViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
