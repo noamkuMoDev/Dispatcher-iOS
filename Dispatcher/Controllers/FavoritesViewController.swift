@@ -4,6 +4,6 @@ class FavoritesViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar(for: Constants.ScreenNames.favorites, on: navigationController!.navigationBar)
+        setupNavigationBar(for: Constants.ScreenNames.favorites)
     }
 }

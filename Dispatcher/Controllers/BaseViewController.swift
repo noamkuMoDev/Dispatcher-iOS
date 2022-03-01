@@ -6,7 +6,7 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
     }
 
-    func setupNavigationBar(for screenName: String, on navbar: UINavigationBar) {
+    func setupNavigationBar(for screenName: String) {
         
         DispatchQueue.main.async {
             switch screenName {
