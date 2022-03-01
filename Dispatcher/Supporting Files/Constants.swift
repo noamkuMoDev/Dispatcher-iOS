@@ -7,4 +7,9 @@ struct Constants {
         static let profile = "Profile"
         static let favorites = "Favorites"
     }
+    
+    struct Segues {
+        static let homepageToNotifications = "homepageToNotifications"
+        static let favoritesToNotifications = "favoritesToNotifications"
+    }
 }

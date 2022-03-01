@@ -17,6 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="Dispatch Dark Blue"/>
+                        <color key="tintColor" name="Dispatch Light Gray"/>
                         <color key="barTintColor" name="Dispatch White"/>
                         <color key="selectedImageTintColor" name="Dispatch White"/>
                     </tabBar>
@@ -63,11 +64,11 @@
             </objects>
             <point key="canvasLocation" x="530" y="1213"/>
         </scene>
-        <!--Profile-->
+        <!--Navigation Controller-->
         <scene sceneID="gZ2-sg-ECb">
             <objects>
                 <navigationController id="G31-O4-asJ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" image="person" catalog="system" id="Y8l-0W-0En">
+                    <tabBarItem key="tabBarItem" title="" image="person" catalog="system" id="Y8l-0W-0En">
                         <color key="badgeColor" name="Dispatch Light Gray"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="rsC-J8-Vwx">
@@ -84,11 +85,11 @@
             </objects>
             <point key="canvasLocation" x="531" y="492"/>
         </scene>
-        <!--Homepage-->
+        <!--Navigation Controller-->
         <scene sceneID="pav-9r-hLa">
             <objects>
                 <navigationController id="HZs-BQ-O8b" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Homepage" image="house" catalog="system" id="gjM-CW-yC5"/>
+                    <tabBarItem key="tabBarItem" title="" image="house" catalog="system" id="gjM-CW-yC5"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="j2j-HX-9LN">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -103,11 +104,11 @@
             </objects>
             <point key="canvasLocation" x="1372" y="492"/>
         </scene>
-        <!--Favorites-->
+        <!--Navigation Controller-->
         <scene sceneID="1uk-gL-BOv">
             <objects>
                 <navigationController id="adq-gH-4zx" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Favorites" image="star" catalog="system" id="APv-g2-9OW"/>
+                    <tabBarItem key="tabBarItem" title="" image="star" catalog="system" id="APv-g2-9OW"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="OGk-Mx-b0f">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -152,11 +153,37 @@
                     <navigationItem key="navigationItem" id="A7l-Lu-1H7"/>
                     <connections>
                         <outlet property="tableView" destination="aXi-Bs-RAZ" id="9Dw-j3-ePA"/>
+                        <segue destination="tUC-ru-eE1" kind="show" identifier="homepageToNotifications" id="f5P-ad-VVd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NmD-95-HIW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1369.5652173913045" y="1212.7232142857142"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="97s-qI-tfe">
+            <objects>
+                <viewController id="tUC-ru-eE1" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0q2-oz-dRL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GpU-Ni-gdu">
+                                <rect key="frame" x="159" y="352" width="96" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="yXp-8n-oRU"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="hYD-cK-PxP"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="62g-Ra-EIk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1765" y="1961"/>
         </scene>
         <!--Favorites View Controller-->
         <scene sceneID="Dl1-zV-D4S">
@@ -181,12 +208,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="2YF-rK-IpJ"/>
+                    <connections>
+                        <segue destination="tUC-ru-eE1" kind="show" identifier="favoritesToNotifications" id="Tvg-NK-Rg2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fhH-oy-gqj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2199" y="1213"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="f5P-ad-VVd"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="house" catalog="system" width="128" height="106"/>
         <image name="person" catalog="system" width="128" height="117"/>

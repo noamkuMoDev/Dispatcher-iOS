@@ -2,11 +2,16 @@ import UIKit
 
 class BaseViewController: UIViewController {
 
+    var screenName: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
+    
     func setupNavigationBar(for screenName: String) {
+        
+        self.screenName = screenName
         
         DispatchQueue.main.async {
             switch screenName {
@@ -27,6 +32,7 @@ class BaseViewController: UIViewController {
         }
     }
     
+    
     private func setHeaderLeftLogo() {
         let logoImage = UIImage.init(named: "logo")
         let logoImageView = UIImageView.init(image: logoImage)
@@ -39,6 +45,7 @@ class BaseViewController: UIViewController {
         widthConstraint.isActive = true
         navigationItem.leftBarButtonItem =  imageItem
     }
+    
     
     private func setHeaderRightButtons() {
         
@@ -53,7 +60,7 @@ class BaseViewController: UIViewController {
                 image: UIImage(systemName: "bell"),
                 style: .done,
                 target: self,
-                action: nil
+                action: #selector(goToNotifications)
             ),
             UIBarButtonItem(
                 image: UIImage(systemName: "magnifyingglass"),
@@ -65,5 +72,20 @@ class BaseViewController: UIViewController {
                 customView: avatar
             )
         ]
+    }
+    
+    
+    @objc func goToNotifications() {
+        
+        switch self.screenName {
+        case Constants.ScreenNames.homepage:
+            self.performSegue(withIdentifier: Constants.Segues.homepageToNotifications, sender: self)
+            break
+        case Constants.ScreenNames.favorites:
+            self.performSegue(withIdentifier: Constants.Segues.favoritesToNotifications, sender: self)
+            break
+        default:
+            break
+        }
     }
 }
