@@ -1,0 +1,69 @@
+import UIKit
+
+class BaseViewController: UIViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+
+    func setupNavigationBar(for screenName: String, on navbar: UINavigationBar) {
+        
+        DispatchQueue.main.async {
+            switch screenName {
+            case Constants.ScreenNames.profile:
+                break
+            case Constants.ScreenNames.homepage:
+                self.setHeaderLeftLogo()
+                self.setHeaderRightButtons()
+                break
+            case Constants.ScreenNames.favorites:
+                self.setHeaderLeftLogo()
+                self.setHeaderRightButtons()
+                break
+            default:
+                self.setHeaderLeftLogo()
+                break
+            }
+        }
+    }
+    
+    private func setHeaderLeftLogo() {
+        let logoImage = UIImage.init(named: "logo")
+        let logoImageView = UIImageView.init(image: logoImage)
+        logoImageView.frame = CGRect(x:0.0,y:0.0, width:10,height:25.0)
+        logoImageView.contentMode = .scaleAspectFill
+        let imageItem = UIBarButtonItem.init(customView: logoImageView)
+        let widthConstraint = logoImageView.widthAnchor.constraint(equalToConstant: 60)
+        let heightConstraint = logoImageView.heightAnchor.constraint(equalToConstant: 60)
+        heightConstraint.isActive = true
+        widthConstraint.isActive = true
+        navigationItem.leftBarButtonItem =  imageItem
+    }
+    
+    private func setHeaderRightButtons() {
+        
+        let avatar = UIButton(frame: CGRect(x: 0, y: 0, width: 40.0, height: 40.0))
+        avatar.setTitle("NK", for: .normal)
+        avatar.backgroundColor = .gray
+        avatar.layer.cornerRadius = avatar.frame.width / 2
+        avatar.layer.masksToBounds = true
+        
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(
+                image: UIImage(systemName: "bell"),
+                style: .done,
+                target: self,
+                action: nil
+            ),
+            UIBarButtonItem(
+                image: UIImage(systemName: "magnifyingglass"),
+                style: .done,
+                target: self,
+                action: nil
+            ),
+            UIBarButtonItem(
+                customView: avatar
+            )
+        ]
+    }
+}

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43C1B5B827CE038300AB0D3B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5B727CE038300AB0D3B /* BaseViewController.swift */; };
+		43C1B5BA27CE098A00AB0D3B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5B927CE098A00AB0D3B /* Constants.swift */; };
+		43C1B5BC27CE0B1700AB0D3B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */; };
+		43C1B5BE27CE0B4500AB0D3B /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */; };
 		43F08D4127C7C9A6003FFA7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F08D4027C7C9A6003FFA7D /* AppDelegate.swift */; };
 		43F08D4327C7C9A6003FFA7D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F08D4227C7C9A6003FFA7D /* SceneDelegate.swift */; };
 		43F08D4527C7C9A6003FFA7D /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F08D4427C7C9A6003FFA7D /* HomepageViewController.swift */; };
@@ -23,9 +27,13 @@
 		2D9A14A3AABC05B7E9E8BAFF /* Pods-Dispatcher.prod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dispatcher.prod.xcconfig"; path = "Target Support Files/Pods-Dispatcher/Pods-Dispatcher.prod.xcconfig"; sourceTree = "<group>"; };
 		3E320D33BAC2DB1DFFBD50B7 /* Pods-Dispatcher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dispatcher.release.xcconfig"; path = "Target Support Files/Pods-Dispatcher/Pods-Dispatcher.release.xcconfig"; sourceTree = "<group>"; };
 		3F51A4C89E75671CF0847D35 /* Pods-Dispatcher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dispatcher.debug.xcconfig"; path = "Target Support Files/Pods-Dispatcher/Pods-Dispatcher.debug.xcconfig"; sourceTree = "<group>"; };
+		43C1B5B727CE038300AB0D3B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		43C1B5B927CE098A00AB0D3B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		43DCD2AE27CCAC8F00020D8A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		43DCD2AF27CCACCA00020D8A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		43F08D3D27C7C9A6003FFA7D /* Dispatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Dispatcher.app; path = "Dispatcher Development.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		43F08D3D27C7C9A6003FFA7D /* Dispatcher Development.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dispatcher Development.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		43F08D4027C7C9A6003FFA7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43F08D4227C7C9A6003FFA7D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		43F08D4427C7C9A6003FFA7D /* HomepageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageViewController.swift; sourceTree = "<group>"; };
@@ -88,7 +96,7 @@
 		43F08D3E27C7C9A6003FFA7D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				43F08D3D27C7C9A6003FFA7D /* Dispatcher.app */,
+				43F08D3D27C7C9A6003FFA7D /* Dispatcher Development.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -125,6 +133,9 @@
 			isa = PBXGroup;
 			children = (
 				43F08D4427C7C9A6003FFA7D /* HomepageViewController.swift */,
+				43C1B5B727CE038300AB0D3B /* BaseViewController.swift */,
+				43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */,
+				43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -136,6 +147,7 @@
 				43F08D4927C7C9C3003FFA7D /* Assets.xcassets */,
 				43F08D4227C7C9A6003FFA7D /* SceneDelegate.swift */,
 				43F08D4027C7C9A6003FFA7D /* AppDelegate.swift */,
+				43C1B5B927CE098A00AB0D3B /* Constants.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -184,7 +196,7 @@
 			);
 			name = Dispatcher;
 			productName = Dispatcher;
-			productReference = 43F08D3D27C7C9A6003FFA7D /* Dispatcher.app */;
+			productReference = 43F08D3D27C7C9A6003FFA7D /* Dispatcher Development.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -317,6 +329,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43C1B5BC27CE0B1700AB0D3B /* ProfileViewController.swift in Sources */,
+				43C1B5BA27CE098A00AB0D3B /* Constants.swift in Sources */,
+				43C1B5BE27CE0B4500AB0D3B /* FavoritesViewController.swift in Sources */,
+				43C1B5B827CE038300AB0D3B /* BaseViewController.swift in Sources */,
 				43F08D4527C7C9A6003FFA7D /* HomepageViewController.swift in Sources */,
 				43F08D4127C7C9A6003FFA7D /* AppDelegate.swift in Sources */,
 				43F08D4327C7C9A6003FFA7D /* SceneDelegate.swift in Sources */,
@@ -416,7 +432,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Dispatcher/Info.plist;
+				INFOPLIST_FILE = "Dispatcher/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -500,7 +516,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Dispatcher/Info.plist;
+				INFOPLIST_FILE = "Dispatcher/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
