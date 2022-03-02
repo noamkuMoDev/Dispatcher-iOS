@@ -1,8 +1,13 @@
 import UIKit
 
-class BaseViewController: UIViewController {
-
+class BaseViewController: UIViewController, Header {
+    // ????????????
+    var logo: UIBarButtonItem?
+    var notificationsIcon: UIBarButtonItem?
+    var searchIcon: UIBarButtonItem?
+    
     var screenName: String = ""
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

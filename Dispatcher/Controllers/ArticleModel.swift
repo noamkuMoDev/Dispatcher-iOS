@@ -3,7 +3,6 @@ import Foundation
 protocol Article {
     var title: String { get }
     var date: Date { get }
-    var content: String { get }
     var url: String { get }
     var isFavorite: Bool { get set }
 }
@@ -11,7 +10,17 @@ protocol Article {
 struct ArticleModel: Article {
     var title: String
     var date: Date
-    var content: String
     var url: String
     var isFavorite: Bool
+    
+    var content: String
+}
+
+struct VideoModel: Article {
+    var title: String
+    var date: Date
+    var url: String
+    var isFavorite: Bool
+    
+    var length: Float
 }

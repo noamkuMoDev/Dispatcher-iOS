@@ -5,7 +5,7 @@ class HomepageViewController: BaseViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var newsArray: [Article] = [
-        ArticleModel(title: "Title Article 1", date: Date(), content: "Content of the article", url: "http://noamkurtzer.co.il", isFavorite: false)
+        ArticleModel(title: "Title Article 1", date: Date(), url: "Content of the article", isFavorite: false, content: "http://noamkurtzer.co.il")
     ]
     
     override func viewDidLoad() {
