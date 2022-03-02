@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Tab Bar Controller-->
+        <!--My Tab Bar Controller-->
         <scene sceneID="DJW-wW-onp">
             <objects>
-                <tabBarController id="cdU-oW-DC1" sceneMemberID="viewController">
+                <tabBarController id="cdU-oW-DC1" customClass="MyTabBarController" customModule="Dispatcher_Development" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" itemPositioning="fill" id="dQF-TG-lel">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -68,7 +68,7 @@
         <scene sceneID="gZ2-sg-ECb">
             <objects>
                 <navigationController id="G31-O4-asJ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="person" catalog="system" id="Y8l-0W-0En">
+                    <tabBarItem key="tabBarItem" title="" image="Profile" id="Y8l-0W-0En">
                         <color key="badgeColor" name="Dispatch Light Gray"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="rsC-J8-Vwx">
@@ -89,7 +89,7 @@
         <scene sceneID="pav-9r-hLa">
             <objects>
                 <navigationController id="HZs-BQ-O8b" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="house" catalog="system" id="gjM-CW-yC5"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="" image="Homepage" id="gjM-CW-yC5"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="j2j-HX-9LN">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -108,7 +108,7 @@
         <scene sceneID="1uk-gL-BOv">
             <objects>
                 <navigationController id="adq-gH-4zx" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="star" catalog="system" id="APv-g2-9OW"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="" image="Favorites" id="APv-g2-9OW"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="OGk-Mx-b0f">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -249,9 +249,9 @@
         <segue reference="Tvg-NK-Rg2"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="house" catalog="system" width="128" height="106"/>
-        <image name="person" catalog="system" width="128" height="117"/>
-        <image name="star" catalog="system" width="128" height="116"/>
+        <image name="Favorites" width="9" height="9"/>
+        <image name="Homepage" width="9" height="9"/>
+        <image name="Profile" width="9" height="9"/>
         <namedColor name="Dispatch Dark Blue">
             <color red="0.14901960784313725" green="0.12941176470588237" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -12,7 +12,7 @@ class BaseViewController: UIViewController, Header {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
     
     func setupNavigationBar(for screenName: String) {
         
