@@ -1,18 +1,24 @@
 import UIKit
 
-class BaseViewController: UIViewController, Header {
-    // ????????????
-    var logo: UIBarButtonItem?
-    var notificationsIcon: UIBarButtonItem?
-    var searchIcon: UIBarButtonItem?
+class BaseViewController: UIViewController {
     
+    @IBOutlet weak var logo: UIImageView!
+    @IBOutlet weak var searchIcon: UIImageView!
+    @IBOutlet weak var notificationsIcon: UIImageView!
+    
+    
+    //Variables sent in
     var screenName: String = ""
+    var tableContentArray: [Article] = []
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
+    
+    //MARK: - NavigationBar
     
     func setupNavigationBar(for screenName: String) {
         
@@ -110,3 +116,39 @@ class BaseViewController: UIViewController, Header {
         }
     }
 }
+
+
+////MARK: - UITableViewDataSource
+//extension BaseViewController: UITableViewDataSource {
+//
+//    func populateTableContentArray(withItems contentArray: [Article]){
+//        tableContentArray = contentArray
+////        tableView.reloadData()
+//    }
+//
+//
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return tableContentArray.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//
+//        if let instance = tableContentArray[indexPath.row] as? ArticleModel {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "reusableCell", for: indexPath) //as! specificCustomCell
+//            cell.textLabel?.text = instance.title
+//            return cell
+//        }
+//        else {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "reusableCell", for: indexPath)
+//            return cell
+//        }
+//    }
+//}
+//
+////MARK: - UITableViewDelegate
+//extension BaseViewController: UITableViewDelegate {
+//
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.deselectRow(at: indexPath, animated: true)
+//    }
+//}
