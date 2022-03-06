@@ -1,23 +1,22 @@
-//
-//  NewsCell.swift
-//  Dispatcher
-//
-//  Created by Noam Kurtzer on 03/03/2022.
-//
-
 import UIKit
 
 class NewsCell: UITableViewCell {
 
+    @IBOutlet weak var entireNewsCell: UIStackView!
+    @IBOutlet weak var newsImage: UIImageView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        
+        entireNewsCell.layer.cornerRadius = 20
+        
+        newsImage.clipsToBounds = true
+        newsImage.layer.cornerRadius = 10
+        newsImage.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
     }
-    
 }

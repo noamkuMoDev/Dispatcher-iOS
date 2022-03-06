@@ -2,6 +2,8 @@ import UIKit
 
 class SavedArticleCell: UITableViewCell {
 
+    @IBOutlet weak var savedArticleCell: UIStackView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -10,7 +12,10 @@ class SavedArticleCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+        savedArticleCell.layer.cornerRadius =  10
+        
+        savedArticleCell.layer.borderWidth = 2
+        let borderColor = UIColor( red: 243/255, green: 243/255, blue:255/255, alpha: 1.0 )
+        savedArticleCell.layer.borderColor = borderColor.cgColor
     }
-    
 }

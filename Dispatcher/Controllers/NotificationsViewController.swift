@@ -2,8 +2,9 @@ import UIKit
 
 class NotificationsViewController: UIViewController {
 
-    var ourDataArray: [String] = [
-    
+    var ourDataArray: [NotificationModel] = [
+        NotificationModel(text: "Notification 1", wasRead: true),
+        NotificationModel(text: "Notification 2", wasRead: false)
     ]
     
     

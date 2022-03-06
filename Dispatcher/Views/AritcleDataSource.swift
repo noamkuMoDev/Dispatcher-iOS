@@ -19,7 +19,7 @@ extension ArticleDataSource: UITableViewDataSource {
             //Define the custom cell                                    identifier                       classsName
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) //as! cellType
 
-            cell.textLabel?.text = newsArray[indexPath.row].title
+            //cell.textLabel?.text = newsArray[indexPath.row].title
             return cell
         }
 }
