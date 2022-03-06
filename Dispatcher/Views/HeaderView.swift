@@ -22,8 +22,6 @@ class HeaderView: UIView {
         let headerHeightConstraint = heightAnchor.constraint(equalToConstant: headerHeight)
         let constraints = [headerWidthConstraint,headerHeightConstraint]
         NSLayoutConstraint.activate(constraints)
-        
-        //setBackButton()
     }
     
     
@@ -45,18 +43,13 @@ class HeaderView: UIView {
     func setBackButton() {
         
         let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
-        backButton.backgroundColor = UIColor.green
         backButton.setTitle("Back", for: .normal)
-        //backButton.setImage(UIImageView(image: UIImage(named:"logo")!, for: .normal)
+        backButton.setImage(UIImage(systemName: "search"), for: .normal)
         backButton.addTarget(self, action: #selector(icon1Pressed), for: .touchUpInside)
-        
-        
-        let backBtnWidthConstraint = backButton.widthAnchor.constraint(equalToConstant: 50)
-        let backBtnHeightConstraint = backButton.heightAnchor.constraint(equalToConstant: 50)
         addSubview(backButton)
-        let stickBtnToLeft = backButton.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 16)
+        let stickBtnToLeft = backButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
         let centerBtnVertically = backButton.centerYAnchor.constraint(equalTo: centerYAnchor)
-        let backBtnConstraint = [backBtnWidthConstraint,backBtnHeightConstraint, stickBtnToLeft, centerBtnVertically]
+        let backBtnConstraint = [stickBtnToLeft, centerBtnVertically]
         NSLayoutConstraint.activate(backBtnConstraint)
     }
     
@@ -101,3 +94,4 @@ class HeaderView: UIView {
         print("icon2 was PRESSED")
     }
 }
+

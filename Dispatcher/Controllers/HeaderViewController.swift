@@ -26,4 +26,8 @@ class HeaderViewController: UIViewController {
     open func defineHeaderLogo(){
         headerView.setLogo()
     }
+    
+    open func defineBackButton(){
+        headerView.setBackButton()
+    }
 }

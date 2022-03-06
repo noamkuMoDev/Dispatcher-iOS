@@ -14,7 +14,6 @@
 		43C1B5C027CE48C200AB0D3B /* ArticleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BF27CE48C200AB0D3B /* ArticleModel.swift */; };
 		43C1B5C427CE6B3D00AB0D3B /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5C327CE6B3D00AB0D3B /* Header.swift */; };
 		43C1B5C627CF63F300AB0D3B /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5C527CF63F300AB0D3B /* MyTabBarController.swift */; };
-		43C1B5C827CFB68100AB0D3B /* ContentTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5C727CFB68100AB0D3B /* ContentTableView.swift */; };
 		43C1B5D627D0A69300AB0D3B /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43C1B5CA27D0A68E00AB0D3B /* Roboto-MediumItalic.ttf */; };
 		43C1B5D727D0A69300AB0D3B /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43C1B5CB27D0A68F00AB0D3B /* Roboto-Regular.ttf */; };
 		43C1B5D827D0A69300AB0D3B /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43C1B5CC27D0A68F00AB0D3B /* Roboto-Thin.ttf */; };
@@ -64,7 +63,6 @@
 		43C1B5BF27CE48C200AB0D3B /* ArticleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ArticleModel.swift; path = Dispatcher/Controllers/ArticleModel.swift; sourceTree = SOURCE_ROOT; };
 		43C1B5C327CE6B3D00AB0D3B /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Header.swift; path = Dispatcher/Controllers/Header.swift; sourceTree = SOURCE_ROOT; };
 		43C1B5C527CF63F300AB0D3B /* MyTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
-		43C1B5C727CFB68100AB0D3B /* ContentTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTableView.swift; sourceTree = "<group>"; };
 		43C1B5CA27D0A68E00AB0D3B /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
 		43C1B5CB27D0A68F00AB0D3B /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		43C1B5CC27D0A68F00AB0D3B /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
@@ -237,7 +235,6 @@
 				43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */,
 				43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */,
 				43C1B5C527CF63F300AB0D3B /* MyTabBarController.swift */,
-				43C1B5C727CFB68100AB0D3B /* ContentTableView.swift */,
 				43C1B5E627D0B69100AB0D3B /* NotificationsViewController.swift */,
 				43C1B5E827D0BCE800AB0D3B /* ViewProfileViewController.swift */,
 				43C1B5FD27D2456E00AB0D3B /* HeaderViewController.swift */,
@@ -450,7 +447,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43C1B5C827CFB68100AB0D3B /* ContentTableView.swift in Sources */,
 				43C1B5BC27CE0B1700AB0D3B /* ProfileViewController.swift in Sources */,
 				43C1B5C427CE6B3D00AB0D3B /* Header.swift in Sources */,
 				43C1B5E727D0B69100AB0D3B /* NotificationsViewController.swift in Sources */,

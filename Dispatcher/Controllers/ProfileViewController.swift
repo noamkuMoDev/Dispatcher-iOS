@@ -1,6 +1,6 @@
 import UIKit
 
-class ProfileViewController: BaseViewController {
+class ProfileViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -8,7 +8,6 @@ class ProfileViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar(for: Constants.ScreenNames.profile)
     }
     
     

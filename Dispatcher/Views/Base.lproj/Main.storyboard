@@ -485,11 +485,11 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kyv-DJ-5Y8">
                                 <rect key="frame" x="315.5" y="80" width="82.5" height="28.5"/>
-                                <color key="tintColor" name="Dispatch Gray"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Edit Profile">
                                     <fontDescription key="titleFontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
                                     <color key="baseForegroundColor" name="Dispatch Purple"/>
+                                    <color key="baseBackgroundColor" name="Dispatch Gray"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="editProfileButtonPressed:" destination="Qvb-2b-fpt" eventType="touchUpInside" id="a3i-Nf-k88"/>
