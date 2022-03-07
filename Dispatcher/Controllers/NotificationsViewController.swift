@@ -2,7 +2,7 @@ import UIKit
 
 class NotificationsViewController: UIViewController {
 
-    var ourDataArray: [NotificationModel] = [
+    var notificationsArray: [NotificationModel] = [
         NotificationModel(text: "Notification 1", wasRead: true),
         NotificationModel(text: "Notification 2", wasRead: false)
     ]
@@ -33,15 +33,13 @@ extension NotificationsViewController: UITableViewDelegate {
 extension NotificationsViewController: UITableViewDataSource {
     
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return ourDataArray.count
+            return notificationsArray.count
         }
      
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
             let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCellsIdentifier.notification, for: indexPath) as! NotificationCell
 
-            //cell.textLabel?.text = ourDataArray[indexPath.row]  // Array[number of the row].property
             return cell
         }
-
 }
