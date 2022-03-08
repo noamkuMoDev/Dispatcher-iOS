@@ -25,7 +25,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="343" height="449"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="CTv-uZ-cEu">
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="CTv-uZ-cEu">
                         <rect key="frame" x="0.0" y="0.0" width="343" height="449"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sampleImage" translatesAutoresizingMaskIntoConstraints="NO" id="nE8-jU-uSg">
@@ -38,16 +38,16 @@
                                 <rect key="frame" x="16" y="158" width="311" height="20"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friday, Jun 25, 2021" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWS-8m-C9O">
-                                        <rect key="frame" x="0.0" y="0.0" width="151.5" height="20"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="153" height="20"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                         <color key="textColor" name="Dispatch Gray"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5HM-ac-BaM">
-                                        <rect key="frame" x="151.5" y="0.0" width="159.5" height="20"/>
+                                        <rect key="frame" x="153" y="0.0" width="158" height="20"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dk5-AU-Bsr">
-                                                <rect key="frame" x="0.0" y="0.0" width="75" height="20"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="74" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="P0n-ps-2B5"/>
                                                 </constraints>
@@ -59,7 +59,7 @@
                                                 </buttonConfiguration>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jud-P5-XGf">
-                                                <rect key="frame" x="85" y="0.0" width="74.5" height="20"/>
+                                                <rect key="frame" x="84" y="0.0" width="74" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="2Nz-Zp-EfT"/>
                                                 </constraints>
@@ -99,10 +99,9 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Cb-uR-jOo">
-                                        <rect key="frame" x="0.0" y="104" width="301" height="96"/>
+                                        <rect key="frame" x="0.0" y="104" width="311" height="96"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="96" id="7LI-Xx-XZb"/>
-                                            <constraint firstAttribute="height" constant="96" id="aqW-D5-ixB"/>
+                                            <constraint firstAttribute="height" constant="96" id="7LI-Xx-XZb"/>
                                         </constraints>
                                         <string key="text">On Friday, Chinese Vice Premier Liu He said it is necessary to “crack down on Bitcoin mining and trading behavior” to prevent risks to the “social field.” For a long time, Chinese authorities have been concerned about the ...</string>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
@@ -113,21 +112,25 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="9ah-c9-oZ4"/>
                                     <constraint firstItem="Lsb-DM-5Yh" firstAttribute="top" secondItem="WJa-RV-M7c" secondAttribute="top" id="BkP-dm-gXs"/>
-                                    <constraint firstItem="Lsb-DM-5Yh" firstAttribute="top" secondItem="WJa-RV-M7c" secondAttribute="top" id="Iar-Qg-f4w"/>
+                                    <constraint firstItem="6Cb-uR-jOo" firstAttribute="leading" secondItem="WJa-RV-M7c" secondAttribute="leading" id="IO7-Bd-gip"/>
                                     <constraint firstAttribute="trailing" secondItem="Lsb-DM-5Yh" secondAttribute="trailing" id="KXU-gQ-tj9"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="LEV-IS-Cxm"/>
                                     <constraint firstItem="Lsb-DM-5Yh" firstAttribute="leading" secondItem="WJa-RV-M7c" secondAttribute="leading" id="Pzx-cb-PkC"/>
+                                    <constraint firstAttribute="trailing" secondItem="6Cb-uR-jOo" secondAttribute="trailing" id="S3a-bu-w34"/>
                                     <constraint firstAttribute="trailing" secondItem="hjk-DI-if8" secondAttribute="trailing" id="SFR-pV-kCf"/>
                                     <constraint firstItem="hjk-DI-if8" firstAttribute="leading" secondItem="WJa-RV-M7c" secondAttribute="leading" id="e8C-DM-WvZ"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l2k-rd-xu8">
+                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l2k-rd-xu8">
                                 <rect key="frame" x="16" y="413" width="311" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="wK4-5Z-eIF"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="NAVIGATE TO DISPATCH">
+                                <buttonConfiguration key="configuration" style="filled" image="Arrow-Right" imagePlacement="trailing" title="NAVIGATE TO DISPATCH" imagePadding="30">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="70" scale="large" weight="semibold"/>
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="0.0"/>
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="baseBackgroundColor" name="Dispatch Blue"/>
                                 </buttonConfiguration>
                             </button>
@@ -158,12 +161,14 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="entireNewsCell" destination="CTv-uZ-cEu" id="ugZ-Pm-hZa"/>
+                <outlet property="goButton" destination="l2k-rd-xu8" id="l9G-6z-dyw"/>
                 <outlet property="newsImage" destination="nE8-jU-uSg" id="615-TV-fSb"/>
             </connections>
             <point key="canvasLocation" x="94.927536231884062" y="60.602678571428569"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="Arrow-Right" width="6" height="4.5"/>
         <image name="sampleImage" width="375" height="149"/>
         <namedColor name="Dispatch Blue">
             <color red="0.0" green="0.34509803921568627" blue="0.72549019607843135" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

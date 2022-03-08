@@ -26,7 +26,7 @@
                         <rect key="frame" x="0.0" y="7" width="320" height="51"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ee5-wN-fok">
-                                <rect key="frame" x="8" y="7.5" width="259" height="36"/>
+                                <rect key="frame" x="8" y="7.5" width="280" height="36"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotificationVerticleLine" translatesAutoresizingMaskIntoConstraints="NO" id="rib-4C-wIL">
                                         <rect key="frame" x="0.0" y="0.0" width="8" height="36"/>
@@ -36,25 +36,31 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notification about a new article from a tag you liked, two lines." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NiK-z1-R6q">
-                                        <rect key="frame" x="16" y="0.0" width="243" height="36"/>
+                                        <rect key="frame" x="16" y="0.0" width="264" height="36"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                         <color key="textColor" name="Dispatch Purple"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotificationForward" translatesAutoresizingMaskIntoConstraints="NO" id="gyN-iN-DpX">
-                                <rect key="frame" x="318.5" y="20.5" width="1.5" height="10"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="5" id="3Cb-at-1JD"/>
-                                    <constraint firstAttribute="height" constant="10" id="UtO-2Q-nxA"/>
-                                </constraints>
-                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6vL-yY-WJ4">
+                                <rect key="frame" x="304" y="20.5" width="0.0" height="10"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotificationForward" translatesAutoresizingMaskIntoConstraints="NO" id="gyN-iN-DpX">
+                                        <rect key="frame" x="0.0" y="0.0" width="5" height="10"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="5" id="3Cb-at-1JD"/>
+                                            <constraint firstAttribute="height" constant="10" id="UtO-2Q-nxA"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="gyN-iN-DpX" firstAttribute="centerY" secondItem="f55-6r-Qlb" secondAttribute="centerY" id="3dk-2R-rak"/>
+                            <constraint firstAttribute="trailing" secondItem="6vL-yY-WJ4" secondAttribute="trailing" constant="16" id="HpA-yt-js1"/>
                             <constraint firstAttribute="trailing" secondItem="Ee5-wN-fok" secondAttribute="trailing" constant="53" id="Nl5-VW-cew"/>
                             <constraint firstItem="Ee5-wN-fok" firstAttribute="leading" secondItem="f55-6r-Qlb" secondAttribute="leading" constant="8" id="rDE-gI-KZt"/>
+                            <constraint firstItem="6vL-yY-WJ4" firstAttribute="leading" secondItem="Ee5-wN-fok" secondAttribute="trailing" constant="16" id="wTI-bn-3Nb"/>
                         </constraints>
                     </stackView>
                 </subviews>

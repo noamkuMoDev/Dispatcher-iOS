@@ -5,7 +5,7 @@ class HomepageViewController: HeaderViewController {
     var dataSource = ArticleDataSource()
 
     
-    @IBOutlet weak var tableView: ContentTableView!
+    @IBOutlet weak var tableView: UITableView!
     
     
     var newsArray: [Article] = [
@@ -16,10 +16,11 @@ class HomepageViewController: HeaderViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        defineHeaderIcons(icon1: UIImage(named: "search")!, icon2: UIImage(named:"notifications")!)
-        defineHeaderLogo()
+//        defineHeaderIcons(icon1: UIImage(named: "search")!, icon2: UIImage(named:"notifications")!)
+//        defineHeaderLogo()
+        setCheckmarkIcons()
         
-        tableView.rowHeight = 525
+        tableView.rowHeight = 465
         tableView.register(UINib(nibName: Constants.NibNames.homepage, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.homepage)
         tableView.delegate = dataSource
         tableView.dataSource = dataSource

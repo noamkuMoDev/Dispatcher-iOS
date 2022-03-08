@@ -4,6 +4,7 @@ class NewsCell: UITableViewCell {
 
     @IBOutlet weak var entireNewsCell: UIStackView!
     @IBOutlet weak var newsImage: UIImageView!
+    @IBOutlet weak var goButton: UIButton!
     
     
     override func awakeFromNib() {
