@@ -47,47 +47,6 @@
             </objects>
             <point key="canvasLocation" x="1371" y="-244"/>
         </scene>
-        <!--Base View Controller-->
-        <scene sceneID="6dG-c8-MXr">
-            <objects>
-                <viewController id="p8c-Bh-3fM" customClass="BaseViewController" customModule="Dispatcher_Development" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="aMq-pG-OtL">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tzd-Qy-dlW">
-                                <rect key="frame" x="0.0" y="44" width="414" height="64"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="hmh-G5-Qvj">
-                                        <rect key="frame" x="0.0" y="0.0" width="78" height="64"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="notifications" translatesAutoresizingMaskIntoConstraints="NO" id="pHo-cZ-cJz">
-                                        <rect key="frame" x="367" y="18" width="32" height="29"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="search" translatesAutoresizingMaskIntoConstraints="NO" id="kib-bV-AOn">
-                                        <rect key="frame" x="315" y="18" width="32" height="29"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" red="0.14901960784313725" green="0.12941176470588237" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="7uF-W1-gTq"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <connections>
-                        <outlet property="logo" destination="hmh-G5-Qvj" id="jCa-JL-Hfl"/>
-                        <outlet property="notificationsIcon" destination="pHo-cZ-cJz" id="3Zd-Ei-7eB"/>
-                        <outlet property="searchIcon" destination="kib-bV-AOn" id="DZU-49-lUV"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="h2S-ld-SvP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-213" y="-244"/>
-        </scene>
         <!--Profile View Controller-->
         <scene sceneID="I2y-lf-UV8">
             <objects>
@@ -366,7 +325,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6X5-hS-lCR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-504" y="2014"/>
+            <point key="canvasLocation" x="-286" y="1971"/>
         </scene>
         <!--View Profile View Controller-->
         <scene sceneID="blb-6q-WeA">
@@ -614,9 +573,6 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
         <image name="dropdown" width="6" height="5"/>
         <image name="filter" width="9" height="9"/>
         <image name="large-missing-profile-pic" width="33.5" height="33.5"/>
-        <image name="logo" width="168" height="168"/>
-        <image name="notifications" width="8" height="8"/>
-        <image name="search" width="8" height="8"/>
         <image name="small-missing-profile-pic" width="16" height="16"/>
         <namedColor name="Dispatch Dark Blue">
             <color red="0.14901960784313725" green="0.12941176470588237" blue="0.27450980392156865" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

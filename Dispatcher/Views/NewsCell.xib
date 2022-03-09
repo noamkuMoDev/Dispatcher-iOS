@@ -26,28 +26,28 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="CTv-uZ-cEu">
-                        <rect key="frame" x="0.0" y="0.0" width="343" height="449"/>
+                        <rect key="frame" x="16" y="0.0" width="311" height="449"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sampleImage" translatesAutoresizingMaskIntoConstraints="NO" id="nE8-jU-uSg">
-                                <rect key="frame" x="0.0" y="0.0" width="343" height="149"/>
+                                <rect key="frame" x="0.0" y="0.0" width="311" height="149"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="149" id="iRC-wg-d12"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="XKR-cN-FHs" userLabel="Extras' Stack View">
-                                <rect key="frame" x="16" y="158" width="311" height="20"/>
+                                <rect key="frame" x="16" y="158" width="279" height="20"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friday, Jun 25, 2021" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWS-8m-C9O">
-                                        <rect key="frame" x="0.0" y="0.0" width="153" height="20"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="137.5" height="20"/>
                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                         <color key="textColor" name="Dispatch Gray"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5HM-ac-BaM">
-                                        <rect key="frame" x="153" y="0.0" width="158" height="20"/>
+                                        <rect key="frame" x="137.5" y="0.0" width="141.5" height="20"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dk5-AU-Bsr">
-                                                <rect key="frame" x="0.0" y="0.0" width="74" height="20"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="65.5" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="P0n-ps-2B5"/>
                                                 </constraints>
@@ -59,7 +59,7 @@
                                                 </buttonConfiguration>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jud-P5-XGf">
-                                                <rect key="frame" x="84" y="0.0" width="74" height="20"/>
+                                                <rect key="frame" x="75.5" y="0.0" width="66" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="2Nz-Zp-EfT"/>
                                                 </constraints>
@@ -78,10 +78,10 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="WJa-RV-M7c" userLabel="Texts' Stack View">
-                                <rect key="frame" x="16" y="187" width="311" height="200"/>
+                                <rect key="frame" x="16" y="187" width="279" height="200"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="China's renewed crypto crackdown wipes nearly $300 billion off the market as bitcoin slides" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lsb-DM-5Yh">
-                                        <rect key="frame" x="0.0" y="0.0" width="311" height="63"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="279" height="63"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="63" id="cx1-7q-hI8"/>
                                         </constraints>
@@ -90,7 +90,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Arjun Kharpal, CNBC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hjk-DI-if8">
-                                        <rect key="frame" x="0.0" y="73" width="311" height="20"/>
+                                        <rect key="frame" x="0.0" y="73" width="279" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="lnE-Fo-xDb"/>
                                         </constraints>
@@ -99,7 +99,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Cb-uR-jOo">
-                                        <rect key="frame" x="0.0" y="104" width="311" height="96"/>
+                                        <rect key="frame" x="0.0" y="104" width="279" height="96"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="96" id="7LI-Xx-XZb"/>
                                         </constraints>
@@ -122,7 +122,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l2k-rd-xu8">
-                                <rect key="frame" x="16" y="413" width="311" height="36"/>
+                                <rect key="frame" x="16" y="413" width="279" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="wK4-5Z-eIF"/>
                                 </constraints>
@@ -141,7 +141,6 @@
                             <constraint firstAttribute="trailing" secondItem="l2k-rd-xu8" secondAttribute="trailing" constant="16" id="9yx-Bj-Bo1"/>
                             <constraint firstItem="WJa-RV-M7c" firstAttribute="leading" secondItem="CTv-uZ-cEu" secondAttribute="leading" constant="16" id="IFN-DX-r0u"/>
                             <constraint firstItem="XKR-cN-FHs" firstAttribute="leading" secondItem="CTv-uZ-cEu" secondAttribute="leading" constant="16" id="K8s-wx-rgq"/>
-                            <constraint firstAttribute="width" constant="343" id="Q1t-Q0-Hry"/>
                             <constraint firstItem="l2k-rd-xu8" firstAttribute="leading" secondItem="CTv-uZ-cEu" secondAttribute="leading" constant="16" id="QxQ-jh-bfk"/>
                             <constraint firstItem="nE8-jU-uSg" firstAttribute="top" secondItem="CTv-uZ-cEu" secondAttribute="top" id="S5V-FQ-4bp"/>
                             <constraint firstAttribute="trailing" secondItem="XKR-cN-FHs" secondAttribute="trailing" constant="16" id="bKq-wy-6P4"/>
@@ -154,8 +153,10 @@
                 </subviews>
                 <color key="backgroundColor" name="Dispatch Light Gray"/>
                 <constraints>
+                    <constraint firstItem="CTv-uZ-cEu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Eh1-6A-sbL"/>
                     <constraint firstItem="CTv-uZ-cEu" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="ct7-gi-u4Y"/>
                     <constraint firstItem="CTv-uZ-cEu" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="mie-jo-f8v"/>
+                    <constraint firstAttribute="trailing" secondItem="CTv-uZ-cEu" secondAttribute="trailing" constant="16" id="raZ-Hz-hTu"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
