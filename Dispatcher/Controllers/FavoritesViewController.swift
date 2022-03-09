@@ -1,9 +1,10 @@
 import UIKit
 
-class FavoritesViewController: HeaderViewController {
+class FavoritesViewController: UIViewController {
     
     var dataSource = ArticleDataSource()
     
+    @IBOutlet weak var header: CustomHeaderView!
     @IBOutlet weak var tableView: UITableView!
     
     var newsArray: [Article] = [
@@ -14,8 +15,6 @@ class FavoritesViewController: HeaderViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        defineHeaderIcons(icon1: UIImage(named: "search")!, icon2: UIImage(named:"notifications")!)
-        defineHeaderLogo()
         
         tableView.rowHeight = 115.0
         tableView.separatorStyle = .none

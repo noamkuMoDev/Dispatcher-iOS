@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewProfileViewController: HeaderViewController {
+class ViewProfileViewController: UIViewController {
 
     @IBOutlet weak var myProfileTitleAndButton: UIView!
     @IBOutlet weak var changePictureLabel: UILabel!
@@ -10,7 +10,6 @@ class ViewProfileViewController: HeaderViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        defineBackButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {

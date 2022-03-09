@@ -2,13 +2,18 @@ import UIKit
 
 class NewsCell: UITableViewCell {
 
-    @IBOutlet weak var entireNewsCell: UIStackView!
+    @IBOutlet weak var entireNewsCell: UIView!
     @IBOutlet weak var newsImage: UIImageView!
-    @IBOutlet weak var goButton: UIButton!
-    
+    @IBOutlet weak var subjectTag: UIButton!
+    @IBOutlet weak var moreSubjectsTag: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+
+        subjectTag.layer.cornerRadius = subjectTag.frame.size.height / 2
+        subjectTag.clipsToBounds = true
+        moreSubjectsTag.layer.cornerRadius = moreSubjectsTag.frame.size.height / 2
+        moreSubjectsTag.clipsToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -20,4 +25,5 @@ class NewsCell: UITableViewCell {
         newsImage.layer.cornerRadius = 10
         newsImage.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
     }
+    
 }

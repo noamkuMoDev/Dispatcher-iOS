@@ -88,6 +88,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="articleImage" destination="C2A-L2-EYV" id="pIo-b6-LV6"/>
                 <outlet property="savedArticleCell" destination="XFc-t7-rRH" id="ShC-8a-tRo"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="119.19642857142857"/>

@@ -254,29 +254,44 @@
                                 </constraints>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="yBY-FC-8kL">
-                                <rect key="frame" x="0.0" y="108" width="414" height="617"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <rect key="frame" x="25" y="108" width="364" height="617"/>
+                                <color key="backgroundColor" name="Dispatch Light Gray"/>
+                                <color key="separatorColor" name="Dispatch Light Gray"/>
                                 <color key="sectionIndexBackgroundColor" name="Dispatch Light Gray"/>
+                                <color key="sectionIndexTrackingBackgroundColor" name="Dispatch Light Gray"/>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JcK-oH-Xc9" customClass="CustomHeaderView" customModule="Dispatcher_Development" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="63"/>
+                                <color key="backgroundColor" red="0.14901960780000001" green="0.12941176469999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="63" id="od3-zo-ebZ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gq8-pT-seX"/>
                         <color key="backgroundColor" name="Dispatch Light Gray"/>
                         <constraints>
                             <constraint firstItem="66B-ae-jlG" firstAttribute="leading" secondItem="gq8-pT-seX" secondAttribute="leading" constant="16" id="61a-3r-Pdh"/>
-                            <constraint firstItem="yBY-FC-8kL" firstAttribute="trailing" secondItem="gq8-pT-seX" secondAttribute="trailing" id="AmC-ez-Dw4"/>
+                            <constraint firstItem="JcK-oH-Xc9" firstAttribute="centerX" secondItem="Dr3-0T-q0m" secondAttribute="centerX" id="7QH-ZU-OEI"/>
+                            <constraint firstItem="JcK-oH-Xc9" firstAttribute="top" secondItem="gq8-pT-seX" secondAttribute="top" id="9Ab-Pt-Cdq"/>
                             <constraint firstItem="yBY-FC-8kL" firstAttribute="top" secondItem="kvI-V1-RGH" secondAttribute="bottom" id="B55-rP-VJl"/>
-                            <constraint firstItem="yBY-FC-8kL" firstAttribute="leading" secondItem="gq8-pT-seX" secondAttribute="leading" id="J58-0R-UP5"/>
+                            <constraint firstItem="JcK-oH-Xc9" firstAttribute="leading" secondItem="Dr3-0T-q0m" secondAttribute="leading" id="Hym-bt-oYG"/>
                             <constraint firstItem="kvI-V1-RGH" firstAttribute="top" secondItem="gq8-pT-seX" secondAttribute="top" constant="64" id="LNg-PH-jyD"/>
+                            <constraint firstAttribute="trailing" secondItem="JcK-oH-Xc9" secondAttribute="trailing" id="MpP-zO-BQ9"/>
                             <constraint firstItem="kvI-V1-RGH" firstAttribute="leading" secondItem="gq8-pT-seX" secondAttribute="leading" id="RbO-Cj-G9u"/>
                             <constraint firstItem="iAx-Tc-IfQ" firstAttribute="top" secondItem="gq8-pT-seX" secondAttribute="top" constant="64" id="Wbw-Bu-isI"/>
+                            <constraint firstItem="yBY-FC-8kL" firstAttribute="leading" secondItem="gq8-pT-seX" secondAttribute="leading" constant="25" id="bpx-8W-P4b"/>
                             <constraint firstItem="yBY-FC-8kL" firstAttribute="bottom" secondItem="gq8-pT-seX" secondAttribute="bottom" id="cXb-vb-0h7"/>
                             <constraint firstItem="66B-ae-jlG" firstAttribute="top" secondItem="gq8-pT-seX" secondAttribute="top" constant="64" id="pZT-FG-941"/>
+                            <constraint firstItem="yBY-FC-8kL" firstAttribute="centerX" secondItem="Dr3-0T-q0m" secondAttribute="centerX" id="qf1-2v-q7f"/>
                             <constraint firstItem="gq8-pT-seX" firstAttribute="trailing" secondItem="iAx-Tc-IfQ" secondAttribute="trailing" constant="16" id="rtq-Ay-C4E"/>
                             <constraint firstItem="gq8-pT-seX" firstAttribute="trailing" secondItem="kvI-V1-RGH" secondAttribute="trailing" id="ur5-MV-Qep"/>
+                            <constraint firstItem="gq8-pT-seX" firstAttribute="trailing" secondItem="yBY-FC-8kL" secondAttribute="trailing" constant="25" id="vlp-Ug-4nD"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="A7l-Lu-1H7"/>
                     <connections>
+                        <outlet property="header" destination="JcK-oH-Xc9" id="z0t-1a-G7w"/>
                         <outlet property="tableView" destination="yBY-FC-8kL" id="WnK-wx-T7O"/>
                         <segue destination="tUC-ru-eE1" kind="show" identifier="homepageToNotifications" id="f5P-ad-VVd"/>
                         <segue destination="Qi2-cd-MPv" kind="show" identifier="homepageToSearch" id="U37-Fe-alY"/>
@@ -518,6 +533,13 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                         <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ldg-ii-AYH" customClass="CustomHeaderView" customModule="Dispatcher_Development" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="63"/>
+                                <color key="backgroundColor" name="Dispatch Dark Blue"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="63" id="gmZ-uz-9Ll"/>
+                                </constraints>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="O8o-KD-LEg">
                                 <rect key="frame" x="0.0" y="64" width="414" height="32"/>
                                 <subviews>
@@ -544,14 +566,18 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                             <constraint firstItem="XjW-ao-P3U" firstAttribute="leading" secondItem="UjA-9h-A2X" secondAttribute="leading" constant="16" id="79V-Gx-nBt"/>
                             <constraint firstItem="XjW-ao-P3U" firstAttribute="trailing" secondItem="UjA-9h-A2X" secondAttribute="trailing" constant="-16" id="EUk-0S-mXi"/>
                             <constraint firstItem="UjA-9h-A2X" firstAttribute="trailing" secondItem="O8o-KD-LEg" secondAttribute="trailing" id="IGo-QO-koK"/>
+                            <constraint firstItem="ldg-ii-AYH" firstAttribute="top" secondItem="UjA-9h-A2X" secondAttribute="top" id="V8A-8Q-GzV"/>
+                            <constraint firstItem="ldg-ii-AYH" firstAttribute="leading" secondItem="UjA-9h-A2X" secondAttribute="leading" id="eyg-pd-Ucr"/>
                             <constraint firstItem="XjW-ao-P3U" firstAttribute="top" secondItem="O8o-KD-LEg" secondAttribute="bottom" id="gIc-5i-JZ2"/>
                             <constraint firstItem="O8o-KD-LEg" firstAttribute="top" secondItem="UjA-9h-A2X" secondAttribute="top" constant="64" id="jIC-nE-jsG"/>
+                            <constraint firstItem="ldg-ii-AYH" firstAttribute="trailing" secondItem="UjA-9h-A2X" secondAttribute="trailing" id="kPT-rq-beY"/>
                             <constraint firstItem="O8o-KD-LEg" firstAttribute="leading" secondItem="UjA-9h-A2X" secondAttribute="leading" id="ndG-ch-YOC"/>
                             <constraint firstItem="XjW-ao-P3U" firstAttribute="bottom" secondItem="UjA-9h-A2X" secondAttribute="bottom" id="rSH-xx-B0W"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="2YF-rK-IpJ"/>
                     <connections>
+                        <outlet property="header" destination="ldg-ii-AYH" id="5Xj-eG-bVi"/>
                         <outlet property="tableView" destination="XjW-ao-P3U" id="iBU-Fx-QOu"/>
                         <segue destination="tUC-ru-eE1" kind="show" identifier="favoritesToNotifications" id="Tvg-NK-Rg2"/>
                         <segue destination="Qi2-cd-MPv" kind="show" identifier="favoritesToSearch" id="SwU-X3-8Hj"/>
