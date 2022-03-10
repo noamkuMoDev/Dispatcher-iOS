@@ -288,7 +288,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="A7l-Lu-1H7"/>
                     <connections>
-                        <outlet property="header" destination="JcK-oH-Xc9" id="z0t-1a-G7w"/>
                         <outlet property="tableView" destination="yBY-FC-8kL" id="WnK-wx-T7O"/>
                         <segue destination="tUC-ru-eE1" kind="show" identifier="homepageToNotifications" id="f5P-ad-VVd"/>
                         <segue destination="Qi2-cd-MPv" kind="show" identifier="homepageToSearch" id="U37-Fe-alY"/>

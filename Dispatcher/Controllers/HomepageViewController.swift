@@ -1,10 +1,10 @@
 import UIKit
 
 class HomepageViewController: UIViewController {
-    
+
+    var customHeader: CustomHeaderView?
     var dataSource = ArticleDataSource()
 
-    @IBOutlet weak var header: CustomHeaderView!
     @IBOutlet weak var tableView: UITableView!
     
     
@@ -17,6 +17,8 @@ class HomepageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        customHeader?.delegate = self
+        
         tableView.register(UINib(nibName: Constants.NibNames.homepage, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.homepage)
         tableView.delegate = dataSource
         tableView.dataSource = dataSource
@@ -32,5 +34,12 @@ class HomepageViewController: UIViewController {
     func viewWillDisppear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.isNavigationBarHidden = false
+    }
+}
+
+extension HomepageViewController: CustomHeaderViewDelegate {
+    
+    func btnWasPressed() {
+        print("button was pressed!")
     }
 }
