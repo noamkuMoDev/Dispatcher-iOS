@@ -37,19 +37,19 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="RtY-9b-rvO">
-                                <rect key="frame" x="118" y="7.5" width="194" height="85"/>
+                                <rect key="frame" x="118" y="7.5" width="194" height="85.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="China's renewed crypto crackdown wipes nearly $300 billion off the market as bitcoin slides" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GbH-al-ZPx">
-                                        <rect key="frame" x="0.0" y="0.0" width="190.5" height="49"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="190" height="49.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JOt-sV-sSr">
-                                        <rect key="frame" x="0.0" y="65" width="131" height="20"/>
+                                        <rect key="frame" x="0.0" y="65.5" width="130" height="20"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wu9-dB-vGI">
-                                                <rect key="frame" x="0.0" y="0.0" width="60.5" height="20"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="60" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="iZ8-Vo-lTf"/>
                                                 </constraints>
@@ -61,7 +61,7 @@
                                                 </buttonConfiguration>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fDw-3o-iLR">
-                                                <rect key="frame" x="70.5" y="0.0" width="60.5" height="20"/>
+                                                <rect key="frame" x="70" y="0.0" width="60" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="Yde-xD-MpJ"/>
                                                 </constraints>

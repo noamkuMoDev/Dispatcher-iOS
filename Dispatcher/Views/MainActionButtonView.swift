@@ -6,6 +6,7 @@ class MainActionButtonView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.translatesAutoresizingMaskIntoConstraints = false
         commonInit()
     }
     
@@ -16,7 +17,8 @@ class MainActionButtonView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.frame = bounds
+
+        self.frame = self.bounds
     }
     
     func commonInit() {

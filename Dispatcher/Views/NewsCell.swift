@@ -10,20 +10,24 @@ class NewsCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
+        entireNewsCell.layer.cornerRadius = 20
+        entireNewsCell.layer.borderWidth = 2
+        let borderColor = UIColor( red: 243/255, green: 243/255, blue:255/255, alpha: 1.0 )
+        entireNewsCell.layer.borderColor = borderColor.cgColor
+        
+        newsImage.clipsToBounds = true
+        newsImage.layer.cornerRadius = 10
+        newsImage.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        
         subjectTag.layer.cornerRadius = subjectTag.frame.size.height / 2
         subjectTag.clipsToBounds = true
         moreSubjectsTag.layer.cornerRadius = moreSubjectsTag.frame.size.height / 2
         moreSubjectsTag.clipsToBounds = true
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        entireNewsCell.layer.cornerRadius = 20
-        
-        newsImage.clipsToBounds = true
-        newsImage.layer.cornerRadius = 10
-        newsImage.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-    }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
+    }
 }

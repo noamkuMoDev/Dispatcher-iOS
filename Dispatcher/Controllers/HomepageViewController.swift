@@ -16,8 +16,7 @@ class HomepageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //tableView.rowHeight = 449
+
         tableView.register(UINib(nibName: Constants.NibNames.homepage, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.homepage)
         tableView.delegate = dataSource
         tableView.dataSource = dataSource
