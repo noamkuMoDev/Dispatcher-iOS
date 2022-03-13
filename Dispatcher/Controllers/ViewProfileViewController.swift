@@ -2,7 +2,7 @@ import UIKit
 
 class ViewProfileViewController: UIViewController {
 
-    @IBOutlet weak var myProfileTitleAndButton: UIView!
+    @IBOutlet weak var customHeader: CustomHeaderView!
     @IBOutlet weak var changePictureLabel: UILabel!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
@@ -10,6 +10,7 @@ class ViewProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        customHeader.initView(delegate: self, leftIcon: UIImage(named: "BackButton"))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -23,5 +24,14 @@ class ViewProfileViewController: UIViewController {
     }
     
     @IBAction func editProfileButtonPressed(_ sender: Any) {
+        customHeader.updateIcons(rightIcon: UIImage(named: "checkmark")!, leftIcon: UIImage(named: "close")!)
+    }
+}
+
+//MARK: - CustomHeaderViewDelegate
+extension ViewProfileViewController: CustomHeaderViewDelegate {
+    
+    func leftIconPressed() {
+        navigationController?.popViewController(animated: true)
     }
 }
