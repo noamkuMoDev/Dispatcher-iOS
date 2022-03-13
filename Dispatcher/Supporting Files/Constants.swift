@@ -15,7 +15,7 @@ struct Constants {
         static let favoritesToSearch = "favoritesToSearch"
         static let goToUpdateProfile = "goToUpdateProfile"
         static let goToTermsAndPrivacy = "goToTermsAndPrivacy"
-        static let goToSettings = "goToSettings????"
+        static let goToSettings = "goToSettings"
     }
     
     struct TableCellsIdentifier {
@@ -23,6 +23,8 @@ struct Constants {
         static let favorites = "savedArticleCell"
         static let homepage = "newsCell"
         static let profileOption = "ProfileOptionCell"
+        static let setting = "AppSettingCell"
+        static let settingSection = "SettingSectionCell"
     }
     
     struct NibNames {
@@ -30,5 +32,7 @@ struct Constants {
         static let favorites = "SavedArticleCell"
         static let notification = "NotificationCell"
         static let profileOption = "ProfileOptionCell"
+        static let appSetting = "AppSettingCell"
+        static let appSettingSection = "SettingSectionCell"
     }
 }

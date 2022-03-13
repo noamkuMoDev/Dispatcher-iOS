@@ -76,7 +76,7 @@ extension ProfileViewController: UITableViewDelegate {
         switch indexPath.row {
         case 0:
             print("Settings")
-            //self.performSegue(withIdentifier: optionsArray[0].navigateTo!, sender: self)
+            self.performSegue(withIdentifier: optionsArray[0].navigateTo!, sender: self)
             break
         case 1:
             print("Terms & privacy")
