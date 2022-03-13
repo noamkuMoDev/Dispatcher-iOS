@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "settings.png",
+      "filename" : "gearWheel.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "settings@2x.png",
+      "filename" : "gearWheel@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "settings@3x.png",
+      "filename" : "gearWheel@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
