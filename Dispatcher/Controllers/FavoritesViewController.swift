@@ -44,11 +44,10 @@ class FavoritesViewController: UIViewController {
 extension FavoritesViewController: CustomHeaderViewDelegate {
     
     func firstRightIconPressed() {
-        print("Notifications icon was tapped. Hello from Homepage")
         self.performSegue(withIdentifier: Constants.Segues.favoritesToNotifications, sender: self)
     }
     
     func secondRightIconPressed() {
-        print("Search icon was tapped. Hello from Homepage")
+        self.performSegue(withIdentifier: Constants.Segues.favoritesToSearch, sender: self)
     }
 }

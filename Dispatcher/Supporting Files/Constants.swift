@@ -25,6 +25,7 @@ struct Constants {
         static let profileOption = "ProfileOptionCell"
         static let setting = "AppSettingCell"
         static let settingSection = "SettingSectionCell"
+        static let recentSearch = "RecentSearchCell"
     }
     
     struct NibNames {
@@ -34,5 +35,6 @@ struct Constants {
         static let profileOption = "ProfileOptionCell"
         static let appSetting = "AppSettingCell"
         static let appSettingSection = "SettingSectionCell"
+        static let recentSearch = "RecentSearchCell"
     }
 }

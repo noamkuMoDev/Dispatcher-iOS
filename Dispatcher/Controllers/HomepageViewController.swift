@@ -38,11 +38,10 @@ class HomepageViewController: UIViewController {
 extension HomepageViewController: CustomHeaderViewDelegate {
     
     func firstRightIconPressed() {
-        print("Notifications icon was tapped. Hello from Homepage")
         self.performSegue(withIdentifier: Constants.Segues.homepageToNotifications, sender: self)
     }
     
     func secondRightIconPressed() {
-        print("Search icon was tapped. Hello from Homepage")
+        self.performSegue(withIdentifier: Constants.Segues.homepageToSearch, sender: self)
     }
 }
