@@ -4,8 +4,15 @@ class NewsCell: UITableViewCell {
 
     @IBOutlet weak var entireNewsCell: UIView!
     @IBOutlet weak var newsImage: UIImageView!
+    
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var subjectTag: UIButton!
     @IBOutlet weak var moreSubjectsTag: UIButton!
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var summaryLabel: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

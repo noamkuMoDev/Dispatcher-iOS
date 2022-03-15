@@ -19,7 +19,7 @@
 		43C1B5ED27D0BF7300AB0D3B /* TextFieldOverride.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5EC27D0BF7300AB0D3B /* TextFieldOverride.swift */; };
 		43C1B5F027D0C60000AB0D3B /* SavedArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5EE27D0C60000AB0D3B /* SavedArticleCell.swift */; };
 		43C1B5F127D0C60000AB0D3B /* SavedArticleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43C1B5EF27D0C60000AB0D3B /* SavedArticleCell.xib */; };
-		43C1B5F327D0E64800AB0D3B /* AritcleDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5F227D0E64800AB0D3B /* AritcleDataSource.swift */; };
+		43C1B5F327D0E64800AB0D3B /* TableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5F227D0E64800AB0D3B /* TableViewManager.swift */; };
 		43C1B5FA27D1154500AB0D3B /* NotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5F927D1154500AB0D3B /* NotificationModel.swift */; };
 		43C1B60227D24EBD00AB0D3B /* UISupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B60127D24EBD00AB0D3B /* UISupport.swift */; };
 		43C1B60627D78E5A00AB0D3B /* CustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B60527D78E5A00AB0D3B /* CustomHeaderView.swift */; };
@@ -73,6 +73,7 @@
 		43C1B67027DF35D000AB0D3B /* RecentSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43C1B66E27DF35D000AB0D3B /* RecentSearchCell.xib */; };
 		43C1B67227DF663B00AB0D3B /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B67127DF663A00AB0D3B /* SearchResultsView.swift */; };
 		43C1B67427DF664F00AB0D3B /* SearchResultsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43C1B67327DF664F00AB0D3B /* SearchResultsView.xib */; };
+		43DCB39827DF8D1A00A1A779 /* AlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DCB39727DF8D1A00A1A779 /* AlamofireManager.swift */; };
 		43F08D4127C7C9A6003FFA7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F08D4027C7C9A6003FFA7D /* AppDelegate.swift */; };
 		43F08D4327C7C9A6003FFA7D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F08D4227C7C9A6003FFA7D /* SceneDelegate.swift */; };
 		43F08D4527C7C9A6003FFA7D /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F08D4427C7C9A6003FFA7D /* HomepageViewController.swift */; };
@@ -101,7 +102,7 @@
 		43C1B5EC27D0BF7300AB0D3B /* TextFieldOverride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldOverride.swift; sourceTree = "<group>"; };
 		43C1B5EE27D0C60000AB0D3B /* SavedArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedArticleCell.swift; sourceTree = "<group>"; };
 		43C1B5EF27D0C60000AB0D3B /* SavedArticleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SavedArticleCell.xib; sourceTree = "<group>"; };
-		43C1B5F227D0E64800AB0D3B /* AritcleDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AritcleDataSource.swift; sourceTree = "<group>"; };
+		43C1B5F227D0E64800AB0D3B /* TableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewManager.swift; sourceTree = "<group>"; };
 		43C1B5F927D1154500AB0D3B /* NotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotificationModel.swift; path = Dispatcher/Views/NotificationModel.swift; sourceTree = SOURCE_ROOT; };
 		43C1B60127D24EBD00AB0D3B /* UISupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISupport.swift; sourceTree = "<group>"; };
 		43C1B60527D78E5A00AB0D3B /* CustomHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeaderView.swift; sourceTree = "<group>"; };
@@ -155,6 +156,7 @@
 		43C1B66E27DF35D000AB0D3B /* RecentSearchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecentSearchCell.xib; sourceTree = "<group>"; };
 		43C1B67127DF663A00AB0D3B /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
 		43C1B67327DF664F00AB0D3B /* SearchResultsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultsView.xib; sourceTree = "<group>"; };
+		43DCB39727DF8D1A00A1A779 /* AlamofireManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlamofireManager.swift; path = Dispatcher/Views/AlamofireManager.swift; sourceTree = SOURCE_ROOT; };
 		43DCD2AE27CCAC8F00020D8A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		43DCD2AF27CCACCA00020D8A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		43F08D3D27C7C9A6003FFA7D /* Dispatcher Development.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dispatcher Development.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -291,6 +293,7 @@
 				43C1B5F927D1154500AB0D3B /* NotificationModel.swift */,
 				43C1B65727DE13CE00AB0D3B /* ProfileOptionModel.swift */,
 				43C1B66127DE34B000AB0D3B /* SettingsModel.swift */,
+				43DCB39727DF8D1A00A1A779 /* AlamofireManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -304,7 +307,7 @@
 				43C1B5E327D0B19100AB0D3B /* NotificationCell.xib */,
 				43C1B5EE27D0C60000AB0D3B /* SavedArticleCell.swift */,
 				43C1B5EF27D0C60000AB0D3B /* SavedArticleCell.xib */,
-				43C1B5F227D0E64800AB0D3B /* AritcleDataSource.swift */,
+				43C1B5F227D0E64800AB0D3B /* TableViewManager.swift */,
 				43C1B60527D78E5A00AB0D3B /* CustomHeaderView.swift */,
 				43C1B60727D78E6C00AB0D3B /* CustomHeaderView.xib */,
 				43C1B60F27D8B6EF00AB0D3B /* MainActionButtonView.swift */,
@@ -571,6 +574,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43DCB39827DF8D1A00A1A779 /* AlamofireManager.swift in Sources */,
 				43C1B66227DE34B000AB0D3B /* SettingsModel.swift in Sources */,
 				43C1B5BC27CE0B1700AB0D3B /* ProfileViewController.swift in Sources */,
 				43C1B5E727D0B69100AB0D3B /* NotificationsViewController.swift in Sources */,
@@ -596,7 +600,7 @@
 				43F08D4127C7C9A6003FFA7D /* AppDelegate.swift in Sources */,
 				43C1B5E927D0BCE800AB0D3B /* ViewProfileViewController.swift in Sources */,
 				43F08D4327C7C9A6003FFA7D /* SceneDelegate.swift in Sources */,
-				43C1B5F327D0E64800AB0D3B /* AritcleDataSource.swift in Sources */,
+				43C1B5F327D0E64800AB0D3B /* TableViewManager.swift in Sources */,
 				43C1B5C627CF63F300AB0D3B /* MyTabBarController.swift in Sources */,
 				43C1B67227DF663B00AB0D3B /* SearchResultsView.swift in Sources */,
 				43C1B5FA27D1154500AB0D3B /* NotificationModel.swift in Sources */,

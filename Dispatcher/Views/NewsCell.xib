@@ -116,10 +116,14 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" name="Dispatch Light Gray"/>
             <connections>
+                <outlet property="authorLabel" destination="pEp-5q-ZCL" id="mTT-b5-2jp"/>
+                <outlet property="dateLabel" destination="hQE-EG-wuI" id="AVf-gG-qAN"/>
                 <outlet property="entireNewsCell" destination="H2p-sc-9uM" id="y0t-pM-SHg"/>
                 <outlet property="moreSubjectsTag" destination="5WY-ci-UqJ" id="YIp-8b-st5"/>
                 <outlet property="newsImage" destination="VWF-pu-E1i" id="LbS-q3-QXG"/>
                 <outlet property="subjectTag" destination="tQV-uQ-TU1" id="h3C-0u-9uL"/>
+                <outlet property="summaryLabel" destination="NzC-95-AJi" id="hHW-Vv-qTp"/>
+                <outlet property="titleLabel" destination="lN6-xD-0Sb" id="MmW-vX-uFE"/>
             </connections>
             <point key="canvasLocation" x="115.94202898550725" y="239.73214285714283"/>
         </tableViewCell>

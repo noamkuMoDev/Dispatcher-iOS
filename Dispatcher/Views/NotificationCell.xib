@@ -73,6 +73,9 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" name="Dispatch Light Gray"/>
+            <connections>
+                <outlet property="label" destination="NiK-z1-R6q" id="dxv-2q-iyl"/>
+            </connections>
             <point key="canvasLocation" x="137.68115942028987" y="134.93303571428569"/>
         </tableViewCell>
     </objects>

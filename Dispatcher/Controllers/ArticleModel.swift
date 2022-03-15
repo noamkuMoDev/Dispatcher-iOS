@@ -1,26 +1,21 @@
 import Foundation
 
-protocol Article {
-    var title: String { get }
-    var date: Date { get }
-    var url: String { get }
-    var isFavorite: Bool { get set }
+struct ArticleModel: Decodable, Encodable {
+    
+    let id: Int
+    let articleTitle: String
+    //let date: Date
+    //let url: String
+    //let isFavorite: Bool
+    let content: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case articleTitle = "title"
+        case content = "body"
+        //case isFavorite
+        //case url
+        //case date
+    }
 }
 
-struct ArticleModel: Article {
-    var title: String
-    var date: Date
-    var url: String
-    var isFavorite: Bool
-    
-    var content: String
-}
-
-struct VideoModel: Article {
-    var title: String
-    var date: Date
-    var url: String
-    var isFavorite: Bool
-    
-    var length: Float
-}
