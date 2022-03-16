@@ -9,19 +9,22 @@ class HomepageViewController: UIViewController {
         ArticleModel(id: 1, articleTitle: "Title Article 1", content: "http://noamkurtzer.co.il"),
         ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il")
     ]
-    var dataSource: TableViewManager<ArticleModel>!
+    var dataSource: TableViewDataSourceManager<ArticleModel>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         customHeader.initView(delegate: self, icon1: UIImage(named: "notifications"), icon2: UIImage(named: "search"), leftIcon: UIImage(named: "logo"))
         
-        self.dataSource = TableViewManager(
+        self.dataSource = TableViewDataSourceManager(
                 models: newsArray,
-                reuseIdentifier: Constants.TableCellsIdentifier.homepage,
-                cellType: .article
+                reuseIdentifier: Constants.TableCellsIdentifier.homepage
             ) { article, cell in
-                    //cell.cellTextLabel?.text = article.articleTitle
+                let currentCell = cell as! NewsCell
+                currentCell.titleLabel.text = article.articleTitle
+                currentCell.authorLabel.text = "Noam Kurtzer"
+                currentCell.dateLabel.text = "Sunday July 25, 1995"
+                currentCell.summaryLabel.text = article.content
             }
         
         tableView.dataSource = dataSource

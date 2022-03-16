@@ -390,20 +390,20 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uJP-kN-aGa">
-                                <rect key="frame" x="16" y="76" width="362" height="28.666666666666671"/>
+                                <rect key="frame" x="16" y="76" width="362" height="28"/>
                                 <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="4gd-iR-a0n">
-                                <rect key="frame" x="0.0" y="130.66666666666663" width="414" height="450"/>
+                                <rect key="frame" x="0.0" y="130" width="414" height="450"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="450" id="Hds-cN-5V4"/>
                                 </constraints>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="News Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="26j-f2-gR6">
-                                <rect key="frame" x="16.000000000000007" y="592.66666666666663" width="114.66666666666669" height="19"/>
+                                <rect key="frame" x="16.000000000000007" y="592" width="114.66666666666669" height="19"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="19" id="yP7-mP-bne"/>
                                 </constraints>
@@ -418,13 +418,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ut-SY-zbL">
-                                <rect key="frame" x="332" y="592.66666666666663" width="52" height="19"/>
+                                <rect key="frame" x="332" y="592" width="52" height="19"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                 <color key="textColor" name="Dispatch Gray"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dropdown" translatesAutoresizingMaskIntoConstraints="NO" id="CUX-RR-5kV">
-                                <rect key="frame" x="392" y="596.66666666666663" width="6" height="12"/>
+                                <rect key="frame" x="392" y="596" width="6" height="12"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="6" id="CvX-ho-vk8"/>
                                     <constraint firstAttribute="height" constant="12" id="O19-Z9-M9w"/>
@@ -764,6 +764,30 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                                     <constraint firstItem="FH9-cW-c97" firstAttribute="centerY" secondItem="5YH-wN-LcL" secondAttribute="centerY" id="nHu-zw-mmx"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wcr-kK-dSY" customClass="SortbyView" customModule="Dispatcher_Development" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="75" width="414" height="44"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="gAP-kN-YUR"/>
+                                </constraints>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no-results-found-image" translatesAutoresizingMaskIntoConstraints="NO" id="YVC-S3-82M">
+                                <rect key="frame" x="150.66666666666666" y="306" width="112.99999999999997" height="113"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="113" id="Gg4-Ts-wgP"/>
+                                    <constraint firstAttribute="height" constant="113" id="Jy9-RA-DdC"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We couldn't find any matches for your query" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GgP-84-67R">
+                                <rect key="frame" x="0.0" y="423" width="414" height="19"/>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                                <color key="textColor" name="Dispatch Purple"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bIP-2Z-gta">
+                                <rect key="frame" x="16" y="119" width="382" height="597"/>
+                                <color key="backgroundColor" name="Dispatch Light Gray"/>
+                            </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3qE-VJ-F43">
                                 <rect key="frame" x="0.0" y="75" width="414" height="70"/>
                                 <subviews>
@@ -805,17 +829,29 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kFF-ww-lsR"/>
-                        <color key="backgroundColor" name="Dispatch Gray"/>
+                        <color key="backgroundColor" name="Dispatch Light Gray"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="3qE-VJ-F43" secondAttribute="trailing" id="1UB-se-uoi"/>
                             <constraint firstItem="uUr-Qh-gn7" firstAttribute="top" secondItem="3qE-VJ-F43" secondAttribute="bottom" id="5wu-rR-YOd"/>
+                            <constraint firstItem="bIP-2Z-gta" firstAttribute="top" secondItem="wcr-kK-dSY" secondAttribute="bottom" id="6F1-KW-YrY"/>
                             <constraint firstItem="5YH-wN-LcL" firstAttribute="top" secondItem="HHP-kx-cT4" secondAttribute="topMargin" id="9ed-8I-sm9"/>
                             <constraint firstAttribute="bottom" secondItem="uUr-Qh-gn7" secondAttribute="bottom" id="GXW-vt-hrK"/>
+                            <constraint firstItem="GgP-84-67R" firstAttribute="leading" secondItem="HHP-kx-cT4" secondAttribute="leading" id="Ll4-8B-ycR"/>
                             <constraint firstItem="5YH-wN-LcL" firstAttribute="leading" secondItem="HHP-kx-cT4" secondAttribute="leading" id="Q5C-6p-RUo"/>
+                            <constraint firstAttribute="trailing" secondItem="GgP-84-67R" secondAttribute="trailing" id="Q8c-pq-PsY"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="bIP-2Z-gta" secondAttribute="bottom" constant="9" id="SCu-dA-sC8"/>
+                            <constraint firstItem="GgP-84-67R" firstAttribute="top" secondItem="YVC-S3-82M" secondAttribute="bottom" constant="4" id="V2W-3P-wsr"/>
+                            <constraint firstItem="YVC-S3-82M" firstAttribute="centerX" secondItem="HHP-kx-cT4" secondAttribute="centerX" id="XOy-hc-zOp"/>
                             <constraint firstItem="3qE-VJ-F43" firstAttribute="top" secondItem="5YH-wN-LcL" secondAttribute="bottom" constant="1" id="a3u-9v-Xkb"/>
                             <constraint firstItem="3qE-VJ-F43" firstAttribute="leading" secondItem="HHP-kx-cT4" secondAttribute="leading" id="btF-xC-Qii"/>
+                            <constraint firstItem="YVC-S3-82M" firstAttribute="centerY" secondItem="HHP-kx-cT4" secondAttribute="centerY" id="bu7-7C-Wac"/>
+                            <constraint firstItem="wcr-kK-dSY" firstAttribute="top" secondItem="5YH-wN-LcL" secondAttribute="bottom" constant="1" id="cDW-af-7NH"/>
+                            <constraint firstAttribute="trailing" secondItem="wcr-kK-dSY" secondAttribute="trailing" id="ce0-Hn-XrN"/>
                             <constraint firstAttribute="trailing" secondItem="uUr-Qh-gn7" secondAttribute="trailing" id="eVr-Pi-04U"/>
+                            <constraint firstAttribute="trailing" secondItem="bIP-2Z-gta" secondAttribute="trailing" constant="16" id="een-uD-aEM"/>
                             <constraint firstItem="uUr-Qh-gn7" firstAttribute="leading" secondItem="HHP-kx-cT4" secondAttribute="leading" id="kIN-FO-Zoz"/>
+                            <constraint firstItem="bIP-2Z-gta" firstAttribute="leading" secondItem="HHP-kx-cT4" secondAttribute="leading" constant="16" id="rU0-mo-QfW"/>
+                            <constraint firstItem="wcr-kK-dSY" firstAttribute="leading" secondItem="HHP-kx-cT4" secondAttribute="leading" id="vkg-24-5SV"/>
                             <constraint firstAttribute="trailing" secondItem="5YH-wN-LcL" secondAttribute="trailing" id="vqL-PG-9Aw"/>
                         </constraints>
                     </view>
@@ -823,11 +859,15 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                     <connections>
                         <outlet property="contentView" destination="HHP-kx-cT4" id="t3L-vD-jeS"/>
                         <outlet property="goBackButton" destination="rlk-sG-rOL" id="qpq-bp-nwN"/>
+                        <outlet property="noResultsImageView" destination="YVC-S3-82M" id="vdB-BF-cQB"/>
+                        <outlet property="noResultsLabel" destination="GgP-84-67R" id="RHt-PP-5Sz"/>
                         <outlet property="recentSearchesTableView" destination="uUr-Qh-gn7" id="GoK-cU-CBd"/>
                         <outlet property="recentSearchesView" destination="3qE-VJ-F43" id="WOn-Ft-T9q"/>
                         <outlet property="searchClearIcon" destination="FH9-cW-c97" id="gJ6-iq-T7l"/>
+                        <outlet property="searchResultsTableView" destination="bIP-2Z-gta" id="pVg-7w-QVa"/>
                         <outlet property="searchTextField" destination="8S0-ez-Ld8" id="vYH-4w-tLP"/>
                         <outlet property="searchView" destination="5YH-wN-LcL" id="Eqh-cc-fT4"/>
+                        <outlet property="sortbyView" destination="wcr-kK-dSY" id="7L3-4n-bR3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9bZ-FH-Klt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -864,7 +904,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                                     <constraint firstAttribute="height" constant="32" id="Usn-Dc-Owv"/>
                                 </constraints>
                             </stackView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="XjW-ao-P3U">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="XjW-ao-P3U">
                                 <rect key="frame" x="8" y="96" width="398" height="629"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
@@ -909,6 +949,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
         <image name="dropdown" width="6" height="5.3333334922790527"/>
         <image name="filter" width="9.3333330154418945" height="9.3333330154418945"/>
         <image name="large-missing-profile-pic" width="33.666667938232422" height="33.666667938232422"/>
+        <image name="no-results-found-image" width="44.333332061767578" height="44.333332061767578"/>
         <image name="search" width="8.3333330154418945" height="8"/>
         <image name="small-missing-profile-pic" width="16.333333969116211" height="16.333333969116211"/>
         <namedColor name="Dispatch Dark Blue">

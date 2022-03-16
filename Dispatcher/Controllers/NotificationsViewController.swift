@@ -5,7 +5,7 @@ class NotificationsViewController: UIViewController {
     @IBOutlet weak var customHeader: CustomHeaderView!
     @IBOutlet weak var tableView: UITableView!
     
-    var dataSource: TableViewManager<NotificationModel>!
+    var dataSource: TableViewDataSourceManager<NotificationModel>!
     var notificationsArray: [NotificationModel] = [
         NotificationModel(text: "Notification 1", wasRead: true),
         NotificationModel(text: "Notification 2", wasRead: false)
@@ -18,18 +18,12 @@ class NotificationsViewController: UIViewController {
         customHeader.initView(delegate: self, leftIcon: UIImage(named: "BackButton"))
         
         tableView.register(UINib(nibName: Constants.NibNames.notification, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.notification)
-        self.dataSource = TableViewManager(
-            models: notificationsArray,  // pass data array
-            reuseIdentifier: Constants.TableCellsIdentifier.notification, // pass custom cell identifier
-            cellType: .notification // pass type of custom cell
+        self.dataSource = TableViewDataSourceManager(
+            models: notificationsArray,
+            reuseIdentifier: Constants.TableCellsIdentifier.notification
         ) { notification, cell in
-            //cell.label!.text = notification.text
-            print("===========================================================================")
-            print("===========================================================================")
-            print(notification)
-            print(cell)
-            print("===========================================================================")
-            print("===========================================================================")
+            let currentCell = cell as! NotificationCell
+            currentCell.label.text = notification.text
         }
         tableView.dataSource = dataSource
         tableView.delegate = dataSource

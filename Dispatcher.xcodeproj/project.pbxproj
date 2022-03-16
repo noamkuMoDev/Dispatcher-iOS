@@ -19,7 +19,7 @@
 		43C1B5ED27D0BF7300AB0D3B /* TextFieldOverride.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5EC27D0BF7300AB0D3B /* TextFieldOverride.swift */; };
 		43C1B5F027D0C60000AB0D3B /* SavedArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5EE27D0C60000AB0D3B /* SavedArticleCell.swift */; };
 		43C1B5F127D0C60000AB0D3B /* SavedArticleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43C1B5EF27D0C60000AB0D3B /* SavedArticleCell.xib */; };
-		43C1B5F327D0E64800AB0D3B /* TableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5F227D0E64800AB0D3B /* TableViewManager.swift */; };
+		43C1B5F327D0E64800AB0D3B /* TableViewDataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5F227D0E64800AB0D3B /* TableViewDataSourceManager.swift */; };
 		43C1B5FA27D1154500AB0D3B /* NotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5F927D1154500AB0D3B /* NotificationModel.swift */; };
 		43C1B60227D24EBD00AB0D3B /* UISupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B60127D24EBD00AB0D3B /* UISupport.swift */; };
 		43C1B60627D78E5A00AB0D3B /* CustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B60527D78E5A00AB0D3B /* CustomHeaderView.swift */; };
@@ -71,9 +71,10 @@
 		43C1B66C27DF312100AB0D3B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B66B27DF312100AB0D3B /* SearchViewController.swift */; };
 		43C1B66F27DF35D000AB0D3B /* RecentSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B66D27DF35D000AB0D3B /* RecentSearchCell.swift */; };
 		43C1B67027DF35D000AB0D3B /* RecentSearchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43C1B66E27DF35D000AB0D3B /* RecentSearchCell.xib */; };
-		43C1B67227DF663B00AB0D3B /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B67127DF663A00AB0D3B /* SearchResultsView.swift */; };
-		43C1B67427DF664F00AB0D3B /* SearchResultsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43C1B67327DF664F00AB0D3B /* SearchResultsView.xib */; };
 		43DCB39827DF8D1A00A1A779 /* AlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DCB39727DF8D1A00A1A779 /* AlamofireManager.swift */; };
+		43DCB39A27E1C45F00A1A779 /* SortbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DCB39927E1C45F00A1A779 /* SortbyView.swift */; };
+		43DCB39C27E1C46A00A1A779 /* SortbyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43DCB39B27E1C46A00A1A779 /* SortbyView.xib */; };
+		43DCB39E27E1FA7500A1A779 /* RecentSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DCB39D27E1FA7500A1A779 /* RecentSearchModel.swift */; };
 		43F08D4127C7C9A6003FFA7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F08D4027C7C9A6003FFA7D /* AppDelegate.swift */; };
 		43F08D4327C7C9A6003FFA7D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F08D4227C7C9A6003FFA7D /* SceneDelegate.swift */; };
 		43F08D4527C7C9A6003FFA7D /* HomepageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F08D4427C7C9A6003FFA7D /* HomepageViewController.swift */; };
@@ -102,7 +103,7 @@
 		43C1B5EC27D0BF7300AB0D3B /* TextFieldOverride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldOverride.swift; sourceTree = "<group>"; };
 		43C1B5EE27D0C60000AB0D3B /* SavedArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedArticleCell.swift; sourceTree = "<group>"; };
 		43C1B5EF27D0C60000AB0D3B /* SavedArticleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SavedArticleCell.xib; sourceTree = "<group>"; };
-		43C1B5F227D0E64800AB0D3B /* TableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewManager.swift; sourceTree = "<group>"; };
+		43C1B5F227D0E64800AB0D3B /* TableViewDataSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceManager.swift; sourceTree = "<group>"; };
 		43C1B5F927D1154500AB0D3B /* NotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotificationModel.swift; path = Dispatcher/Views/NotificationModel.swift; sourceTree = SOURCE_ROOT; };
 		43C1B60127D24EBD00AB0D3B /* UISupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISupport.swift; sourceTree = "<group>"; };
 		43C1B60527D78E5A00AB0D3B /* CustomHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeaderView.swift; sourceTree = "<group>"; };
@@ -154,9 +155,10 @@
 		43C1B66B27DF312100AB0D3B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		43C1B66D27DF35D000AB0D3B /* RecentSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchCell.swift; sourceTree = "<group>"; };
 		43C1B66E27DF35D000AB0D3B /* RecentSearchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecentSearchCell.xib; sourceTree = "<group>"; };
-		43C1B67127DF663A00AB0D3B /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
-		43C1B67327DF664F00AB0D3B /* SearchResultsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultsView.xib; sourceTree = "<group>"; };
 		43DCB39727DF8D1A00A1A779 /* AlamofireManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlamofireManager.swift; path = Dispatcher/Views/AlamofireManager.swift; sourceTree = SOURCE_ROOT; };
+		43DCB39927E1C45F00A1A779 /* SortbyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortbyView.swift; sourceTree = "<group>"; };
+		43DCB39B27E1C46A00A1A779 /* SortbyView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SortbyView.xib; sourceTree = "<group>"; };
+		43DCB39D27E1FA7500A1A779 /* RecentSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RecentSearchModel.swift; path = Dispatcher/Views/RecentSearchModel.swift; sourceTree = SOURCE_ROOT; };
 		43DCD2AE27CCAC8F00020D8A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		43DCD2AF27CCACCA00020D8A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		43F08D3D27C7C9A6003FFA7D /* Dispatcher Development.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dispatcher Development.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -294,6 +296,7 @@
 				43C1B65727DE13CE00AB0D3B /* ProfileOptionModel.swift */,
 				43C1B66127DE34B000AB0D3B /* SettingsModel.swift */,
 				43DCB39727DF8D1A00A1A779 /* AlamofireManager.swift */,
+				43DCB39D27E1FA7500A1A779 /* RecentSearchModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -307,7 +310,7 @@
 				43C1B5E327D0B19100AB0D3B /* NotificationCell.xib */,
 				43C1B5EE27D0C60000AB0D3B /* SavedArticleCell.swift */,
 				43C1B5EF27D0C60000AB0D3B /* SavedArticleCell.xib */,
-				43C1B5F227D0E64800AB0D3B /* TableViewManager.swift */,
+				43C1B5F227D0E64800AB0D3B /* TableViewDataSourceManager.swift */,
 				43C1B60527D78E5A00AB0D3B /* CustomHeaderView.swift */,
 				43C1B60727D78E6C00AB0D3B /* CustomHeaderView.xib */,
 				43C1B60F27D8B6EF00AB0D3B /* MainActionButtonView.swift */,
@@ -322,8 +325,8 @@
 				43C1B66827DE4EE900AB0D3B /* SettingSectionCell.xib */,
 				43C1B66D27DF35D000AB0D3B /* RecentSearchCell.swift */,
 				43C1B66E27DF35D000AB0D3B /* RecentSearchCell.xib */,
-				43C1B67127DF663A00AB0D3B /* SearchResultsView.swift */,
-				43C1B67327DF664F00AB0D3B /* SearchResultsView.xib */,
+				43DCB39927E1C45F00A1A779 /* SortbyView.swift */,
+				43DCB39B27E1C46A00A1A779 /* SortbyView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -449,7 +452,6 @@
 				43C1B67027DF35D000AB0D3B /* RecentSearchCell.xib in Resources */,
 				43C1B62A27D9DB2200AB0D3B /* Roboto-Regular.ttf in Resources */,
 				43C1B64127D9DC6700AB0D3B /* Poppins-Black.ttf in Resources */,
-				43C1B67427DF664F00AB0D3B /* SearchResultsView.xib in Resources */,
 				43C1B62627D9DB2200AB0D3B /* Roboto-LightItalic.ttf in Resources */,
 				43C1B64D27D9DC6700AB0D3B /* Poppins-ExtraBold.ttf in Resources */,
 				43C1B62827D9DB2200AB0D3B /* Roboto-BlackItalic.ttf in Resources */,
@@ -467,6 +469,7 @@
 				43C1B65027D9DC6700AB0D3B /* Poppins-Light.ttf in Resources */,
 				43C1B64C27D9DC6700AB0D3B /* Poppins-SemiBoldItalic.ttf in Resources */,
 				43C1B64527D9DC6700AB0D3B /* Poppins-Thin.ttf in Resources */,
+				43DCB39C27E1C46A00A1A779 /* SortbyView.xib in Resources */,
 				43C1B60827D78E6C00AB0D3B /* CustomHeaderView.xib in Resources */,
 				43C1B64F27D9DC6700AB0D3B /* Poppins-BlackItalic.ttf in Resources */,
 				43C1B61227D8B70300AB0D3B /* MainActionButtonView.xib in Resources */,
@@ -583,9 +586,11 @@
 				43C1B5BA27CE098A00AB0D3B /* Constants.swift in Sources */,
 				43C1B5E427D0B19100AB0D3B /* NotificationCell.swift in Sources */,
 				43C1B61027D8B6EF00AB0D3B /* MainActionButtonView.swift in Sources */,
+				43DCB39A27E1C45F00A1A779 /* SortbyView.swift in Sources */,
 				43C1B66F27DF35D000AB0D3B /* RecentSearchCell.swift in Sources */,
 				43C1B61527D8D79F00AB0D3B /* NewsCell.swift in Sources */,
 				43C1B65E27DE2C8700AB0D3B /* TermsAndPrivacyViewController.swift in Sources */,
+				43DCB39E27E1FA7500A1A779 /* RecentSearchModel.swift in Sources */,
 				43C1B5C027CE48C200AB0D3B /* ArticleModel.swift in Sources */,
 				43C1B5ED27D0BF7300AB0D3B /* TextFieldOverride.swift in Sources */,
 				43C1B65B27DE155400AB0D3B /* ProfileOptionCell.swift in Sources */,
@@ -600,9 +605,8 @@
 				43F08D4127C7C9A6003FFA7D /* AppDelegate.swift in Sources */,
 				43C1B5E927D0BCE800AB0D3B /* ViewProfileViewController.swift in Sources */,
 				43F08D4327C7C9A6003FFA7D /* SceneDelegate.swift in Sources */,
-				43C1B5F327D0E64800AB0D3B /* TableViewManager.swift in Sources */,
+				43C1B5F327D0E64800AB0D3B /* TableViewDataSourceManager.swift in Sources */,
 				43C1B5C627CF63F300AB0D3B /* MyTabBarController.swift in Sources */,
-				43C1B67227DF663B00AB0D3B /* SearchResultsView.swift in Sources */,
 				43C1B5FA27D1154500AB0D3B /* NotificationModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

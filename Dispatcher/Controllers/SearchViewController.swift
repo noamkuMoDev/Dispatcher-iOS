@@ -13,17 +13,26 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var searchClearIcon: UIImageView!
     @IBOutlet weak var goBackButton: UIImageView!
     
-    
     @IBOutlet weak var recentSearchesView: UIView!
     @IBOutlet weak var recentSearchesTableView: UITableView!
     
+    @IBOutlet weak var sortbyView: SortbyView!
+    @IBOutlet weak var searchResultsTableView: UITableView!
+    
+    @IBOutlet weak var noResultsImageView: UIImageView!
+    @IBOutlet weak var noResultsLabel: UILabel!
     
     
     var searchClearImageName: iconImageName = .search
-    var recentSearchesArray: [String] = [
-        "crypto",
-        "soccer",
-        "football"
+    var recentSearchDataSource: TableViewDataSourceManager<RecentSearchModel>!
+    var recentSearchesArray: [RecentSearchModel] = [
+        RecentSearchModel(text: "crypto"),
+        RecentSearchModel(text: "soccer"),
+    ]
+    
+    var searchResultsDataSource: TableViewDataSourceManager<ArticleModel>!
+    var searchResultsArray: [ArticleModel] = [
+        ArticleModel(id: 4, articleTitle: "Some title", content: "Some content")
     ]
     
     
@@ -31,7 +40,7 @@ class SearchViewController: UIViewController {
         super.viewDidLoad()
         
         searchTextField.delegate = self
-        
+        searchTextField.addTarget(self, action: #selector(SearchViewController.textFieldDidChange(_:)), for: .editingChanged)
         searchClearIcon.addGestureRecognizer(UITapGestureRecognizer(target: searchClearIcon, action: #selector(searchClearButtonPressed)))
         searchClearIcon.isUserInteractionEnabled = true
         let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(searchClearButtonPressed(tapGestureRecognizer:)))
@@ -42,8 +51,36 @@ class SearchViewController: UIViewController {
         let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(goBackButtonPressed(tapGestureRecognizer:)))
         goBackButton.addGestureRecognizer(tapGestureRecognizer2)
         
-        recentSearchesTableView.dataSource = self
-        recentSearchesTableView.register(UINib(nibName: Constants.NibNames.recentSearch, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.recentSearch)
+        //RecentSearcges TableView
+//        recentSearchesTableView.register(UINib(nibName: "RecentSearchCell", bundle: nil), forCellReuseIdentifier: "RecentSearchCell")
+//        self.recentSearchDataSource = TableViewManager(
+//            models: recentSearchesArray,
+//            reuseIdentifier: "RecentSearchCell"
+//        ) { searchResult, cell in
+//            let currentcell = cell as! RecentSearchCell
+//            currentcell.label.text = searchResult.text
+//        }
+//        recentSearchesTableView.dataSource = recentSearchDataSource
+//        recentSearchesTableView.delegate = self
+        
+        //SearchResults TableView
+        searchResultsTableView.register(UINib(nibName: Constants.NibNames.homepage, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.homepage)
+        self.searchResultsDataSource = TableViewDataSourceManager(
+            models: searchResultsArray,
+            reuseIdentifier: Constants.TableCellsIdentifier.homepage
+        ) { article, cell in
+            let currentcell = cell as! NewsCell
+            currentcell.titleLabel.text = article.articleTitle
+        }
+        searchResultsTableView.dataSource = recentSearchDataSource
+        //searchResultsTableView.delegate = self
+        
+        //Hide / Show Elements
+        sortbyView.initView(delegate: self)
+        sortbyView.isHidden = true
+        searchResultsTableView.isHidden = true
+        noResultsImageView.isHidden = true
+        noResultsLabel.isHidden = true
     }
 
     
@@ -60,21 +97,17 @@ class SearchViewController: UIViewController {
 
     
     func displaySearchResults(){
+        print("displaySearchResults")
         recentSearchesView.isHidden = true
         recentSearchesTableView.isHidden = true
         
-        let resultsView = SearchResultsView()
-        resultsView.translatesAutoresizingMaskIntoConstraints = false
-        let resultsViewWidthConstraint = resultsView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
-        let resultsViewHeightConstraint = resultsView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)
-        NSLayoutConstraint.activate([resultsViewWidthConstraint,resultsViewHeightConstraint])
-        view.addSubview(resultsView)
-        
-        let alignResultsViewToTop = resultsView.topAnchor.constraint(equalTo: searchView.bottomAnchor)
-        let alignResultsViewToBottom = resultsView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-        let alignResultsViewHorizontally = resultsView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        
-        NSLayoutConstraint.activate([alignResultsViewToTop,alignResultsViewToBottom,alignResultsViewHorizontally])
+        sortbyView.isHidden = false
+        if searchResultsArray.count == 0 {
+            noResultsLabel.isHidden = false
+            noResultsImageView.isHidden = false
+        } else {
+            searchResultsTableView.isHidden = false
+        }
     }
 }
 
@@ -84,14 +117,16 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UITextFieldDelegate {
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        recentSearchesView.isHidden = false
-        recentSearchesTableView.isHidden = false
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        print("changed text to: \(searchTextField.text ?? "") so fetch data")
+        if searchClearImageName == .search {
+            searchClearIcon.image = UIImage(named: "remove")
+            searchClearImageName = .remove
+        }
     }
     
-    
-    
     @objc func searchClearButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
+        
         if searchClearImageName == .search {
             if searchTextField.text == "" {
                 searchTextField.placeholder = "Enter search keywords"
@@ -103,6 +138,10 @@ extension SearchViewController: UITextFieldDelegate {
             }
         } else {
             searchTextField.text = ""
+            if searchClearImageName == .remove {
+                searchClearIcon.image = UIImage(named: "search")
+                searchClearImageName = .search
+            }
         }
     }
     
@@ -126,28 +165,8 @@ extension SearchViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let searchText = searchTextField.text {
             print("Let's FETCH DATA of the search words: \(searchText)")
+            displaySearchResults()
         }
-    }
-}
-
-
-// MARK: - UITableViewDataSource
-
-extension SearchViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recentSearchesArray.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCellsIdentifier.recentSearch, for: indexPath) as! RecentSearchCell
-        cell.label.text = recentSearchesArray[indexPath.row]
-        
-        cell.cellIndex = indexPath.row
-        cell.delegate = self
-        
-        return cell
     }
 }
 
@@ -160,5 +179,15 @@ extension SearchViewController: removeRecentSearchCellDelegate {
         print("Remove cell in index \(index)")
         recentSearchesArray.remove(at: index)
         recentSearchesTableView.reloadData()
+    }
+}
+
+
+// MARK: - SortbyViewDelegate
+
+extension SearchViewController: SortbyViewDelegate {
+    
+    func filterIconDidPress() {
+        print("OPEN FILTERS PANE")
     }
 }

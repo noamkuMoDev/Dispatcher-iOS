@@ -12,29 +12,24 @@ class FavoritesViewController: UIViewController {
         ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il")
     ]
     
-    var dataSource: TableViewManager<ArticleModel>!
+    var dataSource: TableViewDataSourceManager<ArticleModel>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         customHeader.initView(delegate: self, icon1: UIImage(named: "notifications"), icon2: UIImage(named: "search"), leftIcon: UIImage(named: "logo"))
         
-        self.dataSource = TableViewManager(
+        self.dataSource = TableViewDataSourceManager(
                 models: newsArray,
-                reuseIdentifier: Constants.TableCellsIdentifier.favorites,
-                cellType: .savedArticle
+                reuseIdentifier: Constants.TableCellsIdentifier.favorites
             ) { savedArticle, cell in
-                //cell.textLabel?.text = savedArticle.articleTitle
-                //cell.detailTextLabel?.text = savedArticle.content
+                let currentCell = cell as! SavedArticleCell
+                currentCell.articleTitle.text = savedArticle.articleTitle
             }
-        
-        tableView.rowHeight = 115.0
-        tableView.separatorStyle = .none
-        tableView.register(UINib(nibName: Constants.NibNames.favorites, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.favorites)
-        
         tableView.delegate = dataSource
         tableView.dataSource = dataSource
-        //dataSource.newsArray = newsArray
+        tableView.rowHeight = 115.0
+        tableView.register(UINib(nibName: Constants.NibNames.favorites, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.favorites)
     }
     
     
