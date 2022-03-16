@@ -22,6 +22,10 @@ class NewsCell: UITableViewCell {
         let borderColor = UIColor( red: 243/255, green: 243/255, blue:255/255, alpha: 1.0 )
         entireNewsCell.layer.borderColor = borderColor.cgColor
         
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor.clear
+        self.selectedBackgroundView = bgColorView
+        
         newsImage.clipsToBounds = true
         newsImage.layer.cornerRadius = 10
         newsImage.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]

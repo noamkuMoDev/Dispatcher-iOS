@@ -10,10 +10,13 @@ class RecentSearchCell: UITableViewCell {
     @IBOutlet weak var removeIcon: UIImageView!
     
     var delegate: removeRecentSearchCellDelegate?
-    var cellIndex: Int = -1
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor.clear
+        self.selectedBackgroundView = bgColorView
         
         removeIcon.addGestureRecognizer(UITapGestureRecognizer(target: removeIcon, action: #selector(removeItemPressed)))
         removeIcon.isUserInteractionEnabled = true

@@ -195,3 +195,13 @@ extension SearchViewController: SortbyViewDelegate {
 }
 
 
+extension SearchViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if tableView == searchResultsTableView {
+            print(indexPath.row)     // index of the row that was tapped
+            tableView.deselectRow(at: indexPath, animated: true) //make the row not stay colored
+        }
+    }
+}

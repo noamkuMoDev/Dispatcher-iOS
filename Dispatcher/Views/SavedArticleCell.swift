@@ -27,6 +27,10 @@ class SavedArticleCell: UITableViewCell {
             .layerMaxXMaxYCorner,
             .layerMaxXMinYCorner
         ]
+        
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor.clear
+        self.selectedBackgroundView = bgColorView
     }
     
     override func layoutSubviews() {

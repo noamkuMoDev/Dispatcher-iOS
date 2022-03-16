@@ -23,6 +23,7 @@ class TableViewDataSourceManager<Model>: NSObject, UITableViewDataSource, UITabl
         let model = models[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         cellConfigurator(model, cell)
+
         return cell
     }
     
