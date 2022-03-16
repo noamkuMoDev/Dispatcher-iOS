@@ -21,7 +21,6 @@ class TableViewDataSourceManager<Model>: NSObject, UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let model = models[indexPath.row]
-        print(reuseIdentifier)
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
         cellConfigurator(model, cell)
         return cell

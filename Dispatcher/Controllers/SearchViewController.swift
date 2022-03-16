@@ -24,7 +24,8 @@ class SearchViewController: UIViewController {
     
     
     var searchClearImageName: iconImageName = .search
-    var recentSearchDataSource: TableViewDataSourceManager<RecentSearchModel>!
+    
+    var recentSearchesDataSource: TableViewDataSourceManager<RecentSearchModel>!
     var recentSearchesArray: [RecentSearchModel] = [
         RecentSearchModel(text: "crypto"),
         RecentSearchModel(text: "soccer"),
@@ -39,31 +40,31 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        goBackButton.addGestureRecognizer(UITapGestureRecognizer(target: goBackButton, action: #selector(goBackButtonPressed)))
+        goBackButton.isUserInteractionEnabled = true
+        let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(goBackButtonPressed(tapGestureRecognizer:)))
+        goBackButton.addGestureRecognizer(tapGestureRecognizer1)
+        
         searchTextField.delegate = self
         searchTextField.addTarget(self, action: #selector(SearchViewController.textFieldDidChange(_:)), for: .editingChanged)
         searchClearIcon.addGestureRecognizer(UITapGestureRecognizer(target: searchClearIcon, action: #selector(searchClearButtonPressed)))
         searchClearIcon.isUserInteractionEnabled = true
-        let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(searchClearButtonPressed(tapGestureRecognizer:)))
-        searchClearIcon.addGestureRecognizer(tapGestureRecognizer1)
+        let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(searchClearButtonPressed(tapGestureRecognizer:)))
+        searchClearIcon.addGestureRecognizer(tapGestureRecognizer2)
         
-        goBackButton.addGestureRecognizer(UITapGestureRecognizer(target: goBackButton, action: #selector(goBackButtonPressed)))
-        goBackButton.isUserInteractionEnabled = true
-        let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(goBackButtonPressed(tapGestureRecognizer:)))
-        goBackButton.addGestureRecognizer(tapGestureRecognizer2)
         
-        //RecentSearcges TableView
-//        recentSearchesTableView.register(UINib(nibName: "RecentSearchCell", bundle: nil), forCellReuseIdentifier: "RecentSearchCell")
-//        self.recentSearchDataSource = TableViewManager(
-//            models: recentSearchesArray,
-//            reuseIdentifier: "RecentSearchCell"
-//        ) { searchResult, cell in
-//            let currentcell = cell as! RecentSearchCell
-//            currentcell.label.text = searchResult.text
-//        }
-//        recentSearchesTableView.dataSource = recentSearchDataSource
-//        recentSearchesTableView.delegate = self
         
-        //SearchResults TableView
+        recentSearchesTableView.register(UINib(nibName: Constants.NibNames.recentSearch, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.recentSearch)
+        self.recentSearchesDataSource = TableViewDataSourceManager(
+            models: recentSearchesArray,
+            reuseIdentifier: Constants.TableCellsIdentifier.recentSearch
+        ) { search, cell in
+            let currentcell = cell as! RecentSearchCell
+            currentcell.label.text = search.text
+            currentcell.delegate = self
+        }
+        recentSearchesTableView.dataSource = recentSearchesDataSource
+        
         searchResultsTableView.register(UINib(nibName: Constants.NibNames.homepage, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.homepage)
         self.searchResultsDataSource = TableViewDataSourceManager(
             models: searchResultsArray,
@@ -72,8 +73,9 @@ class SearchViewController: UIViewController {
             let currentcell = cell as! NewsCell
             currentcell.titleLabel.text = article.articleTitle
         }
-        searchResultsTableView.dataSource = recentSearchDataSource
-        //searchResultsTableView.delegate = self
+        searchResultsTableView.dataSource = searchResultsDataSource
+
+        
         
         //Hide / Show Elements
         sortbyView.initView(delegate: self)
@@ -82,19 +84,19 @@ class SearchViewController: UIViewController {
         noResultsImageView.isHidden = true
         noResultsLabel.isHidden = true
     }
-
+    
     
     @objc func goBackButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         navigationController?.popViewController(animated: true)
     }
     
-
+    
     @IBAction func clearRecentSearchesPressed(_ sender: UIButton) {
         print("Clear the table view and history in database")
         recentSearchesArray = []
         recentSearchesTableView.reloadData()
     }
-
+    
     
     func displaySearchResults(){
         print("displaySearchResults")
@@ -151,16 +153,16 @@ extension SearchViewController: UITextFieldDelegate {
         return true
     }
     
-
-     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-       if searchTextField.text == "" {
-                searchTextField.placeholder = "Enter search keywords"
-                return false
-            } else {
-                return true
-            }
-     }
-
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if searchTextField.text == "" {
+            searchTextField.placeholder = "Enter search keywords"
+            return false
+        } else {
+            return true
+        }
+    }
+    
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let searchText = searchTextField.text {
@@ -175,9 +177,9 @@ extension SearchViewController: UITextFieldDelegate {
 
 extension SearchViewController: removeRecentSearchCellDelegate {
     
-    func removeCellButtonDidPress(ofIndex index: Int) {
-        print("Remove cell in index \(index)")
-        recentSearchesArray.remove(at: index)
+    func removeCellButtonDidPress(called searchName: String) {
+        recentSearchesArray = recentSearchesArray.filter { $0.text !=  searchName}
+        self.recentSearchesDataSource.models = self.recentSearchesArray
         recentSearchesTableView.reloadData()
     }
 }
@@ -191,3 +193,5 @@ extension SearchViewController: SortbyViewDelegate {
         print("OPEN FILTERS PANE")
     }
 }
+
+

@@ -1,7 +1,7 @@
 import UIKit
 
 protocol removeRecentSearchCellDelegate {
-    func removeCellButtonDidPress(ofIndex index: Int)
+    func removeCellButtonDidPress(called searchName: String)
 }
 
 class RecentSearchCell: UITableViewCell {
@@ -27,6 +27,6 @@ class RecentSearchCell: UITableViewCell {
     
     
     @objc func removeItemPressed(tapGestureRecognizer: UITapGestureRecognizer) {
-        delegate?.removeCellButtonDidPress(ofIndex: cellIndex)
+        delegate?.removeCellButtonDidPress(called: label.text ?? "")
     }
 }
