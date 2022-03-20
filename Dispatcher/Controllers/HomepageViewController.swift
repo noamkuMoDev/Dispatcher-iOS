@@ -36,7 +36,6 @@ class HomepageViewController: UIViewController {
             switch result{
             case .success(let articles):
                 self.newsArray = articles
-                
                 DispatchQueue.main.async {
                     self.dataSource.models = self.newsArray
                     self.tableView.reloadData()

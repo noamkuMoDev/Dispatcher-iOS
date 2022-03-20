@@ -37,4 +37,8 @@ struct Constants {
         static let appSettingSection = "SettingSectionCell"
         static let recentSearch = "RecentSearchCell"
     }
+    
+    struct UserDefaults {
+        static let recentSearches = "recentSearches"
+    }
 }

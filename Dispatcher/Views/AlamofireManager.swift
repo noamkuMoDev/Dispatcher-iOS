@@ -3,6 +3,7 @@ import Alamofire
 
 class AlamofireManager: NSObject {
     
+    var isPaginating: Bool = false
     var url: String!
     var headers = HTTPHeaders()
     var parameters = Parameters()
@@ -18,12 +19,19 @@ class AlamofireManager: NSObject {
         }
     }
     
-    func executeGetQuery<T>(completion: @escaping (Result<T, Error>) -> Void) where T: Codable {
+    func executeGetQuery<T>(pagination: Bool = false, completion: @escaping (Result<T, Error>) -> Void) where T: Codable {
+        if pagination {
+            isPaginating = true
+        }
         AF.request(url, method: .get).responseData(completionHandler: { response in
             do {
                 switch response.result {
                 case .success:
-                    completion(.success(try JSONDecoder().decode(T.self, from: response.data ?? Data())))
+                    if !pagination {
+                        completion(.success(try JSONDecoder().decode(T.self, from: response.data ?? Data())))
+                    } else {
+                        
+                    }
                 case .failure(let error):
                     completion(.failure(error))
                 }
@@ -31,6 +39,9 @@ class AlamofireManager: NSObject {
                 print(error)
             }
         })
+        if pagination {
+            isPaginating = false
+        }
     }
     
     func executePostQuery<T>(completion: @escaping (Result<T, Error>) -> Void) where T: Codable {

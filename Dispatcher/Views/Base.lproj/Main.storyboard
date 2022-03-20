@@ -724,6 +724,10 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                         <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="liQ-A9-pzP" customClass="LoadingView" customModule="Dispatcher_Development" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5YH-wN-LcL">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="74"/>
                                 <subviews>
@@ -834,12 +838,15 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                             <constraint firstAttribute="trailing" secondItem="3qE-VJ-F43" secondAttribute="trailing" id="1UB-se-uoi"/>
                             <constraint firstItem="uUr-Qh-gn7" firstAttribute="top" secondItem="3qE-VJ-F43" secondAttribute="bottom" id="5wu-rR-YOd"/>
                             <constraint firstItem="bIP-2Z-gta" firstAttribute="top" secondItem="wcr-kK-dSY" secondAttribute="bottom" id="6F1-KW-YrY"/>
+                            <constraint firstItem="liQ-A9-pzP" firstAttribute="leading" secondItem="HHP-kx-cT4" secondAttribute="leading" id="8wg-UQ-4Ce"/>
                             <constraint firstItem="5YH-wN-LcL" firstAttribute="top" secondItem="HHP-kx-cT4" secondAttribute="topMargin" id="9ed-8I-sm9"/>
+                            <constraint firstItem="liQ-A9-pzP" firstAttribute="top" secondItem="HHP-kx-cT4" secondAttribute="topMargin" id="B5p-6s-THU"/>
                             <constraint firstAttribute="bottom" secondItem="uUr-Qh-gn7" secondAttribute="bottom" id="GXW-vt-hrK"/>
                             <constraint firstItem="GgP-84-67R" firstAttribute="leading" secondItem="HHP-kx-cT4" secondAttribute="leading" id="Ll4-8B-ycR"/>
                             <constraint firstItem="5YH-wN-LcL" firstAttribute="leading" secondItem="HHP-kx-cT4" secondAttribute="leading" id="Q5C-6p-RUo"/>
                             <constraint firstAttribute="trailing" secondItem="GgP-84-67R" secondAttribute="trailing" id="Q8c-pq-PsY"/>
                             <constraint firstAttribute="bottomMargin" secondItem="bIP-2Z-gta" secondAttribute="bottom" constant="9" id="SCu-dA-sC8"/>
+                            <constraint firstAttribute="trailing" secondItem="liQ-A9-pzP" secondAttribute="trailing" id="TdD-Ty-YGS"/>
                             <constraint firstItem="GgP-84-67R" firstAttribute="top" secondItem="YVC-S3-82M" secondAttribute="bottom" constant="4" id="V2W-3P-wsr"/>
                             <constraint firstItem="YVC-S3-82M" firstAttribute="centerX" secondItem="HHP-kx-cT4" secondAttribute="centerX" id="XOy-hc-zOp"/>
                             <constraint firstItem="3qE-VJ-F43" firstAttribute="top" secondItem="5YH-wN-LcL" secondAttribute="bottom" constant="1" id="a3u-9v-Xkb"/>
@@ -849,6 +856,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                             <constraint firstAttribute="trailing" secondItem="wcr-kK-dSY" secondAttribute="trailing" id="ce0-Hn-XrN"/>
                             <constraint firstAttribute="trailing" secondItem="uUr-Qh-gn7" secondAttribute="trailing" id="eVr-Pi-04U"/>
                             <constraint firstAttribute="trailing" secondItem="bIP-2Z-gta" secondAttribute="trailing" constant="16" id="een-uD-aEM"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="liQ-A9-pzP" secondAttribute="bottom" id="ilZ-C4-OGF"/>
                             <constraint firstItem="uUr-Qh-gn7" firstAttribute="leading" secondItem="HHP-kx-cT4" secondAttribute="leading" id="kIN-FO-Zoz"/>
                             <constraint firstItem="bIP-2Z-gta" firstAttribute="leading" secondItem="HHP-kx-cT4" secondAttribute="leading" constant="16" id="rU0-mo-QfW"/>
                             <constraint firstItem="wcr-kK-dSY" firstAttribute="leading" secondItem="HHP-kx-cT4" secondAttribute="leading" id="vkg-24-5SV"/>
@@ -859,6 +867,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                     <connections>
                         <outlet property="contentView" destination="HHP-kx-cT4" id="t3L-vD-jeS"/>
                         <outlet property="goBackButton" destination="rlk-sG-rOL" id="qpq-bp-nwN"/>
+                        <outlet property="loadingView" destination="liQ-A9-pzP" id="LWC-MX-ac4"/>
                         <outlet property="noResultsImageView" destination="YVC-S3-82M" id="vdB-BF-cQB"/>
                         <outlet property="noResultsLabel" destination="GgP-84-67R" id="RHt-PP-5Sz"/>
                         <outlet property="recentSearchesTableView" destination="uUr-Qh-gn7" id="GoK-cU-CBd"/>
