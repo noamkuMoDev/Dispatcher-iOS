@@ -1,41 +1,30 @@
 import UIKit
 
-class FavoritesViewController: UIViewController, UITableViewDelegate {
+class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingViewDelegate {
     
     @IBOutlet weak var customHeader: CustomHeaderView!
+    @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var tableView: UITableView!
     
     
-    var newsArray: [ArticleModel] = [
-        ArticleModel(id: 1, articleTitle: "Title Article 1", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-        ArticleModel(id: 1, articleTitle: "Title Article 2", content: "http://noamkurtzer.co.il"),
-    ]
+    var newsArray: [Articles] = []
     
-    var dataSource: TableViewDataSourceManager<ArticleModel>!
+    private var currentPaginationPage = 1
+    private var amountToFetch = 10
+    private var totalPaginationPages = 1
+    
+    var dataSource: TableViewDataSourceManager<Articles>!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         customHeader.initView(delegate: self, icon1: UIImage(named: "notifications"), icon2: UIImage(named: "search"), leftIcon: UIImage(named: "logo"))
+        loadingView.initView(delegate: self)
         
+        displaySavedArticlesOnScreen()
+        
+        tableView.register(UINib(nibName: Constants.NibNames.favorites, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.favorites)
         self.dataSource = TableViewDataSourceManager(
             models: newsArray,
             reuseIdentifier: Constants.TableCellsIdentifier.favorites
@@ -46,7 +35,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
         tableView.delegate = self
         tableView.dataSource = dataSource
         tableView.rowHeight = 115.0
-        tableView.register(UINib(nibName: Constants.NibNames.favorites, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.favorites)
     }
     
     
@@ -59,6 +47,56 @@ class FavoritesViewController: UIViewController, UITableViewDelegate {
     func viewWillDisppear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.isNavigationBarHidden = false
+    }
+    
+    
+    func displaySavedArticlesOnScreen() {
+        
+        DispatchQueue.main.async {
+            self.loadingView.isHidden = false
+            self.loadingView.loadIndicator.startAnimating()
+        }
+        
+        self.fetchNewsFromAPI() {
+            
+            DispatchQueue.main.async {
+                self.loadingView.loadIndicator.stopAnimating()
+                self.loadingView.isHidden = true
+            }
+            
+            if self.newsArray.count == 0 {
+                //TO DO: tell user there are no saved articles
+            }
+        }
+    }
+    
+    
+    func fetchNewsFromAPI(completionHandler: @escaping () -> ()) {
+        
+        let alamofireQuery = AlamofireManager(from: "\(Constants.apiCalls.newsUrl)?q=news&page_size=\(amountToFetch)&page=\(currentPaginationPage)")
+
+        if !alamofireQuery.isPaginating && currentPaginationPage <= totalPaginationPages {
+            alamofireQuery.executeGetQuery() {
+                ( result: Result<ArticleModel,Error> ) in
+                switch result {
+                case .success(let response):
+
+                    self.currentPaginationPage += 1
+                    self.totalPaginationPages = response.totalPages
+                    
+                    self.newsArray = response.articles
+                    DispatchQueue.main.async {
+                        self.dataSource.models = self.newsArray
+                        self.tableView.reloadData()
+                    }
+                    completionHandler()
+                    
+                case .failure(let error):
+                    print(error)
+                    completionHandler()
+                }
+            }
+        }
     }
 }
 
@@ -74,6 +112,7 @@ extension FavoritesViewController: CustomHeaderViewDelegate {
         self.performSegue(withIdentifier: Constants.Segues.favoritesToSearch, sender: self)
     }
 }
+
 
 // MARK: - UIScrollViewDelegate
 
@@ -94,28 +133,12 @@ extension FavoritesViewController: UIScrollViewDelegate {
         let position = scrollView.contentOffset.y
         if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) {
             
-            let alamofireManager = AlamofireManager(from: "https://jsonplaceholder.typicode.com/posts")
-            if !alamofireManager.isPaginating {
-                
-                tableView.tableFooterView = createSpinnerFooter()
-                
-                alamofireManager.executeGetQuery(){
-                    (result: Result<[ArticleModel],Error>) in
-                    DispatchQueue.main.async {
-                        self.tableView.tableFooterView = nil
-                    }
-                    switch result{
-                    case .success(let articles):
-                        self.newsArray.append(contentsOf: articles)
-                        DispatchQueue.main.async {
-                            self.dataSource.models.append(contentsOf: articles)
-                            self.tableView.reloadData()
-                        }
-                    case .failure(let error):
-                        print(error)
-                    }
+            fetchNewsFromAPI() {
+                DispatchQueue.main.async {
+                    self.tableView.tableFooterView = nil
                 }
             }
         }
     }
 }
+

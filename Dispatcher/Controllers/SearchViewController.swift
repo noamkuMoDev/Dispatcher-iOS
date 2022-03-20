@@ -29,13 +29,17 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     
     let defaults = UserDefaults.standard
     
+    private var currentPaginationPage = 1
+    private var amountToFetch = 7
+    private var totalPaginationPages = 1
+    
     var searchClearImageName: iconImageName = .search
     
     var recentSearchesDataSource: TableViewDataSourceManager<RecentSearchModel>!
     var recentSearchesArray: [RecentSearchModel] = []
     
-    var searchResultsDataSource: TableViewDataSourceManager<ArticleModel>!
-    var searchResultsArray: [ArticleModel] = []
+    var searchResultsDataSource: TableViewDataSourceManager<Articles>!
+    var searchResultsArray: [Articles] = []
     
     
     override func viewDidLoad() {
@@ -80,7 +84,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
             currentcell.titleLabel.text = article.articleTitle
         }
         searchResultsTableView.dataSource = searchResultsDataSource
-
+        searchResultsTableView.delegate = self
         
         loadingView.initView(delegate: self)
         loadingView.isHidden = true
@@ -106,39 +110,62 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     }
     
     
-    func fetchSearchResults(of keywords: String){
-
-        recentSearchesView.isHidden = true
-        recentSearchesTableView.isHidden = true
+    func fetchInitialSearchResults(of keywords: String) {
         
-        sortbyView.isHidden = false
-        loadingView.isHidden = false
-        loadingView.loadIndicator.startAnimating()
-        
-        
-        AlamofireManager(from: "https://jsonplaceholder.typicode.com/posts").executeGetQuery(){
-            (result: Result<[ArticleModel],Error>) in
+        DispatchQueue.main.async {
+            self.recentSearchesView.isHidden = true
+            self.recentSearchesTableView.isHidden = true
             
-            switch result {
-            case .success (let articles):
-                self.searchResultsArray = articles
-                DispatchQueue.main.async {
-                    self.searchResultsDataSource.models = self.searchResultsArray
-                    self.searchResultsTableView.reloadData()
-                }
-            case .failure (let error):
-                print(error)
+            self.sortbyView.isHidden = false
+            self.loadingView.isHidden = false
+            self.loadingView.loadIndicator.startAnimating()
+        }
+        
+        self.fetchNewsFromAPI(query: keywords) {
+            
+            DispatchQueue.main.async {
+                self.loadingView.loadIndicator.stopAnimating()
+                self.loadingView.isHidden = true
             }
-            
+            print("COMPLETION HANDLER \(self.searchResultsArray.count)")
             if self.searchResultsArray.count == 0 {
                 self.noResultsLabel.isHidden = false
                 self.noResultsImageView.isHidden = false
+                
             } else {
                 self.searchResultsTableView.isHidden = false
-                
                 self.saveNewRecentSearch(keywords)
             }
-            self.loadingView.loadIndicator.stopAnimating()
+        }
+    }
+    
+    
+    
+    func fetchNewsFromAPI(query:String = "news", completionHandler: @escaping () -> ()) {
+        print("LOOKING FOR NEWS ABOUT: \(query)")
+        let alamofireQuery = AlamofireManager(from: "\(Constants.apiCalls.newsUrl)?q=\(query)&page_size=\(amountToFetch)&page=\(currentPaginationPage)")
+
+        if !alamofireQuery.isPaginating && currentPaginationPage <= totalPaginationPages {
+            alamofireQuery.executeGetQuery() {
+                ( result: Result<ArticleModel,Error> ) in
+                switch result {
+                case .success(let response):
+
+                    self.currentPaginationPage += 1
+                    self.totalPaginationPages = response.totalPages
+                    
+                    self.searchResultsArray = response.articles
+                    DispatchQueue.main.async {
+                        self.searchResultsDataSource.models = self.searchResultsArray
+                        self.searchResultsTableView.reloadData()
+                    }
+                    completionHandler()
+                    
+                case .failure(let error):
+                    print(error)
+                    completionHandler()
+                }
+            }
         }
     }
     
@@ -155,6 +182,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
             updateModelArrayIntoUserDefaults()
         }
     }
+    
     
     func updateModelArrayIntoUserDefaults() {
         var stringsRecentSearches: [String] = []
@@ -211,7 +239,7 @@ extension SearchViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let searchText = searchTextField.text {
-            fetchSearchResults(of: searchText)
+            fetchInitialSearchResults(of: searchText)
         }
     }
 }
@@ -228,7 +256,7 @@ extension SearchViewController: RecentSearchCellDelegate {
             searchClearImageName = .remove
         }
         
-        fetchSearchResults(of: searchName)
+        fetchInitialSearchResults(of: searchName)
         
         let index = recentSearchesArray.firstIndex(where: { $0.text == searchName })!
         recentSearchesArray.insert(recentSearchesArray[index], at: 0)
@@ -267,6 +295,36 @@ extension SearchViewController: UITableViewDelegate {
         if tableView == searchResultsTableView {
             print(indexPath.row)     // index of the row that was tapped
             tableView.deselectRow(at: indexPath, animated: true) //make the row not stay colored
+        }
+    }
+}
+
+
+// MARK: - UIScrollViewDelegate
+
+extension SearchViewController: UIScrollViewDelegate {
+    
+    func createSpinnerFooter() -> UIView {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
+        let spinner = UIActivityIndicatorView()
+        spinner.center = footerView.center
+        footerView.addSubview(spinner)
+        spinner.startAnimating()
+        
+        return footerView
+    }
+    
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let position = scrollView.contentOffset.y
+        if position > (searchResultsTableView.contentSize.height - 100 - scrollView.frame.size.height) {
+            
+            fetchNewsFromAPI(query: searchTextField.text!) {
+                DispatchQueue.main.async {
+                    self.searchResultsTableView.tableFooterView = nil
+                }
+            }
         }
     }
 }

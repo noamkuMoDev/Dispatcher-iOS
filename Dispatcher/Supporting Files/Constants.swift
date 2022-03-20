@@ -41,4 +41,12 @@ struct Constants {
     struct UserDefaults {
         static let recentSearches = "recentSearches"
     }
+    
+    struct apiCalls {
+        static let newsUrl = "https://api.newscatcherapi.com/v2/search"
+    }
+    
+    struct Keys {
+        static let newApi = "_E1saiwKuTTM_aofezdXNrGCZsgavQ89t-bJ8Z6WlXA"
+    }
 }
