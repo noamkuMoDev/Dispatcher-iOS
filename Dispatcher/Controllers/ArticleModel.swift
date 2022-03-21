@@ -2,7 +2,7 @@ import Foundation
 
 struct ArticleModel: Decodable, Encodable {
     
-    let totalPages: Int
+    let totalPages: Int?
     let articles: [Articles]
     
     enum CodingKeys: String, CodingKey {

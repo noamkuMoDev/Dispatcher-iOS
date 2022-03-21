@@ -17,7 +17,6 @@ class MainActionButtonView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-
         self.frame = self.bounds
     }
     

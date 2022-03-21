@@ -165,7 +165,9 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
                 case .success(let response):
 
                     self.currentPaginationPage += 1
-                    self.totalPaginationPages = response.totalPages
+                    if let safeTotalPages = response.totalPages {
+                        self.totalPaginationPages = safeTotalPages
+                    }
                     
                     self.searchResultsArray = response.articles
                     DispatchQueue.main.async {

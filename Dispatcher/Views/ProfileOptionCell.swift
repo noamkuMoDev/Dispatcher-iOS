@@ -9,12 +9,16 @@ class ProfileOptionCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        let bgColorView = UIView()
-        bgColorView.backgroundColor = UIColor.clear
-        self.selectedBackgroundView = bgColorView
+        setCellColorDesign()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    func setCellColorDesign() {
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor.clear
+        self.selectedBackgroundView = bgColorView
     }
 }

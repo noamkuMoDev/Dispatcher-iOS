@@ -34,8 +34,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JOt-sV-sSr">
-                        <rect key="frame" x="113" y="70" width="130" height="20"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JOt-sV-sSr">
+                        <rect key="frame" x="113" y="70" width="107.5" height="20"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wu9-dB-vGI">
                                 <rect key="frame" x="0.0" y="0.0" width="60" height="20"/>
@@ -50,7 +50,7 @@
                                 </buttonConfiguration>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fDw-3o-iLR">
-                                <rect key="frame" x="70" y="0.0" width="60" height="20"/>
+                                <rect key="frame" x="70" y="0.0" width="37.5" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="Yde-xD-MpJ"/>
                                 </constraints>
@@ -88,6 +88,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="articleImage" destination="C2A-L2-EYV" id="pIo-b6-LV6"/>
+                <outlet property="articleMoreTags" destination="fDw-3o-iLR" id="MBh-te-WF0"/>
                 <outlet property="articleTitle" destination="GbH-al-ZPx" id="pEk-az-iZb"/>
                 <outlet property="articleTopic" destination="wu9-dB-vGI" id="baK-Pf-CBF"/>
                 <outlet property="savedArticleCell" destination="H2p-sc-9uM" id="jCo-n1-4WB"/>

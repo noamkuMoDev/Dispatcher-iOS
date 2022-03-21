@@ -1,9 +1,6 @@
 import UIKit
 
-protocol LoadingViewDelegate {
-    //func startLoading()
-    //func stopLoading()
-}
+protocol LoadingViewDelegate {}
 
 class LoadingView: UIView {
     
@@ -11,6 +8,7 @@ class LoadingView: UIView {
     @IBOutlet weak var loadIndicator: UIActivityIndicatorView!
     
     var delegate: LoadingViewDelegate?
+    
     
     func initView(delegate: LoadingViewDelegate? = nil) {
         
@@ -27,6 +25,4 @@ class LoadingView: UIView {
         
         contentView.backgroundColor = UIColor.white.withAlphaComponent(0.7)
     }
-    
-    
 }

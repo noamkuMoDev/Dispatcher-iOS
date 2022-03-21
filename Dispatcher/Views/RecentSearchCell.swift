@@ -15,11 +15,21 @@ class RecentSearchCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        setCellColorDesign()
+        setGestureRecognizers()
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+    
+    func setCellColorDesign() {
         let bgColorView = UIView()
         bgColorView.backgroundColor = UIColor.clear
         self.selectedBackgroundView = bgColorView
-        
-        
+    }
+    
+    func setGestureRecognizers() {
         label.addGestureRecognizer(UITapGestureRecognizer(target: label, action: #selector(itemLabelPressed)))
         label.isUserInteractionEnabled = true
         let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(itemLabelPressed(tapGestureRecognizer:)))
@@ -30,13 +40,8 @@ class RecentSearchCell: UITableViewCell {
         let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(removeItemPressed(tapGestureRecognizer:)))
         removeIcon.addGestureRecognizer(tapGestureRecognizer2)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
     
-    
-    @objc func itemLabelPressed(tapGestureRecognizer: UITapGestureRecognizer){
+    @objc func itemLabelPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.recentSearchPressed(called: label.text ?? "")
     }
     

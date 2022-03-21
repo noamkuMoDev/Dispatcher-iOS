@@ -1,6 +1,6 @@
 import UIKit
 
-class HomepageViewController: UIViewController, LoadingViewDelegate {
+class HomepageViewController: UIViewController, LoadingViewDelegate, UITableViewDelegate {
 
     @IBOutlet weak var customHeader: CustomHeaderView!
     @IBOutlet weak var loadingView: LoadingView!
@@ -37,7 +37,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
             }
         
         tableView.dataSource = dataSource
-        tableView.delegate = dataSource
+        tableView.delegate = self
         tableView.register(UINib(nibName: Constants.NibNames.homepage, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.homepage)
     }
     
@@ -67,21 +67,28 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
         }
     }
     
-    func fetchNewsFromAPI(completionHandler: @escaping () -> ()){
+    func fetchNewsFromAPI(completionHandler: @escaping () -> ()) {
         
-        AlamofireManager(from: "\(Constants.apiCalls.newsUrl)?q=news&page_size=\(amountToFetch)&page=\(currentPaginationPage)").executeGetQuery(){
-            (result: Result<ArticleModel,Error>) in
-            switch result {
-            case .success(let response):
-                self.newsArray = response.articles
-                DispatchQueue.main.async {
-                    self.dataSource.models = self.newsArray
-                    self.tableView.reloadData()
+        let alamofireQuery = AlamofireManager(from: "\(Constants.apiCalls.newsUrl)?q=news&page_size=\(amountToFetch)&page=\(currentPaginationPage)")
+        
+        if !alamofireQuery.isPaginating && currentPaginationPage <= totalPaginationPages {
+            alamofireQuery.executeGetQuery(){
+                (result: Result<ArticleModel,Error>) in
+                switch result {
+                case .success(let response):
+                    if let safeTotalPages = response.totalPages {
+                        self.totalPaginationPages = safeTotalPages
+                    }
+                    self.newsArray = response.articles
+                    DispatchQueue.main.async {
+                        self.dataSource.models = self.newsArray
+                        self.tableView.reloadData()
+                    }
+                    completionHandler()
+                case .failure(let error):
+                    print(error)
+                    completionHandler()
                 }
-                completionHandler()
-            case .failure(let error):
-                print(error)
-                completionHandler()
             }
         }
     }
@@ -120,7 +127,6 @@ extension HomepageViewController: UIScrollViewDelegate {
         
         let position = scrollView.contentOffset.y
         if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) {
-            
             fetchNewsFromAPI() {
                 DispatchQueue.main.async {
                     self.tableView.tableFooterView = nil

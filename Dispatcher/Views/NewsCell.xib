@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -31,17 +32,17 @@
                             <constraint firstAttribute="height" constant="149" id="xBn-ht-KGp"/>
                         </constraints>
                     </imageView>
-                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="34" translatesAutoresizingMaskIntoConstraints="NO" id="nhC-Aw-GXS" userLabel="Info Stack View">
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="nhC-Aw-GXS" userLabel="Info Stack View">
                         <rect key="frame" x="16" y="158" width="310" height="20"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friday Jun 25, 2021" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQE-EG-wuI">
-                                <rect key="frame" x="0.0" y="0.0" width="127" height="20"/>
+                                <rect key="frame" x="0.0" y="0.0" width="164.5" height="20"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                 <color key="textColor" name="Dispatch Gray"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQV-uQ-TU1">
-                                <rect key="frame" x="161" y="0.0" width="67.5" height="20"/>
+                                <rect key="frame" x="172.5" y="0.0" width="87.5" height="20"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Crypto">
                                     <fontDescription key="titleFontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
@@ -50,7 +51,10 @@
                                 </buttonConfiguration>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5WY-ci-UqJ">
-                                <rect key="frame" x="265.5" y="0.0" width="44.5" height="20"/>
+                                <rect key="frame" x="268" y="0.0" width="42" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="42" id="nzT-09-bnq"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="+ 3">
                                     <fontDescription key="titleFontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
@@ -61,7 +65,6 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="HvS-S2-BYk"/>
-                            <constraint firstItem="5WY-ci-UqJ" firstAttribute="leading" secondItem="tQV-uQ-TU1" secondAttribute="trailing" constant="10" id="VoS-OA-quu"/>
                         </constraints>
                     </stackView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="China's renewed crypto crackdown wipes nearly $300 billion off the market as bitcoin slides" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lN6-xD-0Sb" userLabel="Title">
