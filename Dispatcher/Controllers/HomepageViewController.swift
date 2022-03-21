@@ -1,47 +1,86 @@
 import UIKit
 
 class HomepageViewController: UIViewController {
-
-    @IBOutlet weak var customHeader: CustomHeaderView!
-    @IBOutlet weak var tableView: UITableView!
     
-    var dataSource = ArticleDataSource()
-
-    var newsArray: [Article] = [
-        ArticleModel(title: "Title Article 1", date: Date(), url: "Content of the article", isFavorite: false, content: "http://noamkurtzer.co.il"),
-        ArticleModel(title: "Title Article 2", date: Date(), url: "Content of 2nd article", isFavorite: false, content: "http://noamkurtzer.co.il")
-    ]
+    /**Outlets**/
     
+    
+    /**Variables**/
+    
+    
+    
+    /**OnLoad**/
     override func viewDidLoad() {
         super.viewDidLoad()
- 
-        customHeader.initView(delegate: self, icon1: UIImage(named: "notifications"), icon2: UIImage(named: "search"), leftIcon: UIImage(named: "logo"))
         
-        tableView.register(UINib(nibName: Constants.NibNames.homepage, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.homepage)
-        tableView.delegate = dataSource
-        tableView.dataSource = dataSource
-        dataSource.newsArray = newsArray
-        dataSource.cellIdentifier = Constants.TableCellsIdentifier.homepage
+        //Set the header's buttons:
+        configureItems()
+        
+        
+        
+        //Crash button
+//        let button = UIButton(type: .roundedRect)
+//        button.frame = CGRect(x: 20, y: 50, width: 100, height: 30)
+//        button.setTitle("Test Crash", for: [])
+//        button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
+//        view.addSubview(button)
+        
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true
+    //Crush button
+//    @IBAction func crashButtonTapped(_ sender: UIButton) {
+//        let numbers = [0]
+//        let _ = numbers[1]
+//    }
+    
+    
+    
+    
+    
+    /**Methods**/
+    private func configureItems() {
+        
+        //Right header icons:
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(
+                image: UIImage(systemName: "bell"),
+                style: .done,
+                target: self,
+                action: nil
+            ),
+            UIBarButtonItem(
+                image: UIImage(systemName: "magnifyingglass"),
+                style: .done,
+                target: self,
+                action: nil
+            )
+        ]
+        
+        
+        //dgdfdfdf
+        
+        let logoImage = UIImage.init(named: "logo")
+        let logoImageView = UIImageView.init(image: logoImage)
+        //logoImageView.frame = CGRect(x:0.0,y:0.0, width:10,height:25.0)
+        logoImageView.contentMode = .scaleAspectFill
+        let imageItem = UIBarButtonItem.init(customView: logoImageView)
+        let widthConstraint = logoImageView.widthAnchor.constraint(equalToConstant: 60)
+        let heightConstraint = logoImageView.heightAnchor.constraint(equalToConstant: 60)
+        heightConstraint.isActive = true
+        widthConstraint.isActive = true
+        navigationItem.leftBarButtonItem =  imageItem
+        
+        
+        //Left header icon - logo:
+//        let customView = UIImageView(image: UIImage(named: "logo"))
+//        customView.contentMode = .scaleAspectFit
+//
+//
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(
+//            customView: customView
+//        )
     }
-
-    func viewWillDisppear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.isNavigationBarHidden = false
-    }
+    
+    
 }
 
-extension HomepageViewController: CustomHeaderViewDelegate {
-    
-    func firstRightIconPressed() {
-        self.performSegue(withIdentifier: Constants.Segues.homepageToNotifications, sender: self)
-    }
-    
-    func secondRightIconPressed() {
-        self.performSegue(withIdentifier: Constants.Segues.homepageToSearch, sender: self)
-    }
-}

@@ -8,6 +8,5 @@ target 'Dispatcher' do
 pod 'Firebase/Auth'
 pod 'Firebase/Firestore'
 pod 'Firebase/Crashlytics'
-pod 'Alamofire', '~> 5.5'
 
 end
