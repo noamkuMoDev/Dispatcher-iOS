@@ -81,23 +81,18 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
                 ( result: Result<ArticleModel,Error> ) in
                 switch result {
                 case .success(let response):
-
                     self.currentPaginationPage += 1
-                    if let safeTotalPages = response.totalPages {
-                        self.totalPaginationPages = safeTotalPages
-                    }
+                    self.totalPaginationPages = response.totalPages
                     
-                    self.newsArray = response.articles
+                    self.newsArray.append(contentsOf: response.articles)
                     DispatchQueue.main.async {
                         self.dataSource.models = self.newsArray
                         self.tableView.reloadData()
                     }
-                    completionHandler()
-                    
                 case .failure(let error):
                     print(error)
-                    completionHandler()
                 }
+                completionHandler()
             }
         }
     }

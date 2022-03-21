@@ -42,7 +42,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupTextField()
         setupTableViews()
         defineGestureRecognizers()
@@ -141,7 +141,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
                 self.loadingView.loadIndicator.stopAnimating()
                 self.loadingView.isHidden = true
             }
-
+            
             if self.searchResultsArray.count == 0 {
                 self.noResultsLabel.isHidden = false
                 self.noResultsImageView.isHidden = false
@@ -155,37 +155,33 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     
     
     func fetchNewsFromAPI(query:String = "news", completionHandler: @escaping () -> ()) {
-        print("LOOKING FOR NEWS ABOUT: \(query)")
+        
         let alamofireQuery = AlamofireManager(from: "\(Constants.apiCalls.newsUrl)?q=\(query)&page_size=\(amountToFetch)&page=\(currentPaginationPage)")
-
+        
         if !alamofireQuery.isPaginating && currentPaginationPage <= totalPaginationPages {
             alamofireQuery.executeGetQuery() {
                 ( result: Result<ArticleModel,Error> ) in
                 switch result {
                 case .success(let response):
-
                     self.currentPaginationPage += 1
-                    if let safeTotalPages = response.totalPages {
-                        self.totalPaginationPages = safeTotalPages
-                    }
+                    self.totalPaginationPages = response.totalPages
                     
-                    self.searchResultsArray = response.articles
+                    self.searchResultsArray.append(contentsOf: response.articles)
                     DispatchQueue.main.async {
                         self.searchResultsDataSource.models = self.searchResultsArray
                         self.searchResultsTableView.reloadData()
                     }
-                    completionHandler()
-                    
                 case .failure(let error):
                     print(error)
-                    completionHandler()
+                    
                 }
+                completionHandler()
             }
         }
     }
     
     
-    func saveNewRecentSearch(_ keyword: String){
+    func saveNewRecentSearch(_ keyword: String) {
         
         if !recentSearchesArray.contains(where: {$0.text == keyword}) {
             recentSearchesArray.insert(RecentSearchModel(text: keyword), at: 0)
@@ -213,6 +209,12 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
 // MARK: - UITextFieldDelegate
 
 extension SearchViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        searchResultsTableView.isHidden = true
+        recentSearchesView.isHidden = false
+        recentSearchesTableView.isHidden = false
+    }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         if searchClearImageName == .search {
@@ -251,6 +253,7 @@ extension SearchViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let searchText = searchTextField.text {
+            searchResultsArray = []
             fetchInitialSearchResults(of: searchText)
         }
     }
@@ -263,11 +266,12 @@ extension SearchViewController: RecentSearchCellDelegate {
     
     func recentSearchPressed(called searchName: String) {
         searchTextField.text = searchName
+        searchTextField.endEditing(true)
         if searchClearImageName == .search {
             searchClearIcon.image = UIImage(named: "remove")
             searchClearImageName = .remove
         }
-        
+        searchResultsArray = []
         fetchInitialSearchResults(of: searchName)
         
         let index = recentSearchesArray.firstIndex(where: { $0.text == searchName })!

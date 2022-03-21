@@ -1,17 +1,19 @@
 import Foundation
 
-struct ArticleModel: Decodable, Encodable {
+struct ArticleModel: Codable {
     
-    let totalPages: Int?
+    let totalPages: Int
     let articles: [Articles]
+    let numOfResults: Int
     
     enum CodingKeys: String, CodingKey {
         case totalPages = "total_pages"
         case articles = "articles"
+        case numOfResults = "total_hits"
     }
 }
 
-struct Articles: Decodable, Encodable {
+struct Articles: Codable {
     
     let id: String
     let articleTitle: String
@@ -20,6 +22,7 @@ struct Articles: Decodable, Encodable {
     let content: String
     let author: String?
     let topic: String
+    let imageUrl: String?
     
     enum CodingKeys: String, CodingKey {
         case id = "_id"
@@ -29,6 +32,7 @@ struct Articles: Decodable, Encodable {
         case url = "link"
         case date = "published_date"
         case topic = "topic"
+        case imageUrl = "media"
     }
 }
 

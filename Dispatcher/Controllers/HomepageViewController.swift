@@ -18,9 +18,9 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
         super.viewDidLoad()
         
         customHeader.initView(delegate: self, icon1: UIImage(named: "notifications"), icon2: UIImage(named: "search"), leftIcon: UIImage(named: "logo"))
+        loadingView.initView(delegate: self)
         fetchInitialResults()
         setupTableView()
-        loadingView.initView(delegate: self)
     }
     
     func setupTableView() {
@@ -76,19 +76,18 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
                 (result: Result<ArticleModel,Error>) in
                 switch result {
                 case .success(let response):
-                    if let safeTotalPages = response.totalPages {
-                        self.totalPaginationPages = safeTotalPages
-                    }
-                    self.newsArray = response.articles
+                    self.currentPaginationPage += 1
+                    self.totalPaginationPages = response.totalPages
+                    
+                    self.newsArray.append(contentsOf: response.articles)
                     DispatchQueue.main.async {
                         self.dataSource.models = self.newsArray
                         self.tableView.reloadData()
                     }
-                    completionHandler()
                 case .failure(let error):
                     print(error)
-                    completionHandler()
                 }
+                completionHandler()
             }
         }
     }
