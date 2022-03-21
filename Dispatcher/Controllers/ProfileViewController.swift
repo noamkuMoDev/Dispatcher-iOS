@@ -2,12 +2,27 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
+    @IBOutlet weak var userProfileShadowView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
-    var optionsArray: [String] = []
+    var optionsArray: [ProfileOptionModel] = [
+        ProfileOptionModel(icon: UIImage(named: "gearWheel")!, text: "Setting", navigateTo: Constants.Segues.goToSettings),
+        ProfileOptionModel(icon: UIImage(named: "documents")!, text: "Terms & privacy", navigateTo: Constants.Segues.goToTermsAndPrivacy),
+        ProfileOptionModel(icon: UIImage(named: "logout")!, text: "Logout")
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        userProfileShadowView.layer.masksToBounds = false
+        userProfileShadowView.layer.shadowColor = UIColor.black.cgColor
+        userProfileShadowView.layer.shadowOpacity = 0.2
+        userProfileShadowView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        userProfileShadowView.layer.shadowRadius = 3
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UINib(nibName: Constants.NibNames.profileOption, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.profileOption)
     }
     
     
@@ -39,16 +54,16 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-           return optionsArray.count
-       }
+        return optionsArray.count
+    }
     
-       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-           
-           let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath)
-
-           //cell.textLabel?.text = itemArray[indexPath.row]
-           return cell
-       }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCellsIdentifier.profileOption, for: indexPath) as! ProfileOptionCell
+        cell.label.text = optionsArray[indexPath.row].text
+        cell.iconImageView.image = optionsArray[indexPath.row].icon
+        return cell
+    }
 }
 
 //MARK: - UITableViewDelegate
@@ -56,7 +71,24 @@ extension ProfileViewController: UITableViewDataSource {
 extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        switch indexPath.row {
+        case 0:
+            print("Settings")
+            self.performSegue(withIdentifier: optionsArray[0].navigateTo!, sender: self)
+            break
+        case 1:
+            print("Terms & privacy")
+            self.performSegue(withIdentifier: optionsArray[1].navigateTo!, sender: self)
+            break
+        case 2:
+            print("logout")
+            //self.performSegue(withIdentifier: optionsArray[2].navigateTo!, sender: self)
+            break
+        default:
+            print("non-existing option")
+            break
+        }
     }
 }

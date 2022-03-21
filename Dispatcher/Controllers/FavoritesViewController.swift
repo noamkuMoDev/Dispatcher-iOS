@@ -1,10 +1,11 @@
 import UIKit
 
-class FavoritesViewController: HeaderViewController {
+class FavoritesViewController: UIViewController {
+    
+    @IBOutlet weak var customHeader: CustomHeaderView!
+    @IBOutlet weak var tableView: UITableView!
     
     var dataSource = ArticleDataSource()
-    
-    @IBOutlet weak var tableView: UITableView!
     
     var newsArray: [Article] = [
         ArticleModel(title: "Title Article 1", date: Date(), url: "Content of the article", isFavorite: true, content: "http://noamkurtzer.co.il"),
@@ -14,8 +15,8 @@ class FavoritesViewController: HeaderViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        defineHeaderIcons(icon1: UIImage(named: "search")!, icon2: UIImage(named:"notifications")!)
-        defineHeaderLogo()
+        
+        customHeader.initView(delegate: self, icon1: UIImage(named: "notifications"), icon2: UIImage(named: "search"), leftIcon: UIImage(named: "logo"))
         
         tableView.rowHeight = 115.0
         tableView.separatorStyle = .none
@@ -37,5 +38,16 @@ class FavoritesViewController: HeaderViewController {
     func viewWillDisppear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.isNavigationBarHidden = false
+    }
+}
+
+extension FavoritesViewController: CustomHeaderViewDelegate {
+    
+    func firstRightIconPressed() {
+        self.performSegue(withIdentifier: Constants.Segues.favoritesToNotifications, sender: self)
+    }
+    
+    func secondRightIconPressed() {
+        self.performSegue(withIdentifier: Constants.Segues.favoritesToSearch, sender: self)
     }
 }

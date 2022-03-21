@@ -1,25 +1,22 @@
 import UIKit
 
-class HomepageViewController: HeaderViewController {
+class HomepageViewController: UIViewController {
+
+    @IBOutlet weak var customHeader: CustomHeaderView!
+    @IBOutlet weak var tableView: UITableView!
     
     var dataSource = ArticleDataSource()
 
-    
-    @IBOutlet weak var tableView: ContentTableView!
-    
-    
     var newsArray: [Article] = [
         ArticleModel(title: "Title Article 1", date: Date(), url: "Content of the article", isFavorite: false, content: "http://noamkurtzer.co.il"),
-        ArticleModel(title: "Title Article 2", date: Date(), url: "Content of 2מג article", isFavorite: false, content: "http://noamkurtzer.co.il")
+        ArticleModel(title: "Title Article 2", date: Date(), url: "Content of 2nd article", isFavorite: false, content: "http://noamkurtzer.co.il")
     ]
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        defineHeaderIcons(icon1: UIImage(named: "search")!, icon2: UIImage(named:"notifications")!)
-        defineHeaderLogo()
+ 
+        customHeader.initView(delegate: self, icon1: UIImage(named: "notifications"), icon2: UIImage(named: "search"), leftIcon: UIImage(named: "logo"))
         
-        tableView.rowHeight = 525
         tableView.register(UINib(nibName: Constants.NibNames.homepage, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.homepage)
         tableView.delegate = dataSource
         tableView.dataSource = dataSource
@@ -36,5 +33,15 @@ class HomepageViewController: HeaderViewController {
         super.viewWillDisappear(animated)
         navigationController?.isNavigationBarHidden = false
     }
+}
 
+extension HomepageViewController: CustomHeaderViewDelegate {
+    
+    func firstRightIconPressed() {
+        self.performSegue(withIdentifier: Constants.Segues.homepageToNotifications, sender: self)
+    }
+    
+    func secondRightIconPressed() {
+        self.performSegue(withIdentifier: Constants.Segues.homepageToSearch, sender: self)
+    }
 }
