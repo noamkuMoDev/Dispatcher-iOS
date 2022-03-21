@@ -18,9 +18,12 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
         super.viewDidLoad()
         
         customHeader.initView(delegate: self, icon1: UIImage(named: "notifications"), icon2: UIImage(named: "search"), leftIcon: UIImage(named: "logo"))
-        
         fetchInitialResults()
-        
+        setupTableView()
+        loadingView.initView(delegate: self)
+    }
+    
+    func setupTableView() {
         self.dataSource = TableViewDataSourceManager(
                 models: newsArray,
                 reuseIdentifier: Constants.TableCellsIdentifier.homepage
@@ -36,8 +39,6 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
         tableView.dataSource = dataSource
         tableView.delegate = dataSource
         tableView.register(UINib(nibName: Constants.NibNames.homepage, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.homepage)
-        
-        loadingView.initView(delegate: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,7 +50,6 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
         super.viewWillDisappear(animated)
         navigationController?.isNavigationBarHidden = false
     }
-    
     
     func fetchInitialResults() {
         
@@ -66,7 +66,6 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
             }
         }
     }
-    
     
     func fetchNewsFromAPI(completionHandler: @escaping () -> ()){
         

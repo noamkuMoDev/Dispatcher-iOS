@@ -16,7 +16,10 @@ class NotificationsViewController: UIViewController {
         super.viewDidLoad()
 
         customHeader.initView(delegate: self, leftIcon: UIImage(named: "BackButton"))
-        
+        setupTableView()
+    }
+    
+    func setupTableView() {
         tableView.register(UINib(nibName: Constants.NibNames.notification, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.notification)
         self.dataSource = TableViewDataSourceManager(
             models: notificationsArray,
@@ -27,7 +30,6 @@ class NotificationsViewController: UIViewController {
         }
         tableView.dataSource = dataSource
         tableView.delegate = dataSource
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,6 +42,7 @@ class NotificationsViewController: UIViewController {
         navigationController?.isNavigationBarHidden = false
     }
 }
+
 
 //MARK: - CustomHeaderViewDelegate
 extension NotificationsViewController: CustomHeaderViewDelegate {

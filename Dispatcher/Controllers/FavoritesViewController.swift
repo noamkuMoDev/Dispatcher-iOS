@@ -23,7 +23,9 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
         loadingView.initView(delegate: self)
         
         displaySavedArticlesOnScreen()
-        
+    }
+    
+    func setupTableView() {
         tableView.register(UINib(nibName: Constants.NibNames.favorites, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.favorites)
         self.dataSource = TableViewDataSourceManager(
             models: newsArray,
@@ -36,8 +38,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
         tableView.dataSource = dataSource
         tableView.rowHeight = 115.0
     }
-    
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -99,6 +99,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
         }
     }
 }
+
 
 // MARK: - CustomHeaderViewDelegate
 

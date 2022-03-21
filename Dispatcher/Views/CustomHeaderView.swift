@@ -34,6 +34,10 @@ class CustomHeaderView: UIView {
         if let safeFirstRightIcon = icon1 {
             firstRightImageView.image = safeFirstRightIcon
             firstRightImageView.isHidden = false
+            firstRightImageView.addGestureRecognizer(UITapGestureRecognizer(target: firstRightImageView, action: #selector(farRightIconPressed)))
+            firstRightImageView.isUserInteractionEnabled = true
+            let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(farRightIconPressed(tapGestureRecognizer:)))
+            firstRightImageView.addGestureRecognizer(tapGestureRecognizer1)
         } else {
             firstRightImageView.isHidden = true
         }
@@ -41,6 +45,10 @@ class CustomHeaderView: UIView {
         if let safeSecondRightIcon = icon2 {
             secondRightImageView.image = safeSecondRightIcon
             secondRightImageView.isHidden = false
+            secondRightImageView.addGestureRecognizer(UITapGestureRecognizer(target: secondRightImageView, action: #selector(farRightIconPressed)))
+            secondRightImageView.isUserInteractionEnabled = true
+            let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(scondRightIconPressed(tapGestureRecognizer:)))
+            secondRightImageView.addGestureRecognizer(tapGestureRecognizer2)
         } else {
             secondRightImageView.isHidden = true
         }
@@ -48,32 +56,19 @@ class CustomHeaderView: UIView {
         if let safeLeftIcon = leftIcon {
             leftImageView.image = safeLeftIcon
             leftImageView.isHidden = false
+            leftImageView.addGestureRecognizer(UITapGestureRecognizer(target: leftImageView, action: #selector(leftIconPressed)))
+            leftImageView.isUserInteractionEnabled = true
+            let tapGestureRecognizer3 = UITapGestureRecognizer(target: self, action: #selector(leftIconPressed(tapGestureRecognizer:)))
+            leftImageView.addGestureRecognizer(tapGestureRecognizer3)
         } else {
             leftImageView.isHidden = true
         }
-        
     }
     
     private func commonInit() {
-    
         Bundle.main.loadNibNamed("CustomHeaderView", owner: self, options: nil)
         contentView.frame = self.bounds
         self.addSubview(contentView)
-
-        firstRightImageView.addGestureRecognizer(UITapGestureRecognizer(target: firstRightImageView, action: #selector(farRightIconPressed)))
-        firstRightImageView.isUserInteractionEnabled = true
-        let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(farRightIconPressed(tapGestureRecognizer:)))
-        firstRightImageView.addGestureRecognizer(tapGestureRecognizer1)
-
-        secondRightImageView.addGestureRecognizer(UITapGestureRecognizer(target: secondRightImageView, action: #selector(farRightIconPressed)))
-        secondRightImageView.isUserInteractionEnabled = true
-        let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(scondRightIconPressed(tapGestureRecognizer:)))
-        secondRightImageView.addGestureRecognizer(tapGestureRecognizer2)
-        
-        leftImageView.addGestureRecognizer(UITapGestureRecognizer(target: leftImageView, action: #selector(leftIconPressed)))
-        leftImageView.isUserInteractionEnabled = true
-        let tapGestureRecognizer3 = UITapGestureRecognizer(target: self, action: #selector(leftIconPressed(tapGestureRecognizer:)))
-        leftImageView.addGestureRecognizer(tapGestureRecognizer3)
     }
     
     
@@ -86,13 +81,11 @@ class CustomHeaderView: UIView {
     }
     
     
-    @objc func farRightIconPressed(tapGestureRecognizer: UITapGestureRecognizer)
-    {
+    @objc func farRightIconPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.firstRightIconPressed()
     }
     
-    @objc func scondRightIconPressed(tapGestureRecognizer: UITapGestureRecognizer)
-    {
+    @objc func scondRightIconPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.secondRightIconPressed()
     }
     
