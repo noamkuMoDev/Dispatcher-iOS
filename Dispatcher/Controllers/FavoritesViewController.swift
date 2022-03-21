@@ -21,7 +21,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
         
         customHeader.initView(delegate: self, icon1: UIImage(named: "notifications"), icon2: UIImage(named: "search"), leftIcon: UIImage(named: "logo"))
         loadingView.initView(delegate: self)
-        
+        setupTableView()
         displaySavedArticlesOnScreen()
     }
     
@@ -33,9 +33,10 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
         ) { savedArticle, cell in
             let currentCell = cell as! SavedArticleCell
             currentCell.articleTitle.text = savedArticle.articleTitle
+            currentCell.articleTopic.setTitle(savedArticle.topic, for: .normal)
         }
         tableView.delegate = self
-        tableView.dataSource = dataSource
+        tableView.dataSource = self.dataSource
         tableView.rowHeight = 115.0
     }
     

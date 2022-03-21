@@ -5,6 +5,7 @@ class SavedArticleCell: UITableViewCell {
     @IBOutlet weak var savedArticleCell: UIView!
     @IBOutlet weak var articleImage: UIImageView!
     @IBOutlet weak var articleTitle: UILabel!
+    @IBOutlet weak var articleTopic: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()

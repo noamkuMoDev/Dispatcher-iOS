@@ -91,6 +91,10 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         ) { article, cell in
             let currentcell = cell as! NewsCell
             currentcell.titleLabel.text = article.articleTitle
+            currentcell.authorLabel.text = article.author
+            currentcell.dateLabel.text = article.date
+            currentcell.subjectTag.setTitle(article.topic, for: .normal)
+            currentcell.summaryLabel.text = article.content
         }
         searchResultsTableView.dataSource = searchResultsDataSource
         searchResultsTableView.delegate = self
