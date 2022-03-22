@@ -47,6 +47,6 @@ struct Constants {
     }
     
     struct Keys {
-        static let newApi = "_E1saiwKuTTM_aofezdXNrGCZsgavQ89t-bJ8Z6WlXA"
+        static let newsApiKey = "_E1saiwKuTTM_aofezdXNrGCZsgavQ89t-bJ8Z6WlXA"
     }
 }
