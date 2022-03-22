@@ -5,16 +5,17 @@ class NotificationsViewController: UIViewController {
     @IBOutlet weak var customHeader: CustomHeaderView!
     @IBOutlet weak var tableView: UITableView!
     
+    var notificationsVM = NotificationsViewModel()
     var dataSource: TableViewDataSourceManager<NotificationModel>!
-    var notificationsArray: [NotificationModel] = [
-        NotificationModel(text: "Notification 1", wasRead: true),
-        NotificationModel(text: "Notification 2", wasRead: false)
-    ]
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        initiateUIElements()
+    }
+    
+    func initiateUIElements() {
         customHeader.initView(delegate: self, leftIcon: UIImage(named: "BackButton"))
         setupTableView()
     }
@@ -22,7 +23,7 @@ class NotificationsViewController: UIViewController {
     func setupTableView() {
         tableView.register(UINib(nibName: Constants.NibNames.notification, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.notification)
         self.dataSource = TableViewDataSourceManager(
-            models: notificationsArray,
+            models: notificationsVM.notificationsArray,
             reuseIdentifier: Constants.TableCellsIdentifier.notification
         ) { notification, cell in
             let currentCell = cell as! NotificationCell
@@ -35,11 +36,6 @@ class NotificationsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
-    }
-
-    func viewWillDisppear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.isNavigationBarHidden = false
     }
 }
 

@@ -5,15 +5,8 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var userProfileShadowView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
-    
+    var profileVM = ProfileViewModel()
     var dataSource: TableViewDataSourceManager<ProfileOptionModel>!
-    
-    var optionsArray: [ProfileOptionModel] = [
-        ProfileOptionModel(icon: "gearWheel", text: "Setting", navigateTo: Constants.Segues.goToSettings),
-        ProfileOptionModel(icon: "documents", text: "Terms & privacy", navigateTo: Constants.Segues.goToTermsAndPrivacy),
-        ProfileOptionModel(icon: "logout", text: "Logout")
-    ]
-    
     
     
     override func viewDidLoad() {
@@ -34,7 +27,7 @@ class ProfileViewController: UIViewController {
     func setupTableView() {
         tableView.register(UINib(nibName: Constants.NibNames.profileOption, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.profileOption)
         self.dataSource = TableViewDataSourceManager(
-            models: optionsArray,
+            models: profileVM.optionsArray,
             reuseIdentifier: Constants.TableCellsIdentifier.profileOption
         ) { option, cell in
             print(option)
@@ -56,11 +49,6 @@ class ProfileViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
     }
-
-    func viewWillDisppear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.isNavigationBarHidden = false
-    }
 }
 
 
@@ -71,9 +59,9 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if optionsArray[indexPath.row].text != "logout" {
-            if optionsArray[indexPath.row].navigateTo != nil {
-                self.performSegue(withIdentifier: optionsArray[indexPath.row].navigateTo!, sender: self)
+        if profileVM.optionsArray[indexPath.row].text != "logout" {
+            if profileVM.optionsArray[indexPath.row].navigateTo != nil {
+                self.performSegue(withIdentifier: profileVM.optionsArray[indexPath.row].navigateTo!, sender: self)
             }
         } else {
             // TO DO : log the user out, then navigate to login screen

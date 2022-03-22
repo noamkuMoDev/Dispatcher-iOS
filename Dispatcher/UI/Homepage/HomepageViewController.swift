@@ -5,27 +5,28 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
     @IBOutlet weak var customHeader: CustomHeaderView!
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var tableView: UITableView!
-    
-    private var currentPaginationPage = 1
-    private var amountToFetch = 7
-    private var totalPaginationPages = 1
-    
-    var newsArray: [Articles] = []
+
+    var homepageVM = HomepageViewModel()
     var dataSource: TableViewDataSourceManager<Articles>!
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initiateUIElements()
+        fetchInitialResults()
+    }
+    
+    func initiateUIElements() {
         customHeader.initView(delegate: self, icon1: UIImage(named: "notifications"), icon2: UIImage(named: "search"), leftIcon: UIImage(named: "logo"))
         loadingView.initView(delegate: self)
-        fetchInitialResults()
         setupTableView()
     }
     
     func setupTableView() {
+        tableView.register(UINib(nibName: Constants.NibNames.homepage, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.homepage)
         self.dataSource = TableViewDataSourceManager(
-                models: newsArray,
+                models: homepageVM.newsArray,
                 reuseIdentifier: Constants.TableCellsIdentifier.homepage
             ) { article, cell in
                 let currentCell = cell as! NewsCell
@@ -38,58 +39,27 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
         
         tableView.dataSource = dataSource
         tableView.delegate = self
-        tableView.register(UINib(nibName: Constants.NibNames.homepage, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.homepage)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true
     }
 
-    func viewWillDisppear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.isNavigationBarHidden = false
-    }
-    
     func fetchInitialResults() {
-        
         DispatchQueue.main.async {
             self.loadingView.isHidden = false
             self.loadingView.loadIndicator.startAnimating()
         }
-        
-        self.fetchNewsFromAPI() {
+        homepageVM.fetchNewsFromAPI() {
             
             DispatchQueue.main.async {
+                self.dataSource.models = self.homepageVM.newsArray
+                self.tableView.reloadData()
                 self.loadingView.loadIndicator.stopAnimating()
                 self.loadingView.isHidden = true
             }
         }
     }
     
-    func fetchNewsFromAPI(completionHandler: @escaping () -> ()) {
-        
-        let alamofireQuery = AlamofireManager(from: "\(Constants.apiCalls.newsUrl)?q=news&page_size=\(amountToFetch)&page=\(currentPaginationPage)")
-        
-        if !alamofireQuery.isPaginating && currentPaginationPage <= totalPaginationPages {
-            alamofireQuery.executeGetQuery(){
-                (result: Result<ArticleModel,Error>) in
-                switch result {
-                case .success(let response):
-                    self.currentPaginationPage += 1
-                    self.totalPaginationPages = response.totalPages
-                    
-                    self.newsArray.append(contentsOf: response.articles)
-                    DispatchQueue.main.async {
-                        self.dataSource.models = self.newsArray
-                        self.tableView.reloadData()
-                    }
-                case .failure(let error):
-                    print(error)
-                }
-                completionHandler()
-            }
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
     }
 }
 
@@ -126,8 +96,10 @@ extension HomepageViewController: UIScrollViewDelegate {
         
         let position = scrollView.contentOffset.y
         if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) {
-            fetchNewsFromAPI() {
+            homepageVM.fetchNewsFromAPI() {
+                self.dataSource.models = self.homepageVM.newsArray
                 DispatchQueue.main.async {
+                    self.tableView.reloadData()
                     self.tableView.tableFooterView = nil
                 }
             }

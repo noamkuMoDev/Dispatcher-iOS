@@ -25,27 +25,26 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     
     @IBOutlet weak var loadingView: LoadingView!
     
-    
-    let defaults = UserDefaults.standard
-    
-    private var currentPaginationPage = 1
-    private var amountToFetch = 7
-    private var totalPaginationPages = 1
+    var searchVM = SearchViewModel()
     
     var searchClearImageName: iconImageName = .search
     
     var recentSearchesDataSource: TableViewDataSourceManager<RecentSearchModel>!
-    var recentSearchesArray: [RecentSearchModel] = []
     var searchResultsDataSource: TableViewDataSourceManager<Articles>!
-    var searchResultsArray: [Articles] = []
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initiateUIElements()
+        defineGestureRecognizers()
+        searchVM.fetchSavedRecentSearchesFromUserDefaults()
+    }
+    
+    func initiateUIElements() {
         setupTextField()
         setupTableViews()
-        defineGestureRecognizers()
         initialHideShowElements()
     }
     
@@ -67,14 +66,10 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     }
     
     func setupTableViews() {
-        if let savedRecentSearches = defaults.array(forKey: Constants.UserDefaults.recentSearches) as? [String] {
-            for search in savedRecentSearches {
-                recentSearchesArray.append(RecentSearchModel(text: search))
-            }
-        }
+        
         recentSearchesTableView.register(UINib(nibName: Constants.NibNames.recentSearch, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.recentSearch)
         self.recentSearchesDataSource = TableViewDataSourceManager(
-            models: recentSearchesArray,
+            models: searchVM.recentSearchesArray,
             reuseIdentifier: Constants.TableCellsIdentifier.recentSearch
         ) { search, cell in
             let currentcell = cell as! RecentSearchCell
@@ -86,7 +81,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         
         searchResultsTableView.register(UINib(nibName: Constants.NibNames.homepage, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.homepage)
         self.searchResultsDataSource = TableViewDataSourceManager(
-            models: searchResultsArray,
+            models: searchVM.searchResultsArray,
             reuseIdentifier: Constants.TableCellsIdentifier.homepage
         ) { article, cell in
             let currentcell = cell as! NewsCell
@@ -98,7 +93,6 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         }
         searchResultsTableView.dataSource = searchResultsDataSource
         searchResultsTableView.delegate = self
-        
     }
     
     func initialHideShowElements() {
@@ -116,10 +110,10 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     }
     
     @IBAction func clearRecentSearchesPressed(_ sender: UIButton) {
-        recentSearchesArray = []
-        updateModelArrayIntoUserDefaults()
-        DispatchQueue.main.async {
-            self.recentSearchesTableView.reloadData()
+        searchVM.clearRecentSearchesHistory() {
+            DispatchQueue.main.async {
+                self.recentSearchesTableView.reloadData()
+            }
         }
     }
     
@@ -135,72 +129,25 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
             self.loadingView.loadIndicator.startAnimating()
         }
         
-        self.fetchNewsFromAPI(query: keywords) {
+        searchVM.searchResultsArray = []
+        searchVM.fetchNewsFromAPI(query: keywords) { statusMsg in
             
             DispatchQueue.main.async {
+                self.searchResultsDataSource.models = self.searchVM.searchResultsArray
+                self.searchResultsTableView.reloadData()
                 self.loadingView.loadIndicator.stopAnimating()
                 self.loadingView.isHidden = true
             }
             
-            if self.searchResultsArray.count == 0 {
+            if self.searchVM.searchResultsArray.count == 0 {
                 self.noResultsLabel.isHidden = false
                 self.noResultsImageView.isHidden = false
                 
             } else {
                 self.searchResultsTableView.isHidden = false
-                self.saveNewRecentSearch(keywords)
+                self.searchVM.saveNewRecentSearch(keywords)
             }
         }
-    }
-    
-    
-    func fetchNewsFromAPI(query:String = "news", completionHandler: @escaping () -> ()) {
-        
-        let alamofireQuery = AlamofireManager(from: "\(Constants.apiCalls.newsUrl)?q=\(query)&page_size=\(amountToFetch)&page=\(currentPaginationPage)")
-        
-        if !alamofireQuery.isPaginating && currentPaginationPage <= totalPaginationPages {
-            alamofireQuery.executeGetQuery() {
-                ( result: Result<ArticleModel,Error> ) in
-                switch result {
-                case .success(let response):
-                    self.currentPaginationPage += 1
-                    self.totalPaginationPages = response.totalPages
-                    
-                    self.searchResultsArray.append(contentsOf: response.articles)
-                    DispatchQueue.main.async {
-                        self.searchResultsDataSource.models = self.searchResultsArray
-                        self.searchResultsTableView.reloadData()
-                    }
-                case .failure(let error):
-                    print(error)
-                    
-                }
-                completionHandler()
-            }
-        }
-    }
-    
-    
-    func saveNewRecentSearch(_ keyword: String) {
-        
-        if !recentSearchesArray.contains(where: {$0.text == keyword}) {
-            recentSearchesArray.insert(RecentSearchModel(text: keyword), at: 0)
-            
-            if recentSearchesArray.count > 10 {
-                recentSearchesArray.remove(at: recentSearchesArray.count-1)
-            }
-            
-            updateModelArrayIntoUserDefaults()
-        }
-    }
-    
-    
-    func updateModelArrayIntoUserDefaults() {
-        var stringsRecentSearches: [String] = []
-        for search in recentSearchesArray {
-            stringsRecentSearches.append(search.text)
-        }
-        defaults.set(stringsRecentSearches, forKey: Constants.UserDefaults.recentSearches)
     }
 }
 
@@ -253,7 +200,6 @@ extension SearchViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let searchText = searchTextField.text {
-            searchResultsArray = []
             fetchInitialSearchResults(of: searchText)
         }
     }
@@ -265,29 +211,27 @@ extension SearchViewController: UITextFieldDelegate {
 extension SearchViewController: RecentSearchCellDelegate {
     
     func recentSearchPressed(called searchName: String) {
+        
         searchTextField.text = searchName
         searchTextField.endEditing(true)
         if searchClearImageName == .search {
             searchClearIcon.image = UIImage(named: "remove")
             searchClearImageName = .remove
         }
-        searchResultsArray = []
-        fetchInitialSearchResults(of: searchName)
         
-        let index = recentSearchesArray.firstIndex(where: { $0.text == searchName })!
-        recentSearchesArray.insert(recentSearchesArray[index], at: 0)
-        recentSearchesArray.remove(at: index+1)
-        updateModelArrayIntoUserDefaults()
+        fetchInitialSearchResults(of: searchName)
+        searchVM.updateRecentSearchesHistoryOrder(selectedSearch: searchName)
     }
     
     
     func removeCellButtonDidPress(called searchName: String) {
-        recentSearchesArray = recentSearchesArray.filter { $0.text !=  searchName}
-        self.recentSearchesDataSource.models = self.recentSearchesArray
-        DispatchQueue.main.async {
-            self.recentSearchesTableView.reloadData()
+        
+        searchVM.removeItemFromRecentSearchesHistory(searchToRemove: searchName) {
+            self.recentSearchesDataSource.models = self.searchVM.recentSearchesArray
+            DispatchQueue.main.async {
+                self.recentSearchesTableView.reloadData()
+            }
         }
-        updateModelArrayIntoUserDefaults()
     }
 }
 
@@ -335,8 +279,10 @@ extension SearchViewController: UIScrollViewDelegate {
         let position = scrollView.contentOffset.y
         if position > (searchResultsTableView.contentSize.height - 100 - scrollView.frame.size.height) {
             
-            fetchNewsFromAPI(query: searchTextField.text!) {
+            searchVM.fetchNewsFromAPI(query: searchTextField.text!) { statusMsg in
                 DispatchQueue.main.async {
+                    self.searchResultsDataSource.models = self.searchVM.searchResultsArray
+                    self.searchResultsTableView.reloadData()
                     self.searchResultsTableView.tableFooterView = nil
                 }
             }
