@@ -25,21 +25,22 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     
     @IBOutlet weak var loadingView: LoadingView!
     
-    var searchVM = SearchViewModel()
+    
+    let searchVM = SearchViewModel()
     
     var searchClearImageName: iconImageName = .search
     
     var recentSearchesDataSource: TableViewDataSourceManager<RecentSearchModel>!
-    var searchResultsDataSource: TableViewDataSourceManager<Articles>!
+    var searchResultsDataSource: TableViewDataSourceManager<Article>!
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        searchVM.fetchSavedRecentSearchesFromUserDefaults()
         initiateUIElements()
         defineGestureRecognizers()
-        searchVM.fetchSavedRecentSearchesFromUserDefaults()
     }
     
     func initiateUIElements() {
@@ -130,7 +131,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         }
         
         searchVM.searchResultsArray = []
-        searchVM.fetchNewsFromAPI(query: keywords) { statusMsg in
+        searchVM.fetchNewsFromAPI(searchWords: keywords) { statusMsg in
             
             DispatchQueue.main.async {
                 self.searchResultsDataSource.models = self.searchVM.searchResultsArray
@@ -145,7 +146,11 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
                 
             } else {
                 self.searchResultsTableView.isHidden = false
-                self.searchVM.saveNewRecentSearch(keywords)
+                self.searchVM.saveNewRecentSearch(keywords) {
+                    DispatchQueue.main.async {
+                        self.searchResultsTableView.reloadData()
+                    }
+                }
             }
         }
     }
@@ -159,8 +164,8 @@ extension SearchViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         searchResultsTableView.isHidden = true
-        recentSearchesView.isHidden = false
-        recentSearchesTableView.isHidden = false
+            self.recentSearchesView.isHidden = false
+            self.recentSearchesTableView.isHidden = false
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
@@ -279,7 +284,7 @@ extension SearchViewController: UIScrollViewDelegate {
         let position = scrollView.contentOffset.y
         if position > (searchResultsTableView.contentSize.height - 100 - scrollView.frame.size.height) {
             
-            searchVM.fetchNewsFromAPI(query: searchTextField.text!) { statusMsg in
+            searchVM.fetchNewsFromAPI(searchWords: searchTextField.text!) { statusMsg in
                 DispatchQueue.main.async {
                     self.searchResultsDataSource.models = self.searchVM.searchResultsArray
                     self.searchResultsTableView.reloadData()

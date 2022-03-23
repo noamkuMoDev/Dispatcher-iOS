@@ -5,7 +5,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var userProfileShadowView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
-    var profileVM = ProfileViewModel()
+    let profileVM = ProfileViewModel()
     var dataSource: TableViewDataSourceManager<ProfileOptionModel>!
     
     

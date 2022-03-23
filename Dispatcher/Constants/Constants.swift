@@ -46,6 +46,11 @@ struct Constants {
         static let newsUrl = "https://api.newscatcherapi.com/v2/search"
     }
     
+    struct pageSizeToFetch {
+        static let savedArticles = 10
+        static let articlesList = 7
+    }
+    
     struct Keys {
         static let newsApiKey = "_E1saiwKuTTM_aofezdXNrGCZsgavQ89t-bJ8Z6WlXA"
     }

@@ -23,13 +23,13 @@ class AlamofireManager: NSObject {
     
     
     
-    func executeGetQuery<T>(completion: @escaping (Result<T, Error>, String) -> Void) where T: Codable {
+    func executeGetQuery<T>(completion: @escaping (Result<T, Error>, String?) -> Void) where T: Codable {
         isPaginating = true
         AF.request(url, method: .get, headers: headers).responseData(completionHandler: { response in
             do {
                 switch response.result {
                 case .success:
-                    completion(.success(try JSONDecoder().decode(T.self, from: response.data ?? Data())),"Fetch was successful")
+                    completion(.success(try JSONDecoder().decode(T.self, from: response.data ?? Data())), "succes")
                     self.isPaginating = false
                 case .failure(let error):
                     completion(.failure(error), "couldn't fetch data")

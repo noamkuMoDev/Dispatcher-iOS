@@ -6,8 +6,8 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var tableView: UITableView!
 
-    var homepageVM = HomepageViewModel()
-    var dataSource: TableViewDataSourceManager<Articles>!
+    let homepageVM = HomepageViewModel()
+    var dataSource: TableViewDataSourceManager<Article>!
 
     
     override func viewDidLoad() {

@@ -6,8 +6,8 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var tableView: UITableView!
     
-    var favoritesVM = FavoritesViewModel()
-    var dataSource: TableViewDataSourceManager<Articles>!
+    let favoritesVM = FavoritesViewModel()
+    var dataSource: TableViewDataSourceManager<Article>!
     
     override func viewDidLoad() {
         super.viewDidLoad()

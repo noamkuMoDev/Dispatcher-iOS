@@ -5,7 +5,7 @@ class NotificationsViewController: UIViewController {
     @IBOutlet weak var customHeader: CustomHeaderView!
     @IBOutlet weak var tableView: UITableView!
     
-    var notificationsVM = NotificationsViewModel()
+    let notificationsVM = NotificationsViewModel()
     var dataSource: TableViewDataSourceManager<NotificationModel>!
 
     

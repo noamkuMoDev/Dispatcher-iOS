@@ -5,10 +5,9 @@ class FavoritesViewModel {
     
     let repository = FavoritesRepository()
     
-    var newsArray: [Articles] = []
+    var newsArray: [Article] = []
     
     var currentPaginationPage = 1
-    var amountToFetch = 10
     var totalPaginationPages = 1
     
     
@@ -16,9 +15,8 @@ class FavoritesViewModel {
         
         if currentPaginationPage <= totalPaginationPages {
             
-            let url: String = "\(Constants.apiCalls.newsUrl)?q=news&page_size=\(amountToFetch)&page=\(currentPaginationPage)"
-            repository.fetchNewsFromAPI(url: url) { result, statusMsg in
-                
+            repository.fetchNewsFromAPI(currentPage: currentPaginationPage) { result, statusMsg in
+
                 switch result {
                 case .success(let response):
                     self.currentPaginationPage += 1
@@ -28,7 +26,7 @@ class FavoritesViewModel {
                 case .failure(let error):
                     print(error)
                 }
-                completionHandler(statusMsg)
+                completionHandler(statusMsg!)
             }
         }
     }
