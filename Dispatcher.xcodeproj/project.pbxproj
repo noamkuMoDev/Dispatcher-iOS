@@ -19,6 +19,7 @@
 		4311F5EA27EB18A000C28F3C /* HomepageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F5E927EB18A000C28F3C /* HomepageRepository.swift */; };
 		4311F5EC27EB1D5800C28F3C /* SearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F5EB27EB1D5800C28F3C /* SearchRepository.swift */; };
 		4311F5EE27EB26AF00C28F3C /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F5ED27EB26AF00C28F3C /* UserDefaultsManager.swift */; };
+		4311F5F027EB2FE500C28F3C /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F5EF27EB2FE500C28F3C /* SettingsViewModel.swift */; };
 		43C1B5BA27CE098A00AB0D3B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5B927CE098A00AB0D3B /* Constants.swift */; };
 		43C1B5BC27CE0B1700AB0D3B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */; };
 		43C1B5BE27CE0B4500AB0D3B /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */; };
@@ -115,6 +116,7 @@
 		4311F5E927EB18A000C28F3C /* HomepageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageRepository.swift; sourceTree = "<group>"; };
 		4311F5EB27EB1D5800C28F3C /* SearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepository.swift; sourceTree = "<group>"; };
 		4311F5ED27EB26AF00C28F3C /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		4311F5EF27EB2FE500C28F3C /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		43C1B5B927CE098A00AB0D3B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
@@ -213,8 +215,8 @@
 		4311F5C227E9CFFB00C28F3C /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				4311F5DE27EA0EC100C28F3C /* FavoritesRepository.swift */,
 				4311F5E927EB18A000C28F3C /* HomepageRepository.swift */,
+				4311F5DE27EA0EC100C28F3C /* FavoritesRepository.swift */,
 				4311F5EB27EB1D5800C28F3C /* SearchRepository.swift */,
 			);
 			path = Repositories;
@@ -292,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				43C1B65F27DE32BD00AB0D3B /* SettingsViewController.swift */,
+				4311F5EF27EB2FE500C28F3C /* SettingsViewModel.swift */,
 				4311F5C927E9D0F700C28F3C /* Terms and Privacy */,
 			);
 			path = Settings;
@@ -300,20 +303,10 @@
 		4311F5CF27E9E56100C28F3C /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
-				43C1B61327D8D79E00AB0D3B /* NewsCell.swift */,
-				43C1B61427D8D79E00AB0D3B /* NewsCell.xib */,
-				43C1B5EE27D0C60000AB0D3B /* SavedArticleCell.swift */,
-				43C1B5EF27D0C60000AB0D3B /* SavedArticleCell.xib */,
-				43C1B66D27DF35D000AB0D3B /* RecentSearchCell.swift */,
-				43C1B66E27DF35D000AB0D3B /* RecentSearchCell.xib */,
-				43C1B5E227D0B19100AB0D3B /* NotificationCell.swift */,
-				43C1B5E327D0B19100AB0D3B /* NotificationCell.xib */,
-				43C1B65927DE155400AB0D3B /* ProfileOptionCell.swift */,
-				43C1B65A27DE155400AB0D3B /* ProfileOptionCell.xib */,
-				43C1B66727DE4EE900AB0D3B /* SettingSectionCell.swift */,
-				43C1B66827DE4EE900AB0D3B /* SettingSectionCell.xib */,
-				43C1B66327DE379600AB0D3B /* AppSettingCell.swift */,
-				43C1B66427DE379600AB0D3B /* AppSettingCell.xib */,
+				4311F5F227EB329500C28F3C /* News */,
+				4311F5F327EB32C500C28F3C /* Profile */,
+				4311F5F427EB32DF00C28F3C /* Search */,
+				4311F5F527EB32F200C28F3C /* Notifications */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -321,14 +314,10 @@
 		4311F5D027E9E5DF00C28F3C /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
-				43C1B60527D78E5A00AB0D3B /* CustomHeaderView.swift */,
-				43C1B60727D78E6C00AB0D3B /* CustomHeaderView.xib */,
-				43DCB39F27E72B2700A1A779 /* LoadingView.xib */,
-				43DCB3A127E72B4200A1A779 /* LoadingView.swift */,
-				43DCB39927E1C45F00A1A779 /* SortbyView.swift */,
-				43DCB39B27E1C46A00A1A779 /* SortbyView.xib */,
-				43C1B60F27D8B6EF00AB0D3B /* MainActionButtonView.swift */,
-				43C1B61127D8B70300AB0D3B /* MainActionButtonView.xib */,
+				4311F5F727EB332100C28F3C /* Header */,
+				4311F5F927EB335600C28F3C /* Sort By */,
+				4311F5F827EB333700C28F3C /* Indicators */,
+				4311F5F627EB331300C28F3C /* Buttons */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -374,6 +363,92 @@
 				4311F5E727EB130200C28F3C /* ArticleResponse.swift */,
 			);
 			path = Responses;
+			sourceTree = "<group>";
+		};
+		4311F5F127EB327A00C28F3C /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				43C1B66827DE4EE900AB0D3B /* SettingSectionCell.xib */,
+				43C1B66727DE4EE900AB0D3B /* SettingSectionCell.swift */,
+				43C1B66427DE379600AB0D3B /* AppSettingCell.xib */,
+				43C1B66327DE379600AB0D3B /* AppSettingCell.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		4311F5F227EB329500C28F3C /* News */ = {
+			isa = PBXGroup;
+			children = (
+				43C1B61427D8D79E00AB0D3B /* NewsCell.xib */,
+				43C1B61327D8D79E00AB0D3B /* NewsCell.swift */,
+				43C1B5EF27D0C60000AB0D3B /* SavedArticleCell.xib */,
+				43C1B5EE27D0C60000AB0D3B /* SavedArticleCell.swift */,
+			);
+			path = News;
+			sourceTree = "<group>";
+		};
+		4311F5F327EB32C500C28F3C /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				4311F5F127EB327A00C28F3C /* Settings */,
+				43C1B65A27DE155400AB0D3B /* ProfileOptionCell.xib */,
+				43C1B65927DE155400AB0D3B /* ProfileOptionCell.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		4311F5F427EB32DF00C28F3C /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				43C1B66E27DF35D000AB0D3B /* RecentSearchCell.xib */,
+				43C1B66D27DF35D000AB0D3B /* RecentSearchCell.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		4311F5F527EB32F200C28F3C /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				43C1B5E327D0B19100AB0D3B /* NotificationCell.xib */,
+				43C1B5E227D0B19100AB0D3B /* NotificationCell.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		4311F5F627EB331300C28F3C /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				43C1B61127D8B70300AB0D3B /* MainActionButtonView.xib */,
+				43C1B60F27D8B6EF00AB0D3B /* MainActionButtonView.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
+		4311F5F727EB332100C28F3C /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				43C1B60727D78E6C00AB0D3B /* CustomHeaderView.xib */,
+				43C1B60527D78E5A00AB0D3B /* CustomHeaderView.swift */,
+			);
+			path = Header;
+			sourceTree = "<group>";
+		};
+		4311F5F827EB333700C28F3C /* Indicators */ = {
+			isa = PBXGroup;
+			children = (
+				43DCB39F27E72B2700A1A779 /* LoadingView.xib */,
+				43DCB3A127E72B4200A1A779 /* LoadingView.swift */,
+			);
+			path = Indicators;
+			sourceTree = "<group>";
+		};
+		4311F5F927EB335600C28F3C /* Sort By */ = {
+			isa = PBXGroup;
+			children = (
+				43DCB39B27E1C46A00A1A779 /* SortbyView.xib */,
+				43DCB39927E1C45F00A1A779 /* SortbyView.swift */,
+			);
+			path = "Sort By";
 			sourceTree = "<group>";
 		};
 		43C1B5C927D0A66500AB0D3B /* fonts */ = {
@@ -757,6 +832,7 @@
 				43C1B5E427D0B19100AB0D3B /* NotificationCell.swift in Sources */,
 				43C1B61027D8B6EF00AB0D3B /* MainActionButtonView.swift in Sources */,
 				43DCB39A27E1C45F00A1A779 /* SortbyView.swift in Sources */,
+				4311F5F027EB2FE500C28F3C /* SettingsViewModel.swift in Sources */,
 				43C1B66F27DF35D000AB0D3B /* RecentSearchCell.swift in Sources */,
 				4311F5CC27E9D1BC00C28F3C /* FavoritesViewModel.swift in Sources */,
 				43C1B61527D8D79F00AB0D3B /* NewsCell.swift in Sources */,

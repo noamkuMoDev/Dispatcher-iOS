@@ -12,14 +12,13 @@ class HomepageViewModel {
         
         repository.fetchNewsFromAPI(currentPage: currentPaginationPage) { result, statusMsg in
             
-                switch result {
-                case .success(let response):
-                    self.currentPaginationPage += 1
-                    self.totalPaginationPages = response.totalPages
-                    self.newsArray.append(contentsOf: response.articles)
-                case .failure(let error):
-                    print(error)
-                }
+            if statusMsg == nil {
+                self.currentPaginationPage += 1
+                self.totalPaginationPages = result!.totalPages
+                self.newsArray.append(contentsOf: result!.articles)
+            } else {
+                print(statusMsg ?? "error fetching articles")
+            }
                 completionHandler()
             }
         }

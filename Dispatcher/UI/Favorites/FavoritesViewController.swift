@@ -42,8 +42,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
             self.loadingView.isHidden = false
             self.loadingView.loadIndicator.startAnimating()
         }
-        favoritesVM.fetchNewsFromAPI() {  statusMsg in
-            print(statusMsg)
+        favoritesVM.fetchNewsFromAPI() {
             DispatchQueue.main.async {
                 self.dataSource.models = self.favoritesVM.newsArray
                 self.tableView.reloadData()
@@ -94,8 +93,7 @@ extension FavoritesViewController: UIScrollViewDelegate {
         let position = scrollView.contentOffset.y
         if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) {
             
-            favoritesVM.fetchNewsFromAPI() { statusMsg in
-                print(statusMsg)
+            favoritesVM.fetchNewsFromAPI() {
                 self.dataSource.models = self.favoritesVM.newsArray
                 DispatchQueue.main.async {
                     self.tableView.reloadData()

@@ -15,11 +15,6 @@ class TermsAndPrivacyViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
     }
-
-    func viewWillDisppear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.isNavigationBarHidden = false
-    }
 }
 
 

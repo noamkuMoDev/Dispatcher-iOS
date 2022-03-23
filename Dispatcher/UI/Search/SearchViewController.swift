@@ -131,8 +131,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         }
         
         searchVM.searchResultsArray = []
-        searchVM.fetchNewsFromAPI(searchWords: keywords) { statusMsg in
-            
+        searchVM.fetchNewsFromAPI(searchWords: keywords) {
             DispatchQueue.main.async {
                 self.searchResultsDataSource.models = self.searchVM.searchResultsArray
                 self.searchResultsTableView.reloadData()
@@ -284,7 +283,7 @@ extension SearchViewController: UIScrollViewDelegate {
         let position = scrollView.contentOffset.y
         if position > (searchResultsTableView.contentSize.height - 100 - scrollView.frame.size.height) {
             
-            searchVM.fetchNewsFromAPI(searchWords: searchTextField.text!) { statusMsg in
+            searchVM.fetchNewsFromAPI(searchWords: searchTextField.text!) {
                 DispatchQueue.main.async {
                     self.searchResultsDataSource.models = self.searchVM.searchResultsArray
                     self.searchResultsTableView.reloadData()

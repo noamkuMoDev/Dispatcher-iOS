@@ -11,22 +11,20 @@ class FavoritesViewModel {
     var totalPaginationPages = 1
     
     
-    func fetchNewsFromAPI(completionHandler: @escaping (String) -> ()) {
+    func fetchNewsFromAPI(completionHandler: @escaping () -> ()) {
         
         if currentPaginationPage <= totalPaginationPages {
             
             repository.fetchNewsFromAPI(currentPage: currentPaginationPage) { result, statusMsg in
 
-                switch result {
-                case .success(let response):
+                if statusMsg == nil {
                     self.currentPaginationPage += 1
-                    self.totalPaginationPages = response.totalPages
-                    self.newsArray.append(contentsOf: response.articles)
-                    
-                case .failure(let error):
-                    print(error)
+                    self.totalPaginationPages = result!.totalPages
+                    self.newsArray.append(contentsOf: result!.articles)
+                } else {
+                    print(statusMsg ?? "error fetching saved articles")
                 }
-                completionHandler(statusMsg!)
+                completionHandler()
             }
         }
     }

@@ -11,21 +11,19 @@ class SearchViewModel {
     var searchResultsArray: [Article] = []
     
     
-    func fetchNewsFromAPI(searchWords: String, completionHandler: @escaping (String) -> ()) {
+    func fetchNewsFromAPI(searchWords: String, completionHandler: @escaping () -> ()) {
         
         if currentPaginationPage <= totalPaginationPages {
             repository.fetchNewsFromAPI(searchWords: searchWords, currentPage: currentPaginationPage) { result, statusMsg in
 
-                switch result {
-                case .success(let response):
+                if statusMsg == nil {
                     self.currentPaginationPage += 1
-                    self.totalPaginationPages = response.totalPages
-                    self.searchResultsArray.append(contentsOf: response.articles)
-                    
-                case .failure(let error):
-                    print(error)
+                    self.totalPaginationPages = result!.totalPages
+                    self.searchResultsArray.append(contentsOf: result!.articles)
+                } else {
+                    print(statusMsg ?? "error fetching articles of search words")
                 }
-                completionHandler(statusMsg!)
+                completionHandler()
             }
         }
     }
