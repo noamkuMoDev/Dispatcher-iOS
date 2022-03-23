@@ -16,6 +16,8 @@ struct Constants {
         static let goToUpdateProfile = "goToUpdateProfile"
         static let goToTermsAndPrivacy = "goToTermsAndPrivacy"
         static let goToSettings = "goToSettings"
+        static let signupToHomepage = "signupIntoApp"
+        static let signupToLogin = "signupToLogin"
     }
     
     struct TableCellsIdentifier {
