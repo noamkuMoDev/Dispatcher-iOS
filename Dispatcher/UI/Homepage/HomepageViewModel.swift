@@ -2,7 +2,7 @@ import Foundation
 
 class HomepageViewModel {
     
-    let repository = HomepageRepository()
+    private let repository = HomepageRepository()
     var newsArray: [Article] = []
     
     private var currentPaginationPage = 1
@@ -11,7 +11,6 @@ class HomepageViewModel {
     func fetchNewsFromAPI(completionHandler: @escaping (String?) -> ()) {
         
         repository.fetchNewsFromAPI(currentPage: currentPaginationPage) { result, statusMsg in
-            
             if statusMsg == nil {
                 self.currentPaginationPage += 1
                 self.totalPaginationPages = result!.totalPages

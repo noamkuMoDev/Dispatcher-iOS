@@ -550,11 +550,11 @@
 		43F08D3F27C7C9A6003FFA7D /* Dispatcher */ = {
 			isa = PBXGroup;
 			children = (
-				4311F60127EC609B00C28F3C /* Persistence */,
 				43C1B5C927D0A66500AB0D3B /* fonts */,
 				43DCD2AB27CCAC3000020D8A /* Firebase */,
 				43F08D5727C7CA06003FFA7D /* Supporting Files */,
 				4311F5D227E9E6EA00C28F3C /* Constants */,
+				4311F60127EC609B00C28F3C /* Persistence */,
 				4311F5E027EB0E0E00C28F3C /* Networking */,
 				4311F5C227E9CFFB00C28F3C /* Repositories */,
 				4311F5C327E9D00600C28F3C /* UI */,

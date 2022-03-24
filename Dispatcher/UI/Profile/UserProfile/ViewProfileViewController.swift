@@ -10,17 +10,16 @@ class ViewProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initializeUIElements()
+    }
+    
+    func initializeUIElements() {
         customHeader.initView(delegate: self, leftIcon: UIImage(named: "BackButton"))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
-    }
-
-    func viewWillDisppear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.isNavigationBarHidden = false
     }
     
     @IBAction func editProfileButtonPressed(_ sender: Any) {

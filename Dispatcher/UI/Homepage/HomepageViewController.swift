@@ -36,7 +36,6 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
                 currentCell.summaryLabel.text = article.content
                 currentCell.subjectTag.setTitle(article.topic, for: .normal)
             }
-        
         tableView.dataSource = dataSource
         tableView.delegate = self
     }

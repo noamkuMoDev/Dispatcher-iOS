@@ -12,6 +12,10 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initiateUIElements()
+    }
+    
+    func initiateUIElements() {
         addShadowsToHeader()
         setupTableView()
     }
@@ -30,7 +34,6 @@ class ProfileViewController: UIViewController {
             models: viewModel.optionsArray,
             reuseIdentifier: Constants.TableCellsIdentifier.PROFILE_OPTION
         ) { option, cell in
-            print(option)
             let currentcell = cell as! ProfileOptionCell
             currentcell.label.text = option.text
             currentcell.iconImageView.image = UIImage(named: option.icon)

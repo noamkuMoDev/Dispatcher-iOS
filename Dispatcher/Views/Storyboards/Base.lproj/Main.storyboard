@@ -926,6 +926,19 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                                     <constraint firstAttribute="height" constant="32" id="Usn-Dc-Owv"/>
                                 </constraints>
                             </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no-results-found-image" translatesAutoresizingMaskIntoConstraints="NO" id="HZq-ak-OhP">
+                                <rect key="frame" x="150.66666666666666" y="306" width="112.99999999999997" height="113"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="113" id="3Jy-Qf-kmx"/>
+                                    <constraint firstAttribute="height" constant="113" id="FXo-F2-iHe"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No saved articles were found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JSg-cc-jjP">
+                                <rect key="frame" x="90.666666666666671" y="427" width="232.66666666666663" height="21.333333333333314"/>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="XjW-ao-P3U">
                                 <rect key="frame" x="8" y="96" width="398" height="629"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -936,16 +949,20 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                         <constraints>
                             <constraint firstItem="XjW-ao-P3U" firstAttribute="leading" secondItem="UjA-9h-A2X" secondAttribute="leading" constant="8" id="79V-Gx-nBt"/>
                             <constraint firstItem="XjW-ao-P3U" firstAttribute="trailing" secondItem="UjA-9h-A2X" secondAttribute="trailing" constant="-8" id="EUk-0S-mXi"/>
+                            <constraint firstItem="HZq-ak-OhP" firstAttribute="centerX" secondItem="vSL-IN-Nez" secondAttribute="centerX" id="F0t-cF-FKC"/>
                             <constraint firstAttribute="bottomMargin" secondItem="84b-yh-Gq1" secondAttribute="bottom" id="GSR-Yg-kAj"/>
                             <constraint firstItem="UjA-9h-A2X" firstAttribute="trailing" secondItem="O8o-KD-LEg" secondAttribute="trailing" id="IGo-QO-koK"/>
                             <constraint firstItem="ldg-ii-AYH" firstAttribute="top" secondItem="UjA-9h-A2X" secondAttribute="top" id="V8A-8Q-GzV"/>
+                            <constraint firstItem="JSg-cc-jjP" firstAttribute="top" secondItem="HZq-ak-OhP" secondAttribute="bottom" constant="8" id="bKj-Z8-4tZ"/>
                             <constraint firstItem="ldg-ii-AYH" firstAttribute="leading" secondItem="UjA-9h-A2X" secondAttribute="leading" id="eyg-pd-Ucr"/>
                             <constraint firstItem="XjW-ao-P3U" firstAttribute="top" secondItem="O8o-KD-LEg" secondAttribute="bottom" id="gIc-5i-JZ2"/>
                             <constraint firstItem="O8o-KD-LEg" firstAttribute="top" secondItem="UjA-9h-A2X" secondAttribute="top" constant="64" id="jIC-nE-jsG"/>
                             <constraint firstItem="ldg-ii-AYH" firstAttribute="trailing" secondItem="UjA-9h-A2X" secondAttribute="trailing" id="kPT-rq-beY"/>
                             <constraint firstItem="O8o-KD-LEg" firstAttribute="leading" secondItem="UjA-9h-A2X" secondAttribute="leading" id="ndG-ch-YOC"/>
                             <constraint firstItem="XjW-ao-P3U" firstAttribute="bottom" secondItem="UjA-9h-A2X" secondAttribute="bottom" id="rSH-xx-B0W"/>
+                            <constraint firstItem="JSg-cc-jjP" firstAttribute="centerX" secondItem="vSL-IN-Nez" secondAttribute="centerX" id="u4L-ic-TA9"/>
                             <constraint firstItem="84b-yh-Gq1" firstAttribute="top" secondItem="vSL-IN-Nez" secondAttribute="topMargin" id="uGg-1o-ZDZ"/>
+                            <constraint firstItem="HZq-ak-OhP" firstAttribute="centerY" secondItem="vSL-IN-Nez" secondAttribute="centerY" id="vRv-oE-aKh"/>
                             <constraint firstAttribute="trailing" secondItem="84b-yh-Gq1" secondAttribute="trailing" id="y0H-hM-0MJ"/>
                             <constraint firstItem="84b-yh-Gq1" firstAttribute="leading" secondItem="vSL-IN-Nez" secondAttribute="leading" id="yHO-DK-43q"/>
                         </constraints>
@@ -954,6 +971,8 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                     <connections>
                         <outlet property="customHeader" destination="ldg-ii-AYH" id="q8K-gO-PVX"/>
                         <outlet property="loadingView" destination="84b-yh-Gq1" id="oeY-rm-dSq"/>
+                        <outlet property="noResultsImageView" destination="HZq-ak-OhP" id="bGw-Eu-rMs"/>
+                        <outlet property="noResultsLabel" destination="JSg-cc-jjP" id="wsA-2H-reb"/>
                         <outlet property="tableView" destination="XjW-ao-P3U" id="iBU-Fx-QOu"/>
                         <segue destination="tUC-ru-eE1" kind="show" identifier="favoritesToNotifications" id="Tvg-NK-Rg2"/>
                         <segue destination="Qi2-cd-MPv" kind="show" identifier="favoritesToSearch" id="SwU-X3-8Hj"/>
@@ -965,8 +984,8 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="U37-Fe-alY"/>
-        <segue reference="f5P-ad-VVd"/>
+        <segue reference="SwU-X3-8Hj"/>
+        <segue reference="Tvg-NK-Rg2"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Favorites" width="25" height="25"/>

@@ -6,6 +6,10 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var noResultsImageView: UIImageView!
+    @IBOutlet weak var noResultsLabel: UILabel!
+    
+    
     let viewModel = FavoritesViewModel()
     var dataSource: TableViewDataSourceManager<Article>!
     
@@ -19,6 +23,8 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     func initiateUIElements() {
         customHeader.initView(delegate: self, icon1: UIImage(named: "notifications"), icon2: UIImage(named: "search"), leftIcon: UIImage(named: "logo"))
         loadingView.initView(delegate: self)
+        noResultsLabel.isHidden = true
+        noResultsImageView.isHidden = true
         setupTableView()
     }
     
@@ -52,7 +58,9 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
             }
             
             if self.viewModel.newsArray.count == 0 {
-                //TO DO: tell user there are no saved articles
+                self.tableView.isHidden = true
+                self.noResultsLabel.isHidden = false
+                self.noResultsImageView.isHidden = false
             }
         }
     }

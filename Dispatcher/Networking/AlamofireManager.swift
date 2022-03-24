@@ -7,7 +7,7 @@ class AlamofireManager: NSObject {
     var url: String!
     var headers = HTTPHeaders()
     var parameters = Parameters()
-    var encoding: ParameterEncoding = JSONEncoding.default
+    let encoding: ParameterEncoding = JSONEncoding.default
     
     
     

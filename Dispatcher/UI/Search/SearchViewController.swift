@@ -43,22 +43,48 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         defineGestureRecognizers()
     }
     
+    func fetchInitialSearchResults(of keywords: String) {
+        
+        DispatchQueue.main.async {
+            self.recentSearchesView.isHidden = true
+            self.recentSearchesTableView.isHidden = true
+            
+            self.sortbyView.isHidden = false
+            self.loadingView.isHidden = false
+            self.loadingView.loadIndicator.startAnimating()
+        }
+        
+        viewModel.searchResultsArray = []
+        viewModel.fetchNewsFromAPI(searchWords: keywords) { error in
+            print(error ?? "")
+            DispatchQueue.main.async {
+                self.searchResultsDataSource.models = self.viewModel.searchResultsArray
+                self.searchResultsTableView.reloadData()
+                self.loadingView.loadIndicator.stopAnimating()
+                self.loadingView.isHidden = true
+            }
+            
+            if self.viewModel.searchResultsArray.count == 0 {
+                self.noResultsLabel.isHidden = false
+                self.noResultsImageView.isHidden = false
+                
+            } else {
+                self.searchResultsTableView.isHidden = false
+                self.viewModel.saveNewRecentSearch(keywords) {
+                    DispatchQueue.main.async {
+                        self.searchResultsTableView.reloadData()
+                        self.recentSearchesDataSource.models = self.viewModel.recentSearchesArray
+                        self.recentSearchesTableView.reloadData()
+                    }
+                }
+            }
+        }
+    }
+    
     func initiateUIElements() {
         setupTextField()
         setupTableViews()
         initialHideShowElements()
-    }
-    
-    func defineGestureRecognizers() {
-        goBackButton.addGestureRecognizer(UITapGestureRecognizer(target: goBackButton, action: #selector(goBackButtonPressed)))
-        goBackButton.isUserInteractionEnabled = true
-        let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(goBackButtonPressed(tapGestureRecognizer:)))
-        goBackButton.addGestureRecognizer(tapGestureRecognizer1)
-        
-        searchClearIcon.addGestureRecognizer(UITapGestureRecognizer(target: searchClearIcon, action: #selector(searchClearButtonPressed)))
-        searchClearIcon.isUserInteractionEnabled = true
-        let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(searchClearButtonPressed(tapGestureRecognizer:)))
-        searchClearIcon.addGestureRecognizer(tapGestureRecognizer2)
     }
     
     func setupTextField() {
@@ -106,6 +132,19 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         noResultsLabel.isHidden = true
     }
     
+    func defineGestureRecognizers() {
+        goBackButton.addGestureRecognizer(UITapGestureRecognizer(target: goBackButton, action: #selector(goBackButtonPressed)))
+        goBackButton.isUserInteractionEnabled = true
+        let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(goBackButtonPressed(tapGestureRecognizer:)))
+        goBackButton.addGestureRecognizer(tapGestureRecognizer1)
+        
+        searchClearIcon.addGestureRecognizer(UITapGestureRecognizer(target: searchClearIcon, action: #selector(searchClearButtonPressed)))
+        searchClearIcon.isUserInteractionEnabled = true
+        let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(searchClearButtonPressed(tapGestureRecognizer:)))
+        searchClearIcon.addGestureRecognizer(tapGestureRecognizer2)
+    }
+    
+   
     @objc func goBackButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         navigationController?.popViewController(animated: true)
     }
@@ -118,42 +157,6 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         }
     }
     
-    
-    func fetchInitialSearchResults(of keywords: String) {
-        
-        DispatchQueue.main.async {
-            self.recentSearchesView.isHidden = true
-            self.recentSearchesTableView.isHidden = true
-            
-            self.sortbyView.isHidden = false
-            self.loadingView.isHidden = false
-            self.loadingView.loadIndicator.startAnimating()
-        }
-        
-        viewModel.searchResultsArray = []
-        viewModel.fetchNewsFromAPI(searchWords: keywords) { error in
-            print(error ?? "")
-            DispatchQueue.main.async {
-                self.searchResultsDataSource.models = self.viewModel.searchResultsArray
-                self.searchResultsTableView.reloadData()
-                self.loadingView.loadIndicator.stopAnimating()
-                self.loadingView.isHidden = true
-            }
-            
-            if self.viewModel.searchResultsArray.count == 0 {
-                self.noResultsLabel.isHidden = false
-                self.noResultsImageView.isHidden = false
-                
-            } else {
-                self.searchResultsTableView.isHidden = false
-                self.viewModel.saveNewRecentSearch(keywords) {
-                    DispatchQueue.main.async {
-                        self.searchResultsTableView.reloadData()
-                    }
-                }
-            }
-        }
-    }
 }
 
 
@@ -164,8 +167,8 @@ extension SearchViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         searchResultsTableView.isHidden = true
-            self.recentSearchesView.isHidden = false
-            self.recentSearchesTableView.isHidden = false
+        recentSearchesView.isHidden = false
+        recentSearchesTableView.isHidden = false
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
@@ -216,21 +219,23 @@ extension SearchViewController: UITextFieldDelegate {
 extension SearchViewController: RecentSearchCellDelegate {
     
     func recentSearchPressed(called searchName: String) {
-        
         searchTextField.text = searchName
         searchTextField.endEditing(true)
         if searchClearImageName == .search {
             searchClearIcon.image = UIImage(named: "remove")
             searchClearImageName = .remove
         }
-        
         fetchInitialSearchResults(of: searchName)
-        viewModel.updateRecentSearchesHistoryOrder(selectedSearch: searchName)
+        viewModel.updateRecentSearchesHistoryOrder(selectedSearch: searchName) {
+            DispatchQueue.main.async {
+                self.recentSearchesDataSource.models = self.viewModel.recentSearchesArray
+                self.recentSearchesTableView.reloadData()
+            }
+        }
     }
     
     
     func removeCellButtonDidPress(called searchName: String) {
-        
         viewModel.removeItemFromRecentSearchesHistory(searchToRemove: searchName) {
             self.recentSearchesDataSource.models = self.viewModel.recentSearchesArray
             DispatchQueue.main.async {

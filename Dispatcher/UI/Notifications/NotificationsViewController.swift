@@ -27,10 +27,16 @@ class NotificationsViewController: UIViewController {
             reuseIdentifier: Constants.TableCellsIdentifier.NOTIFICATION
         ) { notification, cell in
             let currentCell = cell as! NotificationCell
+            currentCell.delegate = self
             currentCell.label.text = notification.text
+            if !notification.wasRead {
+                currentCell.label.textColor = UIColor.lightGray
+                currentCell.entireCell.backgroundColor = hexStringToUIColor(hex: "#FAFAFA")
+                currentCell.verticalLine.image = UIImage(named: "NotificationVerticleLine-Gray")
+            }
         }
         tableView.dataSource = dataSource
-        tableView.delegate = dataSource
+        tableView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,5 +51,20 @@ extension NotificationsViewController: CustomHeaderViewDelegate {
 
     func leftIconPressed() {
         navigationController?.popViewController(animated: true)
+    }
+}
+
+//MARK: - UITableViewDelegate
+extension NotificationsViewController: UITableViewDelegate {
+    
+    // TO DO: add pagination & loading footer to table
+}
+
+
+//MARK: - NotificationCellDelegate
+extension NotificationsViewController: NotificationCellDelegate {
+    
+    func notificationDidPress(notificationText: String) {
+        print("pressed notification with content: \(notificationText)")
     }
 }

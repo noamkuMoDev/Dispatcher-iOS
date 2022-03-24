@@ -41,7 +41,6 @@ class SearchViewModel {
     func clearRecentSearchesHistory(completionHandler: @escaping () -> ()) {
         recentSearchesArray = []
         repository.updateModelArrayIntoUserDefaults(recentSearchesArr: recentSearchesArray)
-        completionHandler()
     }
     
     func saveNewRecentSearch(_ keyword: String, completionHandler: @escaping () -> ()) {
@@ -58,11 +57,12 @@ class SearchViewModel {
         completionHandler()
     }
     
-    func updateRecentSearchesHistoryOrder(selectedSearch: String) {
+    func updateRecentSearchesHistoryOrder(selectedSearch: String, completionHandler: @escaping () -> ()) {
         let index = recentSearchesArray.firstIndex(where: { $0.text == selectedSearch })!
         recentSearchesArray.insert(recentSearchesArray[index], at: 0)
         recentSearchesArray.remove(at: index+1)
         repository.updateModelArrayIntoUserDefaults(recentSearchesArr: recentSearchesArray)
+        completionHandler()
     }
     
     func removeItemFromRecentSearchesHistory(searchToRemove: String, completionHandler: @escaping () -> ()) {
