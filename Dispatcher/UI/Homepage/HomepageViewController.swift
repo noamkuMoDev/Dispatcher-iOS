@@ -6,7 +6,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var tableView: UITableView!
 
-    let homepageVM = HomepageViewModel()
+    let viewModel = HomepageViewModel()
     var dataSource: TableViewDataSourceManager<Article>!
 
     
@@ -24,10 +24,10 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
     }
     
     func setupTableView() {
-        tableView.register(UINib(nibName: Constants.NibNames.homepage, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.homepage)
+        tableView.register(UINib(nibName: Constants.NibNames.HOMEPAGE, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE)
         self.dataSource = TableViewDataSourceManager(
-                models: homepageVM.newsArray,
-                reuseIdentifier: Constants.TableCellsIdentifier.homepage
+                models: viewModel.newsArray,
+                reuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE
             ) { article, cell in
                 let currentCell = cell as! NewsCell
                 currentCell.titleLabel.text = article.articleTitle
@@ -46,10 +46,10 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
             self.loadingView.isHidden = false
             self.loadingView.loadIndicator.startAnimating()
         }
-        homepageVM.fetchNewsFromAPI() {
+        viewModel.fetchNewsFromAPI() {
             
             DispatchQueue.main.async {
-                self.dataSource.models = self.homepageVM.newsArray
+                self.dataSource.models = self.viewModel.newsArray
                 self.tableView.reloadData()
                 self.loadingView.loadIndicator.stopAnimating()
                 self.loadingView.isHidden = true
@@ -69,11 +69,11 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
 extension HomepageViewController: CustomHeaderViewDelegate {
     
     func firstRightIconPressed() {
-        self.performSegue(withIdentifier: Constants.Segues.homepageToNotifications, sender: self)
+        self.performSegue(withIdentifier: Constants.Segues.HOMEPAGE_TO_NOTIFICATIONS, sender: self)
     }
     
     func secondRightIconPressed() {
-        self.performSegue(withIdentifier: Constants.Segues.homepageToSearch, sender: self)
+        self.performSegue(withIdentifier: Constants.Segues.HOMEPAGE_TO_SEARCH, sender: self)
     }
 }
 
@@ -96,8 +96,8 @@ extension HomepageViewController: UIScrollViewDelegate {
         
         let position = scrollView.contentOffset.y
         if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) {
-            homepageVM.fetchNewsFromAPI() {
-                self.dataSource.models = self.homepageVM.newsArray
+            viewModel.fetchNewsFromAPI() {
+                self.dataSource.models = self.viewModel.newsArray
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                     self.tableView.tableFooterView = nil

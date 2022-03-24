@@ -5,7 +5,7 @@ class NotificationsViewController: UIViewController {
     @IBOutlet weak var customHeader: CustomHeaderView!
     @IBOutlet weak var tableView: UITableView!
     
-    let notificationsVM = NotificationsViewModel()
+    let viewModel = NotificationsViewModel()
     var dataSource: TableViewDataSourceManager<NotificationModel>!
 
     
@@ -21,10 +21,10 @@ class NotificationsViewController: UIViewController {
     }
     
     func setupTableView() {
-        tableView.register(UINib(nibName: Constants.NibNames.notification, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.notification)
+        tableView.register(UINib(nibName: Constants.NibNames.NOTIFICATION, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.NOTIFICATION)
         self.dataSource = TableViewDataSourceManager(
-            models: notificationsVM.notificationsArray,
-            reuseIdentifier: Constants.TableCellsIdentifier.notification
+            models: viewModel.notificationsArray,
+            reuseIdentifier: Constants.TableCellsIdentifier.NOTIFICATION
         ) { notification, cell in
             let currentCell = cell as! NotificationCell
             currentCell.label.text = notification.text

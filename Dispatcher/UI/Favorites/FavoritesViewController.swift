@@ -6,7 +6,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var tableView: UITableView!
     
-    let favoritesVM = FavoritesViewModel()
+    let viewModel = FavoritesViewModel()
     var dataSource: TableViewDataSourceManager<Article>!
     
     override func viewDidLoad() {
@@ -23,10 +23,10 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     }
     
     func setupTableView() {
-        tableView.register(UINib(nibName: Constants.NibNames.favorites, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.favorites)
+        tableView.register(UINib(nibName: Constants.NibNames.FAVORITES, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.FAVORITES)
         self.dataSource = TableViewDataSourceManager(
-            models: favoritesVM.newsArray,
-            reuseIdentifier: Constants.TableCellsIdentifier.favorites
+            models: viewModel.newsArray,
+            reuseIdentifier: Constants.TableCellsIdentifier.FAVORITES
         ) { savedArticle, cell in
             let currentCell = cell as! SavedArticleCell
             currentCell.articleTitle.text = savedArticle.articleTitle
@@ -42,15 +42,15 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
             self.loadingView.isHidden = false
             self.loadingView.loadIndicator.startAnimating()
         }
-        favoritesVM.fetchNewsFromAPI() {
+        viewModel.fetchNewsFromAPI() {
             DispatchQueue.main.async {
-                self.dataSource.models = self.favoritesVM.newsArray
+                self.dataSource.models = self.viewModel.newsArray
                 self.tableView.reloadData()
                 self.loadingView.loadIndicator.stopAnimating()
                 self.loadingView.isHidden = true
             }
             
-            if self.favoritesVM.newsArray.count == 0 {
+            if self.viewModel.newsArray.count == 0 {
                 //TO DO: tell user there are no saved articles
             }
         }
@@ -67,11 +67,11 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
 extension FavoritesViewController: CustomHeaderViewDelegate {
     
     func firstRightIconPressed() {
-        self.performSegue(withIdentifier: Constants.Segues.favoritesToNotifications, sender: self)
+        self.performSegue(withIdentifier: Constants.Segues.FAVORITES_TO_NOTIFICATIONS, sender: self)
     }
     
     func secondRightIconPressed() {
-        self.performSegue(withIdentifier: Constants.Segues.favoritesToSearch, sender: self)
+        self.performSegue(withIdentifier: Constants.Segues.FAVORITES_TO_SEARCH, sender: self)
     }
 }
 
@@ -93,8 +93,8 @@ extension FavoritesViewController: UIScrollViewDelegate {
         let position = scrollView.contentOffset.y
         if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) {
             
-            favoritesVM.fetchNewsFromAPI() {
-                self.dataSource.models = self.favoritesVM.newsArray
+            viewModel.fetchNewsFromAPI() {
+                self.dataSource.models = self.viewModel.newsArray
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                     self.tableView.tableFooterView = nil

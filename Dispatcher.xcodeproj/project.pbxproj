@@ -22,6 +22,7 @@
 		4311F5F027EB2FE500C28F3C /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F5EF27EB2FE500C28F3C /* SettingsViewModel.swift */; };
 		4311F5FC27EB4EA300C28F3C /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F5FB27EB4EA300C28F3C /* SignupViewController.swift */; };
 		4311F5FE27EB5D3F00C28F3C /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F5FD27EB5D3F00C28F3C /* SignupViewModel.swift */; };
+		4311F60027EC574400C28F3C /* FirebaseAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F5FF27EC574400C28F3C /* FirebaseAuthManager.swift */; };
 		43C1B5BA27CE098A00AB0D3B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5B927CE098A00AB0D3B /* Constants.swift */; };
 		43C1B5BC27CE0B1700AB0D3B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */; };
 		43C1B5BE27CE0B4500AB0D3B /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */; };
@@ -121,6 +122,7 @@
 		4311F5EF27EB2FE500C28F3C /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		4311F5FB27EB4EA300C28F3C /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		4311F5FD27EB5D3F00C28F3C /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
+		4311F5FF27EC574400C28F3C /* FirebaseAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManager.swift; sourceTree = "<group>"; };
 		43C1B5B927CE098A00AB0D3B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 				43DCB39727DF8D1A00A1A779 /* AlamofireManager.swift */,
 				4311F5ED27EB26AF00C28F3C /* UserDefaultsManager.swift */,
 				4311F5E127EB102100C28F3C /* Responses */,
+				4311F5FF27EC574400C28F3C /* FirebaseAuthManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -841,6 +844,7 @@
 				4311F5DB27EA049A00C28F3C /* NotificationsViewModel.swift in Sources */,
 				43C1B66C27DF312100AB0D3B /* SearchViewController.swift in Sources */,
 				43DCB3A227E72B4200A1A779 /* LoadingView.swift in Sources */,
+				4311F60027EC574400C28F3C /* FirebaseAuthManager.swift in Sources */,
 				4311F5EA27EB18A000C28F3C /* HomepageRepository.swift in Sources */,
 				43C1B65827DE13D000AB0D3B /* ProfileOptionModel.swift in Sources */,
 				43C1B5BA27CE098A00AB0D3B /* Constants.swift in Sources */,

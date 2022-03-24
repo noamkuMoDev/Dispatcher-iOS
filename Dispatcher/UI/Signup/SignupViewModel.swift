@@ -1,7 +1,10 @@
 import Foundation
-import FirebaseAuth
+
 
 class SignupViewModel {
+    
+    let repository = FirebaseAuthManager()
+    
     
     func isValidEmailAddress(email: String) -> Bool {
         
@@ -63,15 +66,8 @@ class SignupViewModel {
     
     func signUserToApp(email: String, password: String) {
         
-        Auth.auth().createUser(withEmail: email, password: password) {
-            authResult, error in
-            
-            if error != nil {
-                // there was an error creating the user, dispaly message on screen
-                print(error!)
-            } else {
-                // TO DO - save generated ID & the user in a database
-            }
-        }
+        let cleanEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleanPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
+        repository.signUserToApp(email: cleanEmail, password: cleanPassword)
     }
 }

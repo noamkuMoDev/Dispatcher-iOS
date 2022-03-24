@@ -24,7 +24,7 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var loginButton: MainActionButtonView!
     
     
-    let signupVM = SignupViewModel()
+    let viewModel = SignupViewModel()
     
     var passwordEyeStatus: eyeIconStatus = .conseal
     var reenterPasswordEyeStatus: eyeIconStatus = .conseal
@@ -47,18 +47,21 @@ class SignupViewController: UIViewController {
         emailTextField.layer.masksToBounds = true
         emailTextField.layer.borderColor = UIColor.red.cgColor
         emailTextField.layer.borderWidth = 0.0
+        emailTextField.layer.cornerRadius = 4.0
         
         passwordTextField.delegate = self
         passwordTextField.addTarget(self, action: #selector(SignupViewController.textFieldDidChange(_:)), for: .editingChanged)
         passwordTextField.layer.masksToBounds = true
         passwordTextField.layer.borderColor = UIColor.red.cgColor
         passwordTextField.layer.borderWidth = 0.0
+        passwordTextField.layer.cornerRadius = 4.0
         
         reenterPasswordTextField.delegate = self
         reenterPasswordTextField.addTarget(self, action: #selector(SignupViewController.textFieldDidChange(_:)), for: .editingChanged)
         reenterPasswordTextField.layer.masksToBounds = true
         reenterPasswordTextField.layer.borderColor = UIColor.red.cgColor
         reenterPasswordTextField.layer.borderWidth = 0.0
+        reenterPasswordTextField.layer.cornerRadius = 4.0
     }
     
     func defineGestureRecognizers() {
@@ -114,8 +117,8 @@ class SignupViewController: UIViewController {
             reenterPasswordTextField.layer.borderWidth = 1.0
         } else {
             let currentEmail = emailTextField.text, currentPassword = passwordTextField.text
-            if signupVM.validateSignUpFields(email: currentEmail, password: currentPassword, passwordAgain: reenterPasswordTextField.text) {
-                signupVM.signUserToApp(email: currentEmail!, password: currentPassword!)
+            if viewModel.validateSignUpFields(email: currentEmail, password: currentPassword, passwordAgain: reenterPasswordTextField.text) {
+                viewModel.signUserToApp(email: currentEmail!, password: currentPassword!)
             } else {
                 // 1 or more fields don't fit requirements
             }
@@ -124,7 +127,7 @@ class SignupViewController: UIViewController {
     
     
     func loginButtonPressed() {
-        self.performSegue(withIdentifier: Constants.Segues.signupToLogin, sender: self)
+        self.performSegue(withIdentifier: Constants.Segues.SIGNUP_TO_LOGIN, sender: self)
     }
 }
 
@@ -135,7 +138,7 @@ extension SignupViewController: UITextFieldDelegate {
         
         if textField == emailTextField {
             if emailTextField.text != nil && emailTextField.text!.count > 5 {
-                if !signupVM.isValidEmailAddress(email: emailTextField.text!) {
+                if !viewModel.isValidEmailAddress(email: emailTextField.text!) {
                     wrongEmailLabel.isHidden = false
                     emailTextField.layer.borderWidth = 1.0
                 } else {
@@ -146,7 +149,7 @@ extension SignupViewController: UITextFieldDelegate {
         }
         
         if textField == passwordTextField {
-            let isPasswordStrong = signupVM.isStrongPassword(password: passwordTextField.text ?? "")
+            let isPasswordStrong = viewModel.isStrongPassword(password: passwordTextField.text ?? "")
             if !isPasswordStrong {
                 weakPasswordLabel.isHidden = false
                 passwordTextField.layer.borderWidth = 1.0
