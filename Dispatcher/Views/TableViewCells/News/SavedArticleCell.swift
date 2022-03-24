@@ -36,7 +36,6 @@ class SavedArticleCell: UITableViewCell {
         savedArticleCell.layer.borderWidth = 2
         let borderColor = UIColor( red: 243/255, green: 243/255, blue:255/255, alpha: 1.0 )
         savedArticleCell.layer.borderColor = borderColor.cgColor
-        
         savedArticleCell.layer.cornerRadius =  4
     }
     

@@ -10,7 +10,6 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         initializeUIElements()
     }
     
@@ -51,19 +50,19 @@ extension SettingsViewController: UITableViewDataSource {
         cell.settingTitle.text = viewModel.appSettings[indexPath.section].options[indexPath.row].title
         cell.settingDescription.text = viewModel.appSettings[indexPath.section].options[indexPath.row].description
         
-        var switchImage: UIImage
+        var settingSwitchImage: UIImage
         switch viewModel.appSettings[indexPath.section].options[indexPath.row].status {
         case .on:
-            switchImage = UIImage(named: "switch-on")!
+            settingSwitchImage = UIImage(named: "switch-on")!
             break
         case .off:
-            switchImage = UIImage(named: "switch-off")!
+            settingSwitchImage = UIImage(named: "switch-off")!
             break
         default:
-            switchImage = UIImage(named: "switch-disabled")!
+            settingSwitchImage = UIImage(named: "switch-disabled")!
             break
         }
-        cell.settingSwitchImageView.image = switchImage
+        cell.settingSwitchImageView.image = settingSwitchImage
         
         return cell
     }

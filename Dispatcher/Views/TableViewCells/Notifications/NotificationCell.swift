@@ -25,7 +25,6 @@ class NotificationCell: UITableViewCell {
     }
     
     func setGestureRecognizers() {
-        
         entireCell.addGestureRecognizer(UITapGestureRecognizer(target: entireCell, action: #selector(notificationCellTapped)))
         entireCell.isUserInteractionEnabled = true
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(notificationCellTapped(tapGestureRecognizer:)))

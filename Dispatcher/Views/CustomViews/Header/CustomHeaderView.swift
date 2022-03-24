@@ -74,7 +74,6 @@ class CustomHeaderView: UIView {
     
     func updateIcons(rightIcon: UIImage, leftIcon: UIImage) {
         firstRightImageView.image = rightIcon
-    
         leftImageView.image = leftIcon
         
         //TO DO: resize icons & change function fired

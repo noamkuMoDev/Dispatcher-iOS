@@ -8,6 +8,10 @@ class TermsAndPrivacyViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initiateUIElements()
+    }
+    
+    func initiateUIElements() {
         customHeader.initView(delegate: self, leftIcon: UIImage(named: "BackButton"))
     }
     

@@ -9,8 +9,8 @@ class SortbyView: UIView {
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var filterIcon: UIImageView!
     
-    
     var delegate: SortbyViewDelegate?
+    
     
     func initView(delegate: SortbyViewDelegate? = nil) {
         
