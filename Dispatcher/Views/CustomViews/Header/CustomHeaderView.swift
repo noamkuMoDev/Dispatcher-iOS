@@ -1,67 +1,50 @@
 import UIKit
 
 protocol CustomHeaderViewDelegate: AnyObject {
-    func firstRightIconPressed()
-    func secondRightIconPressed()
-    func leftIconPressed()
+    
+    func notificationsButtonPressed()
+    func searchButtonPressed()
+    func backButtonPressed()
+    func checkmarkButtonPressed()
+    func cancelButtonPressed()
 }
 
 extension CustomHeaderViewDelegate {
-    func firstRightIconPressed() {}
-    func secondRightIconPressed() {}
-    func leftIconPressed() {}
+    
+    func notificationsButtonPressed() {}
+    func searchButtonPressed() {}
+    func backButtonPressed() {}
+    func checkmarkButtonPressed() {}
+    func cancelButtonPressed() {}
 }
 
+enum HeaderTypes {
+    case fullAppearance
+    case backOnlyAppearance
+    case confirmCancelAppearance
+}
 
 class CustomHeaderView: UIView {
     
-    @IBOutlet weak var firstRightImageView: UIImageView!
-    @IBOutlet weak var secondRightImageView: UIImageView!
-    @IBOutlet weak var leftImageView: UIImageView!
+
+    @IBOutlet weak var rightNotificationsImageView: UIImageView!
+    @IBOutlet weak var rightSearchImageView: UIImageView!
+    @IBOutlet weak var rightConfirmImageView: UIImageView!
+    @IBOutlet weak var leftLogoImageView: UIImageView!
+    @IBOutlet weak var leftGoBackImageView: UIImageView!
+    @IBOutlet weak var leftCancelImageView: UIImageView!
     @IBOutlet var contentView: UIView!
     
     private weak var delegate: CustomHeaderViewDelegate?
 
     
-    func initView(delegate: CustomHeaderViewDelegate? = nil, icon1: UIImage? = nil, icon2: UIImage? = nil, leftIcon: UIImage? = nil) {
+    func initView(delegate: CustomHeaderViewDelegate? = nil, apperanceType: HeaderTypes) {
         
         commonInit()
-        
+        hideAllElements()
+        determineHeaderAppearance(apperanceType)
         if let safeDelegate = delegate {
             self.delegate = safeDelegate
-        }
-        
-        if let safeFirstRightIcon = icon1 {
-            firstRightImageView.image = safeFirstRightIcon
-            firstRightImageView.isHidden = false
-            firstRightImageView.addGestureRecognizer(UITapGestureRecognizer(target: firstRightImageView, action: #selector(farRightIconPressed)))
-            firstRightImageView.isUserInteractionEnabled = true
-            let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(farRightIconPressed(tapGestureRecognizer:)))
-            firstRightImageView.addGestureRecognizer(tapGestureRecognizer1)
-        } else {
-            firstRightImageView.isHidden = true
-        }
-        
-        if let safeSecondRightIcon = icon2 {
-            secondRightImageView.image = safeSecondRightIcon
-            secondRightImageView.isHidden = false
-            secondRightImageView.addGestureRecognizer(UITapGestureRecognizer(target: secondRightImageView, action: #selector(farRightIconPressed)))
-            secondRightImageView.isUserInteractionEnabled = true
-            let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(scondRightIconPressed(tapGestureRecognizer:)))
-            secondRightImageView.addGestureRecognizer(tapGestureRecognizer2)
-        } else {
-            secondRightImageView.isHidden = true
-        }
-        
-        if let safeLeftIcon = leftIcon {
-            leftImageView.image = safeLeftIcon
-            leftImageView.isHidden = false
-            leftImageView.addGestureRecognizer(UITapGestureRecognizer(target: leftImageView, action: #selector(leftIconPressed)))
-            leftImageView.isUserInteractionEnabled = true
-            let tapGestureRecognizer3 = UITapGestureRecognizer(target: self, action: #selector(leftIconPressed(tapGestureRecognizer:)))
-            leftImageView.addGestureRecognizer(tapGestureRecognizer3)
-        } else {
-            leftImageView.isHidden = true
         }
     }
     
@@ -71,24 +54,96 @@ class CustomHeaderView: UIView {
         self.addSubview(contentView)
     }
     
+    private func hideAllElements() {
+        rightNotificationsImageView.isHidden = true
+        rightSearchImageView.isHidden = true
+        rightConfirmImageView.isHidden = true
+        leftLogoImageView.isHidden = true
+        leftGoBackImageView.isHidden = true
+        leftCancelImageView.isHidden = true
+    }
     
-    func updateIcons(rightIcon: UIImage, leftIcon: UIImage) {
-        firstRightImageView.image = rightIcon
-        leftImageView.image = leftIcon
+    private func determineHeaderAppearance(_ apperanceType: HeaderTypes) {
+        switch apperanceType {
+        case .fullAppearance:
+            setLogoAndRightButtons()
+        case .backOnlyAppearance:
+            setBackButtonOnly()
+        case .confirmCancelAppearance:
+            setCheckAndCancelButtons()
+        }
+    }
+    
+    func setLogoAndRightButtons() {
+        //logo          search  notifications
+        rightNotificationsImageView.isHidden = false
+        rightNotificationsImageView.addGestureRecognizer(UITapGestureRecognizer(target: rightNotificationsImageView, action: #selector(notificationsButtonPressed)))
+        rightNotificationsImageView.isUserInteractionEnabled = true
+        let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(notificationsButtonPressed(tapGestureRecognizer:)))
+        rightNotificationsImageView.addGestureRecognizer(tapGestureRecognizer1)
         
-        //TO DO: resize icons & change function fired
+        rightSearchImageView.image = UIImage(named: "search")
+        rightSearchImageView.isHidden = false
+        rightSearchImageView.addGestureRecognizer(UITapGestureRecognizer(target: rightSearchImageView, action: #selector(searchButtonPressed)))
+        rightSearchImageView.isUserInteractionEnabled = true
+        let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(searchButtonPressed(tapGestureRecognizer:)))
+        rightSearchImageView.addGestureRecognizer(tapGestureRecognizer2)
+
+        leftLogoImageView.isHidden = false
     }
     
     
-    @objc func farRightIconPressed(tapGestureRecognizer: UITapGestureRecognizer) {
-        delegate?.firstRightIconPressed()
+    func setBackButtonOnly() {
+        //back
+        leftGoBackImageView.isHidden = false
+        leftGoBackImageView.addGestureRecognizer(UITapGestureRecognizer(target: leftGoBackImageView, action: #selector(backButtonPressed)))
+        leftGoBackImageView.isUserInteractionEnabled = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(backButtonPressed(tapGestureRecognizer:)))
+        leftGoBackImageView.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    @objc func scondRightIconPressed(tapGestureRecognizer: UITapGestureRecognizer) {
-        delegate?.secondRightIconPressed()
+    
+    func setCheckAndCancelButtons() {
+        //cancel        confirm
+        rightConfirmImageView.image = UIImage(named: "checkmark")
+        rightConfirmImageView.isHidden = false
+        rightConfirmImageView.addGestureRecognizer(UITapGestureRecognizer(target: rightConfirmImageView, action: #selector(checkmarkButtonPressed)))
+        rightConfirmImageView.isUserInteractionEnabled = true
+        let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(checkmarkButtonPressed(tapGestureRecognizer:)))
+        rightConfirmImageView.addGestureRecognizer(tapGestureRecognizer1)
+        
+        leftCancelImageView.image = UIImage(named: "close")
+        leftCancelImageView.isHidden = false
+        leftCancelImageView.addGestureRecognizer(UITapGestureRecognizer(target: leftCancelImageView, action: #selector(cancelButtonPressed)))
+        leftCancelImageView.isUserInteractionEnabled = true
+        let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(cancelButtonPressed(tapGestureRecognizer:)))
+        leftCancelImageView.addGestureRecognizer(tapGestureRecognizer2)
     }
     
-    @objc func leftIconPressed(tapGestureRecognizer: UITapGestureRecognizer) {
-        delegate?.leftIconPressed()
+    
+    func updateHeaderAppearanceType(to appearanceType: HeaderTypes) {
+        hideAllElements()
+        determineHeaderAppearance(appearanceType)
+    }
+    
+    
+    @objc func notificationsButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
+        delegate?.notificationsButtonPressed()
+    }
+    
+    @objc func searchButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
+        delegate?.searchButtonPressed()
+    }
+    
+    @objc func backButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
+        delegate?.backButtonPressed()
+    }
+    
+    @objc func checkmarkButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
+        delegate?.checkmarkButtonPressed()
+    }
+    
+    @objc func cancelButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
+        delegate?.cancelButtonPressed()
     }
 }

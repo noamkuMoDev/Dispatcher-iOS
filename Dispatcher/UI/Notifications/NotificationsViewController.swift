@@ -16,7 +16,7 @@ class NotificationsViewController: UIViewController {
     }
     
     func initiateUIElements() {
-        customHeader.initView(delegate: self, leftIcon: UIImage(named: "BackButton"))
+        customHeader.initView(delegate: self, apperanceType: .backOnlyAppearance)
         setupTableView()
     }
     
@@ -49,7 +49,7 @@ class NotificationsViewController: UIViewController {
 //MARK: - CustomHeaderViewDelegate
 extension NotificationsViewController: CustomHeaderViewDelegate {
 
-    func leftIconPressed() {
+    func backButtonPressed() {
         navigationController?.popViewController(animated: true)
     }
 }

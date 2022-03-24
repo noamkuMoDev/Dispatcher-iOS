@@ -12,6 +12,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     
     let viewModel = FavoritesViewModel()
     var dataSource: TableViewDataSourceManager<Article>!
+    var isPaginating: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +22,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     }
     
     func initiateUIElements() {
-        customHeader.initView(delegate: self, icon1: UIImage(named: "notifications"), icon2: UIImage(named: "search"), leftIcon: UIImage(named: "logo"))
+        customHeader.initView(delegate: self, apperanceType: .fullAppearance)
         loadingView.initView(delegate: self)
         noResultsLabel.isHidden = true
         noResultsImageView.isHidden = true
@@ -75,11 +76,11 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
 // MARK: - CustomHeaderViewDelegate
 extension FavoritesViewController: CustomHeaderViewDelegate {
     
-    func firstRightIconPressed() {
+    func notificationsButtonPressed() {
         self.performSegue(withIdentifier: Constants.Segues.FAVORITES_TO_NOTIFICATIONS, sender: self)
     }
     
-    func secondRightIconPressed() {
+    func searchButtonPressed() {
         self.performSegue(withIdentifier: Constants.Segues.FAVORITES_TO_SEARCH, sender: self)
     }
 }
@@ -100,15 +101,19 @@ extension FavoritesViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y
-        if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) {
-            
+        if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) && !isPaginating {
+            isPaginating = true
             viewModel.fetchNewsFromAPI() { error in
-                print(error ?? "")
-                self.dataSource.models = self.viewModel.newsArray
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                    self.tableView.tableFooterView = nil
+                if error == nil {
+                    self.dataSource.models = self.viewModel.newsArray
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                        self.tableView.tableFooterView = nil
+                    }
+                } else {
+                    print(error!)
                 }
+                self.isPaginating = true
             }
         }
     }

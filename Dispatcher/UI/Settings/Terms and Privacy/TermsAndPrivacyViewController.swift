@@ -12,7 +12,7 @@ class TermsAndPrivacyViewController: UIViewController {
     }
     
     func initiateUIElements() {
-        customHeader.initView(delegate: self, leftIcon: UIImage(named: "BackButton"))
+        customHeader.initView(delegate: self, apperanceType: .backOnlyAppearance)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -25,7 +25,7 @@ class TermsAndPrivacyViewController: UIViewController {
 // MARK: - CustomHeaderViewDelegate
 extension TermsAndPrivacyViewController: CustomHeaderViewDelegate {
     
-    func leftIconPressed() {
+    func backButtonPressed() {
         navigationController?.popViewController(animated: true)
     }
 }

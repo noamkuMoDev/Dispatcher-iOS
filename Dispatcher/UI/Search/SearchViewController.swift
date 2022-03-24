@@ -29,6 +29,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     let viewModel = SearchViewModel()
     
     var searchClearImageName: iconImageName = .search
+    var isPaginating: Bool = false
     
     var recentSearchesDataSource: TableViewDataSourceManager<RecentSearchModel>!
     var searchResultsDataSource: TableViewDataSourceManager<Article>!
@@ -151,6 +152,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     
     @IBAction func clearRecentSearchesPressed(_ sender: UIButton) {
         viewModel.clearRecentSearchesHistory() {
+            self.recentSearchesDataSource.models = self.viewModel.recentSearchesArray
             DispatchQueue.main.async {
                 self.recentSearchesTableView.reloadData()
             }
@@ -287,15 +289,19 @@ extension SearchViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         let position = scrollView.contentOffset.y
-        if position > (searchResultsTableView.contentSize.height - 100 - scrollView.frame.size.height) {
-            
+        if position > (searchResultsTableView.contentSize.height - 100 - scrollView.frame.size.height) && !isPaginating {
+            isPaginating = true
             viewModel.fetchNewsFromAPI(searchWords: searchTextField.text!) { error in
-                print(error ?? "")
-                DispatchQueue.main.async {
-                    self.searchResultsDataSource.models = self.viewModel.searchResultsArray
-                    self.searchResultsTableView.reloadData()
-                    self.searchResultsTableView.tableFooterView = nil
+                if error == nil {
+                    DispatchQueue.main.async {
+                        self.searchResultsDataSource.models = self.viewModel.searchResultsArray
+                        self.searchResultsTableView.reloadData()
+                        self.searchResultsTableView.tableFooterView = nil
+                    }
+                } else {
+                    print(error!)
                 }
+                self.isPaginating = false
             }
         }
     }

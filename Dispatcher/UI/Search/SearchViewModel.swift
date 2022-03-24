@@ -41,6 +41,7 @@ class SearchViewModel {
     func clearRecentSearchesHistory(completionHandler: @escaping () -> ()) {
         recentSearchesArray = []
         repository.updateModelArrayIntoUserDefaults(recentSearchesArr: recentSearchesArray)
+        completionHandler()
     }
     
     func saveNewRecentSearch(_ keyword: String, completionHandler: @escaping () -> ()) {

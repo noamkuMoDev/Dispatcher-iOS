@@ -2,8 +2,7 @@ import Foundation
 import Alamofire
 
 class AlamofireManager: NSObject {
-    
-    var isPaginating: Bool = false
+
     var url: String!
     var headers = HTTPHeaders()
     var parameters = Parameters()
@@ -24,19 +23,16 @@ class AlamofireManager: NSObject {
     
     
     func executeGetQuery<T>(completionHandler: @escaping (Result<T, Error>, String?) -> Void) where T: Codable {
-        isPaginating = true
         AF.request(url, method: .get, headers: headers).responseData(completionHandler: { response in
             do {
                 switch response.result {
                 case .success:
                     completionHandler(.success(try JSONDecoder().decode(T.self, from: response.data ?? Data())), nil)
-                    self.isPaginating = false
                 case .failure(let error):
                     completionHandler(.failure(error), "couldn't fetch data")
                 }
             } catch let error {
                 completionHandler(.failure(error), "failed fetching")
-                self.isPaginating = false
             }
         })
     }

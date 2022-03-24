@@ -7,6 +7,7 @@ protocol RecentSearchCellDelegate {
 
 class RecentSearchCell: UITableViewCell {
 
+    @IBOutlet weak var entireCell: UIView!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var removeIcon: UIImageView!
     
@@ -30,10 +31,10 @@ class RecentSearchCell: UITableViewCell {
     }
     
     func setGestureRecognizers() {
-        label.addGestureRecognizer(UITapGestureRecognizer(target: label, action: #selector(itemLabelPressed)))
-        label.isUserInteractionEnabled = true
-        let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(itemLabelPressed(tapGestureRecognizer:)))
-        label.addGestureRecognizer(tapGestureRecognizer1)
+        entireCell.addGestureRecognizer(UITapGestureRecognizer(target: label, action: #selector(recentSearchCellPressed)))
+        entireCell.isUserInteractionEnabled = true
+        let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(recentSearchCellPressed(tapGestureRecognizer:)))
+        entireCell.addGestureRecognizer(tapGestureRecognizer1)
         
         removeIcon.addGestureRecognizer(UITapGestureRecognizer(target: removeIcon, action: #selector(removeItemPressed)))
         removeIcon.isUserInteractionEnabled = true
@@ -41,7 +42,7 @@ class RecentSearchCell: UITableViewCell {
         removeIcon.addGestureRecognizer(tapGestureRecognizer2)
     }
     
-    @objc func itemLabelPressed(tapGestureRecognizer: UITapGestureRecognizer) {
+    @objc func recentSearchCellPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.recentSearchPressed(called: label.text ?? "")
     }
     

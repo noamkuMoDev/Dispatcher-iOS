@@ -43,6 +43,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="entireCell" destination="H2p-sc-9uM" id="MSw-nD-Zjt"/>
                 <outlet property="label" destination="IQu-XK-uzh" id="SxZ-n0-hwr"/>
                 <outlet property="removeIcon" destination="S18-fY-EQC" id="h7M-Hb-MFW"/>
             </connections>

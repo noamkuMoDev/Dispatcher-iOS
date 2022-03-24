@@ -14,7 +14,7 @@ class SettingsViewController: UIViewController {
     }
     
     func initializeUIElements() {
-        customHeader.initView(delegate: self, leftIcon: UIImage(named: "BackButton"))
+        customHeader.initView(delegate: self, apperanceType: .backOnlyAppearance)
         setupTableView()
     }
     
@@ -90,7 +90,7 @@ extension SettingsViewController: UITableViewDelegate {
 
 extension SettingsViewController: CustomHeaderViewDelegate {
     
-    func leftIconPressed() {
+    func backButtonPressed() {
         navigationController?.popViewController(animated: true)
     }
 }

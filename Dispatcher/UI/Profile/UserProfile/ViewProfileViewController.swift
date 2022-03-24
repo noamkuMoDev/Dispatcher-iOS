@@ -14,7 +14,7 @@ class ViewProfileViewController: UIViewController {
     }
     
     func initializeUIElements() {
-        customHeader.initView(delegate: self, leftIcon: UIImage(named: "BackButton"))
+        customHeader.initView(delegate: self, apperanceType: .backOnlyAppearance)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -23,7 +23,7 @@ class ViewProfileViewController: UIViewController {
     }
     
     @IBAction func editProfileButtonPressed(_ sender: Any) {
-        customHeader.updateIcons(rightIcon: UIImage(named: "checkmark")!, leftIcon: UIImage(named: "close")!)
+        customHeader.updateHeaderAppearanceType(to: .confirmCancelAppearance)
     }
 }
 
@@ -31,7 +31,17 @@ class ViewProfileViewController: UIViewController {
 //MARK: - CustomHeaderViewDelegate
 extension ViewProfileViewController: CustomHeaderViewDelegate {
     
-    func leftIconPressed() {
+    func backButtonPressed() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    func checkmarkButtonPressed() {
+        //do something...
+        customHeader.updateHeaderAppearanceType(to: .backOnlyAppearance)
+    }
+    
+    func cancelButtonPressed() {
+        //do something...
+        customHeader.updateHeaderAppearanceType(to: .backOnlyAppearance)
     }
 }

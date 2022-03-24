@@ -6,7 +6,6 @@ class HomepageRepository {
         
         let url: String = "\(Constants.apiCalls.NEWS_URL)?q=news&page_size=\(Constants.pageSizeToFetch.ARTICLES_LIST)&page=\(currentPage)"
         let alamofireQuery = AlamofireManager(from: url)
-        if !alamofireQuery.isPaginating {
             alamofireQuery.executeGetQuery() {
                 ( response: Result<ArticleResponse,Error>, statusMsg ) in
                 
@@ -17,7 +16,6 @@ class HomepageRepository {
                     completionHandler(nil, error.localizedDescription) // (nil, errorText)
                 }
             }
-        }
     }
     
 }
