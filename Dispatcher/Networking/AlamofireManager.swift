@@ -15,7 +15,7 @@ class AlamofireManager: NSObject {
         super.init()
         
         self.url = url
-        ["Accept": "application/json", "Content-type": "application/json", "x-api-key": Constants.Keys.newsApiKey].forEach({ self.headers.add(name: $0.key, value: $0.value) })
+        ["Accept": "application/json", "Content-type": "application/json", "x-api-key": Constants.Keys.NEWS_API_KEY].forEach({ self.headers.add(name: $0.key, value: $0.value) })
         if let safeData = data {
             safeData.forEach{ parameters.updateValue($0.value, forKey: $0.key) }
         }

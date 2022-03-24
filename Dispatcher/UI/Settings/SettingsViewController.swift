@@ -5,7 +5,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var customHeader: CustomHeaderView!
     @IBOutlet weak var tableView: UITableView!
     
-    let settingsVM = SettingsViewModel()
+    let viewModel = SettingsViewModel()
     
     
     override func viewDidLoad() {
@@ -20,8 +20,8 @@ class SettingsViewController: UIViewController {
     }
     
     func setupTableView() {
-        tableView.register(UINib(nibName: Constants.NibNames.appSetting, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.setting)
-        tableView.register(UINib(nibName: Constants.NibNames.appSettingSection, bundle: nil), forHeaderFooterViewReuseIdentifier: Constants.TableCellsIdentifier.settingSection)
+        tableView.register(UINib(nibName: Constants.NibNames.APP_SETTING, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.SETTING)
+        tableView.register(UINib(nibName: Constants.NibNames.APP_SETTING_SECTION, bundle: nil), forHeaderFooterViewReuseIdentifier: Constants.TableCellsIdentifier.SETTING_SECTION)
         tableView.dataSource = self
         tableView.delegate = self
     }
@@ -37,22 +37,22 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return settingsVM.appSettings.count
+        return viewModel.appSettings.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return settingsVM.appSettings[section].options.count
+        return viewModel.appSettings[section].options.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCellsIdentifier.setting, for: indexPath) as! AppSettingCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCellsIdentifier.SETTING, for: indexPath) as! AppSettingCell
         
-        cell.settingTitle.text = settingsVM.appSettings[indexPath.section].options[indexPath.row].title
-        cell.settingDescription.text = settingsVM.appSettings[indexPath.section].options[indexPath.row].description
+        cell.settingTitle.text = viewModel.appSettings[indexPath.section].options[indexPath.row].title
+        cell.settingDescription.text = viewModel.appSettings[indexPath.section].options[indexPath.row].description
         
         var switchImage: UIImage
-        switch settingsVM.appSettings[indexPath.section].options[indexPath.row].status {
+        switch viewModel.appSettings[indexPath.section].options[indexPath.row].status {
         case .on:
             switchImage = UIImage(named: "switch-on")!
             break
@@ -75,8 +75,8 @@ extension SettingsViewController: UITableViewDataSource {
 extension SettingsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: Constants.TableCellsIdentifier.settingSection) as! SettingSectionCell
-        view.sectionLabel.text = settingsVM.appSettings[section].sectionTitle
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: Constants.TableCellsIdentifier.SETTING_SECTION) as! SettingSectionCell
+        view.sectionLabel.text = viewModel.appSettings[section].sectionTitle
         
         return view
     }

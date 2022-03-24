@@ -6,7 +6,7 @@ class SearchRepository {
     
     func fetchNewsFromAPI(searchWords: String, currentPage: Int, completionHandler: @escaping (ArticleResponse?, String?) -> ()) {
         
-        let url: String = "\(Constants.apiCalls.newsUrl)?q=\(searchWords)&page_size=\(Constants.pageSizeToFetch.articlesList)&page=\(currentPage)"
+        let url: String = "\(Constants.apiCalls.NEWS_URL)?q=\(searchWords)&page_size=\(Constants.pageSizeToFetch.ARTICLES_LIST)&page=\(currentPage)"
         let alamofireQuery = AlamofireManager(from: url)
         if !alamofireQuery.isPaginating {
             alamofireQuery.executeGetQuery() {
@@ -23,7 +23,7 @@ class SearchRepository {
     }
     
     func fetchSavedRecentSearchesFromUserDefaults() -> [String]? {
-        return userDefaults.fetchArrayFromUserDefaults(key: Constants.UserDefaults.recentSearches)
+        return userDefaults.fetchArrayFromUserDefaults(key: Constants.UserDefaults.RECENT_SEARCHES)
     }
 
     func updateModelArrayIntoUserDefaults(recentSearchesArr: [RecentSearchModel]) {
@@ -31,6 +31,6 @@ class SearchRepository {
         for search in recentSearchesArr {
             stringsRecentSearches.append(search.text)
         }
-        userDefaults.setArrayToUserDefaults(key: Constants.UserDefaults.recentSearches, dataArray: stringsRecentSearches)
+        userDefaults.setArrayToUserDefaults(key: Constants.UserDefaults.RECENT_SEARCHES, dataArray: stringsRecentSearches)
     }
 }
