@@ -8,7 +8,7 @@ class HomepageViewModel {
     private var currentPaginationPage = 1
     private var totalPaginationPages = 1
     
-    func fetchNewsFromAPI(completionHandler: @escaping () -> ()) {
+    func fetchNewsFromAPI(completionHandler: @escaping (String?) -> ()) {
         
         repository.fetchNewsFromAPI(currentPage: currentPaginationPage) { result, statusMsg in
             
@@ -16,10 +16,10 @@ class HomepageViewModel {
                 self.currentPaginationPage += 1
                 self.totalPaginationPages = result!.totalPages
                 self.newsArray.append(contentsOf: result!.articles)
+                completionHandler(nil)
             } else {
-                print(statusMsg ?? "error fetching articles")
-            }
-                completionHandler()
+                completionHandler(statusMsg)
             }
         }
     }
+}

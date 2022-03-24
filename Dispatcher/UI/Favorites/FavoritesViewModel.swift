@@ -11,7 +11,7 @@ class FavoritesViewModel {
     var totalPaginationPages = 1
     
     
-    func fetchNewsFromAPI(completionHandler: @escaping () -> ()) {
+    func fetchNewsFromAPI(completionHandler: @escaping (String?) -> ()) {
         
         if currentPaginationPage <= totalPaginationPages {
             
@@ -21,10 +21,10 @@ class FavoritesViewModel {
                     self.currentPaginationPage += 1
                     self.totalPaginationPages = result!.totalPages
                     self.newsArray.append(contentsOf: result!.articles)
+                    completionHandler(nil)
                 } else {
-                    print(statusMsg ?? "error fetching saved articles")
+                    completionHandler(statusMsg)
                 }
-                completionHandler()
             }
         }
     }

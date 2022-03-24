@@ -351,7 +351,6 @@
 			isa = PBXGroup;
 			children = (
 				43DCB39727DF8D1A00A1A779 /* AlamofireManager.swift */,
-				4311F5ED27EB26AF00C28F3C /* UserDefaultsManager.swift */,
 				4311F5E127EB102100C28F3C /* Responses */,
 			);
 			path = Networking;
@@ -451,6 +450,14 @@
 			path = "Sort By";
 			sourceTree = "<group>";
 		};
+		4311F60127EC609B00C28F3C /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				4311F5ED27EB26AF00C28F3C /* UserDefaultsManager.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
 		43C1B5C927D0A66500AB0D3B /* fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -543,6 +550,7 @@
 		43F08D3F27C7C9A6003FFA7D /* Dispatcher */ = {
 			isa = PBXGroup;
 			children = (
+				4311F60127EC609B00C28F3C /* Persistence */,
 				43C1B5C927D0A66500AB0D3B /* fonts */,
 				43DCD2AB27CCAC3000020D8A /* Firebase */,
 				43F08D5727C7CA06003FFA7D /* Supporting Files */,

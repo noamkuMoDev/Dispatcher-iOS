@@ -42,7 +42,8 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
             self.loadingView.isHidden = false
             self.loadingView.loadIndicator.startAnimating()
         }
-        viewModel.fetchNewsFromAPI() {
+        viewModel.fetchNewsFromAPI() { error in
+            print(error ?? "")
             DispatchQueue.main.async {
                 self.dataSource.models = self.viewModel.newsArray
                 self.tableView.reloadData()
@@ -93,7 +94,8 @@ extension FavoritesViewController: UIScrollViewDelegate {
         let position = scrollView.contentOffset.y
         if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) {
             
-            viewModel.fetchNewsFromAPI() {
+            viewModel.fetchNewsFromAPI() { error in
+                print(error ?? "")
                 self.dataSource.models = self.viewModel.newsArray
                 DispatchQueue.main.async {
                     self.tableView.reloadData()

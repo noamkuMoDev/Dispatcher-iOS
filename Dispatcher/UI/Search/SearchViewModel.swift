@@ -11,7 +11,7 @@ class SearchViewModel {
     var searchResultsArray: [Article] = []
     
     
-    func fetchNewsFromAPI(searchWords: String, completionHandler: @escaping () -> ()) {
+    func fetchNewsFromAPI(searchWords: String, completionHandler: @escaping (String?) -> ()) {
         
         if currentPaginationPage <= totalPaginationPages {
             repository.fetchNewsFromAPI(searchWords: searchWords, currentPage: currentPaginationPage) { result, statusMsg in
@@ -20,10 +20,10 @@ class SearchViewModel {
                     self.currentPaginationPage += 1
                     self.totalPaginationPages = result!.totalPages
                     self.searchResultsArray.append(contentsOf: result!.articles)
+                    completionHandler(nil)
                 } else {
-                    print(statusMsg ?? "error fetching articles of search words")
+                    completionHandler(statusMsg!)
                 }
-                completionHandler()
             }
         }
     }
