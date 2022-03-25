@@ -1,16 +1,18 @@
 import Foundation
 
-class HomepageViewModel {
+class BaseArticlesViewModel {
     
-    private let repository = HomepageRepository()
+    private let repository = BaseArticlesRepository()
+    
     var newsArray: [Article] = []
     
     private var currentPaginationPage = 1
     private var totalPaginationPages = 1
     
-    func fetchNewsFromAPI(completionHandler: @escaping (String?) -> ()) {
+    
+    func fetchNewsFromAPI(searchWords: String = "news", pageSizeToFetch: PageSizeForFetching, completionHandler: @escaping (String?) -> ()) {
         
-        repository.fetchNewsFromAPI(currentPage: currentPaginationPage) { result, statusMsg in
+        repository.fetchNewsFromAPI(searchWords: searchWords, pageSizeType: pageSizeToFetch, currentPage: currentPaginationPage) { result, statusMsg in
             if statusMsg == nil {
                 self.currentPaginationPage += 1
                 self.totalPaginationPages = result!.totalPages

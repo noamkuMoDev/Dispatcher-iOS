@@ -1,40 +1,20 @@
 import Foundation
 
-class SearchViewModel {
+class SearchViewModel: BaseArticlesViewModel {
     
     let repository = SearchRepository()
     
-    private var currentPaginationPage = 1
-    private var totalPaginationPages = 1
-    
     var recentSearchesArray: [RecentSearchModel] = []
-    var searchResultsArray: [Article] = []
     
     
-    func fetchNewsFromAPI(searchWords: String, completionHandler: @escaping (String?) -> ()) {
-        
-        if currentPaginationPage <= totalPaginationPages {
-            repository.fetchNewsFromAPI(searchWords: searchWords, currentPage: currentPaginationPage) { result, statusMsg in
-
-                if statusMsg == nil {
-                    self.currentPaginationPage += 1
-                    self.totalPaginationPages = result!.totalPages
-                    self.searchResultsArray.append(contentsOf: result!.articles)
-                    completionHandler(nil)
-                } else {
-                    completionHandler(statusMsg!)
-                }
-            }
-        }
-    }
-    
-    func fetchSavedRecentSearchesFromUserDefaults() {
+    func fetchSavedRecentSearchesFromUserDefaults(completionHandler: @escaping (String?) -> ()) {
         if let recentSearches = repository.fetchSavedRecentSearchesFromUserDefaults() {
             for search in recentSearches {
                 recentSearchesArray.append(RecentSearchModel(text: search))
+                completionHandler(nil)
             }
         } else {
-            print("couldn't fetch search history")
+            completionHandler("couldn't fetch search history")
         }
     }
     

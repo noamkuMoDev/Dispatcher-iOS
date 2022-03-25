@@ -39,45 +39,15 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.fetchSavedRecentSearchesFromUserDefaults()
+        fetchSearchHistory()
         initiateUIElements()
         defineGestureRecognizers()
     }
     
-    func fetchInitialSearchResults(of keywords: String) {
-        
-        DispatchQueue.main.async {
-            self.recentSearchesView.isHidden = true
-            self.recentSearchesTableView.isHidden = true
-            
-            self.sortbyView.isHidden = false
-            self.loadingView.isHidden = false
-            self.loadingView.loadIndicator.startAnimating()
-        }
-        
-        viewModel.searchResultsArray = []
-        viewModel.fetchNewsFromAPI(searchWords: keywords) { error in
-            print(error ?? "")
-            DispatchQueue.main.async {
-                self.searchResultsDataSource.models = self.viewModel.searchResultsArray
-                self.searchResultsTableView.reloadData()
-                self.loadingView.loadIndicator.stopAnimating()
-                self.loadingView.isHidden = true
-            }
-            
-            if self.viewModel.searchResultsArray.count == 0 {
-                self.noResultsLabel.isHidden = false
-                self.noResultsImageView.isHidden = false
-                
-            } else {
-                self.searchResultsTableView.isHidden = false
-                self.viewModel.saveNewRecentSearch(keywords) {
-                    DispatchQueue.main.async {
-                        self.searchResultsTableView.reloadData()
-                        self.recentSearchesDataSource.models = self.viewModel.recentSearchesArray
-                        self.recentSearchesTableView.reloadData()
-                    }
-                }
+    func fetchSearchHistory() {
+        viewModel.fetchSavedRecentSearchesFromUserDefaults() { error in
+            if error != nil {
+                print(error!)
             }
         }
     }
@@ -109,7 +79,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         
         searchResultsTableView.register(UINib(nibName: Constants.NibNames.HOMEPAGE, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE)
         self.searchResultsDataSource = TableViewDataSourceManager(
-            models: viewModel.searchResultsArray,
+            models: viewModel.newsArray,
             reuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE
         ) { article, cell in
             let currentcell = cell as! NewsCell
@@ -145,7 +115,47 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         searchClearIcon.addGestureRecognizer(tapGestureRecognizer2)
     }
     
-   
+    func fetchInitialSearchResults(of keywords: String) {
+        
+        DispatchQueue.main.async {
+            self.recentSearchesView.isHidden = true
+            self.recentSearchesTableView.isHidden = true
+            
+            self.sortbyView.isHidden = false
+            self.loadingView.isHidden = false
+            self.loadingView.loadIndicator.startAnimating()
+        }
+        
+        viewModel.newsArray = []
+        viewModel.fetchNewsFromAPI(searchWords: keywords, pageSizeToFetch: .articlesList) { error in
+            
+            if error == nil {
+                self.searchResultsDataSource.models = self.viewModel.newsArray
+                DispatchQueue.main.async {
+                    self.searchResultsTableView.reloadData()
+                    self.loadingView.loadIndicator.stopAnimating()
+                    self.loadingView.isHidden = true
+                }
+            } else {
+                print(error!)
+            }
+            
+            if self.viewModel.newsArray.count == 0 {
+                self.noResultsLabel.isHidden = false
+                self.noResultsImageView.isHidden = false
+            } else {
+                self.searchResultsTableView.isHidden = false
+                self.viewModel.saveNewRecentSearch(keywords) {
+                    DispatchQueue.main.async {
+                        self.searchResultsTableView.reloadData()
+                        self.recentSearchesDataSource.models = self.viewModel.recentSearchesArray
+                        self.recentSearchesTableView.reloadData()
+                    }
+                }
+            }
+        }
+    }
+    
     @objc func goBackButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         navigationController?.popViewController(animated: true)
     }
@@ -291,10 +301,10 @@ extension SearchViewController: UIScrollViewDelegate {
         let position = scrollView.contentOffset.y
         if position > (searchResultsTableView.contentSize.height - 100 - scrollView.frame.size.height) && !isPaginating {
             isPaginating = true
-            viewModel.fetchNewsFromAPI(searchWords: searchTextField.text!) { error in
+            viewModel.fetchNewsFromAPI(searchWords: searchTextField.text!, pageSizeToFetch: .articlesList) { error in
                 if error == nil {
                     DispatchQueue.main.async {
-                        self.searchResultsDataSource.models = self.viewModel.searchResultsArray
+                        self.searchResultsDataSource.models = self.viewModel.newsArray
                         self.searchResultsTableView.reloadData()
                         self.searchResultsTableView.tableFooterView = nil
                     }

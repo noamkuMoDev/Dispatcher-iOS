@@ -10,7 +10,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     @IBOutlet weak var noResultsLabel: UILabel!
     
     
-    let viewModel = FavoritesViewModel()
+    let viewModel = BaseArticlesViewModel()
     var dataSource: TableViewDataSourceManager<Article>!
     var isPaginating: Bool = false
     
@@ -49,13 +49,16 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
             self.loadingView.isHidden = false
             self.loadingView.loadIndicator.startAnimating()
         }
-        viewModel.fetchNewsFromAPI() { error in
-            print(error ?? "")
-            DispatchQueue.main.async {
-                self.dataSource.models = self.viewModel.newsArray
-                self.tableView.reloadData()
-                self.loadingView.loadIndicator.stopAnimating()
-                self.loadingView.isHidden = true
+        viewModel.fetchNewsFromAPI(pageSizeToFetch: .savedArticles) { error in
+            if error == nil {
+                DispatchQueue.main.async {
+                    self.dataSource.models = self.viewModel.newsArray
+                    self.tableView.reloadData()
+                    self.loadingView.loadIndicator.stopAnimating()
+                    self.loadingView.isHidden = true
+                }
+            } else {
+                print(error!)
             }
             
             if self.viewModel.newsArray.count == 0 {
@@ -103,7 +106,7 @@ extension FavoritesViewController: UIScrollViewDelegate {
         let position = scrollView.contentOffset.y
         if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) && !isPaginating {
             isPaginating = true
-            viewModel.fetchNewsFromAPI() { error in
+            viewModel.fetchNewsFromAPI(pageSizeToFetch: .savedArticles) { error in
                 if error == nil {
                     self.dataSource.models = self.viewModel.newsArray
                     DispatchQueue.main.async {
@@ -113,7 +116,7 @@ extension FavoritesViewController: UIScrollViewDelegate {
                 } else {
                     print(error!)
                 }
-                self.isPaginating = true
+                self.isPaginating = false
             }
         }
     }

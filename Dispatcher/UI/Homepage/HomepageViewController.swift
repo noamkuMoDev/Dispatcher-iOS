@@ -6,7 +6,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var tableView: UITableView!
 
-    let viewModel = HomepageViewModel()
+    let viewModel = BaseArticlesViewModel()
     var dataSource: TableViewDataSourceManager<Article>!
     var isPaginating: Bool = false
     
@@ -45,13 +45,16 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
             self.loadingView.isHidden = false
             self.loadingView.loadIndicator.startAnimating()
         }
-        viewModel.fetchNewsFromAPI() { error in
-            print(error ?? "")
-            DispatchQueue.main.async {
-                self.dataSource.models = self.viewModel.newsArray
-                self.tableView.reloadData()
-                self.loadingView.loadIndicator.stopAnimating()
-                self.loadingView.isHidden = true
+        viewModel.fetchNewsFromAPI(pageSizeToFetch: .articlesList) { error in
+            if error == nil {
+                DispatchQueue.main.async {
+                    self.dataSource.models = self.viewModel.newsArray
+                    self.tableView.reloadData()
+                    self.loadingView.loadIndicator.stopAnimating()
+                    self.loadingView.isHidden = true
+                }
+            } else {
+                print(error!)
             }
         }
     }
@@ -97,7 +100,7 @@ extension HomepageViewController: UIScrollViewDelegate {
         if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) && !isPaginating {
             
             isPaginating = true
-            viewModel.fetchNewsFromAPI() { error in
+            viewModel.fetchNewsFromAPI(pageSizeToFetch: .articlesList) { error in
                 if error == nil {
                     self.dataSource.models = self.viewModel.newsArray
                     DispatchQueue.main.async {
