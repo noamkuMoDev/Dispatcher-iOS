@@ -22,6 +22,8 @@ class TermsAndPrivacyViewController: UIViewController {
     }
 }
 
+
+// MARK: - CustomHeaderViewDelegate
 extension TermsAndPrivacyViewController: CustomHeaderViewDelegate {
     
     func leftIconPressed() {

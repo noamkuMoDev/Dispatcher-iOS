@@ -21,13 +21,15 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
         
         customHeader.initView(delegate: self, leftIcon: UIImage(named: "BackButton"))
-        
+        setupTableView()
+    }
+    
+    func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UINib(nibName: Constants.NibNames.appSetting, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.setting)
         tableView.register(UINib(nibName: Constants.NibNames.appSettingSection, bundle: nil), forHeaderFooterViewReuseIdentifier: Constants.TableCellsIdentifier.settingSection)
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -39,6 +41,7 @@ class SettingsViewController: UIViewController {
         navigationController?.isNavigationBarHidden = false
     }
 }
+
 
 // MARK: - UITableViewDataSource
 extension SettingsViewController: UITableViewDataSource {
@@ -76,6 +79,7 @@ extension SettingsViewController: UITableViewDataSource {
     }
 }
 
+
 // MARK: - UITableViewDelegate
 
 extension SettingsViewController: UITableViewDelegate {
@@ -91,6 +95,7 @@ extension SettingsViewController: UITableViewDelegate {
         return 32
     }
 }
+
 
 // MARK: - CustomHeaderViewDelegate
 

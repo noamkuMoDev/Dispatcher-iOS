@@ -5,6 +5,10 @@ class MyTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupTabIcons()
+    }
+    
+    func setupTabIcons() {
         let iconTabProfile = self.tabBar.items![0] as UITabBarItem
         iconTabProfile.selectedImage = UIImage(named: "Profile-Selected")
         

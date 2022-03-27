@@ -1,27 +1,44 @@
 import UIKit
 
-class HomepageViewController: UIViewController {
+class HomepageViewController: UIViewController, LoadingViewDelegate, UITableViewDelegate {
 
     @IBOutlet weak var customHeader: CustomHeaderView!
+    @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var tableView: UITableView!
     
-    var dataSource = ArticleDataSource()
+    private var currentPaginationPage = 1
+    private var amountToFetch = 7
+    private var totalPaginationPages = 1
+    
+    var newsArray: [Articles] = []
+    var dataSource: TableViewDataSourceManager<Articles>!
 
-    var newsArray: [Article] = [
-        ArticleModel(title: "Title Article 1", date: Date(), url: "Content of the article", isFavorite: false, content: "http://noamkurtzer.co.il"),
-        ArticleModel(title: "Title Article 2", date: Date(), url: "Content of 2nd article", isFavorite: false, content: "http://noamkurtzer.co.il")
-    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
- 
-        customHeader.initView(delegate: self, icon1: UIImage(named: "notifications"), icon2: UIImage(named: "search"), leftIcon: UIImage(named: "logo"))
         
-        tableView.register(UINib(nibName: Constants.NibNames.homepage, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.homepage)
-        tableView.delegate = dataSource
+        customHeader.initView(delegate: self, icon1: UIImage(named: "notifications"), icon2: UIImage(named: "search"), leftIcon: UIImage(named: "logo"))
+        loadingView.initView(delegate: self)
+        fetchInitialResults()
+        setupTableView()
+    }
+    
+    func setupTableView() {
+        self.dataSource = TableViewDataSourceManager(
+                models: newsArray,
+                reuseIdentifier: Constants.TableCellsIdentifier.homepage
+            ) { article, cell in
+                let currentCell = cell as! NewsCell
+                currentCell.titleLabel.text = article.articleTitle
+                currentCell.authorLabel.text = article.author
+                currentCell.dateLabel.text = article.date
+                currentCell.summaryLabel.text = article.content
+                currentCell.subjectTag.setTitle(article.topic, for: .normal)
+            }
+        
         tableView.dataSource = dataSource
-        dataSource.newsArray = newsArray
-        dataSource.cellIdentifier = Constants.TableCellsIdentifier.homepage
+        tableView.delegate = self
+        tableView.register(UINib(nibName: Constants.NibNames.homepage, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.homepage)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,7 +50,51 @@ class HomepageViewController: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.isNavigationBarHidden = false
     }
+    
+    func fetchInitialResults() {
+        
+        DispatchQueue.main.async {
+            self.loadingView.isHidden = false
+            self.loadingView.loadIndicator.startAnimating()
+        }
+        
+        self.fetchNewsFromAPI() {
+            
+            DispatchQueue.main.async {
+                self.loadingView.loadIndicator.stopAnimating()
+                self.loadingView.isHidden = true
+            }
+        }
+    }
+    
+    func fetchNewsFromAPI(completionHandler: @escaping () -> ()) {
+        
+        let alamofireQuery = AlamofireManager(from: "\(Constants.apiCalls.newsUrl)?q=news&page_size=\(amountToFetch)&page=\(currentPaginationPage)")
+        
+        if !alamofireQuery.isPaginating && currentPaginationPage <= totalPaginationPages {
+            alamofireQuery.executeGetQuery(){
+                (result: Result<ArticleModel,Error>) in
+                switch result {
+                case .success(let response):
+                    self.currentPaginationPage += 1
+                    self.totalPaginationPages = response.totalPages
+                    
+                    self.newsArray.append(contentsOf: response.articles)
+                    DispatchQueue.main.async {
+                        self.dataSource.models = self.newsArray
+                        self.tableView.reloadData()
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+                completionHandler()
+            }
+        }
+    }
 }
+
+
+// MARK: - CustomHeaderViewDelegate
 
 extension HomepageViewController: CustomHeaderViewDelegate {
     
@@ -43,5 +104,33 @@ extension HomepageViewController: CustomHeaderViewDelegate {
     
     func secondRightIconPressed() {
         self.performSegue(withIdentifier: Constants.Segues.homepageToSearch, sender: self)
+    }
+}
+
+
+// MARK: - UIScrollViewDelegate
+
+extension HomepageViewController: UIScrollViewDelegate {
+    
+    func createSpinnerFooter() -> UIView {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
+        let spinner = UIActivityIndicatorView()
+        spinner.center = footerView.center
+        footerView.addSubview(spinner)
+        spinner.startAnimating()
+        
+        return footerView
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let position = scrollView.contentOffset.y
+        if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) {
+            fetchNewsFromAPI() {
+                DispatchQueue.main.async {
+                    self.tableView.tableFooterView = nil
+                }
+            }
+        }
     }
 }

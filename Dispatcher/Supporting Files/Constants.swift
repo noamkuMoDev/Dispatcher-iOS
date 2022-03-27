@@ -37,4 +37,16 @@ struct Constants {
         static let appSettingSection = "SettingSectionCell"
         static let recentSearch = "RecentSearchCell"
     }
+    
+    struct UserDefaults {
+        static let recentSearches = "recentSearches"
+    }
+    
+    struct apiCalls {
+        static let newsUrl = "https://api.newscatcherapi.com/v2/search"
+    }
+    
+    struct Keys {
+        static let newsApiKey = "_E1saiwKuTTM_aofezdXNrGCZsgavQ89t-bJ8Z6WlXA"
+    }
 }

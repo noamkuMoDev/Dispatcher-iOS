@@ -1,7 +1,8 @@
 import UIKit
 
-protocol removeRecentSearchCellDelegate {
-    func removeCellButtonDidPress(ofIndex index: Int)
+protocol RecentSearchCellDelegate {
+    func recentSearchPressed(called searchName: String)
+    func removeCellButtonDidPress(called searchName: String)
 }
 
 class RecentSearchCell: UITableViewCell {
@@ -9,24 +10,42 @@ class RecentSearchCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var removeIcon: UIImageView!
     
-    var delegate: removeRecentSearchCellDelegate?
-    var cellIndex: Int = -1
+    var delegate: RecentSearchCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        removeIcon.addGestureRecognizer(UITapGestureRecognizer(target: removeIcon, action: #selector(removeItemPressed)))
-        removeIcon.isUserInteractionEnabled = true
-        let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(removeItemPressed(tapGestureRecognizer:)))
-        removeIcon.addGestureRecognizer(tapGestureRecognizer2)
+        setCellColorDesign()
+        setGestureRecognizers()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
+    func setCellColorDesign() {
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor.clear
+        self.selectedBackgroundView = bgColorView
+    }
+    
+    func setGestureRecognizers() {
+        label.addGestureRecognizer(UITapGestureRecognizer(target: label, action: #selector(itemLabelPressed)))
+        label.isUserInteractionEnabled = true
+        let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(itemLabelPressed(tapGestureRecognizer:)))
+        label.addGestureRecognizer(tapGestureRecognizer1)
+        
+        removeIcon.addGestureRecognizer(UITapGestureRecognizer(target: removeIcon, action: #selector(removeItemPressed)))
+        removeIcon.isUserInteractionEnabled = true
+        let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(removeItemPressed(tapGestureRecognizer:)))
+        removeIcon.addGestureRecognizer(tapGestureRecognizer2)
+    }
+    
+    @objc func itemLabelPressed(tapGestureRecognizer: UITapGestureRecognizer) {
+        delegate?.recentSearchPressed(called: label.text ?? "")
+    }
     
     @objc func removeItemPressed(tapGestureRecognizer: UITapGestureRecognizer) {
-        delegate?.removeCellButtonDidPress(ofIndex: cellIndex)
+        delegate?.removeCellButtonDidPress(called: label.text ?? "")
     }
 }

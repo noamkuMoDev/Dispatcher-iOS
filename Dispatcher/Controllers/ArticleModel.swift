@@ -1,26 +1,38 @@
 import Foundation
 
-protocol Article {
-    var title: String { get }
-    var date: Date { get }
-    var url: String { get }
-    var isFavorite: Bool { get set }
+struct ArticleModel: Codable {
+    
+    let totalPages: Int
+    let articles: [Articles]
+    let numOfResults: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case totalPages = "total_pages"
+        case articles = "articles"
+        case numOfResults = "total_hits"
+    }
 }
 
-struct ArticleModel: Article {
-    var title: String
-    var date: Date
-    var url: String
-    var isFavorite: Bool
+struct Articles: Codable {
     
-    var content: String
+    let id: String
+    let articleTitle: String
+    let date: String
+    let url: String
+    let content: String
+    let author: String?
+    let topic: String
+    let imageUrl: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case articleTitle = "title"
+        case content = "summary"
+        case author = "author"
+        case url = "link"
+        case date = "published_date"
+        case topic = "topic"
+        case imageUrl = "media"
+    }
 }
 
-struct VideoModel: Article {
-    var title: String
-    var date: Date
-    var url: String
-    var isFavorite: Bool
-    
-    var length: Float
-}

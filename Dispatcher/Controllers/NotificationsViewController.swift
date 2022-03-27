@@ -5,19 +5,31 @@ class NotificationsViewController: UIViewController {
     @IBOutlet weak var customHeader: CustomHeaderView!
     @IBOutlet weak var tableView: UITableView!
     
+    var dataSource: TableViewDataSourceManager<NotificationModel>!
     var notificationsArray: [NotificationModel] = [
         NotificationModel(text: "Notification 1", wasRead: true),
         NotificationModel(text: "Notification 2", wasRead: false)
     ]
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         customHeader.initView(delegate: self, leftIcon: UIImage(named: "BackButton"))
-        
+        setupTableView()
+    }
+    
+    func setupTableView() {
         tableView.register(UINib(nibName: Constants.NibNames.notification, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.notification)
-        tableView.dataSource = self
-        tableView.delegate = self
+        self.dataSource = TableViewDataSourceManager(
+            models: notificationsArray,
+            reuseIdentifier: Constants.TableCellsIdentifier.notification
+        ) { notification, cell in
+            let currentCell = cell as! NotificationCell
+            currentCell.label.text = notification.text
+        }
+        tableView.dataSource = dataSource
+        tableView.delegate = dataSource
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -31,29 +43,6 @@ class NotificationsViewController: UIViewController {
     }
 }
 
-//MARK: - UITableViewDelegate
-extension NotificationsViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-}
-
-//MARK: - UITableViewDataSource
-extension NotificationsViewController: UITableViewDataSource {
-    
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return notificationsArray.count
-        }
-     
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-            let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCellsIdentifier.notification, for: indexPath) as! NotificationCell
-
-            return cell
-        }
-}
 
 //MARK: - CustomHeaderViewDelegate
 extension NotificationsViewController: CustomHeaderViewDelegate {
