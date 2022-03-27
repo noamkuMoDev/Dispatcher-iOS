@@ -27,6 +27,8 @@ class AuthViewController: UIViewController {
     @IBOutlet weak var reenterPasswordEyeIcon: UIImageView!
     @IBOutlet weak var mismatchPasswordLabel: UILabel!
     
+    @IBOutlet weak var separatorLine: UIView!
+    
     @IBOutlet weak var topButton: MainActionButtonView!
     @IBOutlet weak var bottomButton: MainActionButtonView!
     
@@ -37,7 +39,8 @@ class AuthViewController: UIViewController {
     var passwordEyeStatus: eyeIconStatus = .conseal
     var reenterPasswordEyeStatus: eyeIconStatus = .conseal
     
-    
+    var separatorConstraintLogin: NSLayoutConstraint? = nil
+    var separatorConstraintSignup: NSLayoutConstraint? = nil
     
     
     override func viewDidLoad() {
@@ -46,6 +49,12 @@ class AuthViewController: UIViewController {
         recognizeUser()
         initializeUIElements()
         defineGestureRecognizers()
+        
+        separatorConstraintSignup = separatorLine.topAnchor.constraint(equalTo: mismatchPasswordLabel.bottomAnchor, constant: 25.0)
+        separatorConstraintSignup?.isActive = true
+        
+        separatorConstraintLogin = separatorLine.topAnchor.constraint(equalTo: weakPasswordLabel.bottomAnchor, constant: 50.0)
+        separatorConstraintLogin?.isActive = false
     }
     
     func recognizeUser() {
@@ -61,7 +70,9 @@ class AuthViewController: UIViewController {
         setTextFields()
         setActionButtons()
         //  TO DO: change the uiimageview height to be screenHeight / 3
-        //  logoImageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
+        let screenHeight = UIScreen.main.bounds.height
+        logoImageView.heightAnchor.constraint(equalToConstant: CGFloat(screenHeight / 2 )).isActive = true
+
         
         if currentPageType == .login {
             setLoginPageLook()
@@ -109,17 +120,42 @@ class AuthViewController: UIViewController {
     }
     
     func defineGestureRecognizers() {
-        passwordEyeIcon.addGestureRecognizer(UITapGestureRecognizer(target: passwordEyeIcon, action: #selector(passwordIconTapped)))
-        passwordEyeIcon.isUserInteractionEnabled = true
-                let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(passwordIconTapped(tapGestureRecognizer:)))
-        passwordEyeIcon.addGestureRecognizer(tapGestureRecognizer1)
         
-        reenterPasswordEyeIcon.addGestureRecognizer(UITapGestureRecognizer(target: passwordEyeIcon, action: #selector(reenterPasswordIconTapped)))
+        let iconPress1 = MyTapGesture(target: self, action: #selector(self.eyeIconWasTapped))
+        iconPress1.sender = "enter"
+        passwordEyeIcon.isUserInteractionEnabled = true
+        passwordEyeIcon.addGestureRecognizer(iconPress1)
+        
+        let iconPress2 = MyTapGesture(target: self, action: #selector(self.eyeIconWasTapped))
+        iconPress2.sender = "re-enter"
         reenterPasswordEyeIcon.isUserInteractionEnabled = true
-                let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(reenterPasswordIconTapped(tapGestureRecognizer:)))
-        reenterPasswordEyeIcon.addGestureRecognizer(tapGestureRecognizer2)
+        reenterPasswordEyeIcon.addGestureRecognizer(iconPress2)
     }
     
+    @objc func eyeIconWasTapped(sender : MyTapGesture) {
+        
+        if sender.sender == "enter" {
+            if passwordEyeStatus == .conseal {
+                passwordEyeStatus = .reveal
+                passwordEyeIcon.image = UIImage(named: "eye-icon-reveal")
+                passwordTextField.isSecureTextEntry = false
+            } else {
+                passwordEyeStatus = .conseal
+                passwordEyeIcon.image = UIImage(named: "eye-icon-conseal")
+                passwordTextField.isSecureTextEntry = true
+            }
+        } else {
+            if reenterPasswordEyeStatus == .conseal {
+                reenterPasswordEyeStatus = .reveal
+                reenterPasswordEyeIcon.image = UIImage(named: "eye-icon-reveal")
+                reenterPasswordTextField.isSecureTextEntry = false
+            } else {
+                reenterPasswordEyeStatus = .conseal
+                reenterPasswordEyeIcon.image = UIImage(named: "eye-icon-conseal")
+                reenterPasswordTextField.isSecureTextEntry = true
+            }
+        }
+    }
     
     func setSignupPageLook() {
         currentPageType = .signup
@@ -132,6 +168,10 @@ class AuthViewController: UIViewController {
         // extra text field
         reenterPasswordTextField.isHidden = false
         reenterPasswordEyeIcon.isHidden = false
+        
+        //change separator location
+        separatorConstraintLogin?.isActive = false
+        separatorConstraintSignup?.isActive = true
         
         // buttons
         topButton.buttonLabel.text = "SIGNUP"
@@ -149,6 +189,10 @@ class AuthViewController: UIViewController {
         // remove extra text field
         reenterPasswordTextField.isHidden = true
         reenterPasswordEyeIcon.isHidden = true
+
+        //change separator location
+        separatorConstraintSignup?.isActive = false
+        separatorConstraintLogin?.isActive = true
         
         // buttons
         topButton.buttonLabel.text = "LOGIN"
@@ -175,31 +219,6 @@ class AuthViewController: UIViewController {
         weakPasswordLabel.isHidden = true
         mismatchPasswordLabel.isHidden = true
     }
-    
-    @objc func passwordIconTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-        if passwordEyeStatus == .conseal {
-            passwordEyeStatus = .reveal
-            passwordEyeIcon.image = UIImage(named: "eye-icon-reveal")
-            passwordTextField.isSecureTextEntry = false
-        } else {
-            passwordEyeStatus = .conseal
-            passwordEyeIcon.image = UIImage(named: "eye-icon-conseal")
-            passwordTextField.isSecureTextEntry = true
-        }
-    }
-    
-    @objc func reenterPasswordIconTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-        if reenterPasswordEyeStatus == .conseal {
-            reenterPasswordEyeStatus = .reveal
-            reenterPasswordEyeIcon.image = UIImage(named: "eye-icon-reveal")
-            reenterPasswordTextField.isSecureTextEntry = false
-        } else {
-            reenterPasswordEyeStatus = .conseal
-            reenterPasswordEyeIcon.image = UIImage(named: "eye-icon-conseal")
-            reenterPasswordTextField.isSecureTextEntry = true
-        }
-    }
-    
     
     
     func signupNewUser() {
@@ -308,4 +327,10 @@ extension AuthViewController: MainActionButtonDelegate {
             print("not optional")
         }
     }
+}
+
+
+
+class MyTapGesture: UITapGestureRecognizer {
+    var sender = String()
 }
