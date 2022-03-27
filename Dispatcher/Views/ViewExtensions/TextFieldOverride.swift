@@ -15,5 +15,15 @@ class TextFieldOverride: UITextField {
     override open func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
     }
+}
 
+
+extension UITextField {
+    func disableAutoFill() {
+        if #available(iOS 12, *) {
+            textContentType = .oneTimeCode
+        } else {
+            textContentType = .init(rawValue: "")
+        }
+    }
 }

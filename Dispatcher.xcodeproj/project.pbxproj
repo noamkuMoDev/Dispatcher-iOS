@@ -18,6 +18,10 @@
 		4311F5F027EB2FE500C28F3C /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F5EF27EB2FE500C28F3C /* SettingsViewModel.swift */; };
 		4311F60327ECC39800C28F3C /* BaseArticlesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F60227ECC39800C28F3C /* BaseArticlesRepository.swift */; };
 		4311F60527ECC6FE00C28F3C /* BaseArticlesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F60427ECC6FE00C28F3C /* BaseArticlesViewModel.swift */; };
+		4311F60827F0568700C28F3C /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F60727F0568700C28F3C /* SignupViewController.swift */; };
+		4311F60A27F056D600C28F3C /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F60927F056D600C28F3C /* SignupViewModel.swift */; };
+		4311F60C27F056FE00C28F3C /* FirebaseAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F60B27F056FE00C28F3C /* FirebaseAuthManager.swift */; };
+		4311F60E27F05E9900C28F3C /* SignupRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F60D27F05E9900C28F3C /* SignupRepository.swift */; };
 		43C1B5BA27CE098A00AB0D3B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5B927CE098A00AB0D3B /* Constants.swift */; };
 		43C1B5BC27CE0B1700AB0D3B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */; };
 		43C1B5BE27CE0B4500AB0D3B /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */; };
@@ -113,6 +117,10 @@
 		4311F5EF27EB2FE500C28F3C /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		4311F60227ECC39800C28F3C /* BaseArticlesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseArticlesRepository.swift; sourceTree = "<group>"; };
 		4311F60427ECC6FE00C28F3C /* BaseArticlesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseArticlesViewModel.swift; sourceTree = "<group>"; };
+		4311F60727F0568700C28F3C /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		4311F60927F056D600C28F3C /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
+		4311F60B27F056FE00C28F3C /* FirebaseAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManager.swift; sourceTree = "<group>"; };
+		4311F60D27F05E9900C28F3C /* SignupRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupRepository.swift; sourceTree = "<group>"; };
 		43C1B5B927CE098A00AB0D3B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
@@ -213,6 +221,7 @@
 			children = (
 				4311F60227ECC39800C28F3C /* BaseArticlesRepository.swift */,
 				4311F5EB27EB1D5800C28F3C /* SearchRepository.swift */,
+				4311F60D27F05E9900C28F3C /* SignupRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -221,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				4311F60427ECC6FE00C28F3C /* BaseArticlesViewModel.swift */,
+				4311F60627F0566C00C28F3C /* Signup */,
 				4311F5C627E9D03D00C28F3C /* Profile */,
 				4311F5C427E9D01000C28F3C /* Homepage */,
 				4311F5C527E9D02900C28F3C /* Favorites */,
@@ -345,6 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				43DCB39727DF8D1A00A1A779 /* AlamofireManager.swift */,
+				4311F60B27F056FE00C28F3C /* FirebaseAuthManager.swift */,
 				4311F5E127EB102100C28F3C /* Responses */,
 			);
 			path = Networking;
@@ -450,6 +461,15 @@
 				4311F5ED27EB26AF00C28F3C /* UserDefaultsManager.swift */,
 			);
 			path = Persistence;
+			sourceTree = "<group>";
+		};
+		4311F60627F0566C00C28F3C /* Signup */ = {
+			isa = PBXGroup;
+			children = (
+				4311F60727F0568700C28F3C /* SignupViewController.swift */,
+				4311F60927F056D600C28F3C /* SignupViewModel.swift */,
+			);
+			path = Signup;
 			sourceTree = "<group>";
 		};
 		43C1B5C927D0A66500AB0D3B /* fonts */ = {
@@ -833,10 +853,12 @@
 				43C1B5E427D0B19100AB0D3B /* NotificationCell.swift in Sources */,
 				43C1B61027D8B6EF00AB0D3B /* MainActionButtonView.swift in Sources */,
 				43DCB39A27E1C45F00A1A779 /* SortbyView.swift in Sources */,
+				4311F60E27F05E9900C28F3C /* SignupRepository.swift in Sources */,
 				4311F5F027EB2FE500C28F3C /* SettingsViewModel.swift in Sources */,
 				43C1B66F27DF35D000AB0D3B /* RecentSearchCell.swift in Sources */,
 				43C1B61527D8D79F00AB0D3B /* NewsCell.swift in Sources */,
 				43C1B65E27DE2C8700AB0D3B /* TermsAndPrivacyViewController.swift in Sources */,
+				4311F60C27F056FE00C28F3C /* FirebaseAuthManager.swift in Sources */,
 				43DCB39E27E1FA7500A1A779 /* RecentSearchModel.swift in Sources */,
 				4311F5EC27EB1D5800C28F3C /* SearchRepository.swift in Sources */,
 				43C1B5ED27D0BF7300AB0D3B /* TextFieldOverride.swift in Sources */,
@@ -844,6 +866,7 @@
 				4311F5E627EB120A00C28F3C /* SettingsModel.swift in Sources */,
 				43C1B65B27DE155400AB0D3B /* ProfileOptionCell.swift in Sources */,
 				43C1B60227D24EBD00AB0D3B /* UISupport.swift in Sources */,
+				4311F60A27F056D600C28F3C /* SignupViewModel.swift in Sources */,
 				43C1B66527DE379600AB0D3B /* AppSettingCell.swift in Sources */,
 				43C1B5F027D0C60000AB0D3B /* SavedArticleCell.swift in Sources */,
 				43C1B60627D78E5A00AB0D3B /* CustomHeaderView.swift in Sources */,
@@ -855,6 +878,7 @@
 				43F08D4127C7C9A6003FFA7D /* AppDelegate.swift in Sources */,
 				43C1B5E927D0BCE800AB0D3B /* ViewProfileViewController.swift in Sources */,
 				43F08D4327C7C9A6003FFA7D /* SceneDelegate.swift in Sources */,
+				4311F60827F0568700C28F3C /* SignupViewController.swift in Sources */,
 				43C1B5F327D0E64800AB0D3B /* TableViewDataSourceManager.swift in Sources */,
 				4311F5EE27EB26AF00C28F3C /* UserDefaultsManager.swift in Sources */,
 				43C1B5C627CF63F300AB0D3B /* MyTabBarController.swift in Sources */,
