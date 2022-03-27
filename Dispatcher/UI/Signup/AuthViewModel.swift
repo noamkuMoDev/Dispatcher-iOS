@@ -1,9 +1,9 @@
 import Foundation
 
 
-class SignupViewModel {
+class AuthViewModel {
     
-    let repository = SignupRepository()
+    let repository = AuthRepository()
     
     
     func isValidEmailAddress(email: String) -> Bool {
@@ -54,19 +54,19 @@ class SignupViewModel {
     func validateSignUpFields(email: String?, password: String?, passwordAgain: String?, completionHandler: @escaping (String?, Bool) -> ()) {
         
         if let safeEmail = email, let safePassword = password, let safeAnotherPassword = passwordAgain {
-            if safeAnotherPassword == safePassword {
+            if safeAnotherPassword != safePassword {
                 completionHandler("Two passwords don't match", false)
-            } else if isValidEmailAddress(email: safeEmail) {
+            } else if !isValidEmailAddress(email: safeEmail) {
                 completionHandler("Email adress is not valid", false)
-            } else if isStrongPassword(password: safeAnotherPassword) {
+            } else if !isStrongPassword(password: safeAnotherPassword) {
                 completionHandler("Password is not strong enough", false)
             } else {
                 completionHandler(nil, true)
+                print("fields good to go")
             }
         } else {
             completionHandler("One of more of the fields wasn't filled", false)
         }
-        
     }
     
 
@@ -75,6 +75,14 @@ class SignupViewModel {
         let cleanEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
         let cleanPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
         repository.signUserToApp(email: cleanEmail, password: cleanPassword) { error in
+            completionHandler(error)
+        }
+    }
+
+    func logUserToApp(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
+        let cleanEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleanPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
+        repository.logUserToApp(email: cleanEmail, password: cleanPassword) { error in
             completionHandler(error)
         }
     }

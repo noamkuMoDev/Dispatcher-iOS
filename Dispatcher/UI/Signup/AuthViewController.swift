@@ -5,41 +5,55 @@ enum eyeIconStatus {
     case reveal
 }
 
-class SignupViewController: UIViewController {
+enum SignupLoginPageCurrentView {
+    case signup
+    case login
+}
+
+class AuthViewController: UIViewController {
 
     @IBOutlet weak var logoImageView: UIImageView!
     
+    @IBOutlet weak var titleLabel: UILabel!
+    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var wrongEmailLabel: UILabel!
-    
 
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var passwordEyeIcon: UIImageView!
     @IBOutlet weak var weakPasswordLabel: UILabel!
     
-
     @IBOutlet weak var reenterPasswordTextField: UITextField!
     @IBOutlet weak var reenterPasswordEyeIcon: UIImageView!
     @IBOutlet weak var mismatchPasswordLabel: UILabel!
     
-
-    @IBOutlet weak var signupButton: MainActionButtonView!
-    @IBOutlet weak var loginButton: MainActionButtonView!
+    @IBOutlet weak var topButton: MainActionButtonView!
+    @IBOutlet weak var bottomButton: MainActionButtonView!
     
     
     
-    
-    let viewModel = SignupViewModel()
-    
+    let viewModel = AuthViewModel()
+    var currentPageType: SignupLoginPageCurrentView = .signup
     var passwordEyeStatus: eyeIconStatus = .conseal
     var reenterPasswordEyeStatus: eyeIconStatus = .conseal
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        recognizeUser()
         initializeUIElements()
         defineGestureRecognizers()
-        
+    }
+    
+    func recognizeUser() {
+        if true { //if user is not recognized automatically
+            currentPageType = .signup
+        } else {
+            currentPageType = .login
+        }
     }
     
     func initializeUIElements() {
@@ -48,6 +62,12 @@ class SignupViewController: UIViewController {
         setActionButtons()
         //  TO DO: change the uiimageview height to be screenHeight / 3
         //  logoImageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
+        
+        if currentPageType == .login {
+            setLoginPageLook()
+        } else {
+            setSignupPageLook()
+        }
     }
     
     func showHideElements() {
@@ -58,21 +78,21 @@ class SignupViewController: UIViewController {
     
     func setTextFields() {
         emailTextField.delegate = self
-        emailTextField.addTarget(self, action: #selector(SignupViewController.textFieldDidChange(_:)), for: .editingChanged)
+        emailTextField.addTarget(self, action: #selector(AuthViewController.textFieldDidChange(_:)), for: .editingChanged)
         emailTextField.layer.masksToBounds = true
         emailTextField.layer.borderColor = UIColor.red.cgColor
         emailTextField.layer.borderWidth = 0.0
         emailTextField.layer.cornerRadius = 4.0
         
         passwordTextField.delegate = self
-        passwordTextField.addTarget(self, action: #selector(SignupViewController.textFieldDidChange(_:)), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(AuthViewController.textFieldDidChange(_:)), for: .editingChanged)
         passwordTextField.layer.masksToBounds = true
         passwordTextField.layer.borderColor = UIColor.red.cgColor
         passwordTextField.layer.borderWidth = 0.0
         passwordTextField.layer.cornerRadius = 4.0
         
         reenterPasswordTextField.delegate = self
-        reenterPasswordTextField.addTarget(self, action: #selector(SignupViewController.textFieldDidChange(_:)), for: .editingChanged)
+        reenterPasswordTextField.addTarget(self, action: #selector(AuthViewController.textFieldDidChange(_:)), for: .editingChanged)
         reenterPasswordTextField.layer.masksToBounds = true
         reenterPasswordTextField.layer.borderColor = UIColor.red.cgColor
         reenterPasswordTextField.layer.borderWidth = 0.0
@@ -80,14 +100,12 @@ class SignupViewController: UIViewController {
     }
     
     func setActionButtons() {
-        signupButton.delegate = self
-        signupButton.buttonLabel.text = "SIGNUP"
+        topButton.delegate = self
+        bottomButton.delegate = self
         
-        loginButton.delegate = self
-        loginButton.buttonIcon.isHidden = true
-        loginButton.buttonLabel.text = "LOGIN"
-        //loginButton.contentView.backgroundColor = UIColor.lightGray
-        loginButton.entireButton.backgroundColor = UIColor.lightGray
+        topButton.buttonIcon.isHidden = false
+        bottomButton.buttonIcon.isHidden = true
+        bottomButton.entireButton.backgroundColor = UIColor.lightGray
     }
     
     func defineGestureRecognizers() {
@@ -102,6 +120,61 @@ class SignupViewController: UIViewController {
         reenterPasswordEyeIcon.addGestureRecognizer(tapGestureRecognizer2)
     }
     
+    
+    func setSignupPageLook() {
+        currentPageType = .signup
+        // title
+        titleLabel.text = "Signup"
+        
+        //clear text fields
+        clearAllUIElements()
+        
+        // extra text field
+        reenterPasswordTextField.isHidden = false
+        reenterPasswordEyeIcon.isHidden = false
+        
+        // buttons
+        topButton.buttonLabel.text = "SIGNUP"
+        bottomButton.buttonLabel.text = "LOGIN"
+    }
+    
+    func setLoginPageLook() {
+        currentPageType = .login
+        // title
+        titleLabel.text = "Login"
+        
+        //clear text fields
+        clearAllUIElements()
+        
+        // remove extra text field
+        reenterPasswordTextField.isHidden = true
+        reenterPasswordEyeIcon.isHidden = true
+        
+        // buttons
+        topButton.buttonLabel.text = "LOGIN"
+        bottomButton.buttonLabel.text = "SIGNUP"
+    }
+    
+    func clearAllUIElements() {
+        emailTextField.text = nil
+        passwordTextField.text = nil
+        reenterPasswordTextField.text = nil
+        
+        passwordEyeStatus = .conseal
+        passwordEyeIcon.image = UIImage(named: "eye-icon-conseal")
+        passwordTextField.isSecureTextEntry = true
+        reenterPasswordEyeStatus = .conseal
+        reenterPasswordEyeIcon.image = UIImage(named: "eye-icon-conseal")
+        reenterPasswordTextField.isSecureTextEntry = true
+        
+        emailTextField.layer.borderWidth = 0.0
+        passwordTextField.layer.borderWidth = 0.0
+        reenterPasswordTextField.layer.borderWidth = 0.0
+        
+        wrongEmailLabel.isHidden = true
+        weakPasswordLabel.isHidden = true
+        mismatchPasswordLabel.isHidden = true
+    }
     
     @objc func passwordIconTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         if passwordEyeStatus == .conseal {
@@ -128,13 +201,57 @@ class SignupViewController: UIViewController {
     }
     
     
-    func loginButtonPressed() {
-        self.performSegue(withIdentifier: Constants.Segues.SIGNUP_TO_LOGIN, sender: self)
+    
+    func signupNewUser() {
+    
+        if reenterPasswordTextField.text != passwordTextField.text {
+            mismatchPasswordLabel.isHidden = false
+            reenterPasswordTextField.layer.borderWidth = 1.0
+        } else {
+            let currentEmail = emailTextField.text, currentPassword = passwordTextField.text
+            viewModel.validateSignUpFields(email: currentEmail, password: currentPassword, passwordAgain: reenterPasswordTextField.text) { error, status in
+                if !status {
+                    print(error!)
+                } else {
+                    self.viewModel.signUserToApp(email: self.emailTextField.text!, password: self.passwordTextField.text!) { error in
+                        if error != nil {
+                            print(error!)
+                        } else {
+                            self.performSegue(withIdentifier: Constants.Segues.AUTH_SCREEN_TO_APP, sender: self)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func loginExistingUser() {
+        
+        var legitEmail = true, legitPassword = true
+        if !viewModel.isValidEmailAddress(email: emailTextField.text ?? "") {
+            emailTextField.layer.borderWidth = 1.0
+            wrongEmailLabel.isHidden = false
+            legitEmail = false
+        }
+        if passwordTextField.text == nil {
+            passwordTextField.layer.borderWidth = 1.0
+            legitPassword = false
+        }
+        
+        if legitEmail && legitPassword {
+            viewModel.logUserToApp(email: emailTextField.text!, password: passwordTextField.text!) { error in
+                if error != nil {
+                    print(error!)
+                } else {
+                    self.performSegue(withIdentifier: Constants.Segues.AUTH_SCREEN_TO_APP, sender: self)
+                }
+            }
+        }
     }
 }
 
 // MARK: - UITextFieldDelegate
-extension SignupViewController: UITextFieldDelegate {
+extension AuthViewController: UITextFieldDelegate {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         
@@ -170,33 +287,22 @@ extension SignupViewController: UITextFieldDelegate {
 
 
 // MARK: - MainActionButtonDelegate
-extension SignupViewController: MainActionButtonDelegate {
+extension AuthViewController: MainActionButtonDelegate {
     
     func actionButtonDidPress(btnText: String) {
 
         switch btnText {
         case "LOGIN":
-            print(btnText)
-        case "SIGNUP":
-            if reenterPasswordTextField.text != passwordTextField.text {
-                mismatchPasswordLabel.isHidden = false
-                reenterPasswordTextField.layer.borderWidth = 1.0
+            if currentPageType == .login {
+                loginExistingUser()
             } else {
-                let currentEmail = emailTextField.text, currentPassword = passwordTextField.text
-                viewModel.validateSignUpFields(email: currentEmail, password: currentPassword, passwordAgain: reenterPasswordTextField.text) { error, status in
-                    if !status {
-                        print(error!)
-                    } else {
-                        //signup user
-                        self.viewModel.signUserToApp(email: self.emailTextField.text!, password: self.passwordTextField.text!) { error in
-                            if error != nil {
-                                print(error!)
-                            } else {
-                                //move user into the app
-                            }
-                        }
-                    }
-                }
+                setLoginPageLook()
+            }
+        case "SIGNUP":
+            if currentPageType == .login {
+                setSignupPageLook()
+            } else {
+                signupNewUser()
             }
         default:
             print("not optional")

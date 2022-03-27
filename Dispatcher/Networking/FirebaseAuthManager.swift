@@ -19,4 +19,17 @@ class FirebaseAuthManager {
             }
         }
     }
+    
+    func loginUser(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
+        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+            
+            if error != nil {
+                // error signing user
+                completionHandler(error?.localizedDescription)
+            } else {
+                print(authResult!)
+                completionHandler(nil)
+            }
+        }
+    }
 }
