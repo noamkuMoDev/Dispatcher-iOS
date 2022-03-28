@@ -52,13 +52,7 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         
         initializeUIElements()
         defineGestureRecognizers()
-        
-        separatorConstraintSignup = separatorLine.topAnchor.constraint(equalTo: mismatchPasswordLabel.bottomAnchor, constant: 25.0)
-        separatorConstraintSignup?.isActive = true
-        
-        separatorConstraintLogin = separatorLine.topAnchor.constraint(equalTo: weakPasswordLabel.bottomAnchor, constant: 50.0)
-        separatorConstraintLogin?.isActive = false
-
+        defineConstraints()
     }
     
     func recognizeUser() {
@@ -151,6 +145,14 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         reenterPasswordEyeIcon.addGestureRecognizer(iconPress2)
     }
     
+    func defineConstraints() {
+        separatorConstraintSignup = separatorLine.topAnchor.constraint(equalTo: mismatchPasswordLabel.bottomAnchor, constant: 25.0)
+        separatorConstraintSignup?.isActive = true
+        
+        separatorConstraintLogin = separatorLine.topAnchor.constraint(equalTo: weakPasswordLabel.bottomAnchor, constant: 50.0)
+        separatorConstraintLogin?.isActive = false
+    }
+    
     @objc func eyeIconWasTapped(sender : MyTapGesture) {
         
         if sender.sender == "enter" {
@@ -177,43 +179,35 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     }
     
     func setSignupPageLook() {
-        currentPageType = .signup
-        // title
-        titleLabel.text = "Signup"
         
-        //clear text fields
         clearAllUIElements()
+        currentPageType = .signup
         
-        // extra text field
+        titleLabel.text = "Signup"
+
         reenterPasswordTextField.isHidden = false
         reenterPasswordEyeIcon.isHidden = false
         
-        //change separator location
         separatorConstraintLogin?.isActive = false
         separatorConstraintSignup?.isActive = true
         
-        // buttons
         topButton.buttonLabel.text = "SIGNUP"
         bottomButton.buttonLabel.text = "LOGIN"
     }
     
     func setLoginPageLook() {
+        
+        clearAllUIElements()
         currentPageType = .login
-        // title
+
         titleLabel.text = "Login"
         
-        //clear text fields
-        clearAllUIElements()
-        
-        // remove extra text field
         reenterPasswordTextField.isHidden = true
         reenterPasswordEyeIcon.isHidden = true
 
-        //change separator location
         separatorConstraintSignup?.isActive = false
         separatorConstraintLogin?.isActive = true
         
-        // buttons
         topButton.buttonLabel.text = "LOGIN"
         bottomButton.buttonLabel.text = "SIGNUP"
     }
@@ -241,7 +235,6 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     
     
     func signupNewUser() {
-    
         startLoadingScreen()
         
         if reenterPasswordTextField.text != passwordTextField.text {
@@ -264,12 +257,10 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
                 }
             }
         }
-        
         stopLoadingScreen()
     }
     
     func loginExistingUser() {
-        
         startLoadingScreen()
         
         var legitEmail = true, legitPassword = true
@@ -293,7 +284,6 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
                 }
             }
         }
-        
         stopLoadingScreen()
     }
     

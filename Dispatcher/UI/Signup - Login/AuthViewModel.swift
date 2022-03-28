@@ -9,6 +9,7 @@ class AuthViewModel {
        return repository.checkIfLoggedIn()
     }
     
+    
     func isValidEmailAddress(email: String) -> Bool {
         
         var isValidEmail = true
@@ -65,7 +66,6 @@ class AuthViewModel {
                 completionHandler("Password is not strong enough", false)
             } else {
                 completionHandler(nil, true)
-                print("fields good to go")
             }
         } else {
             completionHandler("One of more of the fields wasn't filled", false)
@@ -82,7 +82,9 @@ class AuthViewModel {
         }
     }
 
+    
     func logUserToApp(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
+        
         let cleanEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
         let cleanPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
         repository.logUserToApp(email: cleanEmail, password: cleanPassword) { error in

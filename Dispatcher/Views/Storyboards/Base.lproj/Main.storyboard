@@ -98,7 +98,7 @@
                                     <constraint firstAttribute="height" constant="1" id="yIk-mp-6sc"/>
                                 </constraints>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Gyt-Ux-L0f">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="Gyt-Ux-L0f">
                                 <rect key="frame" x="20" y="746" width="374" height="36"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0q5-gA-JEX" customClass="MainActionButtonView" customModule="Dispatcher_Development" customModuleProvider="target">
