@@ -124,6 +124,10 @@
                                     <constraint firstItem="cXk-0a-X1E" firstAttribute="centerX" secondItem="O8Q-SF-5Ks" secondAttribute="centerX" id="tKu-nD-8Of"/>
                                 </constraints>
                             </stackView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="URE-ds-fao" customClass="LoadingView" customModule="Dispatcher_Development" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="d6B-jK-ezt"/>
                         <color key="backgroundColor" name="Dispatch Light Gray"/>
@@ -138,6 +142,7 @@
                             <constraint firstItem="9Ak-9T-BaW" firstAttribute="top" secondItem="iGr-qe-HLD" secondAttribute="bottom" constant="26" id="DPq-Aa-duj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="iGr-qe-HLD" secondAttribute="trailing" constant="20" id="FZp-7F-U3w"/>
                             <constraint firstItem="QnH-EL-WEm" firstAttribute="trailing" secondItem="UZM-Lm-sxH" secondAttribute="trailing" constant="-20" id="Hac-dP-yLL"/>
+                            <constraint firstAttribute="trailing" secondItem="URE-ds-fao" secondAttribute="trailing" id="IUE-VQ-MxD"/>
                             <constraint firstItem="Gyt-Ux-L0f" firstAttribute="leading" secondItem="UZM-Lm-sxH" secondAttribute="leading" constant="20" id="Jc5-fr-tAa"/>
                             <constraint firstItem="O8Q-SF-5Ks" firstAttribute="leading" secondItem="UZM-Lm-sxH" secondAttribute="leading" constant="20" id="Js3-wn-xI0"/>
                             <constraint firstItem="xDD-eh-uiM" firstAttribute="top" secondItem="3aP-0a-Nha" secondAttribute="bottom" constant="24" id="LaA-67-Hgd"/>
@@ -155,17 +160,21 @@
                             <constraint firstItem="iRv-c4-mFS" firstAttribute="leading" secondItem="UZM-Lm-sxH" secondAttribute="leading" constant="20" id="d6f-4E-h91"/>
                             <constraint firstItem="xDD-eh-uiM" firstAttribute="trailing" secondItem="UZM-Lm-sxH" secondAttribute="trailing" constant="-20" id="dgL-4f-gM3"/>
                             <constraint firstAttribute="trailing" secondItem="O8Q-SF-5Ks" secondAttribute="trailing" constant="20" id="gOz-dc-yPh"/>
+                            <constraint firstItem="URE-ds-fao" firstAttribute="leading" secondItem="UZM-Lm-sxH" secondAttribute="leading" id="ikx-t4-dlc"/>
                             <constraint firstItem="mBC-r8-juo" firstAttribute="leading" secondItem="UZM-Lm-sxH" secondAttribute="leading" id="kGw-35-UpF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="sMF-Ik-hZo" secondAttribute="trailing" constant="20" id="nzu-gS-RJl"/>
                             <constraint firstItem="HZd-pN-Egc" firstAttribute="top" secondItem="iRv-c4-mFS" secondAttribute="bottom" constant="24" id="p31-LE-Nbe"/>
                             <constraint firstItem="iRv-c4-mFS" firstAttribute="top" secondItem="mBC-r8-juo" secondAttribute="bottom" constant="40" id="qTE-zj-7bR"/>
                             <constraint firstItem="QnH-EL-WEm" firstAttribute="top" secondItem="sMF-Ik-hZo" secondAttribute="bottom" constant="24" id="qnT-Jb-bxb"/>
                             <constraint firstItem="sMF-Ik-hZo" firstAttribute="leading" secondItem="UZM-Lm-sxH" secondAttribute="leading" constant="20" id="rF1-13-tnE"/>
+                            <constraint firstAttribute="bottom" secondItem="URE-ds-fao" secondAttribute="bottom" id="wcN-7S-p9y"/>
+                            <constraint firstItem="URE-ds-fao" firstAttribute="top" secondItem="UZM-Lm-sxH" secondAttribute="top" id="wx9-iM-rX5"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="bottomButton" destination="cXk-0a-X1E" id="OMk-cs-UgM"/>
                         <outlet property="emailTextField" destination="HZd-pN-Egc" id="5Tk-0y-2lr"/>
+                        <outlet property="loadingView" destination="URE-ds-fao" id="XEC-rr-ejk"/>
                         <outlet property="logoImageView" destination="mBC-r8-juo" id="bM0-nT-NyN"/>
                         <outlet property="mismatchPasswordLabel" destination="iGr-qe-HLD" id="Rc7-z3-aWS"/>
                         <outlet property="passwordEyeIcon" destination="a0X-vE-jiv" id="Yp9-ps-9ep"/>
@@ -177,7 +186,7 @@
                         <outlet property="topButton" destination="0q5-gA-JEX" id="nQZ-tC-Z53"/>
                         <outlet property="weakPasswordLabel" destination="3aP-0a-Nha" id="FDI-yD-SfJ"/>
                         <outlet property="wrongEmailLabel" destination="sMF-Ik-hZo" id="tXE-RM-D5V"/>
-                        <segue destination="cdU-oW-DC1" kind="show" identifier="welcomeIntoApp" id="ZjP-w9-6NX"/>
+                        <segue destination="cdU-oW-DC1" kind="presentation" identifier="welcomeIntoApp" modalPresentationStyle="fullScreen" id="ZjP-w9-6NX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4bd-JD-2v2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -291,7 +300,7 @@
             <objects>
                 <viewController id="yxn-cW-Zh2" customClass="ProfileViewController" customModule="Dispatcher_Development" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="772-Tw-Fl1">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="703"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d84-VL-Vco">
@@ -343,7 +352,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="N1C-ur-zap">
-                                <rect key="frame" x="0.0" y="87" width="414" height="616"/>
+                                <rect key="frame" x="0.0" y="87" width="414" height="638"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingsCell" id="MMX-Cn-dgu">
@@ -390,7 +399,7 @@
                         <color key="badgeColor" name="Dispatch Light Gray"/>
                     </tabBarItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="rsC-J8-Vwx">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="Dispatch Dark Blue"/>
                         <color key="tintColor" name="Dispatch Light Gray"/>
@@ -410,7 +419,7 @@
                 <navigationController id="HZs-BQ-O8b" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" tag="1" title="" image="Homepage" id="gjM-CW-yC5"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="j2j-HX-9LN">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="Dispatch Dark Blue"/>
                         <color key="tintColor" name="Dispatch Light Gray"/>
@@ -429,7 +438,7 @@
                 <navigationController id="adq-gH-4zx" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" tag="1" title="" image="Favorites" id="APv-g2-9OW"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="OGk-Mx-b0f">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="Dispatch Dark Blue"/>
                         <color key="tintColor" name="Dispatch Light Gray"/>
@@ -447,11 +456,11 @@
             <objects>
                 <viewController id="EBr-YD-0P5" customClass="HomepageViewController" customModule="Dispatcher_Development" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Dr3-0T-q0m">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="703"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a9Z-vr-heP" customClass="LoadingView" customModule="Dispatcher_Development" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="703"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kvI-V1-RGH">
@@ -499,7 +508,7 @@
                                 </constraints>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="yBY-FC-8kL">
-                                <rect key="frame" x="16" y="108" width="382" height="595"/>
+                                <rect key="frame" x="16" y="108" width="382" height="617"/>
                                 <color key="backgroundColor" name="Dispatch Light Gray"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JcK-oH-Xc9" customClass="CustomHeaderView" customModule="Dispatcher_Development" customModuleProvider="target">
@@ -553,7 +562,7 @@
             <objects>
                 <viewController id="NCD-YV-c96" customClass="SettingsViewController" customModule="Dispatcher_Development" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xKr-x5-bNU">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="703"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ht-gZ-9Uy" customClass="CustomHeaderView" customModule="Dispatcher_Development" customModuleProvider="target">
@@ -586,7 +595,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App version 1.4" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7M4-CB-nx4">
-                                <rect key="frame" x="36" y="669" width="342" height="17"/>
+                                <rect key="frame" x="36" y="691" width="342" height="17"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                 <color key="textColor" name="Dispatch Gray"/>
                                 <nil key="highlightedColor"/>
@@ -643,7 +652,7 @@
             <objects>
                 <viewController id="kma-R0-c0n" customClass="TermsAndPrivacyViewController" customModule="Dispatcher_Development" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="no0-1P-9Ja">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="703"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mTl-3l-Ogu" customClass="CustomHeaderView" customModule="Dispatcher_Development" customModuleProvider="target">
@@ -697,7 +706,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
             <objects>
                 <viewController id="Qvb-2b-fpt" customClass="ViewProfileViewController" customModule="Dispatcher_Development" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CvQ-wS-VPx">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="703"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TSo-oC-W8W" customClass="CustomHeaderView" customModule="Dispatcher_Development" customModuleProvider="target">
@@ -841,7 +850,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
             <objects>
                 <viewController id="tUC-ru-eE1" customClass="NotificationsViewController" customModule="Dispatcher_Development" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0q2-oz-dRL">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="703"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y2f-ck-KLs" customClass="CustomHeaderView" customModule="Dispatcher_Development" customModuleProvider="target">
@@ -861,7 +870,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nlH-V5-DS3">
-                                <rect key="frame" x="0.0" y="127" width="414" height="576"/>
+                                <rect key="frame" x="0.0" y="127" width="414" height="598"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
@@ -895,11 +904,11 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
             <objects>
                 <viewController id="Qi2-cd-MPv" customClass="SearchViewController" customModule="Dispatcher_Development" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HHP-kx-cT4">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="703"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="liQ-A9-pzP" customClass="LoadingView" customModule="Dispatcher_Development" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="703"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5YH-wN-LcL">
@@ -950,20 +959,20 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no-results-found-image" translatesAutoresizingMaskIntoConstraints="NO" id="YVC-S3-82M">
-                                <rect key="frame" x="150.66666666666666" y="295" width="112.99999999999997" height="113"/>
+                                <rect key="frame" x="150.66666666666666" y="306" width="112.99999999999997" height="113"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="113" id="Gg4-Ts-wgP"/>
                                     <constraint firstAttribute="height" constant="113" id="Jy9-RA-DdC"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We couldn't find any matches for your query" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GgP-84-67R">
-                                <rect key="frame" x="0.0" y="412" width="414" height="19"/>
+                                <rect key="frame" x="0.0" y="423" width="414" height="19"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                                 <color key="textColor" name="Dispatch Purple"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bIP-2Z-gta">
-                                <rect key="frame" x="16" y="119" width="382" height="575"/>
+                                <rect key="frame" x="16" y="119" width="382" height="597"/>
                                 <color key="backgroundColor" name="Dispatch Light Gray"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3qE-VJ-F43">
@@ -1001,7 +1010,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="uUr-Qh-gn7">
-                                <rect key="frame" x="0.0" y="145" width="414" height="558"/>
+                                <rect key="frame" x="0.0" y="145" width="414" height="580"/>
                                 <color key="backgroundColor" name="Dispatch Light Gray"/>
                                 <color key="separatorColor" name="Dispatch Gray"/>
                             </tableView>
@@ -1062,11 +1071,11 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
             <objects>
                 <viewController id="tsQ-jW-DvZ" customClass="FavoritesViewController" customModule="Dispatcher_Development" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vSL-IN-Nez">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="703"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="84b-yh-Gq1" customClass="LoadingView" customModule="Dispatcher_Development" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="703"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ldg-ii-AYH" customClass="CustomHeaderView" customModule="Dispatcher_Development" customModuleProvider="target">
@@ -1092,20 +1101,20 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                                 </constraints>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="no-results-found-image" translatesAutoresizingMaskIntoConstraints="NO" id="HZq-ak-OhP">
-                                <rect key="frame" x="150.66666666666666" y="295" width="112.99999999999997" height="113"/>
+                                <rect key="frame" x="150.66666666666666" y="306" width="112.99999999999997" height="113"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="113" id="3Jy-Qf-kmx"/>
                                     <constraint firstAttribute="height" constant="113" id="FXo-F2-iHe"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No saved articles were found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JSg-cc-jjP">
-                                <rect key="frame" x="90.666666666666671" y="416" width="232.66666666666663" height="21.333333333333314"/>
+                                <rect key="frame" x="90.666666666666671" y="427" width="232.66666666666663" height="21.333333333333314"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="XjW-ao-P3U">
-                                <rect key="frame" x="8" y="96" width="398" height="607"/>
+                                <rect key="frame" x="8" y="96" width="398" height="629"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>

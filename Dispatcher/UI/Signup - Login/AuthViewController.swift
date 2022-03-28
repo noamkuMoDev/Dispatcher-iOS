@@ -10,8 +10,10 @@ enum SignupLoginPageCurrentView {
     case login
 }
 
-class AuthViewController: UIViewController {
+class AuthViewController: UIViewController, LoadingViewDelegate {
 
+    @IBOutlet weak var loadingView: LoadingView!
+    
     @IBOutlet weak var logoImageView: UIImageView!
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -47,6 +49,7 @@ class AuthViewController: UIViewController {
         super.viewDidLoad()
         
         recognizeUser()
+        
         initializeUIElements()
         defineGestureRecognizers()
         
@@ -55,21 +58,36 @@ class AuthViewController: UIViewController {
         
         separatorConstraintLogin = separatorLine.topAnchor.constraint(equalTo: weakPasswordLabel.bottomAnchor, constant: 50.0)
         separatorConstraintLogin?.isActive = false
+
     }
     
     func recognizeUser() {
-        if true { //if user is not recognized automatically
+        
+        startLoadingScreen()
+        
+        switch viewModel.checkIfLoggedIn() {
+        case .freshUser:
             currentPageType = .signup
-        } else {
+        case .loggedOut:
             currentPageType = .login
+        case .loggedIn:
+            DispatchQueue.main.async {
+                self.currentPageType = .login
+                self.performSegue(withIdentifier: Constants.Segues.AUTH_SCREEN_TO_APP, sender: self)
+            }
         }
+        
+        stopLoadingScreen()
     }
     
     func initializeUIElements() {
+        
+        loadingView.initView(delegate: self)
         showHideElements()
         setTextFields()
         setActionButtons()
-        //  TO DO: change the uiimageview height to be screenHeight / 3
+
+        
         let screenHeight = UIScreen.main.bounds.height
         logoImageView.heightAnchor.constraint(equalToConstant: CGFloat(screenHeight / 2 )).isActive = true
 
@@ -82,6 +100,7 @@ class AuthViewController: UIViewController {
     }
     
     func showHideElements() {
+        loadingView.isHidden = true
         wrongEmailLabel.isHidden = true
         weakPasswordLabel.isHidden = true
         mismatchPasswordLabel.isHidden = true
@@ -223,6 +242,8 @@ class AuthViewController: UIViewController {
     
     func signupNewUser() {
     
+        startLoadingScreen()
+        
         if reenterPasswordTextField.text != passwordTextField.text {
             mismatchPasswordLabel.isHidden = false
             reenterPasswordTextField.layer.borderWidth = 1.0
@@ -236,15 +257,20 @@ class AuthViewController: UIViewController {
                         if error != nil {
                             print(error!)
                         } else {
+                            self.clearAllUIElements()
                             self.performSegue(withIdentifier: Constants.Segues.AUTH_SCREEN_TO_APP, sender: self)
                         }
                     }
                 }
             }
         }
+        
+        stopLoadingScreen()
     }
     
     func loginExistingUser() {
+        
+        startLoadingScreen()
         
         var legitEmail = true, legitPassword = true
         if !viewModel.isValidEmailAddress(email: emailTextField.text ?? "") {
@@ -262,9 +288,26 @@ class AuthViewController: UIViewController {
                 if error != nil {
                     print(error!)
                 } else {
+                    self.clearAllUIElements()
                     self.performSegue(withIdentifier: Constants.Segues.AUTH_SCREEN_TO_APP, sender: self)
                 }
             }
+        }
+        
+        stopLoadingScreen()
+    }
+    
+    func startLoadingScreen() {
+        DispatchQueue.main.async {
+            self.loadingView.isHidden = false
+            self.loadingView.loadIndicator.startAnimating()
+        }
+    }
+    
+    func stopLoadingScreen() {
+        DispatchQueue.main.async {
+            self.loadingView.loadIndicator.stopAnimating()
+            self.loadingView.isHidden = true
         }
     }
 }
@@ -274,26 +317,28 @@ extension AuthViewController: UITextFieldDelegate {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         
-        if textField == emailTextField {
-            if emailTextField.text != nil && emailTextField.text!.count > 5 {
-                if !viewModel.isValidEmailAddress(email: emailTextField.text ?? "") {
-                    wrongEmailLabel.isHidden = false
-                    emailTextField.layer.borderWidth = 1.0
-                } else {
-                    wrongEmailLabel.isHidden = true
-                    emailTextField.layer.borderWidth = 0.0
+        if currentPageType == .signup {
+            if textField == emailTextField {
+                if emailTextField.text != nil && emailTextField.text!.count > 5 {
+                    if !viewModel.isValidEmailAddress(email: emailTextField.text ?? "") {
+                        wrongEmailLabel.isHidden = false
+                        emailTextField.layer.borderWidth = 1.0
+                    } else {
+                        wrongEmailLabel.isHidden = true
+                        emailTextField.layer.borderWidth = 0.0
+                    }
                 }
             }
-        }
-        
-        if textField == passwordTextField {
-            let isPasswordStrong = viewModel.isStrongPassword(password: passwordTextField.text ?? "")
-            if !isPasswordStrong {
-                weakPasswordLabel.isHidden = false
-                passwordTextField.layer.borderWidth = 1.0
-            } else {
-                weakPasswordLabel.isHidden = true
-                passwordTextField.layer.borderWidth = 0.0
+            
+            if textField == passwordTextField {
+                let isPasswordStrong = viewModel.isStrongPassword(password: passwordTextField.text ?? "")
+                if !isPasswordStrong {
+                    weakPasswordLabel.isHidden = false
+                    passwordTextField.layer.borderWidth = 1.0
+                } else {
+                    weakPasswordLabel.isHidden = true
+                    passwordTextField.layer.borderWidth = 0.0
+                }
             }
         }
     }

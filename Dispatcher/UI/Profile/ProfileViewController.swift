@@ -62,12 +62,14 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if viewModel.optionsArray[indexPath.row].text != "logout" {
+        if viewModel.optionsArray[indexPath.row].text.lowercased() != "logout" {
             if viewModel.optionsArray[indexPath.row].navigateTo != nil {
                 self.performSegue(withIdentifier: viewModel.optionsArray[indexPath.row].navigateTo!, sender: self)
             }
         } else {
-            // TO DO : log the user out, then navigate to login screen
+            viewModel.logUserOut() {
+                self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+            }
         }
     }
 }

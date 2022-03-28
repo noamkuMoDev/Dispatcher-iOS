@@ -230,7 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				4311F60427ECC6FE00C28F3C /* BaseArticlesViewModel.swift */,
-				4311F60627F0566C00C28F3C /* Signup */,
+				4311F60627F0566C00C28F3C /* Signup - Login */,
 				4311F5C627E9D03D00C28F3C /* Profile */,
 				4311F5C427E9D01000C28F3C /* Homepage */,
 				4311F5C527E9D02900C28F3C /* Favorites */,
@@ -263,6 +263,7 @@
 			children = (
 				43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */,
 				4311F5D827EA033D00C28F3C /* ProfileViewModel.swift */,
+				4311F5C927E9D0F700C28F3C /* Terms and Privacy */,
 				4311F5D327E9E75200C28F3C /* UserProfile */,
 			);
 			path = Profile;
@@ -299,7 +300,6 @@
 			children = (
 				43C1B65F27DE32BD00AB0D3B /* SettingsViewController.swift */,
 				4311F5EF27EB2FE500C28F3C /* SettingsViewModel.swift */,
-				4311F5C927E9D0F700C28F3C /* Terms and Privacy */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -463,13 +463,13 @@
 			path = Persistence;
 			sourceTree = "<group>";
 		};
-		4311F60627F0566C00C28F3C /* Signup */ = {
+		4311F60627F0566C00C28F3C /* Signup - Login */ = {
 			isa = PBXGroup;
 			children = (
 				4311F60727F0568700C28F3C /* AuthViewController.swift */,
 				4311F60927F056D600C28F3C /* AuthViewModel.swift */,
 			);
-			path = Signup;
+			path = "Signup - Login";
 			sourceTree = "<group>";
 		};
 		43C1B5C927D0A66500AB0D3B /* fonts */ = {

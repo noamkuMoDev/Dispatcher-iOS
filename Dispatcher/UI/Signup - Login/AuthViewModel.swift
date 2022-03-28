@@ -5,6 +5,9 @@ class AuthViewModel {
     
     let repository = AuthRepository()
     
+    func checkIfLoggedIn() -> userType {
+       return repository.checkIfLoggedIn()
+    }
     
     func isValidEmailAddress(email: String) -> Bool {
         

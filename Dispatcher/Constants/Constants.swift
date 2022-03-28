@@ -42,6 +42,7 @@ struct Constants {
     
     struct UserDefaults {
         static let RECENT_SEARCHES = "recentSearches"
+        static let IS_USER_LOGGED_IN = "isLoggedIn"
     }
     
     struct apiCalls {
