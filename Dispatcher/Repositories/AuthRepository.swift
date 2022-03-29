@@ -8,8 +8,10 @@ enum userType {
 
 class AuthRepository {
     
+    let userDefaults = UserDefaultsManager()
+    let firebaseManager = FirebaseAuthManager()
+    
     func checkIfLoggedIn() -> userType {
-        let userDefaults = UserDefaultsManager()
         
         if !userDefaults.checkIfKeyExists(key: Constants.UserDefaults.IS_USER_LOGGED_IN) {
             return .freshUser
@@ -24,7 +26,7 @@ class AuthRepository {
     
     func signUserToApp(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
         
-        FirebaseAuthManager().signupUser(email: email, password: password) { error in
+        firebaseManager.signupUser(email: email, password: password) { error in
             if error == nil {
                 UserDefaultsManager().setItemToUserDefaults(key: Constants.UserDefaults.IS_USER_LOGGED_IN, data: true)
             }
@@ -33,7 +35,7 @@ class AuthRepository {
     }
     
     func logUserToApp(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
-        FirebaseAuthManager().loginUser(email: email, password: password) { error in
+        firebaseManager.loginUser(email: email, password: password) { error in
             var errorDescription = ""
             if error != nil {
                 if error!.contains("There is no user record") {
@@ -45,15 +47,17 @@ class AuthRepository {
                 }
                 completionHandler(errorDescription)
             } else {
-                UserDefaultsManager().setItemToUserDefaults(key: Constants.UserDefaults.IS_USER_LOGGED_IN, data: true)
+                self.userDefaults.setItemToUserDefaults(key: Constants.UserDefaults.IS_USER_LOGGED_IN, data: true)
                 completionHandler(error)
             }
         }
     }
     
-    
     func logoutUserFromApp(completionHandler: @escaping () -> ()) {
-        UserDefaultsManager().setItemToUserDefaults(key: Constants.UserDefaults.IS_USER_LOGGED_IN, data: false)
+        userDefaults.setItemToUserDefaults(key: Constants.UserDefaults.IS_USER_LOGGED_IN, data: false)
+        
+        // TO DO - logout from firebase
+        
         completionHandler()
     }
 }
