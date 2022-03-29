@@ -27,28 +27,28 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //recognizeUser()
+        recognizeUser()
         
         initializeUIElements()
         defineConstraints()
     }
     
-//    func recognizeUser() {
-//
-//        startLoadingScreen()
-//
-//        switch viewModel.checkIfLoggedIn() {
-//        case .loggedOut:
-//            currentPageType = .login
-//        case .loggedIn:
-//            DispatchQueue.main.async {
-//                self.navigateIntoApp()
-//                self.currentPageType = .login
-//            }
-//        }
-//
-//        stopLoadingScreen()
-//    }
+    func recognizeUser() {
+
+        startLoadingScreen()
+
+        switch viewModel.checkIfLoggedIn() {
+        case .loggedOut:
+            currentPageType = .login
+        case .loggedIn:
+            DispatchQueue.main.async {
+                self.navigateIntoApp()
+                self.currentPageType = .login
+            }
+        }
+
+        stopLoadingScreen()
+    }
     
     func initializeUIElements() {
         
