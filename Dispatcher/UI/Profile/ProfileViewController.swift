@@ -67,8 +67,13 @@ extension ProfileViewController: UITableViewDelegate {
                 self.performSegue(withIdentifier: viewModel.optionsArray[indexPath.row].navigateTo!, sender: self)
             }
         } else {
-            viewModel.logUserOut() {
-                self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+            viewModel.logUserOut() { error in
+                if let error = error {
+                    print(error)
+                } else {
+                    let login = UIStoryboard(name: "Auth", bundle: nil).instantiateViewController(withIdentifier: "AuthViewController")
+                    self.present(login, animated: true, completion: nil)
+                }
             }
         }
     }

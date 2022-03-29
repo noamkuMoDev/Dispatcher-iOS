@@ -2,7 +2,7 @@ import Foundation
 
 class ProfileViewModel {
     
-    var repository = AuthRepository()
+    var repository = ProfileRepository()
     
     var optionsArray: [ProfileOptionModel] = [
         ProfileOptionModel(icon: "gearWheel", text: "Setting", navigateTo: Constants.Segues.GO_TO_SETTINGS),
@@ -10,9 +10,9 @@ class ProfileViewModel {
         ProfileOptionModel(icon: "logout", text: "Logout")
     ]
     
-    func logUserOut(completionHandler: @escaping () -> ()) {
-        repository.logoutUserFromApp() {
-            completionHandler()
+    func logUserOut(completionHandler: @escaping (String?) -> ()) {
+        repository.logoutUserFromApp() { error in
+            completionHandler(error)
         }
     }
 }

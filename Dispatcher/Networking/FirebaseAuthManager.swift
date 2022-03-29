@@ -3,6 +3,10 @@ import FirebaseAuth
 
 class FirebaseAuthManager {
     
+    func checkUserLogin() -> Bool {
+        return Auth.auth().currentUser != nil
+    }
+    
     func signupUser(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
         
         Auth.auth().createUser(withEmail: email, password: password) {
@@ -30,6 +34,15 @@ class FirebaseAuthManager {
                 print(authResult!)
                 completionHandler(nil)
             }
+        }
+    }
+    
+    func logoutUser(completionHandler: @escaping (String?) -> ()) {
+        do {
+            try Auth.auth().signOut()
+            completionHandler(nil)
+        } catch (let error) {
+            completionHandler(error.localizedDescription)
         }
     }
 }
