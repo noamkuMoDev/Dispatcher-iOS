@@ -27,13 +27,13 @@ class AuthRepository {
     func logUserToApp(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
         firebaseManager.loginUser(email: email, password: password) { error in
             var errorDescription = ""
-            if error != nil {
-                if error!.contains("There is no user record") {
+            if let error = error {
+                if error.contains("There is no user record") {
                     errorDescription = "Couldn't find a match to given credentials"
-                } else if error!.contains("The password is invalid") {
+                } else if error.contains("The password is invalid") {
                     errorDescription = "Incorrect password"
                 } else {
-                    errorDescription = error!
+                    errorDescription = error
                 }
                 completionHandler(errorDescription)
             } else {

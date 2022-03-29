@@ -46,8 +46,8 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     
     func fetchSearchHistory() {
         viewModel.fetchSavedRecentSearchesFromUserDefaults() { error in
-            if error != nil {
-                print(error!)
+            if let error = error {
+                print(error)
             }
         }
     }

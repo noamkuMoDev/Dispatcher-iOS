@@ -27,27 +27,8 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        recognizeUser()
-        
         initializeUIElements()
         defineConstraints()
-    }
-    
-    func recognizeUser() {
-
-        startLoadingScreen()
-
-        switch viewModel.checkIfLoggedIn() {
-        case .loggedOut:
-            currentPageType = .login
-        case .loggedIn:
-            DispatchQueue.main.async {
-                self.navigateIntoApp()
-                self.currentPageType = .login
-            }
-        }
-
-        stopLoadingScreen()
     }
     
     func initializeUIElements() {
@@ -60,10 +41,8 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
 
         setActionButtons()
 
-        let screenHeight = UIScreen.main.bounds.height
-        logoImageView.heightAnchor.constraint(equalToConstant: CGFloat(screenHeight / 2 )).isActive = true
+        logoImageView.heightAnchor.constraint(equalToConstant: CGFloat(UIScreen.main.bounds.height / 2 )).isActive = true
 
-        
         if currentPageType == .login {
             setLoginPageLook()
         } else {
@@ -81,7 +60,6 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         bottomButton.entireButton.backgroundColor = UIColor.lightGray
     }
 
-    
     func defineConstraints() {
         separatorConstraintSignup = separatorLine.topAnchor.constraint(equalTo: reenterPasswordFormView.bottomAnchor, constant: 25.0)
         separatorConstraintSignup?.isActive = true
@@ -90,35 +68,24 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         separatorConstraintLogin?.isActive = false
     }
 
-    
     func setSignupPageLook() {
-        
         clearAllUIElements()
         currentPageType = .signup
-        
         titleLabel.text = "Signup"
-
         reenterPasswordFormView.isHidden = false
-        
         separatorConstraintLogin?.isActive = false
         separatorConstraintSignup?.isActive = true
-        
         topButton.buttonLabel.text = "SIGNUP"
         bottomButton.buttonLabel.text = "LOGIN"
     }
     
     func setLoginPageLook() {
-        
         clearAllUIElements()
         currentPageType = .login
-
         titleLabel.text = "Login"
-        
         reenterPasswordFormView.isHidden = true
-
         separatorConstraintSignup?.isActive = false
         separatorConstraintLogin?.isActive = true
-        
         topButton.buttonLabel.text = "LOGIN"
         bottomButton.buttonLabel.text = "SIGNUP"
     }
@@ -133,11 +100,12 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     func signupNewUser() {
         startLoadingScreen()
         
-        if reenterPasswordFormView.textField.text != passwordFormView.textField.text {
+        let currentPassword = passwordFormView.textField.text, passwordReenter = passwordFormView.textField.text
+        if currentPassword != passwordReenter {
             reenterPasswordFormView.displayWarning()
         } else {
-            let currentEmail = emailFormView.textField.text, currentPassword = passwordFormView.textField.text
-            viewModel.validateSignUpFields(email: currentEmail, password: currentPassword, passwordAgain: reenterPasswordFormView.textField.text) { error, status in
+            let currentEmail = emailFormView.textField.text
+            viewModel.validateSignUpFields(email: currentEmail, password: currentPassword, passwordAgain: passwordReenter) { error, status in
                 if !status {
                     print(error!)
                 } else {
@@ -170,8 +138,8 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
 
         if legitEmail && legitPassword {
             viewModel.logUserToApp(email: email!, password: password!) { error in
-                if error != nil {
-                    print(error!)
+                if let error = error {
+                    print(error)
                 } else {
                     self.clearAllUIElements()
                     self.navigateIntoApp()
@@ -205,7 +173,6 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
 // MARK: - FormInputViewDelegate
 extension AuthViewController: FormInputViewDelegate {
     
-    // V
     func textFieldDidChange(textFieldId: String, currentText: String?) {
         
         if currentPageType == .signup {
@@ -224,7 +191,7 @@ extension AuthViewController: FormInputViewDelegate {
                 } else {
                     passwordFormView.hideWarning()
                 }
-            } else { //textFieldId == "re-password"
+            } else {
                 if currentText != nil && currentText!.count > 5 {
                     if currentText != passwordFormView.textField.text {
                         reenterPasswordFormView.displayWarning()
@@ -242,7 +209,6 @@ extension AuthViewController: FormInputViewDelegate {
 // MARK: - MainActionButtonDelegate
 extension AuthViewController: MainActionButtonDelegate {
     
-    // V
     func actionButtonDidPress(btnText: String) {
 
         switch btnText {

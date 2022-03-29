@@ -12,9 +12,8 @@ class FirebaseAuthManager {
         Auth.auth().createUser(withEmail: email, password: password) {
             authResult, error in
             
-            if error != nil {
-                // error creating user
-                completionHandler(error?.localizedDescription)
+            if let error = error {
+                completionHandler(error.localizedDescription)
             } else {
                 let uid = authResult!.user.uid
                 // TO DO - save the user in a database
@@ -27,9 +26,8 @@ class FirebaseAuthManager {
     func loginUser(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             
-            if error != nil {
-                // error signing user
-                completionHandler(error?.localizedDescription)
+            if let error = error {
+                completionHandler(error.localizedDescription)
             } else {
                 print(authResult!)
                 completionHandler(nil)

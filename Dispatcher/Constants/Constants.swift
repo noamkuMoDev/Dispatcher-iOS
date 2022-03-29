@@ -16,6 +16,7 @@ struct Constants {
         static let GO_TO_UPDATE_PROFILE = "goToUpdateProfile"
         static let GO_TO_TERMS_AND_PRIVACY = "goToTermsAndPrivacy"
         static let GO_TO_SETTINGS = "goToSettings"
+        static let SPLASH_TO_AUTH = "splashToAuth"
     }
     
     struct TableCellsIdentifier {

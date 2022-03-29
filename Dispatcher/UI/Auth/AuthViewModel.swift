@@ -1,6 +1,5 @@
 import Foundation
 
-
 class AuthViewModel {
     
     let repository = AuthRepository()
@@ -8,7 +7,6 @@ class AuthViewModel {
     func checkIfLoggedIn() -> userType {
        return repository.checkIfLoggedIn()
     }
-    
     
     func isValidEmailAddress(email: String) -> Bool {
         
@@ -30,7 +28,6 @@ class AuthViewModel {
         
         return  isValidEmail
     }
-    
     
     func isStrongPassword(password: String) -> Bool {
         
@@ -54,7 +51,6 @@ class AuthViewModel {
         return  isStrongPassword
     }
     
-
     func validateSignUpFields(email: String?, password: String?, passwordAgain: String?, completionHandler: @escaping (String?, Bool) -> ()) {
         
         if let safeEmail = email, let safePassword = password, let safeAnotherPassword = passwordAgain {
@@ -72,7 +68,6 @@ class AuthViewModel {
         }
     }
     
-
     func signUserToApp(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
         
         let cleanEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -82,7 +77,6 @@ class AuthViewModel {
         }
     }
 
-    
     func logUserToApp(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
         
         let cleanEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
