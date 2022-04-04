@@ -27,6 +27,9 @@
 		4311F61727F31F1300C28F3C /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F61627F31F1300C28F3C /* ProfileRepository.swift */; };
 		4311F61927F3251400C28F3C /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4311F61827F3251400C28F3C /* Auth.storyboard */; };
 		4311F62127F33E8500C28F3C /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F62027F33E8500C28F3C /* SplashViewController.swift */; };
+		4311F62327F9CC5500C28F3C /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F62227F9CC5500C28F3C /* KeychainManager.swift */; };
+		4311F62527FA279C00C28F3C /* SettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F62427FA279C00C28F3C /* SettingsRepository.swift */; };
+		4311F62727FADC3300C28F3C /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F62627FADC3300C28F3C /* AppSettings.swift */; };
 		43C1B5BA27CE098A00AB0D3B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5B927CE098A00AB0D3B /* Constants.swift */; };
 		43C1B5BC27CE0B1700AB0D3B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */; };
 		43C1B5BE27CE0B4500AB0D3B /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */; };
@@ -131,6 +134,9 @@
 		4311F61627F31F1300C28F3C /* ProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRepository.swift; sourceTree = "<group>"; };
 		4311F61827F3251400C28F3C /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 		4311F62027F33E8500C28F3C /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		4311F62227F9CC5500C28F3C /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		4311F62427FA279C00C28F3C /* SettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRepository.swift; sourceTree = "<group>"; };
+		4311F62627FADC3300C28F3C /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		43C1B5B927CE098A00AB0D3B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
@@ -233,6 +239,7 @@
 				4311F5EB27EB1D5800C28F3C /* SearchRepository.swift */,
 				4311F61627F31F1300C28F3C /* ProfileRepository.swift */,
 				4311F60D27F05E9900C28F3C /* AuthRepository.swift */,
+				4311F62427FA279C00C28F3C /* SettingsRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -247,7 +254,6 @@
 				4311F5C527E9D02900C28F3C /* Favorites */,
 				4311F5C727E9D0A500C28F3C /* Notifications */,
 				4311F5C827E9D0C100C28F3C /* Search */,
-				4311F5CA27E9D10C00C28F3C /* Settings */,
 				43F08D5627C7C9F5003FFA7D /* Controllers */,
 			);
 			path = UI;
@@ -274,6 +280,7 @@
 			children = (
 				43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */,
 				4311F5D827EA033D00C28F3C /* ProfileViewModel.swift */,
+				4311F5CA27E9D10C00C28F3C /* Settings */,
 				4311F5C927E9D0F700C28F3C /* Terms and Privacy */,
 				4311F5D327E9E75200C28F3C /* UserProfile */,
 			);
@@ -472,6 +479,7 @@
 			isa = PBXGroup;
 			children = (
 				4311F5ED27EB26AF00C28F3C /* UserDefaultsManager.swift */,
+				4311F62227F9CC5500C28F3C /* KeychainManager.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -608,6 +616,7 @@
 				43C1B65727DE13CE00AB0D3B /* ProfileOptionModel.swift */,
 				43DCB39D27E1FA7500A1A779 /* RecentSearchModel.swift */,
 				4311F5E527EB120A00C28F3C /* SettingsModel.swift */,
+				4311F62627FADC3300C28F3C /* AppSettings.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -894,6 +903,7 @@
 				43C1B65B27DE155400AB0D3B /* ProfileOptionCell.swift in Sources */,
 				43C1B60227D24EBD00AB0D3B /* UISupport.swift in Sources */,
 				4311F60A27F056D600C28F3C /* AuthViewModel.swift in Sources */,
+				4311F62327F9CC5500C28F3C /* KeychainManager.swift in Sources */,
 				43C1B66527DE379600AB0D3B /* AppSettingCell.swift in Sources */,
 				4311F61427F2F0B700C28F3C /* FormInputView.swift in Sources */,
 				43C1B5F027D0C60000AB0D3B /* SavedArticleCell.swift in Sources */,
@@ -907,11 +917,13 @@
 				43C1B5E927D0BCE800AB0D3B /* ViewProfileViewController.swift in Sources */,
 				43F08D4327C7C9A6003FFA7D /* SceneDelegate.swift in Sources */,
 				4311F60827F0568700C28F3C /* AuthViewController.swift in Sources */,
+				4311F62527FA279C00C28F3C /* SettingsRepository.swift in Sources */,
 				43C1B5F327D0E64800AB0D3B /* TableViewDataSourceManager.swift in Sources */,
 				4311F5EE27EB26AF00C28F3C /* UserDefaultsManager.swift in Sources */,
 				43C1B5C627CF63F300AB0D3B /* MyTabBarController.swift in Sources */,
 				43C1B5FA27D1154500AB0D3B /* NotificationModel.swift in Sources */,
 				4311F5D927EA033D00C28F3C /* ProfileViewModel.swift in Sources */,
+				4311F62727FADC3300C28F3C /* AppSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

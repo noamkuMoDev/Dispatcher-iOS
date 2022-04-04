@@ -42,6 +42,9 @@ struct Constants {
     struct UserDefaults {
         static let RECENT_SEARCHES = "recentSearches"
         static let IS_USER_LOGGED_IN = "isLoggedIn"
+        static let SAVE_FILTERS = "saveFilters"
+        static let SAVE_SEARCH_RESULTS = "saveSearchResults"
+        static let SEND_NOTIFICATIONS = "sendNotifications"
     }
     
     struct apiCalls {

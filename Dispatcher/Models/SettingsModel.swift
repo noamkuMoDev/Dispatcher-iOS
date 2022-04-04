@@ -8,11 +8,25 @@ struct SettingModel {
 struct SingleSetting {
     var title: String
     var description: String?
-    var status: switchStatus
+    var status: SwitchStatus
 }
 
-enum switchStatus {
-    case disabled
-    case on
-    case off
+enum SwitchStatus: Int {
+    case disabled // index 0
+    case on //index 1
+    case off //index 2
+    
+    static var allCases: [SwitchStatus] = [.disabled, .on, .off]
+    
+    var title: String {
+        switch self {
+        case .disabled:
+            return "disabled"
+        case .on:
+            return "on"
+        case .off:
+            return "off"
+        }
+    }
 }
+

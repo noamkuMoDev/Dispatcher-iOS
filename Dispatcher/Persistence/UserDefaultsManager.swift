@@ -17,6 +17,11 @@ class UserDefaultsManager: NSObject {
         return data
     }
     
+    func fetchIntFromUserDefaults(key: String) -> Int {
+        let data = defaults.integer(forKey: key)
+        return data
+    }
+    
     func fetchArrayFromUserDefaults<T>(key: String) -> [T]? {
         if let dataArray = defaults.array(forKey: key) as? [T] {
             return dataArray

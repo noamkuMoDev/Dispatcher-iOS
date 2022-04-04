@@ -44,9 +44,10 @@ extension SettingsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCellsIdentifier.SETTING, for: indexPath) as! AppSettingCell
-        
+        cell.delegate = self
+
         cell.settingTitle.text = viewModel.appSettings[indexPath.section].options[indexPath.row].title
         cell.settingDescription.text = viewModel.appSettings[indexPath.section].options[indexPath.row].description
         
@@ -82,6 +83,19 @@ extension SettingsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 32
+    }
+}
+
+// MARK: - AppSettingCellDelegate
+extension SettingsViewController: AppSettingCellDelegate {
+
+    func settingCellDidPress(settingText: String) {
+        
+        viewModel.updateSetting(settingTitle: settingText) {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
 }
 
