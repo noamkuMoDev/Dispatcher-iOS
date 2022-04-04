@@ -18,6 +18,15 @@
 		4311F5F027EB2FE500C28F3C /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F5EF27EB2FE500C28F3C /* SettingsViewModel.swift */; };
 		4311F60327ECC39800C28F3C /* BaseArticlesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F60227ECC39800C28F3C /* BaseArticlesRepository.swift */; };
 		4311F60527ECC6FE00C28F3C /* BaseArticlesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F60427ECC6FE00C28F3C /* BaseArticlesViewModel.swift */; };
+		4311F60827F0568700C28F3C /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F60727F0568700C28F3C /* AuthViewController.swift */; };
+		4311F60A27F056D600C28F3C /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F60927F056D600C28F3C /* AuthViewModel.swift */; };
+		4311F60C27F056FE00C28F3C /* FirebaseAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F60B27F056FE00C28F3C /* FirebaseAuthManager.swift */; };
+		4311F60E27F05E9900C28F3C /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F60D27F05E9900C28F3C /* AuthRepository.swift */; };
+		4311F61227F2DA6300C28F3C /* FormInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4311F61127F2DA6300C28F3C /* FormInputView.xib */; };
+		4311F61427F2F0B700C28F3C /* FormInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F61327F2F0B700C28F3C /* FormInputView.swift */; };
+		4311F61727F31F1300C28F3C /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F61627F31F1300C28F3C /* ProfileRepository.swift */; };
+		4311F61927F3251400C28F3C /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4311F61827F3251400C28F3C /* Auth.storyboard */; };
+		4311F62127F33E8500C28F3C /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F62027F33E8500C28F3C /* SplashViewController.swift */; };
 		43C1B5BA27CE098A00AB0D3B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5B927CE098A00AB0D3B /* Constants.swift */; };
 		43C1B5BC27CE0B1700AB0D3B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */; };
 		43C1B5BE27CE0B4500AB0D3B /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */; };
@@ -113,6 +122,15 @@
 		4311F5EF27EB2FE500C28F3C /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		4311F60227ECC39800C28F3C /* BaseArticlesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseArticlesRepository.swift; sourceTree = "<group>"; };
 		4311F60427ECC6FE00C28F3C /* BaseArticlesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseArticlesViewModel.swift; sourceTree = "<group>"; };
+		4311F60727F0568700C28F3C /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		4311F60927F056D600C28F3C /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		4311F60B27F056FE00C28F3C /* FirebaseAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManager.swift; sourceTree = "<group>"; };
+		4311F60D27F05E9900C28F3C /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
+		4311F61127F2DA6300C28F3C /* FormInputView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FormInputView.xib; sourceTree = "<group>"; };
+		4311F61327F2F0B700C28F3C /* FormInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormInputView.swift; sourceTree = "<group>"; };
+		4311F61627F31F1300C28F3C /* ProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRepository.swift; sourceTree = "<group>"; };
+		4311F61827F3251400C28F3C /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
+		4311F62027F33E8500C28F3C /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		43C1B5B927CE098A00AB0D3B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
@@ -213,6 +231,8 @@
 			children = (
 				4311F60227ECC39800C28F3C /* BaseArticlesRepository.swift */,
 				4311F5EB27EB1D5800C28F3C /* SearchRepository.swift */,
+				4311F61627F31F1300C28F3C /* ProfileRepository.swift */,
+				4311F60D27F05E9900C28F3C /* AuthRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -221,6 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				4311F60427ECC6FE00C28F3C /* BaseArticlesViewModel.swift */,
+				4311F60627F0566C00C28F3C /* Auth */,
 				4311F5C627E9D03D00C28F3C /* Profile */,
 				4311F5C427E9D01000C28F3C /* Homepage */,
 				4311F5C527E9D02900C28F3C /* Favorites */,
@@ -253,6 +274,7 @@
 			children = (
 				43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */,
 				4311F5D827EA033D00C28F3C /* ProfileViewModel.swift */,
+				4311F5C927E9D0F700C28F3C /* Terms and Privacy */,
 				4311F5D327E9E75200C28F3C /* UserProfile */,
 			);
 			path = Profile;
@@ -289,7 +311,6 @@
 			children = (
 				43C1B65F27DE32BD00AB0D3B /* SettingsViewController.swift */,
 				4311F5EF27EB2FE500C28F3C /* SettingsViewModel.swift */,
-				4311F5C927E9D0F700C28F3C /* Terms and Privacy */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -308,6 +329,7 @@
 		4311F5D027E9E5DF00C28F3C /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				4311F61527F31E7200C28F3C /* Forms */,
 				4311F5F727EB332100C28F3C /* Header */,
 				4311F5F927EB335600C28F3C /* Sort By */,
 				4311F5F827EB333700C28F3C /* Indicators */,
@@ -319,6 +341,7 @@
 		4311F5D127E9E61A00C28F3C /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				4311F61827F3251400C28F3C /* Auth.storyboard */,
 				43F08D4627C7C9A6003FFA7D /* Main.storyboard */,
 				43F08D4B27C7C9C3003FFA7D /* LaunchScreen.storyboard */,
 			);
@@ -345,6 +368,7 @@
 			isa = PBXGroup;
 			children = (
 				43DCB39727DF8D1A00A1A779 /* AlamofireManager.swift */,
+				4311F60B27F056FE00C28F3C /* FirebaseAuthManager.swift */,
 				4311F5E127EB102100C28F3C /* Responses */,
 			);
 			path = Networking;
@@ -450,6 +474,24 @@
 				4311F5ED27EB26AF00C28F3C /* UserDefaultsManager.swift */,
 			);
 			path = Persistence;
+			sourceTree = "<group>";
+		};
+		4311F60627F0566C00C28F3C /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				4311F60727F0568700C28F3C /* AuthViewController.swift */,
+				4311F60927F056D600C28F3C /* AuthViewModel.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		4311F61527F31E7200C28F3C /* Forms */ = {
+			isa = PBXGroup;
+			children = (
+				4311F61127F2DA6300C28F3C /* FormInputView.xib */,
+				4311F61327F2F0B700C28F3C /* FormInputView.swift */,
+			);
+			path = Forms;
 			sourceTree = "<group>";
 		};
 		43C1B5C927D0A66500AB0D3B /* fonts */ = {
@@ -584,6 +626,7 @@
 		43F08D5627C7C9F5003FFA7D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4311F62027F33E8500C28F3C /* SplashViewController.swift */,
 				43C1B5C527CF63F300AB0D3B /* MyTabBarController.swift */,
 				43C1B5F227D0E64800AB0D3B /* TableViewDataSourceManager.swift */,
 			);
@@ -687,6 +730,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				43C1B5F127D0C60000AB0D3B /* SavedArticleCell.xib in Resources */,
+				4311F61227F2DA6300C28F3C /* FormInputView.xib in Resources */,
 				43C1B64427D9DC6700AB0D3B /* Poppins-MediumItalic.ttf in Resources */,
 				43C1B62527D9DB2200AB0D3B /* Roboto-BoldItalic.ttf in Resources */,
 				43C1B64727D9DC6700AB0D3B /* Poppins-Italic.ttf in Resources */,
@@ -727,6 +771,7 @@
 				43C1B62327D9DB2200AB0D3B /* Roboto-Thin.ttf in Resources */,
 				43C1B62C27D9DB2200AB0D3B /* Roboto-MediumItalic.ttf in Resources */,
 				43C1B64627D9DC6700AB0D3B /* Poppins-ThinItalic.ttf in Resources */,
+				4311F61927F3251400C28F3C /* Auth.storyboard in Resources */,
 				43C1B65C27DE155400AB0D3B /* ProfileOptionCell.xib in Resources */,
 				43C1B62727D9DB2200AB0D3B /* Roboto-ThinItalic.ttf in Resources */,
 				43C1B64227D9DC6700AB0D3B /* Poppins-LightItalic.ttf in Resources */,
@@ -833,18 +878,24 @@
 				43C1B5E427D0B19100AB0D3B /* NotificationCell.swift in Sources */,
 				43C1B61027D8B6EF00AB0D3B /* MainActionButtonView.swift in Sources */,
 				43DCB39A27E1C45F00A1A779 /* SortbyView.swift in Sources */,
+				4311F60E27F05E9900C28F3C /* AuthRepository.swift in Sources */,
+				4311F62127F33E8500C28F3C /* SplashViewController.swift in Sources */,
 				4311F5F027EB2FE500C28F3C /* SettingsViewModel.swift in Sources */,
 				43C1B66F27DF35D000AB0D3B /* RecentSearchCell.swift in Sources */,
 				43C1B61527D8D79F00AB0D3B /* NewsCell.swift in Sources */,
 				43C1B65E27DE2C8700AB0D3B /* TermsAndPrivacyViewController.swift in Sources */,
+				4311F60C27F056FE00C28F3C /* FirebaseAuthManager.swift in Sources */,
 				43DCB39E27E1FA7500A1A779 /* RecentSearchModel.swift in Sources */,
 				4311F5EC27EB1D5800C28F3C /* SearchRepository.swift in Sources */,
+				4311F61727F31F1300C28F3C /* ProfileRepository.swift in Sources */,
 				43C1B5ED27D0BF7300AB0D3B /* TextFieldOverride.swift in Sources */,
 				4311F5E827EB130200C28F3C /* ArticleResponse.swift in Sources */,
 				4311F5E627EB120A00C28F3C /* SettingsModel.swift in Sources */,
 				43C1B65B27DE155400AB0D3B /* ProfileOptionCell.swift in Sources */,
 				43C1B60227D24EBD00AB0D3B /* UISupport.swift in Sources */,
+				4311F60A27F056D600C28F3C /* AuthViewModel.swift in Sources */,
 				43C1B66527DE379600AB0D3B /* AppSettingCell.swift in Sources */,
+				4311F61427F2F0B700C28F3C /* FormInputView.swift in Sources */,
 				43C1B5F027D0C60000AB0D3B /* SavedArticleCell.swift in Sources */,
 				43C1B60627D78E5A00AB0D3B /* CustomHeaderView.swift in Sources */,
 				43C1B66927DE4EE900AB0D3B /* SettingSectionCell.swift in Sources */,
@@ -855,6 +906,7 @@
 				43F08D4127C7C9A6003FFA7D /* AppDelegate.swift in Sources */,
 				43C1B5E927D0BCE800AB0D3B /* ViewProfileViewController.swift in Sources */,
 				43F08D4327C7C9A6003FFA7D /* SceneDelegate.swift in Sources */,
+				4311F60827F0568700C28F3C /* AuthViewController.swift in Sources */,
 				43C1B5F327D0E64800AB0D3B /* TableViewDataSourceManager.swift in Sources */,
 				4311F5EE27EB26AF00C28F3C /* UserDefaultsManager.swift in Sources */,
 				43C1B5C627CF63F300AB0D3B /* MyTabBarController.swift in Sources */,

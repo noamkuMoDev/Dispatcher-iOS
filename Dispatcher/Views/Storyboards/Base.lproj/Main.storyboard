@@ -23,7 +23,8 @@
         <!--My Tab Bar Controller-->
         <scene sceneID="DJW-wW-onp">
             <objects>
-                <tabBarController id="cdU-oW-DC1" customClass="MyTabBarController" customModule="Dispatcher_Development" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MyTabBarController" modalPresentationStyle="fullScreen" id="cdU-oW-DC1" customClass="MyTabBarController" customModule="Dispatcher_Development" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="IXs-DK-aej"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" itemPositioning="fill" id="dQF-TG-lel">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

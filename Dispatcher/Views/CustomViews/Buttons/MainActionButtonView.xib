@@ -15,7 +15,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainActionButtonView" customModule="Dispatcher_Development" customModuleProvider="target">
             <connections>
+                <outlet property="buttonIcon" destination="kSX-JM-eR8" id="xBD-GC-DVl"/>
+                <outlet property="buttonLabel" destination="u8E-Zj-vPF" id="xz9-0t-E1M"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="g0E-lk-ft9"/>
+                <outlet property="entireButton" destination="U1Y-jS-Cxv" id="KxR-kj-ngd"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
