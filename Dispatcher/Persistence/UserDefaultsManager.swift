@@ -12,10 +12,8 @@ class UserDefaultsManager: NSObject {
         return defaults.object(forKey: key) != nil
     }
     
-    func fetchBoolFromUserDefaults(key: String) -> Bool {
-        let data = defaults.bool(forKey: key)
-        return data
-    }
+    
+    
     
     func fetchIntFromUserDefaults(key: String) -> Int {
         let data = defaults.integer(forKey: key)
@@ -28,6 +26,9 @@ class UserDefaultsManager: NSObject {
         }
         return nil
     }
+    
+    
+    
     
     func setItemToUserDefaults<T>(key: String, data: T) {
         defaults.set(data, forKey: key)

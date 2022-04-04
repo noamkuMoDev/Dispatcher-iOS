@@ -8,6 +8,12 @@ struct Constants {
         static let FAVORITES = "Favorites"
     }
     
+    struct ButtonsText {
+        static let LOGIN = "LOGIN"
+        static let SIGNUP = "SIGNUP"
+        static let LOGOUT = "LOGOUT"
+    }
+    
     struct Segues {
         static let HOMEPAGE_TO_NOTIFICATIONS = "homepageToNotifications"
         static let HOMEPAGE_TO_SEARCH = "homepageToSearch"
@@ -45,6 +51,11 @@ struct Constants {
         static let SAVE_FILTERS = "saveFilters"
         static let SAVE_SEARCH_RESULTS = "saveSearchResults"
         static let SEND_NOTIFICATIONS = "sendNotifications"
+    }
+    
+    struct Keychain {
+        static let SERVICE = "dispatcher.moveo"
+        static let ACCOUNT_USER_EMAIL = "currentUserEmail"
     }
     
     struct apiCalls {

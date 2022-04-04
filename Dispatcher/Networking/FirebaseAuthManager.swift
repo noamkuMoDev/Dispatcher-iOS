@@ -3,7 +3,7 @@ import FirebaseAuth
 
 class FirebaseAuthManager {
     
-    func checkUserLogin() -> Bool {
+    func isUserLoggedIn() -> Bool {
         return Auth.auth().currentUser != nil
     }
     
@@ -29,7 +29,6 @@ class FirebaseAuthManager {
             if let error = error {
                 completionHandler(error.localizedDescription)
             } else {
-                print(authResult!)
                 completionHandler(nil)
             }
         }

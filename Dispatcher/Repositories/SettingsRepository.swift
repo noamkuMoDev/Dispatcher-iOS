@@ -2,24 +2,33 @@ import Foundation
 
 class SettingsRepository {
     
-    let userDefaultsManager = UserDefaultsManager()
+    let appSettings = AppSettings.shared
     
-    func updateSavedSetting(settingsArray: [SettingModel], settingTitle: String, modelIndex: Int, settingIndex: Int , completionHandler: @escaping () -> ()) {
-        
-        var key: String = ""
-        var data: String = ""
+    func fetchNotificationsSetting() -> SwitchStatus {
+        return appSettings.notificationsEnabled
+    }
+    
+    func fetchSaveFiltersSetting() -> SwitchStatus {
+        return appSettings.saveFilters
+    }
+    
+    func fetchSaveSearchResultsSetting() -> SwitchStatus {
+        return appSettings.saveSearchResults
+    }
+    
+    
+    func updateSavedSetting(settingTitle: String, newStatus: SwitchStatus, completionHandler: @escaping () -> ()) {
+
         switch settingTitle {
         case "Save filters":
-            key = Constants.UserDefaults.SAVE_FILTERS
+            appSettings.saveFilters = newStatus
         case "Save search results":
-            key = Constants.UserDefaults.SAVE_SEARCH_RESULTS
+            appSettings.saveSearchResults = newStatus
         case "Notification":
-            key = Constants.UserDefaults.SEND_NOTIFICATIONS
+            appSettings.notificationsEnabled = newStatus
         default:
             print("not valid option")
         }
-        userDefaultsManager.setItemToUserDefaults(key: key, data: settingsArray[modelIndex].options[settingIndex].status)
- 
         completionHandler()
     }
 }

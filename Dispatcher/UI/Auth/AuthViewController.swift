@@ -75,8 +75,8 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         reenterPasswordFormView.isHidden = false
         separatorConstraintLogin?.isActive = false
         separatorConstraintSignup?.isActive = true
-        topButton.buttonLabel.text = "SIGNUP"
-        bottomButton.buttonLabel.text = "LOGIN"
+        topButton.buttonLabel.text = Constants.ButtonsText.SIGNUP
+        bottomButton.buttonLabel.text = Constants.ButtonsText.LOGIN
     }
     
     func setLoginPageLook() {
@@ -86,8 +86,8 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         reenterPasswordFormView.isHidden = true
         separatorConstraintSignup?.isActive = false
         separatorConstraintLogin?.isActive = true
-        topButton.buttonLabel.text = "LOGIN"
-        bottomButton.buttonLabel.text = "SIGNUP"
+        topButton.buttonLabel.text = Constants.ButtonsText.LOGIN
+        bottomButton.buttonLabel.text = Constants.ButtonsText.SIGNUP
     }
     
     func clearAllUIElements() {
@@ -212,13 +212,13 @@ extension AuthViewController: MainActionButtonDelegate {
     func actionButtonDidPress(btnText: String) {
 
         switch btnText {
-        case "LOGIN":
+        case Constants.ButtonsText.LOGIN:
             if currentPageType == .login {
                 loginExistingUser()
             } else {
                 setLoginPageLook()
             }
-        case "SIGNUP":
+        case Constants.ButtonsText.SIGNUP:
             if currentPageType == .login {
                 setSignupPageLook()
             } else {

@@ -12,61 +12,38 @@ class AuthRepository {
     
     func checkIfLoggedIn() -> userType {
         
-        //check password from keychain
         do {
-            let data = try keychainManager.fetchFromKeychain(service: "dispatcher.moveo", account: "currentUserPassword", secClass: kSecClassGenericPassword as String)
-            let password = String(decoding: data!, as: UTF8.self)
-            print("User's password is:\(password)")
+            _ = try keychainManager.fetchFromKeychain(
+                service: Constants.Keychain.SERVICE,
+                account: Constants.Keychain.ACCOUNT_USER_EMAIL,
+                secClass: kSecClassGenericPassword as String
+            )
+            if firebaseManager.isUserLoggedIn() {
+                return .loggedIn
+            }
         } catch {
             print(error)
-        }
-        
-        //check email from keychain
-        do {
-            let data = try keychainManager.fetchFromKeychain(service: "dispatcher.moveo", account: "currentUserEmail", secClass: kSecClassIdentity as String)
-            let email = String(decoding: data!, as: UTF8.self)
-            print("User's email is:\(email)")
-        } catch {
-            print(error)
-        }
-       
-        
-        if firebaseManager.checkUserLogin() {
-            return .loggedIn
         }
         return .loggedOut
     }
     
-    
-    
-    
+
     func signUserToApp(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
         
-        //register to firebase auth
-        firebaseManager.signupUser(email: email, password: password) { error in
-            completionHandler(error)
-            
-            //register in keychain - password
-            do {
-                try self.keychainManager.addToKeychain(data: password.data(using: .utf8)!, service: "dispatcher.moveo", account: "currentUserPassword", secClass: kSecClassGenericPassword as String) {
-                    //completion handler code
+        saveUserEmailToKeychain(email) { error in
+            if let error = error {
+                completionHandler("Error saving email to keychain: \(error)")
+            } else {
+                self.firebaseManager.signupUser(email: email, password: password) {error in
+                    completionHandler(error)
                 }
-            } catch {
-                print(error)
-            }
-            
-            //register in keychain - email
-            do {
-                try self.keychainManager.addToKeychain(data: Data(email.utf8), service: "dispatcher.moveo", account: "currentUserEmail", secClass: kSecClassGenericPassword as String) {
-                    //completion handler code
-                }
-            } catch {
-                print(error)
             }
         }
     }
     
+    
     func logUserToApp(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
+        
         firebaseManager.loginUser(email: email, password: password) { error in
             var errorDescription = ""
             if let error = error {
@@ -77,10 +54,32 @@ class AuthRepository {
                 } else {
                     errorDescription = error
                 }
-                completionHandler(errorDescription)
+                completionHandler("Unexpected error: \(errorDescription)")
             } else {
-                completionHandler(error)
+                self.saveUserEmailToKeychain(email) { error in
+                    if let error = error {
+                        completionHandler("Error saving email to keychain: \(error)")
+                    } else {
+                        completionHandler(nil)
+                    }
+                }
             }
+        }
+    }
+    
+    
+    private func saveUserEmailToKeychain(_ email: String, completionHandler: @escaping (String?) -> ()) {
+        do {
+            try self.keychainManager.addToKeychain(
+                data: Data(email.utf8),
+                service: Constants.Keychain.SERVICE,
+                account: Constants.Keychain.ACCOUNT_USER_EMAIL,
+                secClass: kSecClassGenericPassword as String
+            ){
+                completionHandler(nil)
+            }
+        } catch {
+            completionHandler(error.localizedDescription)
         }
     }
 }

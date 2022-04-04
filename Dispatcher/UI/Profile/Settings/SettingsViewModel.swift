@@ -14,6 +14,12 @@ class SettingsViewModel {
         ]),
     ]
     
+    func fetchUserSettingsPreferences() {
+        appSettings[0].options[0].status = repository.fetchSaveFiltersSetting()
+        appSettings[0].options[1].status = repository.fetchSaveSearchResultsSetting()
+        appSettings[1].options[0].status = repository.fetchNotificationsSetting()
+    }
+    
     func updateSetting(settingTitle: String, completionHandler: @escaping () -> ()) {
         var modelIndex = -1
         var settingIndex = -1
@@ -26,16 +32,18 @@ class SettingsViewModel {
             }
         }
         let currentStatus = appSettings[modelIndex].options[settingIndex].status
+        var newStatus: SwitchStatus = .off
         if currentStatus != .disabled {
             if currentStatus == .on {
-                appSettings[modelIndex].options[settingIndex].status = .off
+                appSettings[modelIndex].options[settingIndex].status = newStatus
             } else {
-                appSettings[modelIndex].options[settingIndex].status = .on
+                newStatus = .on
+                appSettings[modelIndex].options[settingIndex].status = newStatus
             }
-        }
-        
-        repository.updateSavedSetting(settingsArray: appSettings, settingTitle: settingTitle, modelIndex: modelIndex, settingIndex: settingIndex) {
-            completionHandler()
+            
+            repository.updateSavedSetting(settingTitle: settingTitle, newStatus: newStatus) {
+                completionHandler()
+            }
         }
     }
 }

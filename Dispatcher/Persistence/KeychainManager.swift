@@ -55,8 +55,6 @@ class KeychainManager {
             throw KeychainError.unexpectedStatus(status)
         }
         
-        print("saved to keychain")
-        
         completionHandler()
     }
 
@@ -75,6 +73,6 @@ class KeychainManager {
             throw KeychainError.unexpectedStatus(status)
         }
         
-        print("deleted item from keychain")
+        completionHandler()
     }
 }

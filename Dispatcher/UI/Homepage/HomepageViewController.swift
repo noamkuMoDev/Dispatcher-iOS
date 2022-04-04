@@ -6,6 +6,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var tableView: UITableView!
 
+    let appSettings = AppSettings.shared
     let viewModel = BaseArticlesViewModel()
     var dataSource: TableViewDataSourceManager<Article>!
     var isPaginating: Bool = false
@@ -14,6 +15,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
         super.viewDidLoad()
         
         initiateUIElements()
+        checkUserSettingsPreferences()
         fetchInitialResults()
     }
     
@@ -40,6 +42,11 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
         tableView.delegate = self
     }
 
+    func checkUserSettingsPreferences() {
+        print("SaveFilters is: \(appSettings.saveFilters)")
+        print("SaveSearchResults is: \(appSettings.saveSearchResults)")
+    }
+    
     func fetchInitialResults() {
         DispatchQueue.main.async {
             self.loadingView.isHidden = false
