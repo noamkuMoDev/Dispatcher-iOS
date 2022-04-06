@@ -15,10 +15,22 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        defineNotificationCenterListeners()
         initiateUIElements()
         checkUserSettingsPreferences()
         viewModel.fetchSavedArticles() {
             self.fetchInitialResults()
+        }
+    }
+    
+    func defineNotificationCenterListeners() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.favoritesToHomepage), object: nil)
+    }
+    
+    @objc func refreshTableViewContent() {
+        DispatchQueue.main.async {
+            self.dataSource.models = self.viewModel.news.newsArray
+            self.tableView.reloadData()
         }
     }
     
@@ -31,7 +43,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
     func setupTableView() {
         tableView.register(UINib(nibName: Constants.NibNames.HOMEPAGE, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE)
         self.dataSource = TableViewDataSourceManager(
-                models: viewModel.newsArray,
+            models: viewModel.news.newsArray,
                 reuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE
             ) { article, cell in
                 let currentCell = cell as! NewsCell
@@ -54,6 +66,9 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
                 if article.isFavorite {
                     currentCell.isFavorite = true
                     currentCell.favoriteIcon.image = UIImage(named: "favoriteArticle-selected")
+                } else {
+                    currentCell.isFavorite = false
+                    currentCell.favoriteIcon.image = UIImage(named: "favoriteArticle-notSelected")
                 }
             }
         tableView.dataSource = dataSource
@@ -73,7 +88,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
         viewModel.fetchNewsFromAPI(pageSizeToFetch: .articlesList) { error in
             if error == nil {
                 DispatchQueue.main.async {
-                    self.dataSource.models = self.viewModel.newsArray
+                    self.dataSource.models = self.viewModel.news.newsArray
                     self.tableView.reloadData()
                 }
             } else {
@@ -130,7 +145,7 @@ extension HomepageViewController: UIScrollViewDelegate {
             isPaginating = true
             viewModel.fetchNewsFromAPI(pageSizeToFetch: .articlesList) { error in
                 if error == nil {
-                    self.dataSource.models = self.viewModel.newsArray
+                    self.dataSource.models = self.viewModel.news.newsArray
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                         self.tableView.tableFooterView = nil
@@ -151,24 +166,27 @@ extension HomepageViewController: NewsCellDelegate {
     
     func favoriteIconDidPress(forArticle article: Article) {
         if article.isFavorite {
-            print("clicked on a favorited article")
             viewModel.removeArticleFromFavorites(articleID: article.id) { error in
                 if let error = error {
                     print(error)
                 } else {
                     DispatchQueue.main.async {
-                        self.dataSource.models = self.viewModel.newsArray
+                        self.dataSource.models = self.viewModel.news.newsArray
                         self.tableView.reloadData()
                     }
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.homepageToFavorites), object: nil)
                 }
             }
         } else {
-            viewModel.addArticleToFavorites(article) {
-                DispatchQueue.main.async {
-                    print("need to refresh news table to show marked star")
-                    self.dataSource.models = self.viewModel.newsArray
-                    print(self.dataSource.models)
-                    self.tableView.reloadData()
+            viewModel.addArticleToFavorites(article) { error in
+                if let error = error {
+                    print(error)
+                } else {
+                    DispatchQueue.main.async {
+                        self.dataSource.models = self.viewModel.news.newsArray
+                        self.tableView.reloadData()
+                    }
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.homepageToFavorites), object: nil)
                 }
             }
         }

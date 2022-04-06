@@ -3,9 +3,9 @@ import Foundation
 class BaseArticlesViewModel {
     
     private let repository = BaseArticlesRepository()
-    let savedArticlesSingleton = SavedArticles.shared
     
-    var newsArray: [Article] = []
+    let savedArticlesSingleton = SavedArticlesArray.shared
+    let news = ArticlesArray.shared
     
     private var currentPaginationPage = 1
     private var totalPaginationPages = 1
@@ -19,7 +19,7 @@ class BaseArticlesViewModel {
                 if let totalPages = totalPages {
                     self.totalPaginationPages = totalPages
                 }
-                self.newsArray.append(contentsOf: articles!)
+                self.news.newsArray.append(contentsOf: articles!)
                 completionHandler(nil)
             } else {
                 completionHandler(statusMsg)
@@ -30,33 +30,33 @@ class BaseArticlesViewModel {
     
     func fetchSavedArticles(completionHandler: @escaping () -> ()) {
         repository.fetchSavedArticles() { articlesArray in
-            self.savedArticlesSingleton.savedArticlesArray = articlesArray  // put into the singleton
+            self.savedArticlesSingleton.savedArticlesArray = articlesArray
             completionHandler()
         }
     }
     
     
-    func addArticleToFavorites(_ article: Article, completionHandler: @escaping () -> ()) {
+    func addArticleToFavorites(_ article: Article, completionHandler: @escaping (String?) -> ()) {
         repository.saveArticleToFavorites(article) { error in
             if let error = error {
-                print(error)
+                completionHandler(error)
             } else {
-                if let index = self.newsArray.firstIndex(where: { $0.id == article.id }) {
-                    self.newsArray[index].isFavorite = true
-                    completionHandler()
+                if let index = self.news.newsArray.firstIndex(where: { $0.id == article.id }) {
+                    self.news.newsArray[index].isFavorite = true
+                    completionHandler(nil)
                 }
             }
         }
     }
     
+    
     func removeArticleFromFavorites(articleID: String, completionHandler: @escaping (String?) -> ()) {
-        print("removeArticleFromFavorites in VM")
         repository.removeArticleFromFavorites(withID: articleID) { error in
             if let error = error {
                 completionHandler(error)
             } else {
-                if let index = self.newsArray.firstIndex(where: {$0.id == articleID}) {
-                    self.newsArray[index].isFavorite = false
+                if let index = self.news.newsArray.firstIndex(where: {$0.id == articleID}) {
+                    self.news.newsArray[index].isFavorite = false
                 }
                 completionHandler(nil)
             }

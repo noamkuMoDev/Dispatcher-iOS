@@ -32,7 +32,8 @@
 		4311F62727FADC3300C28F3C /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F62627FADC3300C28F3C /* AppSettings.swift */; };
 		437AB14627FB498B002A13F4 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 437AB14427FB498B002A13F4 /* DataModel.xcdatamodeld */; };
 		437AB14827FB4B04002A13F4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AB14727FB4B04002A13F4 /* CoreDataManager.swift */; };
-		437AB14C27FC6AA4002A13F4 /* SavedArticles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AB14B27FC6AA4002A13F4 /* SavedArticles.swift */; };
+		437AB14C27FC6AA4002A13F4 /* SavedArticlesArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AB14B27FC6AA4002A13F4 /* SavedArticlesArray.swift */; };
+		437AB14F27FD8E82002A13F4 /* ArticlesArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AB14E27FD8E82002A13F4 /* ArticlesArray.swift */; };
 		43C1B5BA27CE098A00AB0D3B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5B927CE098A00AB0D3B /* Constants.swift */; };
 		43C1B5BC27CE0B1700AB0D3B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */; };
 		43C1B5BE27CE0B4500AB0D3B /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */; };
@@ -142,7 +143,8 @@
 		4311F62627FADC3300C28F3C /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		437AB14527FB498B002A13F4 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		437AB14727FB4B04002A13F4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		437AB14B27FC6AA4002A13F4 /* SavedArticles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedArticles.swift; sourceTree = "<group>"; };
+		437AB14B27FC6AA4002A13F4 /* SavedArticlesArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedArticlesArray.swift; sourceTree = "<group>"; };
+		437AB14E27FD8E82002A13F4 /* ArticlesArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesArray.swift; sourceTree = "<group>"; };
 		43C1B5B927CE098A00AB0D3B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
@@ -512,8 +514,9 @@
 		437AB14D27FC7567002A13F4 /* Singletons */ = {
 			isa = PBXGroup;
 			children = (
+				437AB14E27FD8E82002A13F4 /* ArticlesArray.swift */,
+				437AB14B27FC6AA4002A13F4 /* SavedArticlesArray.swift */,
 				4311F62627FADC3300C28F3C /* AppSettings.swift */,
-				437AB14B27FC6AA4002A13F4 /* SavedArticles.swift */,
 			);
 			path = Singletons;
 			sourceTree = "<group>";
@@ -924,7 +927,7 @@
 				4311F62327F9CC5500C28F3C /* KeychainManager.swift in Sources */,
 				43C1B66527DE379600AB0D3B /* AppSettingCell.swift in Sources */,
 				4311F61427F2F0B700C28F3C /* FormInputView.swift in Sources */,
-				437AB14C27FC6AA4002A13F4 /* SavedArticles.swift in Sources */,
+				437AB14C27FC6AA4002A13F4 /* SavedArticlesArray.swift in Sources */,
 				43C1B5F027D0C60000AB0D3B /* SavedArticleCell.swift in Sources */,
 				43C1B60627D78E5A00AB0D3B /* CustomHeaderView.swift in Sources */,
 				43C1B66927DE4EE900AB0D3B /* SettingSectionCell.swift in Sources */,
@@ -940,6 +943,7 @@
 				43C1B5F327D0E64800AB0D3B /* TableViewDataSourceManager.swift in Sources */,
 				4311F5EE27EB26AF00C28F3C /* UserDefaultsManager.swift in Sources */,
 				43C1B5C627CF63F300AB0D3B /* MyTabBarController.swift in Sources */,
+				437AB14F27FD8E82002A13F4 /* ArticlesArray.swift in Sources */,
 				43C1B5FA27D1154500AB0D3B /* NotificationModel.swift in Sources */,
 				437AB14627FB498B002A13F4 /* DataModel.xcdatamodeld in Sources */,
 				4311F5D927EA033D00C28F3C /* ProfileViewModel.swift in Sources */,

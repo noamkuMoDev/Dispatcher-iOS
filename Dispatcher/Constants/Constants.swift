@@ -45,6 +45,11 @@ struct Constants {
         static let RECENT_SEARCH = "RecentSearchCell"
     }
     
+    struct NotificationCenter {
+        static let homepageToFavorites = "favoritesChangedInHomepageNotif"
+        static let favoritesToHomepage = "favoritesChangedInFavoritesNotif"
+    }
+    
     struct UserDefaults {
         static let RECENT_SEARCHES = "recentSearches"
         static let IS_USER_LOGGED_IN = "isLoggedIn"

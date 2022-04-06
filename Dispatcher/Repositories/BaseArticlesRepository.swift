@@ -9,7 +9,7 @@ enum PageSizeForFetching {
 class BaseArticlesRepository {
     
     let coreDataManager = CoreDataManager()
-    let savedArticlesSingleton = SavedArticles.shared
+    let savedArticlesSingleton = SavedArticlesArray.shared
     
     func fetchNewsFromAPI(searchWords: String, pageSizeType: PageSizeForFetching, currentPage: Int, completionHandler: @escaping ([Article]?,Int?, String?) -> ()) {
         var pageSize: Int
@@ -50,14 +50,18 @@ class BaseArticlesRepository {
     
     
     func saveArticleToFavorites(_ article: Article, completionHandler: @escaping (String?) -> ()) {
-        coreDataManager.saveItemToCoreData(article: article) { error in
-            completionHandler(error)
+        coreDataManager.saveItemToCoreData(article: article) { (error, favoriteArticle) in
+            if let error = error {
+                completionHandler(error)
+            } else {
+                self.savedArticlesSingleton.savedArticlesArray.append(favoriteArticle!)
+                completionHandler(nil)
+            }
         }
     }
     
     
     func removeArticleFromFavorites(withID articleID: String,completionHandler: @escaping (String?) -> ()) {
-        print("removeArticleFromFavorites in REPOSITORY")
         coreDataManager.deleteFromCoreData(removeID: articleID) { error in
             completionHandler(error)
         }

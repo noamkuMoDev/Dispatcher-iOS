@@ -3,31 +3,25 @@ import CoreData
 
 class CoreDataManager {
     
-    let savedArticlesSingleton = SavedArticles.shared
+    let savedArticlesSingleton = SavedArticlesArray.shared
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    // v
-    func saveItemToCoreData(article: Article, completionHandler: @escaping (String?) -> ()) {
-        _ = adaptArticleToFavoriteArticle(article: article)
+
+    func saveItemToCoreData(article: Article, completionHandler: @escaping (String?, FavoriteArticle?) -> ()) {
+        let favorite = adaptArticleToFavoriteArticle(article: article)
         if let error = saveCoreDataChanges() {
-            completionHandler(error)
+            completionHandler(error,nil)
         } else {
-            print("saved all good")
-            completionHandler(nil)
+            completionHandler(nil,favorite)
         }
     }
     
     
-    // v
     func fetchFavoritesArrayFromCoreData() -> [FavoriteArticle] {
         
         let request: NSFetchRequest<FavoriteArticle> = FavoriteArticle.fetchRequest()
         do {
             let favoritesArray = try context.fetch(request)
-//            var articles: [Article] = []
-//            for article in favoritesArray {
-//                articles.append(Article(id: article.id!, articleTitle: article.title!, date: article.date!, url: article.url!, content: article.content!, author: article.author, topic: article.topic!, imageUrl: article.imageUrl, isFavorite: article.isFavorite))
-//            }
             return favoritesArray
         } catch {
             print("Error fetching data from context, \(error)")
@@ -44,18 +38,21 @@ class CoreDataManager {
                 index = i
             }
         }
-        context.delete(savedArticlesSingleton.savedArticlesArray[index])
-        if let error = saveCoreDataChanges() {
-            completionHandler(error)
+        if index != -1 {
+            context.delete(savedArticlesSingleton.savedArticlesArray[index])
+            if let error = saveCoreDataChanges() {
+                completionHandler(error)
+            } else {
+                savedArticlesSingleton.savedArticlesArray.remove(at: index)
+                completionHandler(nil)
+            }
         } else {
-            print("deleted all good")
-            savedArticlesSingleton.savedArticlesArray.remove(at: index)
-            completionHandler(nil)
+            completionHandler("couldn't find article id in saved articles array")
         }
     }
     
     
-    // v
+    
     private func saveCoreDataChanges() -> String? {
         do {
             try context.save()
@@ -65,7 +62,7 @@ class CoreDataManager {
         }
     }
     
-    // v
+    
     private func adaptArticleToFavoriteArticle(article: Article) -> FavoriteArticle {
         
         let favoriteArticle = FavoriteArticle(context: context)

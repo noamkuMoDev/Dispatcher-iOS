@@ -79,7 +79,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         
         searchResultsTableView.register(UINib(nibName: Constants.NibNames.HOMEPAGE, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE)
         self.searchResultsDataSource = TableViewDataSourceManager(
-            models: viewModel.newsArray,
+            models: viewModel.news.newsArray,
             reuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE
         ) { article, cell in
             let currentcell = cell as! NewsCell
@@ -126,11 +126,11 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
             self.loadingView.loadIndicator.startAnimating()
         }
         
-        viewModel.newsArray = []
+        viewModel.news.newsArray = []
         viewModel.fetchNewsFromAPI(searchWords: keywords, pageSizeToFetch: .articlesList) { error in
             
             if error == nil {
-                self.searchResultsDataSource.models = self.viewModel.newsArray
+                self.searchResultsDataSource.models = self.viewModel.news.newsArray
                 DispatchQueue.main.async {
                     self.searchResultsTableView.reloadData()
                     self.loadingView.loadIndicator.stopAnimating()
@@ -140,7 +140,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
                 print(error!)
             }
             
-            if self.viewModel.newsArray.count == 0 {
+            if self.viewModel.news.newsArray.count == 0 {
                 self.noResultsLabel.isHidden = false
                 self.noResultsImageView.isHidden = false
             } else {
@@ -304,7 +304,7 @@ extension SearchViewController: UIScrollViewDelegate {
             viewModel.fetchNewsFromAPI(searchWords: searchTextField.text!, pageSizeToFetch: .articlesList) { error in
                 if error == nil {
                     DispatchQueue.main.async {
-                        self.searchResultsDataSource.models = self.viewModel.newsArray
+                        self.searchResultsDataSource.models = self.viewModel.news.newsArray
                         self.searchResultsTableView.reloadData()
                         self.searchResultsTableView.tableFooterView = nil
                     }
