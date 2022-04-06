@@ -54,7 +54,7 @@ class BaseArticlesRepository {
             if let error = error {
                 completionHandler(error)
             } else {
-                self.savedArticlesSingleton.savedArticlesArray.append(favoriteArticle!)
+                self.savedArticlesSingleton.savedArticlesArray.insert(favoriteArticle!, at: 0)
                 completionHandler(nil)
             }
         }
