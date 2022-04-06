@@ -1,4 +1,5 @@
 import UIKit
+import CoreData
 
 class HomepageViewController: UIViewController, LoadingViewDelegate, UITableViewDelegate {
 
@@ -16,7 +17,9 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
         
         initiateUIElements()
         checkUserSettingsPreferences()
-        fetchInitialResults()
+        viewModel.fetchSavedArticles() {
+            self.fetchInitialResults()
+        }
     }
     
     func initiateUIElements() {
@@ -32,11 +35,26 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
                 reuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE
             ) { article, cell in
                 let currentCell = cell as! NewsCell
+                currentCell.delegate = self
+
+                currentCell.articleID = article.id
+                if let imageUrl = article.imageUrl {
+                    currentCell.articleImageUrl = imageUrl
+                    guard let url = URL(string: imageUrl) else { return }
+                    UIImage.loadFrom(url: url) { image in
+                        currentCell.newsImage.image = image
+                    }
+                }
                 currentCell.titleLabel.text = article.articleTitle
                 currentCell.authorLabel.text = article.author
                 currentCell.dateLabel.text = article.date
                 currentCell.summaryLabel.text = article.content
                 currentCell.subjectTag.setTitle(article.topic, for: .normal)
+                currentCell.articleUrl = article.url
+                if article.isFavorite {
+                    currentCell.isFavorite = true
+                    currentCell.favoriteIcon.image = UIImage(named: "favoriteArticle-selected")
+                }
             }
         tableView.dataSource = dataSource
         tableView.delegate = self
@@ -57,14 +75,17 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
                 DispatchQueue.main.async {
                     self.dataSource.models = self.viewModel.newsArray
                     self.tableView.reloadData()
-                    self.loadingView.loadIndicator.stopAnimating()
-                    self.loadingView.isHidden = true
                 }
             } else {
                 print(error!)
             }
+            DispatchQueue.main.async {
+                self.loadingView.loadIndicator.stopAnimating()
+                self.loadingView.isHidden = true
+            }
         }
     }
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -118,6 +139,57 @@ extension HomepageViewController: UIScrollViewDelegate {
                     print(error!)
                 }
                 self.isPaginating = false
+            }
+        }
+    }
+}
+
+
+// MARK: - NewsCellDelegate
+
+extension HomepageViewController: NewsCellDelegate {
+    
+    func favoriteIconDidPress(forArticle article: Article) {
+        if article.isFavorite {
+            print("clicked on a favorited article")
+            viewModel.removeArticleFromFavorites(articleID: article.id) { error in
+                if let error = error {
+                    print(error)
+                } else {
+                    DispatchQueue.main.async {
+                        self.dataSource.models = self.viewModel.newsArray
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+        } else {
+            viewModel.addArticleToFavorites(article) {
+                DispatchQueue.main.async {
+                    print("need to refresh news table to show marked star")
+                    self.dataSource.models = self.viewModel.newsArray
+                    print(self.dataSource.models)
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
+}
+
+
+// MARK: - UIImage Extension to use URL
+
+extension UIImage {
+
+    public static func loadFrom(url: URL, completion: @escaping (_ image: UIImage?) -> ()) {
+        DispatchQueue.global().async {
+            if let data = try? Data(contentsOf: url) {
+                DispatchQueue.main.async {
+                    completion(UIImage(data: data))
+                }
+            } else {
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
             }
         }
     }

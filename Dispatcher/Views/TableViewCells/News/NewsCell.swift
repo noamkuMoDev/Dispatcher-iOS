@@ -1,9 +1,19 @@
 import UIKit
 
+protocol NewsCellDelegate {
+    func favoriteIconDidPress(forArticle article: Article)
+}
+
+enum ArticleFavoriteMark {
+    case selected
+    case notSelected
+}
+
 class NewsCell: UITableViewCell {
 
     @IBOutlet weak var entireNewsCell: UIView!
     @IBOutlet weak var newsImage: UIImageView!
+    @IBOutlet weak var favoriteIcon: UIImageView!
     
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var subjectTag: UIButton!
@@ -13,6 +23,11 @@ class NewsCell: UITableViewCell {
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var summaryLabel: UILabel!
     
+    var delegate: NewsCellDelegate?
+    var articleUrl = ""
+    var articleID = ""
+    var articleImageUrl = ""
+    var isFavorite: Bool = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,6 +36,7 @@ class NewsCell: UITableViewCell {
         setCellColorsDesign()
         setImageRounded()
         setTagsRounded()
+        setGestureRecognizer()
     }
     
     override func layoutSubviews() {
@@ -54,5 +70,18 @@ class NewsCell: UITableViewCell {
         subjectTag.clipsToBounds = true
         moreSubjectsTag.layer.cornerRadius = moreSubjectsTag.frame.size.height / 2
         moreSubjectsTag.clipsToBounds = true
+    }
+    
+    func setGestureRecognizer() {
+        favoriteIcon.addGestureRecognizer(UITapGestureRecognizer(target: favoriteIcon, action: #selector(favoriteIconPressed)))
+        favoriteIcon.isUserInteractionEnabled = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(favoriteIconPressed(tapGestureRecognizer:)))
+        favoriteIcon.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc func favoriteIconPressed(tapGestureRecognizer: UITapGestureRecognizer) {
+        let currentArticle = Article(id: articleID, articleTitle: titleLabel.text!, date: dateLabel.text ?? "", url: articleUrl, content: summaryLabel.text!, author: authorLabel.text ?? "", topic: subjectTag.currentTitle!, imageUrl: articleImageUrl , isFavorite: isFavorite)
+
+        delegate?.favoriteIconDidPress(forArticle: currentArticle)
     }
 }

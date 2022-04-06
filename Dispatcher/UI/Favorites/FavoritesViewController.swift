@@ -11,7 +11,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     
     
     let viewModel = BaseArticlesViewModel()
-    var dataSource: TableViewDataSourceManager<Article>!
+    var dataSource: TableViewDataSourceManager<FavoriteArticle>!
     var isPaginating: Bool = false
     
     override func viewDidLoad() {
@@ -32,11 +32,21 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     func setupTableView() {
         tableView.register(UINib(nibName: Constants.NibNames.FAVORITES, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.FAVORITES)
         self.dataSource = TableViewDataSourceManager(
-            models: viewModel.newsArray,
+            models: viewModel.savedArticlesSingleton.savedArticlesArray,
             reuseIdentifier: Constants.TableCellsIdentifier.FAVORITES
         ) { savedArticle, cell in
             let currentCell = cell as! SavedArticleCell
-            currentCell.articleTitle.text = savedArticle.articleTitle
+            currentCell.delegate = self
+            
+            currentCell.articleID = savedArticle.id!
+            
+            if let imageUrl = savedArticle.imageUrl {
+                guard let url = URL(string: imageUrl) else { return }
+                UIImage.loadFrom(url: url) { image in
+                    currentCell.articleImage.image = image
+                }
+            }
+            currentCell.articleTitle.text = savedArticle.title
             currentCell.articleTopic.setTitle(savedArticle.topic, for: .normal)
         }
         tableView.delegate = self
@@ -49,22 +59,22 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
             self.loadingView.isHidden = false
             self.loadingView.loadIndicator.startAnimating()
         }
-        viewModel.fetchNewsFromAPI(pageSizeToFetch: .savedArticles) { error in
-            if error == nil {
-                DispatchQueue.main.async {
-                    self.dataSource.models = self.viewModel.newsArray
-                    self.tableView.reloadData()
-                    self.loadingView.loadIndicator.stopAnimating()
-                    self.loadingView.isHidden = true
-                }
-            } else {
-                print(error!)
+        
+        viewModel.fetchSavedArticles() {
+            DispatchQueue.main.async {
+                self.loadingView.loadIndicator.stopAnimating()
+                self.loadingView.isHidden = true
             }
-            
-            if self.viewModel.newsArray.count == 0 {
+            if self.viewModel.savedArticlesSingleton.savedArticlesArray.count == 0 {
                 self.tableView.isHidden = true
                 self.noResultsLabel.isHidden = false
                 self.noResultsImageView.isHidden = false
+            } else {
+                DispatchQueue.main.async {
+                    self.dataSource.models = self.viewModel.savedArticlesSingleton.savedArticlesArray
+                    self.tableView.reloadData()
+                    
+                }
             }
         }
     }
@@ -89,36 +99,55 @@ extension FavoritesViewController: CustomHeaderViewDelegate {
 }
 
 
-// MARK: - UIScrollViewDelegate
-extension FavoritesViewController: UIScrollViewDelegate {
+// MARK: - SavedArticleCellDelegate
+extension FavoritesViewController: SavedArticleCellDelegate {
     
-    func createSpinnerFooter() -> UIView {
-        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
-        let spinner = UIActivityIndicatorView()
-        spinner.center = footerView.center
-        footerView.addSubview(spinner)
-        spinner.startAnimating()
-        
-        return footerView
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let position = scrollView.contentOffset.y
-        if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) && !isPaginating {
-            isPaginating = true
-            viewModel.fetchNewsFromAPI(pageSizeToFetch: .savedArticles) { error in
-                if error == nil {
-                    self.dataSource.models = self.viewModel.newsArray
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                        self.tableView.tableFooterView = nil
-                    }
-                } else {
-                    print(error!)
+    func favoriteIconDidPress(forArticle articleID: String) {
+        viewModel.removeArticleFromFavorites(articleID: articleID) { error in
+            if let error = error {
+                print(error)
+            } else {
+                DispatchQueue.main.async {
+                    self.dataSource.models = self.viewModel.savedArticlesSingleton.savedArticlesArray
+                    self.tableView.reloadData()
                 }
-                self.isPaginating = false
             }
         }
     }
+}
+
+
+
+// MARK: - UIScrollViewDelegate
+extension FavoritesViewController: UIScrollViewDelegate {
+    
+//    func createSpinnerFooter() -> UIView {
+//        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
+//        let spinner = UIActivityIndicatorView()
+//        spinner.center = footerView.center
+//        footerView.addSubview(spinner)
+//        spinner.startAnimating()
+//
+//        return footerView
+//    }
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        let position = scrollView.contentOffset.y
+//        if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) && !isPaginating {
+//            isPaginating = true
+//            viewModel.fetchNewsFromAPI(pageSizeToFetch: .savedArticles) { error in
+//                if error == nil {
+//                    self.dataSource.models = self.viewModel.favoritesArray
+//                    DispatchQueue.main.async {
+//                        self.tableView.reloadData()
+//                        self.tableView.tableFooterView = nil
+//                    }
+//                } else {
+//                    print(error!)
+//                }
+//                self.isPaginating = false
+//            }
+//        }
+//    }
 }
 

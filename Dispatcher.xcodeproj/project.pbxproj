@@ -30,6 +30,9 @@
 		4311F62327F9CC5500C28F3C /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F62227F9CC5500C28F3C /* KeychainManager.swift */; };
 		4311F62527FA279C00C28F3C /* SettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F62427FA279C00C28F3C /* SettingsRepository.swift */; };
 		4311F62727FADC3300C28F3C /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F62627FADC3300C28F3C /* AppSettings.swift */; };
+		437AB14627FB498B002A13F4 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 437AB14427FB498B002A13F4 /* DataModel.xcdatamodeld */; };
+		437AB14827FB4B04002A13F4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AB14727FB4B04002A13F4 /* CoreDataManager.swift */; };
+		437AB14C27FC6AA4002A13F4 /* SavedArticles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AB14B27FC6AA4002A13F4 /* SavedArticles.swift */; };
 		43C1B5BA27CE098A00AB0D3B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5B927CE098A00AB0D3B /* Constants.swift */; };
 		43C1B5BC27CE0B1700AB0D3B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */; };
 		43C1B5BE27CE0B4500AB0D3B /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */; };
@@ -137,6 +140,9 @@
 		4311F62227F9CC5500C28F3C /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		4311F62427FA279C00C28F3C /* SettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRepository.swift; sourceTree = "<group>"; };
 		4311F62627FADC3300C28F3C /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		437AB14527FB498B002A13F4 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		437AB14727FB4B04002A13F4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		437AB14B27FC6AA4002A13F4 /* SavedArticles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedArticles.swift; sourceTree = "<group>"; };
 		43C1B5B927CE098A00AB0D3B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
@@ -480,6 +486,7 @@
 			children = (
 				4311F5ED27EB26AF00C28F3C /* UserDefaultsManager.swift */,
 				4311F62227F9CC5500C28F3C /* KeychainManager.swift */,
+				437AB14727FB4B04002A13F4 /* CoreDataManager.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -500,6 +507,15 @@
 				4311F61327F2F0B700C28F3C /* FormInputView.swift */,
 			);
 			path = Forms;
+			sourceTree = "<group>";
+		};
+		437AB14D27FC7567002A13F4 /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				4311F62627FADC3300C28F3C /* AppSettings.swift */,
+				437AB14B27FC6AA4002A13F4 /* SavedArticles.swift */,
+			);
+			path = Singletons;
 			sourceTree = "<group>";
 		};
 		43C1B5C927D0A66500AB0D3B /* fonts */ = {
@@ -616,7 +632,8 @@
 				43C1B65727DE13CE00AB0D3B /* ProfileOptionModel.swift */,
 				43DCB39D27E1FA7500A1A779 /* RecentSearchModel.swift */,
 				4311F5E527EB120A00C28F3C /* SettingsModel.swift */,
-				4311F62627FADC3300C28F3C /* AppSettings.swift */,
+				437AB14D27FC7567002A13F4 /* Singletons */,
+				437AB14427FB498B002A13F4 /* DataModel.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -873,6 +890,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				437AB14827FB4B04002A13F4 /* CoreDataManager.swift in Sources */,
 				4311F60327ECC39800C28F3C /* BaseArticlesRepository.swift in Sources */,
 				43DCB39827DF8D1A00A1A779 /* AlamofireManager.swift in Sources */,
 				43C1B5BC27CE0B1700AB0D3B /* ProfileViewController.swift in Sources */,
@@ -906,6 +924,7 @@
 				4311F62327F9CC5500C28F3C /* KeychainManager.swift in Sources */,
 				43C1B66527DE379600AB0D3B /* AppSettingCell.swift in Sources */,
 				4311F61427F2F0B700C28F3C /* FormInputView.swift in Sources */,
+				437AB14C27FC6AA4002A13F4 /* SavedArticles.swift in Sources */,
 				43C1B5F027D0C60000AB0D3B /* SavedArticleCell.swift in Sources */,
 				43C1B60627D78E5A00AB0D3B /* CustomHeaderView.swift in Sources */,
 				43C1B66927DE4EE900AB0D3B /* SettingSectionCell.swift in Sources */,
@@ -922,6 +941,7 @@
 				4311F5EE27EB26AF00C28F3C /* UserDefaultsManager.swift in Sources */,
 				43C1B5C627CF63F300AB0D3B /* MyTabBarController.swift in Sources */,
 				43C1B5FA27D1154500AB0D3B /* NotificationModel.swift in Sources */,
+				437AB14627FB498B002A13F4 /* DataModel.xcdatamodeld in Sources */,
 				4311F5D927EA033D00C28F3C /* ProfileViewModel.swift in Sources */,
 				4311F62727FADC3300C28F3C /* AppSettings.swift in Sources */,
 			);
@@ -1146,6 +1166,19 @@
 			defaultConfigurationName = Dev;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		437AB14427FB498B002A13F4 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				437AB14527FB498B002A13F4 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 437AB14527FB498B002A13F4 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 43F08D3527C7C9A6003FFA7D /* Project object */;
 }

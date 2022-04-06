@@ -1,12 +1,21 @@
 import UIKit
 
+protocol SavedArticleCellDelegate {
+    func favoriteIconDidPress(forArticle: String)
+}
+
 class SavedArticleCell: UITableViewCell {
     
     @IBOutlet weak var savedArticleCell: UIView!
     @IBOutlet weak var articleImage: UIImageView!
+    @IBOutlet weak var favoriteIcon: UIImageView!
     @IBOutlet weak var articleTitle: UILabel!
     @IBOutlet weak var articleTopic: UIButton!
     @IBOutlet weak var articleMoreTags: UIButton!
+    
+    var delegate: SavedArticleCellDelegate?
+    var articleID = ""
+    var articleUrl = ""
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -18,6 +27,7 @@ class SavedArticleCell: UITableViewCell {
         setCellBorder()
         setImageRounded()
         setCellColorsDesign()
+        setGestureRecognizer()
     }
     
     override func layoutSubviews() {
@@ -48,5 +58,18 @@ class SavedArticleCell: UITableViewCell {
             .layerMaxXMaxYCorner,
             .layerMaxXMinYCorner
         ]
+    }
+    
+    func setGestureRecognizer() {
+        
+        favoriteIcon.addGestureRecognizer(UITapGestureRecognizer(target: favoriteIcon, action: #selector(favoriteIconPressed)))
+        favoriteIcon.isUserInteractionEnabled = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(favoriteIconPressed(tapGestureRecognizer:)))
+        favoriteIcon.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc func favoriteIconPressed(tapGestureRecognizer: UITapGestureRecognizer) {
+        
+        delegate?.favoriteIconDidPress(forArticle: articleID)
     }
 }
