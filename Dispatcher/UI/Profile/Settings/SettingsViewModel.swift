@@ -14,10 +14,10 @@ class SettingsViewModel {
         ]),
     ]
     
-    func fetchUserSettingsPreferences() {
-        appSettings[0].options[0].status = repository.fetchSaveFiltersSetting()
-        appSettings[0].options[1].status = repository.fetchSaveSearchResultsSetting()
-        appSettings[1].options[0].status = repository.fetchNotificationsSetting()
+    func getUserSettingsPreferences() {
+        appSettings[0].options[0].status = repository.getSaveFiltersSetting()
+        appSettings[0].options[1].status = repository.getSaveSearchResultsSetting()
+        appSettings[1].options[0].status = repository.getNotificationsSetting()
     }
     
     func updateSetting(settingTitle: String, completionHandler: @escaping () -> ()) {

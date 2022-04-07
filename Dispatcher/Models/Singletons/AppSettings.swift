@@ -10,7 +10,7 @@ class AppSettings {
     
     var notificationsEnabled: SwitchStatus {
         get {
-            let index = userDefaultsManager.fetchIntFromUserDefaults(key: Constants.UserDefaults.SEND_NOTIFICATIONS)
+            let index = userDefaultsManager.getIntFromUserDefaults(key: Constants.UserDefaults.SEND_NOTIFICATIONS)
             return SwitchStatus(rawValue: index) ?? .off
         }
         
@@ -22,7 +22,7 @@ class AppSettings {
     
     var saveFilters: SwitchStatus {
         get {
-            let index = userDefaultsManager.fetchIntFromUserDefaults(key: Constants.UserDefaults.SAVE_FILTERS)
+            let index = userDefaultsManager.getIntFromUserDefaults(key: Constants.UserDefaults.SAVE_FILTERS)
             return SwitchStatus(rawValue: index) ?? .off
         }
         
@@ -34,7 +34,7 @@ class AppSettings {
     
     var saveSearchResults: SwitchStatus {
         get {
-            let index = userDefaultsManager.fetchIntFromUserDefaults(key: Constants.UserDefaults.SAVE_SEARCH_RESULTS)
+            let index = userDefaultsManager.getIntFromUserDefaults(key: Constants.UserDefaults.SAVE_SEARCH_RESULTS)
             return SwitchStatus(rawValue: index) ?? .off
         }
         

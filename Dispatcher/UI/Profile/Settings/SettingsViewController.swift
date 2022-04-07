@@ -10,7 +10,7 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeUIElements()
-        viewModel.fetchUserSettingsPreferences()
+        viewModel.getUserSettingsPreferences()
     }
     
     func initializeUIElements() {
@@ -47,14 +47,8 @@ extension SettingsViewController: UITableViewDataSource {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCellsIdentifier.SETTING, for: indexPath) as! AppSettingCell
         cell.delegate = self
-        print("======")
-        print(viewModel.appSettings[indexPath.section].options[indexPath.row].description) //always good
-        print("======")
         cell.settingTitle.text = viewModel.appSettings[indexPath.section].options[indexPath.row].title
         cell.settingDescription.text = viewModel.appSettings[indexPath.section].options[indexPath.row].description
-        print("~~~~~~")
-        print(cell.settingDescription.text) //always good
-        print("~~~~~~")
         
         var settingSwitchImage: UIImage
         switch viewModel.appSettings[indexPath.section].options[indexPath.row].status {

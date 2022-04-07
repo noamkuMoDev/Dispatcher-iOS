@@ -44,7 +44,7 @@ class BaseArticlesRepository {
     }
     
     
-    func fetchSavedArticles(completionHandler: @escaping ([FavoriteArticle]) -> ()) {
+    func getSavedArticles(completionHandler: @escaping ([FavoriteArticle]) -> ()) {
         completionHandler(coreDataManager.fetchFavoritesArrayFromCoreData())
     }
     

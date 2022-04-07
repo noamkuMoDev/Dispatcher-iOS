@@ -29,7 +29,7 @@ class BaseArticlesViewModel {
     
     
     func fetchSavedArticles(completionHandler: @escaping () -> ()) {
-        repository.fetchSavedArticles() { articlesArray in
+        repository.getSavedArticles() { articlesArray in
             self.savedArticlesSingleton.savedArticlesArray = articlesArray
             completionHandler()
         }

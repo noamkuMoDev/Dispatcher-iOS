@@ -4,8 +4,8 @@ class SearchRepository: BaseArticlesRepository {
     
     let userDefaults = UserDefaultsManager()
     
-    func fetchSavedRecentSearchesFromUserDefaults() -> [String]? {
-        return userDefaults.fetchArrayFromUserDefaults(key: Constants.UserDefaults.RECENT_SEARCHES)
+    func getSavedRecentSearchesFromUserDefaults() -> [String]? {
+        return userDefaults.getArrayFromUserDefaults(key: Constants.UserDefaults.RECENT_SEARCHES)
     }
     
     func updateModelArrayIntoUserDefaults(recentSearchesArr: [RecentSearchModel]) {

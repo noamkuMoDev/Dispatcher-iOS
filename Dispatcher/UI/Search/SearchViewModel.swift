@@ -8,7 +8,7 @@ class SearchViewModel: BaseArticlesViewModel {
     
     
     func fetchSavedRecentSearchesFromUserDefaults(completionHandler: @escaping (String?) -> ()) {
-        if let recentSearches = repository.fetchSavedRecentSearchesFromUserDefaults() {
+        if let recentSearches = repository.getSavedRecentSearchesFromUserDefaults() {
             for search in recentSearches {
                 recentSearchesArray.append(RecentSearchModel(text: search))
                 completionHandler(nil)

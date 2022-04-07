@@ -4,15 +4,15 @@ class SettingsRepository {
     
     let appSettings = AppSettings.shared
     
-    func fetchNotificationsSetting() -> SwitchStatus {
+    func getNotificationsSetting() -> SwitchStatus {
         return appSettings.notificationsEnabled
     }
     
-    func fetchSaveFiltersSetting() -> SwitchStatus {
+    func getSaveFiltersSetting() -> SwitchStatus {
         return appSettings.saveFilters
     }
     
-    func fetchSaveSearchResultsSetting() -> SwitchStatus {
+    func getSaveSearchResultsSetting() -> SwitchStatus {
         return appSettings.saveSearchResults
     }
     
