@@ -33,7 +33,7 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     
     func initializeUIElements() {
         
-        emailFormView.initView(id: "email", delegate: self, labelText: "Invalid email adress", placeholderText: "Your Email", showIcon: true)
+        emailFormView.initView(id: "email", delegate: self, labelText: "Invalid email adress", placeholderText: "Your Email", hideIcon: true)
         passwordFormView.initView(id: "password", delegate: self, labelText: "Weak password", placeholderText: "Password")
         reenterPasswordFormView.initView(id: "re-password", delegate: self, labelText: "Input doesn't match previous password", placeholderText: "Re-Enter Password")
         loadingView.initView(delegate: self)
@@ -173,7 +173,7 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
 // MARK: - FormInputViewDelegate
 extension AuthViewController: FormInputViewDelegate {
     
-    func textFieldDidChange(textFieldId: String, currentText: String?) {
+    func textFieldDidChange(textField: FormInputView, textFieldId: String, currentText: String?) {
         
         if currentPageType == .signup {
             if textFieldId == "email" {

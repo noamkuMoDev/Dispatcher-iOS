@@ -15,6 +15,12 @@ class TextFieldOverride: UITextField {
     override open func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: padding)
     }
+    
+    override var isEnabled: Bool {
+        willSet {
+            backgroundColor = newValue ? UIColor.white : UIColor.white
+        }
+    }
 }
 
 

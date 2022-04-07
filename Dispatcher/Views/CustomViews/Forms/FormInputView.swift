@@ -1,9 +1,8 @@
 import UIKit
 
 protocol FormInputViewDelegate {
-    func textFieldDidChange(textFieldId: String, currentText: String?)
+    func textFieldDidChange(textField: FormInputView, textFieldId: String, currentText: String?)
 }
-
 
 enum eyeIconStatus {
     case conseal
@@ -23,7 +22,7 @@ class FormInputView: UIView {
     var eyeIconStatus: eyeIconStatus = .conseal
     
     
-    func initView(id: String, delegate: FormInputViewDelegate? = nil, labelText: String = "", placeholderText: String = "", showIcon: Bool = false) {
+    func initView(id: String, delegate: FormInputViewDelegate? = nil, labelText: String = "", placeholderText: String = "", hideIcon: Bool = false) {
         
         commonInit()
         
@@ -33,7 +32,7 @@ class FormInputView: UIView {
         }
         textField.placeholder = placeholderText
         textField.addTarget(self, action: #selector(FormInputView.textFieldDidChange(_:)), for: .editingChanged)
-        textfieldIcon.isHidden = showIcon
+        textfieldIcon.isHidden = hideIcon
         warningLabel.text = labelText
         warningLabel.isHidden = true
     }
@@ -82,6 +81,18 @@ class FormInputView: UIView {
     }
     
     func hideWarning() {
+        if id != "name" && id != "userEmail" {
+            textField.layer.borderWidth = 0.0
+        }
+        warningLabel.isHidden = true
+    }
+    
+    func displayEditMode() {
+        textField.layer.borderWidth = 1.0
+        textField.layer.borderColor = UIColor.black.cgColor
+    }
+    
+    func dismissEditMode() {
         textField.layer.borderWidth = 0.0
         warningLabel.isHidden = true
     }
@@ -100,15 +111,17 @@ class FormInputView: UIView {
     }
 }
 
+//MARK: - UITextFieldDelegate
 extension FormInputView: UITextFieldDelegate {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         if textField.text == "" {
             hideWarning()
         } else {
-            delegate?.textFieldDidChange(textFieldId: id , currentText: textField.text)
+            delegate?.textFieldDidChange(textField: self, textFieldId: id , currentText: textField.text)
         }
     }
+
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)

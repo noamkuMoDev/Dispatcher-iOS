@@ -1,8 +1,6 @@
 import Foundation
 
-class ProfileRepository {
-    
-    let firebaseManager = FirebaseAuthManager()
+class ProfileRepository : AuthRepository {
     
     func logoutUserFromApp(completionHandler: @escaping (String?) -> ()) {
         firebaseManager.logoutUser() { error in

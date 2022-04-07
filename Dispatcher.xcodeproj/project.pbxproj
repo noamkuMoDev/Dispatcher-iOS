@@ -27,6 +27,8 @@
 		4311F61727F31F1300C28F3C /* ProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F61627F31F1300C28F3C /* ProfileRepository.swift */; };
 		4311F61927F3251400C28F3C /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4311F61827F3251400C28F3C /* Auth.storyboard */; };
 		4311F62127F33E8500C28F3C /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F62027F33E8500C28F3C /* SplashViewController.swift */; };
+		437AB15427FDB845002A13F4 /* ActionPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AB15327FDB845002A13F4 /* ActionPopupView.swift */; };
+		437AB15627FDB858002A13F4 /* ActionPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 437AB15527FDB858002A13F4 /* ActionPopupView.xib */; };
 		43C1B5BA27CE098A00AB0D3B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5B927CE098A00AB0D3B /* Constants.swift */; };
 		43C1B5BC27CE0B1700AB0D3B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */; };
 		43C1B5BE27CE0B4500AB0D3B /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */; };
@@ -131,6 +133,8 @@
 		4311F61627F31F1300C28F3C /* ProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRepository.swift; sourceTree = "<group>"; };
 		4311F61827F3251400C28F3C /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 		4311F62027F33E8500C28F3C /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		437AB15327FDB845002A13F4 /* ActionPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionPopupView.swift; sourceTree = "<group>"; };
+		437AB15527FDB858002A13F4 /* ActionPopupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActionPopupView.xib; sourceTree = "<group>"; };
 		43C1B5B927CE098A00AB0D3B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		43C1B5BB27CE0B1700AB0D3B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		43C1B5BD27CE0B4500AB0D3B /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
@@ -329,6 +333,7 @@
 		4311F5D027E9E5DF00C28F3C /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				437AB15227FDB807002A13F4 /* Popups */,
 				4311F61527F31E7200C28F3C /* Forms */,
 				4311F5F727EB332100C28F3C /* Header */,
 				4311F5F927EB335600C28F3C /* Sort By */,
@@ -492,6 +497,15 @@
 				4311F61327F2F0B700C28F3C /* FormInputView.swift */,
 			);
 			path = Forms;
+			sourceTree = "<group>";
+		};
+		437AB15227FDB807002A13F4 /* Popups */ = {
+			isa = PBXGroup;
+			children = (
+				437AB15327FDB845002A13F4 /* ActionPopupView.swift */,
+				437AB15527FDB858002A13F4 /* ActionPopupView.xib */,
+			);
+			path = Popups;
 			sourceTree = "<group>";
 		};
 		43C1B5C927D0A66500AB0D3B /* fonts */ = {
@@ -767,6 +781,7 @@
 				43C1B66A27DE4EE900AB0D3B /* SettingSectionCell.xib in Resources */,
 				43F08D4A27C7C9C3003FFA7D /* Assets.xcassets in Resources */,
 				43F08D4827C7C9A6003FFA7D /* Main.storyboard in Resources */,
+				437AB15627FDB858002A13F4 /* ActionPopupView.xib in Resources */,
 				43C1B64927D9DC6700AB0D3B /* Poppins-SemiBold.ttf in Resources */,
 				43C1B62327D9DB2200AB0D3B /* Roboto-Thin.ttf in Resources */,
 				43C1B62C27D9DB2200AB0D3B /* Roboto-MediumItalic.ttf in Resources */,
@@ -894,6 +909,7 @@
 				43C1B65B27DE155400AB0D3B /* ProfileOptionCell.swift in Sources */,
 				43C1B60227D24EBD00AB0D3B /* UISupport.swift in Sources */,
 				4311F60A27F056D600C28F3C /* AuthViewModel.swift in Sources */,
+				437AB15427FDB845002A13F4 /* ActionPopupView.swift in Sources */,
 				43C1B66527DE379600AB0D3B /* AppSettingCell.swift in Sources */,
 				4311F61427F2F0B700C28F3C /* FormInputView.swift in Sources */,
 				43C1B5F027D0C60000AB0D3B /* SavedArticleCell.swift in Sources */,
@@ -1009,6 +1025,8 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Dispatcher/Supporting Files/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app wants to take pictures.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app wants to use your photos.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -1093,6 +1111,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Dispatcher/Supporting Files/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app wants to take pictures.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app wants to use your photos.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
