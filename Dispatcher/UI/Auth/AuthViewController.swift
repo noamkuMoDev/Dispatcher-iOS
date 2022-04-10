@@ -103,24 +103,29 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         let currentPassword = passwordFormView.textField.text, passwordReenter = passwordFormView.textField.text
         if currentPassword != passwordReenter {
             reenterPasswordFormView.displayWarning()
+            stopLoadingScreen()
         } else {
             let currentEmail = emailFormView.textField.text
             viewModel.validateSignUpFields(email: currentEmail, password: currentPassword, passwordAgain: passwordReenter) { error, status in
                 if !status {
                     print(error!)
+                    self.stopLoadingScreen()
                 } else {
+                    print("Validated fields. Call VM signUserToApp")
                     self.viewModel.signUserToApp(email: currentEmail!, password: currentPassword!) { error in
                         if let error = error {
                             print(error)
+                            self.stopLoadingScreen()
                         } else {
+                            print("ALL WENT SMOOTHLY")
                             self.clearAllUIElements()
+                            self.stopLoadingScreen()
                             self.navigateIntoApp()
                         }
                     }
                 }
             }
         }
-        stopLoadingScreen()
     }
     
     func loginExistingUser() {
@@ -172,9 +177,7 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
 
 // MARK: - FormInputViewDelegate
 extension AuthViewController: FormInputViewDelegate {
-    
     func textFieldDidChange(textFieldId: String, currentText: String?) {
-        
         if currentPageType == .signup {
             if textFieldId == "email" {
                 if currentText != nil && currentText!.count > 5 {

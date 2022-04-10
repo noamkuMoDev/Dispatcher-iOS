@@ -2,18 +2,18 @@ import Foundation
 
 class SettingsRepository {
     
-    let appSettings = AppSettings.shared
+    let userDefaultsManager = UserDefaultsManager()
     
     func getNotificationsSetting() -> SwitchStatus {
-        return appSettings.notificationsEnabled
+       return SwitchStatus(rawValue: userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.SEND_NOTIFICATIONS) as! Int) ?? .off
     }
     
     func getSaveFiltersSetting() -> SwitchStatus {
-        return appSettings.saveFilters
+        return SwitchStatus(rawValue: userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.SAVE_FILTERS) as! Int) ?? .off
     }
     
     func getSaveSearchResultsSetting() -> SwitchStatus {
-        return appSettings.saveSearchResults
+        return SwitchStatus(rawValue: userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.SAVE_SEARCH_RESULTS) as! Int) ?? .off
     }
     
     
@@ -21,11 +21,11 @@ class SettingsRepository {
 
         switch settingTitle {
         case "Save filters":
-            appSettings.saveFilters = newStatus
+            userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.SAVE_FILTERS, data: newStatus.rawValue)
         case "Save search results":
-            appSettings.saveSearchResults = newStatus
+            userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.SAVE_SEARCH_RESULTS, data: newStatus.rawValue)
         case "Notification":
-            appSettings.notificationsEnabled = newStatus
+            userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.SEND_NOTIFICATIONS, data: newStatus.rawValue)
         default:
             print("not valid option")
         }

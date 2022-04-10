@@ -3,12 +3,11 @@ import CoreData
 
 class CoreDataManager {
     
-    let savedArticlesSingleton = SavedArticlesArray.shared
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
 
     func saveItemToCoreData(article: Article, completionHandler: @escaping (String?, FavoriteArticle?) -> ()) {
-        let favorite = adaptArticleToFavoriteArticle(article: article)
+        let favorite = adaptArticleToFavoriteArticle(article)
         if let error = saveCoreDataChanges() {
             completionHandler(error,nil)
         } else {
@@ -30,20 +29,20 @@ class CoreDataManager {
     }
     
     
-    func deleteFromCoreData(removeID: String, completionHandler: @escaping (String?) -> ()) {
+    func deleteFromCoreData(removeID: String, savedArticles: [FavoriteArticle], completionHandler: @escaping (String?) -> ()) {
 
         var index: Int = -1
-        for (i,item) in savedArticlesSingleton.savedArticlesArray.enumerated() {
+        for (i,item) in savedArticles.enumerated() {
             if item.id == removeID {
                 index = i
             }
         }
         if index != -1 {
-            context.delete(savedArticlesSingleton.savedArticlesArray[index])
+            context.delete(savedArticles[index])
             if let error = saveCoreDataChanges() {
                 completionHandler(error)
             } else {
-                savedArticlesSingleton.savedArticlesArray.remove(at: index)
+                // remove from the local array !!
                 completionHandler(nil)
             }
         } else {
@@ -63,7 +62,7 @@ class CoreDataManager {
     }
     
     
-    private func adaptArticleToFavoriteArticle(article: Article) -> FavoriteArticle {
+    private func adaptArticleToFavoriteArticle(_ article: Article) -> FavoriteArticle {
         
         let favoriteArticle = FavoriteArticle(context: context)
         favoriteArticle.id = article.id
@@ -78,4 +77,22 @@ class CoreDataManager {
         
         return favoriteArticle
     }
+    
+    
+    func clearCoreDataMemory() {
+        let entities = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.managedObjectModel.entities
+        for entity in entities {
+            delete(entityName: entity.name!)
+        }
+    }
+  
+     func delete(entityName: String) {
+         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+         do {
+             try (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext.execute(deleteRequest)
+         } catch let error as NSError {
+             debugPrint(error)
+         }
+     }
 }

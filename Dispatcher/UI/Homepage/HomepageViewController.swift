@@ -7,7 +7,6 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var tableView: UITableView!
 
-    let appSettings = AppSettings.shared
     let viewModel = BaseArticlesViewModel()
     var dataSource: TableViewDataSourceManager<Article>!
     var isPaginating: Bool = false
@@ -18,7 +17,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
         defineNotificationCenterListeners()
         initiateUIElements()
         checkUserSettingsPreferences()
-        viewModel.fetchSavedArticles() {
+        viewModel.getSavedArticles() {
             self.fetchInitialResults()
         }
     }
@@ -29,7 +28,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
     
     @objc func refreshTableViewContent() {
         DispatchQueue.main.async {
-            self.dataSource.models = self.viewModel.news.newsArray
+            self.dataSource.models = self.viewModel.newsArray
             self.tableView.reloadData()
         }
     }
@@ -43,7 +42,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
     func setupTableView() {
         tableView.register(UINib(nibName: Constants.NibNames.HOMEPAGE, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE)
         self.dataSource = TableViewDataSourceManager(
-            models: viewModel.news.newsArray,
+            models: viewModel.newsArray,
                 reuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE
             ) { article, cell in
                 let currentCell = cell as! NewsCell
@@ -75,10 +74,13 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
         tableView.delegate = self
     }
 
+    
     func checkUserSettingsPreferences() {
-        print("SaveFilters is: \(appSettings.saveFilters)")
-        print("SaveSearchResults is: \(appSettings.saveSearchResults)")
+        print("SAVE_FILTERS app setting is: \(viewModel.getUserAppSetting(of: Constants.UserDefaults.SAVE_FILTERS))")
+        print("SEND_NOTIFICATIONS app setting is: \(viewModel.getUserAppSetting(of: Constants.UserDefaults.SEND_NOTIFICATIONS))")
+        print("SAVE_SEARCH_RESULTS app setting is: \(viewModel.getUserAppSetting(of: Constants.UserDefaults.SAVE_SEARCH_RESULTS))")
     }
+    
     
     func fetchInitialResults() {
         DispatchQueue.main.async {
@@ -88,7 +90,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
         viewModel.fetchNewsFromAPI(pageSizeToFetch: .articlesList) { error in
             if error == nil {
                 DispatchQueue.main.async {
-                    self.dataSource.models = self.viewModel.news.newsArray
+                    self.dataSource.models = self.viewModel.newsArray
                     self.tableView.reloadData()
                 }
             } else {
@@ -145,7 +147,7 @@ extension HomepageViewController: UIScrollViewDelegate {
             isPaginating = true
             viewModel.fetchNewsFromAPI(pageSizeToFetch: .articlesList) { error in
                 if error == nil {
-                    self.dataSource.models = self.viewModel.news.newsArray
+                    self.dataSource.models = self.viewModel.newsArray
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                         self.tableView.tableFooterView = nil
@@ -166,29 +168,21 @@ extension HomepageViewController: NewsCellDelegate {
     
     func favoriteIconDidPress(forArticle article: Article) {
         if article.isFavorite {
-            viewModel.removeArticleFromFavorites(articleID: article.id) { error in
-                if let error = error {
-                    print(error)
-                } else {
-                    DispatchQueue.main.async {
-                        self.dataSource.models = self.viewModel.news.newsArray
-                        self.tableView.reloadData()
-                    }
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.homepageToFavorites), object: nil)
-                }
-            }
+            viewModel.removeArticleFromFavorites(articleID: article.id, completionHandler: handleFavoritesUpdate)
         } else {
-            viewModel.addArticleToFavorites(article) { error in
-                if let error = error {
-                    print(error)
-                } else {
-                    DispatchQueue.main.async {
-                        self.dataSource.models = self.viewModel.news.newsArray
-                        self.tableView.reloadData()
-                    }
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.homepageToFavorites), object: nil)
-                }
+            viewModel.addArticleToFavorites(article, completionHandler: handleFavoritesUpdate)
+        }
+    }
+    
+    func handleFavoritesUpdate(error: String?) {
+        if let error = error {
+            print(error)
+        } else {
+            DispatchQueue.main.async {
+                self.dataSource.models = self.viewModel.newsArray
+                self.tableView.reloadData()
             }
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.homepageToFavorites), object: nil)
         }
     }
 }

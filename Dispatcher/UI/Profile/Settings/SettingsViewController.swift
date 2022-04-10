@@ -70,7 +70,6 @@ extension SettingsViewController: UITableViewDataSource {
 
 
 // MARK: - UITableViewDelegate
-
 extension SettingsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -100,7 +99,6 @@ extension SettingsViewController: AppSettingCellDelegate {
 
 
 // MARK: - CustomHeaderViewDelegate
-
 extension SettingsViewController: CustomHeaderViewDelegate {
     
     func backButtonPressed() {

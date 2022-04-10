@@ -27,9 +27,9 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     }
     
     @objc func refreshTableViewContent() {
-        self.dataSource.models = viewModel.savedArticlesSingleton.savedArticlesArray
+        self.dataSource.models = viewModel.savedArticles.map({$0.value})
         DispatchQueue.main.async {
-            if self.viewModel.savedArticlesSingleton.savedArticlesArray.count == 0 {
+            if self.viewModel.savedArticles.count == 0 {
                 self.displayNoResults()
             } else {
                 self.hideNoResults()
@@ -48,7 +48,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     func setupTableView() {
         tableView.register(UINib(nibName: Constants.NibNames.FAVORITES, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.FAVORITES)
         self.dataSource = TableViewDataSourceManager(
-            models: viewModel.savedArticlesSingleton.savedArticlesArray,
+            models: viewModel.savedArticles.map({$0.value}),
             reuseIdentifier: Constants.TableCellsIdentifier.FAVORITES
         ) { savedArticle, cell in
             let currentCell = cell as! SavedArticleCell
@@ -76,16 +76,16 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
             self.loadingView.loadIndicator.startAnimating()
         }
         
-        viewModel.fetchSavedArticles() {
+        viewModel.getSavedArticles() {
             DispatchQueue.main.async {
                 self.loadingView.loadIndicator.stopAnimating()
                 self.loadingView.isHidden = true
             }
-            if self.viewModel.savedArticlesSingleton.savedArticlesArray.count == 0 {
+            if self.viewModel.savedArticles.count == 0 {
                 self.displayNoResults()
             } else {
                 DispatchQueue.main.async {
-                    self.dataSource.models = self.viewModel.savedArticlesSingleton.savedArticlesArray
+                    self.dataSource.models = self.viewModel.savedArticles.map({$0.value})
                     self.tableView.reloadData()
                 }
             }
@@ -132,8 +132,8 @@ extension FavoritesViewController: SavedArticleCellDelegate {
                 print(error)
             } else {
                 DispatchQueue.main.async {
-                    self.dataSource.models = self.viewModel.savedArticlesSingleton.savedArticlesArray
-                    if self.viewModel.savedArticlesSingleton.savedArticlesArray.count == 0 {
+                    self.dataSource.models = self.viewModel.savedArticles.map({$0.value})
+                    if self.viewModel.savedArticles.count == 0 {
                         self.displayNoResults()
                     } else {
                         self.tableView.reloadData()
