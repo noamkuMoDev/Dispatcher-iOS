@@ -16,7 +16,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         defineNotificationCenterListeners()
         initiateUIElements()
         displaySavedArticlesOnScreen()
@@ -26,14 +25,17 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.homepageToFavorites), object: nil)
     }
     
-    @objc func refreshTableViewContent() {
-        self.dataSource.models = viewModel.savedArticles.map({$0.value})
-        DispatchQueue.main.async {
-            if self.viewModel.savedArticles.count == 0 {
-                self.displayNoResults()
-            } else {
-                self.hideNoResults()
-                self.tableView.reloadData()
+    @objc func refreshTableViewContent(_ notification: NSNotification) {
+        
+        viewModel.getSavedArticles {
+            self.dataSource.models = self.viewModel.savedArticles.map({$0.value})
+            DispatchQueue.main.async {
+                if self.viewModel.savedArticles.count == 0 {
+                    self.displayNoResults()
+                } else {
+                    self.hideNoResults()
+                    self.tableView.reloadData()
+                }
             }
         }
     }
@@ -138,7 +140,9 @@ extension FavoritesViewController: SavedArticleCellDelegate {
                     } else {
                         self.tableView.reloadData()
                     }
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.favoritesToHomepage), object: nil)
+                    print("fire notification to homepage")
+                    let dataDict:[String: String] = ["articleID": articleID]
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.favoritesToHomepage), object: nil, userInfo: dataDict)
                 }
             }
         }

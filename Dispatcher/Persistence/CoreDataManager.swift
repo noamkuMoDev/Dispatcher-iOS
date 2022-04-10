@@ -6,7 +6,7 @@ class CoreDataManager {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
 
-    func saveItemToCoreData(article: Article, completionHandler: @escaping (String?, FavoriteArticle?) -> ()) {
+    func saveArticleToCoreData(article: Article, completionHandler: @escaping (String?, FavoriteArticle?) -> ()) {
         let favorite = adaptArticleToFavoriteArticle(article)
         if let error = saveCoreDataChanges() {
             completionHandler(error,nil)
@@ -15,6 +15,10 @@ class CoreDataManager {
         }
     }
     
+    func saveFavoriteArticlesArrayToCoreData(articles: [FavoriteArticle], completionHandler: @escaping (String?) -> ()) {
+        let error = saveCoreDataChanges()
+        completionHandler(error)
+    }
     
     func fetchFavoritesArrayFromCoreData() -> [FavoriteArticle] {
         

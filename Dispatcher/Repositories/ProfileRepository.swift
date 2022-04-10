@@ -19,7 +19,16 @@ class ProfileRepository {
                 self.firebaseManager.logoutUser() { error in
 
                     self.coreDataManager.clearCoreDataMemory()
-                    self.userDefaultsManager.clearUserDefaultsMemory()
+                    
+                    let userDefaultsKeysToRemove = [
+                        Constants.UserDefaults.CURRENT_USER_UID,
+                        Constants.UserDefaults.CURRENT_USER_NAME,
+                        Constants.UserDefaults.RECENT_SEARCHES,
+                        Constants.UserDefaults.SAVE_FILTERS,
+                        Constants.UserDefaults.SEND_NOTIFICATIONS,
+                        Constants.UserDefaults.SAVE_SEARCH_RESULTS
+                    ]
+                    self.userDefaultsManager.clearUserDefaultsMemory(keysToRemove: userDefaultsKeysToRemove)
                     
                     return completionHandler(error)
                 }

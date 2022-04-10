@@ -11,9 +11,10 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
     var dataSource: TableViewDataSourceManager<Article>!
     var isPaginating: Bool = false
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+ 
         defineNotificationCenterListeners()
         initiateUIElements()
         checkUserSettingsPreferences()
@@ -26,7 +27,10 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.favoritesToHomepage), object: nil)
     }
     
-    @objc func refreshTableViewContent() {
+    @objc func refreshTableViewContent(_ notification: NSNotification) {
+        print(notification.userInfo!["articleID"] as! String)
+        print("notification reached homepage")
+        viewModel.updateArticleToNotFavoriteLocally(articleID: notification.userInfo!["articleID"] as! String)
         DispatchQueue.main.async {
             self.dataSource.models = self.viewModel.newsArray
             self.tableView.reloadData()
@@ -82,7 +86,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
     }
     
     
-    func fetchInitialResults() {
+    @objc func fetchInitialResults() {
         DispatchQueue.main.async {
             self.loadingView.isHidden = false
             self.loadingView.loadIndicator.startAnimating()
@@ -168,21 +172,29 @@ extension HomepageViewController: NewsCellDelegate {
     
     func favoriteIconDidPress(forArticle article: Article) {
         if article.isFavorite {
-            viewModel.removeArticleFromFavorites(articleID: article.id, completionHandler: handleFavoritesUpdate)
-        } else {
-            viewModel.addArticleToFavorites(article, completionHandler: handleFavoritesUpdate)
-        }
-    }
-    
-    func handleFavoritesUpdate(error: String?) {
-        if let error = error {
-            print(error)
-        } else {
-            DispatchQueue.main.async {
-                self.dataSource.models = self.viewModel.newsArray
-                self.tableView.reloadData()
+            viewModel.removeArticleFromFavorites(articleID: article.id) { error in
+                if let error = error {
+                    print(error)
+                } else {
+                    DispatchQueue.main.async {
+                        self.dataSource.models = self.viewModel.newsArray
+                        self.tableView.reloadData()
+                    }
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.homepageToFavorites), object: nil)
+                }
             }
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.homepageToFavorites), object: nil)
+        } else {
+            viewModel.addArticleToFavorites(article) { error in
+                if let error = error {
+                    print(error)
+                } else {
+                    DispatchQueue.main.async {
+                        self.dataSource.models = self.viewModel.newsArray
+                        self.tableView.reloadData()
+                    }
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.homepageToFavorites), object: nil)
+                }
+            }
         }
     }
 }

@@ -38,14 +38,10 @@ class UserDefaultsManager: NSObject {
     }
     
     
-    // LOGOUT FLOW - V
-    func clearUserDefaultsMemory() {
-        //user info
-        defaults.removeObject(forKey: Constants.UserDefaults.CURRENT_USER_NAME)
-        defaults.removeObject(forKey: Constants.UserDefaults.RECENT_SEARCHES)
-        
-        //app settings
-        defaults.removeObject(forKey: Constants.UserDefaults.SAVE_FILTERS)
-        defaults.removeObject(forKey: Constants.UserDefaults.SEND_NOTIFICATIONS)
+
+    func clearUserDefaultsMemory(keysToRemove: [String]) {
+        for keyName in keysToRemove {
+            defaults.removeObject(forKey: keyName)
+        }
     }
 }

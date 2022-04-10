@@ -65,12 +65,24 @@ class BaseArticlesViewModel {
                 completionHandler(error)
             } else {
                 // remove from local favorites & newsArray
-                self.savedArticles.removeValue(forKey: articleID)
-                if let index = self.newsArray.firstIndex(where: {$0.id == articleID}) {
-                    self.newsArray[index].isFavorite = false
-                }
+                self.updateArticleToNotFavoriteLocally(articleID: articleID)
                 completionHandler(nil)
             }
         }
     }
+    
+    
+    func updateArticleToNotFavoriteLocally(articleID: String) {
+        self.savedArticles[articleID] = nil
+        if let index = self.newsArray.firstIndex(where: {$0.id == articleID}) {
+            self.newsArray[index].isFavorite = false
+        }
+    }
+    
+    func updateArticleIntoFavoritesLocally() {
+        
+    }
+    
+    
+    
 }

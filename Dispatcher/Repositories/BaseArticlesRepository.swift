@@ -57,21 +57,22 @@ class BaseArticlesRepository {
             }
             completionHandler(favoritesDictionary)
         } else { // nothing on CoreData
-            print("NOTHING ON CORE DATA")
             // fetch Firestore
             let uid = userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.CURRENT_USER_UID)
             if uid == nil {
                 print("Couldn't get current user uid to fetch saved articles")
                 completionHandler([:])
             } else {
-                print("FETCH FROM FIRESTORE")
                 firestoreManager.fetchUserDataCollection(uid: uid as! String) { error, savedArticles in
                     if error != nil {
                         completionHandler([:])
                     } else {
-                        // !!!!!! TO DO : save to CoreData !!!!!!!
-                        print(savedArticles)
-                        completionHandler(savedArticles! as! [String:FavoriteArticle])
+                        self.coreDataManager.saveFavoriteArticlesArrayToCoreData(articles: savedArticles!.map({$0.value})) { error in
+                            if let error = error {
+                                print("error saving all saved articles to CoreData: \(error)")
+                            }
+                            completionHandler(savedArticles!)
+                        }
                     }
                 }
             }
@@ -81,7 +82,7 @@ class BaseArticlesRepository {
     
     func saveArticleToFavorites(_ article: Article, completionHandler: @escaping (String?,FavoriteArticle?) -> ()) {
         // add to CoreData
-        coreDataManager.saveItemToCoreData(article: article) { (error, favoriteArticle) in
+        coreDataManager.saveArticleToCoreData(article: article) { (error, favoriteArticle) in
             if let error = error {
                 completionHandler(error, nil)
             } else {
@@ -129,7 +130,7 @@ class BaseArticlesRepository {
     }
     
     
-    // HOMEPAGE FLOW - V
+
     func getUserAppSetting(of settingName: String) -> SwitchStatus {
         
         var status: SwitchStatus = .off

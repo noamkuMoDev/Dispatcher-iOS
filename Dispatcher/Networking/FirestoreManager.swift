@@ -20,22 +20,16 @@ class FirestoreManager {
     }
     
     func saveDataIntoCollection(uid: String, data: FavoriteArticle, completionHandler: @escaping (String?) -> ()) {
-        
-        do {
-            try database.collection("Users").document(uid).setData(from: data)
-        } catch let error {
-            print("Error writing city to Firestore: \(error)")
-        }
-        
+ 
         database.collection("Users").document(uid).collection("savedArticles").document(data.id!).setData([
-            "author" : data.author,
-            "content" : data.content,
-            "date" : data.date,
-            "imageUrl": data.imageUrl,
+            "author" : data.author!,
+            "content" : data.content!,
+            "date" : data.date!,
+            "imageUrl": data.imageUrl!,
             "isFavorite" : true,
-            "title" : data.title,
-            "topic" : data.topic,
-            "url" : data.url
+            "title" : data.title!,
+            "topic" : data.topic!,
+            "url" : data.url!
         ]) { error in
             if let error = error {
                 completionHandler("Error writing document in firestore: \(error)")
@@ -62,13 +56,23 @@ class FirestoreManager {
     func fetchUserDataCollection(uid: String, completionHandler: @escaping(String?,[String : FavoriteArticle]?) -> ()) {
         
         let docRef = database.collection("Users").document(uid).collection("savedArticles")
-        docRef.getDocuments(source: FavoriteArticle.self) { (querySnapshot, error) in
+        docRef.getDocuments { (querySnapshot, error) in
             if let error = error {
                 completionHandler("Error getting documents: \(error)",nil)
             } else {
                 var resultsDictionary: [String: FavoriteArticle] = [:]
                 for document in querySnapshot!.documents {
-                    resultsDictionary[document.documentID] = document.data()
+                    let favoriteArticle = FavoriteArticle(context: (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext)
+                    favoriteArticle.title = (document.data()["title"] as! String)
+                    favoriteArticle.isFavorite = (document.data()["isFavorite"] as? Bool)!
+                    favoriteArticle.author = (document.data()["author"] as! String)
+                    favoriteArticle.topic = (document.data()["topic"] as! String)
+                    favoriteArticle.imageUrl = (document.data()["imageUrl"] as! String)
+                    favoriteArticle.content = (document.data()["content"] as! String)
+                    favoriteArticle.url = (document.data()["url"] as! String)
+                    favoriteArticle.date = (document.data()["date"] as! String)
+                    favoriteArticle.id = document.documentID
+                    resultsDictionary[document.documentID] = favoriteArticle
                 }
                 completionHandler(nil,resultsDictionary)
             }
