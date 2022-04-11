@@ -13,31 +13,37 @@ class MainActionButtonView: UIView {
     
     var delegate: MainActionButtonDelegate?
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.translatesAutoresizingMaskIntoConstraints = false
         commonInit()
     }
     
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
     }
+    
     
     override func layoutSubviews() {
         super.layoutSubviews()
         self.frame = self.bounds
     }
     
+    
     func commonInit() {
         Bundle.main.loadNibNamed("MainActionButtonView", owner: self, options: nil)
         addSubview(contentView)
+        
         contentView.layer.cornerRadius = contentView.frame.size.height / 2
         contentView.clipsToBounds = true
         
         setGestureRecognizer()
     }
     
+    // 11/4/22 V
     func setGestureRecognizer() {
         contentView.addGestureRecognizer(UITapGestureRecognizer(target: contentView, action: #selector(buttonTapped)))
         contentView.isUserInteractionEnabled = true
@@ -45,6 +51,7 @@ class MainActionButtonView: UIView {
         contentView.addGestureRecognizer(tapGestureRecognizer)
     }
     
+    // 11/4/22 V
     @objc func buttonTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.actionButtonDidPress(btnText: buttonLabel.text!)
     }

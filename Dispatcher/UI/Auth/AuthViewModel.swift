@@ -4,13 +4,12 @@ class AuthViewModel {
     
     let repository = AuthRepository()
     
-    // LOGIN FLOW - V
+    // 11/4/22 V
     func checkIfLoggedIn() -> userType {
-        print("AUTH VM calling repository checkIfLoggedIn")
         if repository.checkIfLoggedIn() == .loggedIn {
             repository.fetchCurrentUserDetails() { error in
                 if let error = error {
-                    print(error)
+                    print("Couldn't fetch user data - \(error)")
                 }
             }
             return .loggedIn
@@ -19,8 +18,7 @@ class AuthViewModel {
         }
     }
     
-    
-    // LOGIN FLOW - V
+    // 11/4/22 V
     func logUserToApp(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
         
         let cleanEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -31,16 +29,17 @@ class AuthViewModel {
     }
     
     
+    // 11/4/22 V
     func isValidEmailAddress(email: String) -> Bool {
         return repository.isValidEmailAddress(email)
     }
     
-    
+    // 11/4/22 V
     func isStrongPassword(password: String) -> Bool {
         return repository.isStrongPassword(password)
     }
     
-    
+    // 11/4/22 V
     func validateSignUpFields(email: String?, password: String?, passwordAgain: String?, completionHandler: @escaping (String?, Bool) -> ()) {
         
         if let safeEmail = email, let safePassword = password, let safeAnotherPassword = passwordAgain {
@@ -59,12 +58,11 @@ class AuthViewModel {
     }
     
     
-    // SIGNUP FLOW - V
+    // 11/4/22 V
     func signUserToApp(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
         
         let cleanEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
         let cleanPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
-        print("VM calling REPOSITORY signUserToApp")
         repository.signUserToApp(email: cleanEmail, password: cleanPassword) { error in
             completionHandler(error)
         }

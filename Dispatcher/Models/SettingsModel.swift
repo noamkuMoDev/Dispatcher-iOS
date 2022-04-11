@@ -2,7 +2,7 @@ import Foundation
 
 struct SettingModel {
     var sectionTitle: String
-    var options: [SingleSetting]
+    var options: [String:SingleSetting]
 }
 
 struct SingleSetting {

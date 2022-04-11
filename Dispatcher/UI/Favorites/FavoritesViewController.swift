@@ -16,17 +16,19 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         defineNotificationCenterListeners()
         initiateUIElements()
         displaySavedArticlesOnScreen()
     }
     
+    // 11/4/22 V
     func defineNotificationCenterListeners() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.homepageToFavorites), object: nil)
     }
     
+    // 11/4/22 V
     @objc func refreshTableViewContent(_ notification: NSNotification) {
-        
         viewModel.getSavedArticles {
             self.dataSource.models = self.viewModel.savedArticles.map({$0.value})
             DispatchQueue.main.async {
@@ -40,6 +42,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
         }
     }
     
+    // 11/4/22 V
     func initiateUIElements() {
         customHeader.initView(delegate: self, apperanceType: .fullAppearance)
         loadingView.initView(delegate: self)
@@ -47,6 +50,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
         setupTableView()
     }
     
+    // 11/4/22 V
     func setupTableView() {
         tableView.register(UINib(nibName: Constants.NibNames.FAVORITES, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.FAVORITES)
         self.dataSource = TableViewDataSourceManager(
@@ -57,32 +61,24 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
             currentCell.delegate = self
             
             currentCell.articleID = savedArticle.id!
-            
+            currentCell.articleTitle.text = savedArticle.title
+            currentCell.articleTopic.setTitle(savedArticle.topic, for: .normal)
             if let imageUrl = savedArticle.imageUrl {
                 guard let url = URL(string: imageUrl) else { return }
                 UIImage.loadFrom(url: url) { image in
                     currentCell.articleImage.image = image
                 }
             }
-            currentCell.articleTitle.text = savedArticle.title
-            currentCell.articleTopic.setTitle(savedArticle.topic, for: .normal)
         }
         tableView.delegate = self
         tableView.dataSource = self.dataSource
         tableView.rowHeight = 115.0
     }
     
+    // 11/4/22 V
     func displaySavedArticlesOnScreen() {
-        DispatchQueue.main.async {
-            self.loadingView.isHidden = false
-            self.loadingView.loadIndicator.startAnimating()
-        }
-        
+        displayLoadingAnimation()
         viewModel.getSavedArticles() {
-            DispatchQueue.main.async {
-                self.loadingView.loadIndicator.stopAnimating()
-                self.loadingView.isHidden = true
-            }
             if self.viewModel.savedArticles.count == 0 {
                 self.displayNoResults()
             } else {
@@ -91,21 +87,41 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
                     self.tableView.reloadData()
                 }
             }
+            self.removeLoadingAnimation()
         }
     }
     
+    // 11/4/22 V
     func displayNoResults() {
         self.tableView.isHidden = true
         self.noResultsLabel.isHidden = false
         self.noResultsImageView.isHidden = false
     }
     
+    // 11/4/22 V
     func hideNoResults() {
         self.tableView.isHidden = false
         self.noResultsLabel.isHidden = true
         self.noResultsImageView.isHidden = true
     }
     
+    // 11/4/22 V
+    func displayLoadingAnimation() {
+        DispatchQueue.main.async {
+            self.loadingView.loadIndicator.startAnimating()
+            self.loadingView.isHidden = false
+        }
+    }
+    
+    // 11/4/22 V
+    func removeLoadingAnimation() {
+        DispatchQueue.main.async {
+            self.loadingView.loadIndicator.stopAnimating()
+            self.loadingView.isHidden = true
+        }
+    }
+    
+    // 11/4/22 V
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
@@ -116,10 +132,12 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
 // MARK: - CustomHeaderViewDelegate
 extension FavoritesViewController: CustomHeaderViewDelegate {
     
+    // 11/4/22 V
     func notificationsButtonPressed() {
         self.performSegue(withIdentifier: Constants.Segues.FAVORITES_TO_NOTIFICATIONS, sender: self)
     }
     
+    // 11/4/22 V
     func searchButtonPressed() {
         self.performSegue(withIdentifier: Constants.Segues.FAVORITES_TO_SEARCH, sender: self)
     }
@@ -128,10 +146,13 @@ extension FavoritesViewController: CustomHeaderViewDelegate {
 // MARK: - SavedArticleCellDelegate
 extension FavoritesViewController: SavedArticleCellDelegate {
     
+    // 11/4/22 V
     func favoriteIconDidPress(forArticle articleID: String) {
+        displayLoadingAnimation()
         viewModel.removeArticleFromFavorites(articleID: articleID) { error in
             if let error = error {
                 print(error)
+                self.removeLoadingAnimation()
             } else {
                 DispatchQueue.main.async {
                     self.dataSource.models = self.viewModel.savedArticles.map({$0.value})
@@ -140,9 +161,9 @@ extension FavoritesViewController: SavedArticleCellDelegate {
                     } else {
                         self.tableView.reloadData()
                     }
-                    print("fire notification to homepage")
                     let dataDict:[String: String] = ["articleID": articleID]
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.favoritesToHomepage), object: nil, userInfo: dataDict)
+                    self.removeLoadingAnimation()
                 }
             }
         }

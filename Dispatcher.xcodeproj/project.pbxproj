@@ -30,7 +30,7 @@
 		4311F62527FA279C00C28F3C /* SettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F62427FA279C00C28F3C /* SettingsRepository.swift */; };
 		433D64282802BF2E002BBE92 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433D64272802BF2E002BBE92 /* FirestoreManager.swift */; };
 		437AB14627FB498B002A13F4 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 437AB14427FB498B002A13F4 /* DataModel.xcdatamodeld */; };
-		437AB14827FB4B04002A13F4 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AB14727FB4B04002A13F4 /* CoreDataManager.swift */; };
+		437AB14827FB4B04002A13F4 /* FavoriteArticleCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AB14727FB4B04002A13F4 /* FavoriteArticleCoreDataManager.swift */; };
 		437AB15828004BC1002A13F4 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AB15728004BC1002A13F4 /* SettingsViewController.swift */; };
 		437AB15A28004BEC002A13F4 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AB15928004BEC002A13F4 /* SettingsViewModel.swift */; };
 		43C1B5BA27CE098A00AB0D3B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C1B5B927CE098A00AB0D3B /* Constants.swift */; };
@@ -139,7 +139,7 @@
 		4311F62427FA279C00C28F3C /* SettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRepository.swift; sourceTree = "<group>"; };
 		433D64272802BF2E002BBE92 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		437AB14527FB498B002A13F4 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
-		437AB14727FB4B04002A13F4 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		437AB14727FB4B04002A13F4 /* FavoriteArticleCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArticleCoreDataManager.swift; sourceTree = "<group>"; };
 		437AB15728004BC1002A13F4 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		437AB15928004BEC002A13F4 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		43C1B5B927CE098A00AB0D3B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -485,7 +485,7 @@
 			children = (
 				4311F5ED27EB26AF00C28F3C /* UserDefaultsManager.swift */,
 				4311F62227F9CC5500C28F3C /* KeychainManager.swift */,
-				437AB14727FB4B04002A13F4 /* CoreDataManager.swift */,
+				437AB14727FB4B04002A13F4 /* FavoriteArticleCoreDataManager.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -506,13 +506,6 @@
 				4311F61327F2F0B700C28F3C /* FormInputView.swift */,
 			);
 			path = Forms;
-			sourceTree = "<group>";
-		};
-		437AB14D27FC7567002A13F4 /* Singletons */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Singletons;
 			sourceTree = "<group>";
 		};
 		43C1B5C927D0A66500AB0D3B /* fonts */ = {
@@ -629,7 +622,6 @@
 				43C1B65727DE13CE00AB0D3B /* ProfileOptionModel.swift */,
 				43DCB39D27E1FA7500A1A779 /* RecentSearchModel.swift */,
 				4311F5E527EB120A00C28F3C /* SettingsModel.swift */,
-				437AB14D27FC7567002A13F4 /* Singletons */,
 				437AB14427FB498B002A13F4 /* DataModel.xcdatamodeld */,
 			);
 			path = Models;
@@ -887,7 +879,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				437AB14827FB4B04002A13F4 /* CoreDataManager.swift in Sources */,
+				437AB14827FB4B04002A13F4 /* FavoriteArticleCoreDataManager.swift in Sources */,
 				4311F60327ECC39800C28F3C /* BaseArticlesRepository.swift in Sources */,
 				43DCB39827DF8D1A00A1A779 /* AlamofireManager.swift in Sources */,
 				43C1B5BC27CE0B1700AB0D3B /* ProfileViewController.swift in Sources */,

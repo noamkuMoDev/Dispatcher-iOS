@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cdU-oW-DC1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cdU-oW-DC1">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -136,7 +136,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="bdD-u8-DwU">
                                         <rect key="frame" x="16.000000000000007" y="16" width="112.66666666666669" height="49"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hi Noam" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="56s-rD-vzH">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hi there" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="56s-rD-vzH">
                                                 <rect key="frame" x="0.0" y="0.0" width="112.66666666666667" height="23.666666666666668"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="24"/>
                                                 <nil key="textColor"/>
@@ -207,7 +207,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="cIJ-y6-Eiv"/>
                     <connections>
+                        <outlet property="helloUserLabel" destination="56s-rD-vzH" id="Bkx-hW-5au"/>
                         <outlet property="tableView" destination="N1C-ur-zap" id="Q9l-af-pXq"/>
+                        <outlet property="userProfileImage" destination="Msw-se-dUX" id="fQx-35-4nY"/>
                         <outlet property="userProfileShadowView" destination="d84-VL-Vco" id="rKk-km-1Tt"/>
                         <segue destination="Qvb-2b-fpt" kind="show" identifier="goToUpdateProfile" id="jZx-21-YDm"/>
                         <segue destination="kma-R0-c0n" kind="show" identifier="goToTermsAndPrivacy" id="LwT-Z5-vPH"/>
@@ -496,10 +498,12 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BcF-l8-PUi">
-                                <rect key="frame" x="16" y="136.00000000000003" width="382" height="262.66666666666674"/>
-                                <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem nam quis tincidunt nunc lobortis id imperdiet volutpat aliquam. Purus felis lacus, in at elit quis adipiscing urna, at. Libero risus, at ultrices metus eu quisque nibh dictum. Nunc enim feugiat mattis convallis vehicula. Mattis ullamcorper tempus, sem egestas varius dapibus tincidunt. Ullamcorper nisi eget fringilla in pellentesque urna, integer platea in. Auctor blandit tellus enim vel blandit dignissim magna dolor.
+                                <rect key="frame" x="16" y="135.99999999999997" width="382" height="492.33333333333326"/>
+                                <mutableString key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem nam quis tincidunt nunc lobortis id imperdiet volutpat aliquam. Purus felis lacus, in at elit quis adipiscing urna, at. Libero risus, at ultrices metus eu quisque nibh dictum. Nunc enim feugiat mattis convallis vehicula. Mattis ullamcorper tempus, sem egestas varius dapibus tincidunt. Ullamcorper nisi eget fringilla in pellentesque urna, integer platea in. Auctor blandit tellus enim vel blandit dignissim magna dolor.
 Nec lorem amet risus elementum. Cursus eget sit id vitae elit non. Eleifend purus aliquam interdum leo nunc ultrices. Mattis dui nunc sed euismod quis mauris. Accumsan at nulla cras cursus sed.
-Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magna sit. Mattis enim tempor in varius elementum sagittis. Sit proin mi, ut id id ac nam. Dui tellus est ut purus leo id sed lectus et et.</string>
+Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magna sit. Mattis enim tempor in varius elementum sagittis. Sit proin mi, ut id id ac nam. Dui tellus est ut purus leo id sed lectus et et. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem nam quis tincidunt nunc lobortis id imperdiet volutpat aliquam. Purus felis lacus, in at elit quis adipiscing urna, at. Libero risus, at ultrices metus eu quisque nibh dictum. Nunc enim feugiat mattis convallis vehicula. Mattis ullamcorper tempus, sem egestas varius dapibus tincidunt. Ullamcorper nisi eget fringilla in pellentesque urna, integer platea in. Auctor blandit tellus enim vel blandit dignissim magna dolor.
+Nec lorem amet risus elementum. Cursus eget sit id vitae elit non. Eleifend purus aliquam interdum leo nunc ultrices. Mattis dui nunc sed euismod quis mauris. Accumsan at nulla cras cursus sed.
+Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magna sit.</mutableString>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -526,7 +530,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6X5-hS-lCR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-286" y="1971"/>
+            <point key="canvasLocation" x="-286.95652173913044" y="1970.7589285714284"/>
         </scene>
         <!--View Profile View Controller-->
         <scene sceneID="blb-6q-WeA">
@@ -798,7 +802,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                                 <color key="textColor" name="Dispatch Purple"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bIP-2Z-gta">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bIP-2Z-gta">
                                 <rect key="frame" x="16" y="119" width="382" height="597"/>
                                 <color key="backgroundColor" name="Dispatch Light Gray"/>
                             </tableView>

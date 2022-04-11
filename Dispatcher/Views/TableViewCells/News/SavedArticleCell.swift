@@ -17,6 +17,7 @@ class SavedArticleCell: UITableViewCell {
     var articleID = ""
     var articleUrl = ""
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -25,8 +26,8 @@ class SavedArticleCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         setCellBorder()
-        setImageRounded()
         setCellColorsDesign()
+        setImageRounded()
         setGestureRecognizer()
     }
     
@@ -35,13 +36,9 @@ class SavedArticleCell: UITableViewCell {
         
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0))
     }
+
     
-    func setCellColorsDesign() {
-        let bgColorView = UIView()
-        bgColorView.backgroundColor = UIColor.clear
-        self.selectedBackgroundView = bgColorView
-    }
-    
+    // 11/4/22 V
     func setCellBorder() {
         savedArticleCell.layer.borderWidth = 2
         let borderColor = UIColor( red: 243/255, green: 243/255, blue:255/255, alpha: 1.0 )
@@ -49,6 +46,16 @@ class SavedArticleCell: UITableViewCell {
         savedArticleCell.layer.cornerRadius =  4
     }
     
+    
+    // 11/4/22 V
+    func setCellColorsDesign() {
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor.clear
+        self.selectedBackgroundView = bgColorView
+    }
+    
+    
+    // 11/4/22 V
     func setImageRounded() {
         articleImage.clipsToBounds = true
         articleImage.layer.cornerRadius = 4
@@ -60,16 +67,16 @@ class SavedArticleCell: UITableViewCell {
         ]
     }
     
+    // 11/4/22 V
     func setGestureRecognizer() {
-        
         favoriteIcon.addGestureRecognizer(UITapGestureRecognizer(target: favoriteIcon, action: #selector(favoriteIconPressed)))
         favoriteIcon.isUserInteractionEnabled = true
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(favoriteIconPressed(tapGestureRecognizer:)))
         favoriteIcon.addGestureRecognizer(tapGestureRecognizer)
     }
     
+    // 11/4/22 V
     @objc func favoriteIconPressed(tapGestureRecognizer: UITapGestureRecognizer) {
-        
         delegate?.favoriteIconDidPress(forArticle: articleID)
     }
 }

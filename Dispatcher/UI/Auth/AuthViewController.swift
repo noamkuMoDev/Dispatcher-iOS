@@ -27,15 +27,17 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        initializeUIElements()
+        initiateUIElements()
+        defineGestureRecognizers()
         defineConstraints()
     }
     
-    func initializeUIElements() {
+    // 11/4/22 V
+    func initiateUIElements() {
         
-        emailFormView.initView(id: "email", delegate: self, labelText: "Invalid email adress", placeholderText: "Your Email", showIcon: true)
-        passwordFormView.initView(id: "password", delegate: self, labelText: "Weak password", placeholderText: "Password")
-        reenterPasswordFormView.initView(id: "re-password", delegate: self, labelText: "Input doesn't match previous password", placeholderText: "Re-Enter Password")
+        emailFormView.initView(id: Constants.TextFieldsIDs.EMAIL, delegate: self, labelText: "Invalid email adress", placeholderText: "Your Email", showIcon: true)
+        passwordFormView.initView(id: Constants.TextFieldsIDs.PASSWORD, delegate: self, labelText: "Weak password", placeholderText: "Password")
+        reenterPasswordFormView.initView(id: Constants.TextFieldsIDs.PASSWORD_AGAIN, delegate: self, labelText: "Input doesn't match previous password", placeholderText: "Re-Enter Password")
         loadingView.initView(delegate: self)
         loadingView.isHidden = true
 
@@ -49,8 +51,21 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
             setSignupPageLook()
         }
     }
-
     
+    // 11/4/22 V
+    func defineGestureRecognizers() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
+        self.view.addGestureRecognizer(tapGesture)
+    }
+    
+    // 11/4/22 V
+    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+        emailFormView.textField.resignFirstResponder()
+        passwordFormView.textField.resignFirstResponder()
+        reenterPasswordFormView.textField.resignFirstResponder()
+    }
+
+    // 11/4/22 V
     func setActionButtons() {
         topButton.delegate = self
         bottomButton.delegate = self
@@ -60,6 +75,7 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         bottomButton.entireButton.backgroundColor = UIColor.lightGray
     }
 
+    // 11/4/22 V
     func defineConstraints() {
         separatorConstraintSignup = separatorLine.topAnchor.constraint(equalTo: reenterPasswordFormView.bottomAnchor, constant: 25.0)
         separatorConstraintSignup?.isActive = true
@@ -68,6 +84,7 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         separatorConstraintLogin?.isActive = false
     }
 
+    // 11/4/22 V
     func setSignupPageLook() {
         clearAllUIElements()
         currentPageType = .signup
@@ -79,6 +96,7 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         bottomButton.buttonLabel.text = Constants.ButtonsText.LOGIN
     }
     
+    // 11/4/22 V
     func setLoginPageLook() {
         clearAllUIElements()
         currentPageType = .login
@@ -90,36 +108,35 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         bottomButton.buttonLabel.text = Constants.ButtonsText.SIGNUP
     }
     
+    
+    // 11/4/22 V
     func clearAllUIElements() {
         emailFormView.resetElements()
         passwordFormView.resetElements()
         reenterPasswordFormView.resetElements()
     }
     
-    
+    // 11/4/22 V
     func signupNewUser() {
-        startLoadingScreen()
-        
+        startLoadingAnimation()
         let currentPassword = passwordFormView.textField.text, passwordReenter = passwordFormView.textField.text
         if currentPassword != passwordReenter {
             reenterPasswordFormView.displayWarning()
-            stopLoadingScreen()
+            stopLoadingAnimation()
         } else {
             let currentEmail = emailFormView.textField.text
             viewModel.validateSignUpFields(email: currentEmail, password: currentPassword, passwordAgain: passwordReenter) { error, status in
                 if !status {
-                    print(error!)
-                    self.stopLoadingScreen()
+                    print("Issue with text fields inputs - \(error!)")
+                    self.stopLoadingAnimation()
                 } else {
-                    print("Validated fields. Call VM signUserToApp")
                     self.viewModel.signUserToApp(email: currentEmail!, password: currentPassword!) { error in
                         if let error = error {
-                            print(error)
-                            self.stopLoadingScreen()
+                            print("Couldn't signup - \(error)")
+                            self.stopLoadingAnimation()
                         } else {
-                            print("ALL WENT SMOOTHLY")
                             self.clearAllUIElements()
-                            self.stopLoadingScreen()
+                            self.stopLoadingAnimation()
                             self.navigateIntoApp()
                         }
                     }
@@ -128,45 +145,56 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         }
     }
     
+    
+    // 11/4/22 V
     func loginExistingUser() {
-        startLoadingScreen()
-        
+        startLoadingAnimation()
         let email = emailFormView.textField.text, password = passwordFormView.textField.text
         var legitEmail = true, legitPassword = true
+        
         if !viewModel.isValidEmailAddress(email: email ?? "") {
             emailFormView.displayWarning()
             legitEmail = false
         }
         if password == nil {
             passwordFormView.displayWarning()
+            legitPassword = false
         }
 
         if legitEmail && legitPassword {
             viewModel.logUserToApp(email: email!, password: password!) { error in
                 if let error = error {
-                    print(error)
+                    print("Couldn't sign in - \(error)")
                 } else {
                     self.clearAllUIElements()
                     self.navigateIntoApp()
                 }
+                self.stopLoadingAnimation()
             }
+        } else {
+            stopLoadingAnimation()
         }
-        stopLoadingScreen()
     }
     
+    
+    // 11/4/22 V
     func navigateIntoApp() {
         let homepage = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MyTabBarController")
         self.present(homepage, animated: true, completion: nil)
     }
     
-    func startLoadingScreen() {
+    
+    // 11/4/22 V
+    func startLoadingAnimation() {
         DispatchQueue.main.async {
             self.loadingView.isHidden = false
             self.loadingView.loadIndicator.startAnimating()
         }
     }
     
-    func stopLoadingScreen() {
+    
+    // 11/4/22 V
+    func stopLoadingAnimation() {
         DispatchQueue.main.async {
             self.loadingView.loadIndicator.stopAnimating()
             self.loadingView.isHidden = true
@@ -177,9 +205,12 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
 
 // MARK: - FormInputViewDelegate
 extension AuthViewController: FormInputViewDelegate {
+    
+    // 11/4/22 V
     func textFieldDidChange(textFieldId: String, currentText: String?) {
+        
         if currentPageType == .signup {
-            if textFieldId == "email" {
+            if textFieldId == Constants.TextFieldsIDs.EMAIL {
                 if currentText != nil && currentText!.count > 5 {
                     if !viewModel.isValidEmailAddress(email: currentText!) {
                         emailFormView.displayWarning()
@@ -187,13 +218,15 @@ extension AuthViewController: FormInputViewDelegate {
                         emailFormView.hideWarning()
                     }
                 }
-            } else if textFieldId == "password" {
+                
+            } else if textFieldId == Constants.TextFieldsIDs.PASSWORD {
                 let isPasswordStrong = viewModel.isStrongPassword(password: currentText ?? "")
                 if !isPasswordStrong {
                     passwordFormView.displayWarning()
                 } else {
                     passwordFormView.hideWarning()
                 }
+                
             } else {
                 if currentText != nil && currentText!.count > 5 {
                     if currentText != passwordFormView.textField.text {
@@ -212,6 +245,7 @@ extension AuthViewController: FormInputViewDelegate {
 // MARK: - MainActionButtonDelegate
 extension AuthViewController: MainActionButtonDelegate {
     
+    // 11/4/22 V
     func actionButtonDidPress(btnText: String) {
 
         switch btnText {

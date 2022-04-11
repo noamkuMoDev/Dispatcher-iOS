@@ -29,6 +29,7 @@ class NewsCell: UITableViewCell {
     var articleImageUrl = ""
     var isFavorite: Bool = false
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
 
@@ -45,13 +46,7 @@ class NewsCell: UITableViewCell {
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
     }
     
-    
-    func setCellColorsDesign() {
-        let bgColorView = UIView()
-        bgColorView.backgroundColor = UIColor.clear
-        self.selectedBackgroundView = bgColorView
-    }
-    
+    // 11/4/22 V
     func setCellBorder() {
         entireNewsCell.layer.cornerRadius = 20
         entireNewsCell.layer.borderWidth = 2
@@ -59,12 +54,24 @@ class NewsCell: UITableViewCell {
         entireNewsCell.layer.borderColor = borderColor.cgColor
     }
     
+    
+    // 11/4/22 V
+    func setCellColorsDesign() {
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor.clear
+        self.selectedBackgroundView = bgColorView
+    }
+    
+    
+    // 11/4/22 V
     func setImageRounded() {
         newsImage.clipsToBounds = true
         newsImage.layer.cornerRadius = 10
         newsImage.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
     }
     
+    
+    // 11/4/22 V
     func setTagsRounded() {
         subjectTag.layer.cornerRadius = subjectTag.frame.size.height / 2
         subjectTag.clipsToBounds = true
@@ -72,6 +79,8 @@ class NewsCell: UITableViewCell {
         moreSubjectsTag.clipsToBounds = true
     }
     
+    
+    // 11/4/22 V
     func setGestureRecognizer() {
         favoriteIcon.addGestureRecognizer(UITapGestureRecognizer(target: favoriteIcon, action: #selector(favoriteIconPressed)))
         favoriteIcon.isUserInteractionEnabled = true
@@ -79,9 +88,10 @@ class NewsCell: UITableViewCell {
         favoriteIcon.addGestureRecognizer(tapGestureRecognizer)
     }
     
+    
+    // 11/4/22 V
     @objc func favoriteIconPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         let currentArticle = Article(id: articleID, articleTitle: titleLabel.text!, date: dateLabel.text ?? "", url: articleUrl, content: summaryLabel.text!, author: authorLabel.text ?? "", topic: subjectTag.currentTitle!, imageUrl: articleImageUrl , isFavorite: isFavorite)
-
         delegate?.favoriteIconDidPress(forArticle: currentArticle)
     }
 }

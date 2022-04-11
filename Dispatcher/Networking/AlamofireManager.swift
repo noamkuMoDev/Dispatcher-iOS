@@ -21,7 +21,7 @@ class AlamofireManager: NSObject {
     }
     
     
-    
+    // 11/4/22 V
     func executeGetQuery<T>(completionHandler: @escaping (Result<T, Error>, String?) -> Void) where T: Codable {
         AF.request(url, method: .get, headers: headers).responseData(completionHandler: { response in
             do {
@@ -29,13 +29,14 @@ class AlamofireManager: NSObject {
                 case .success:
                     completionHandler(.success(try JSONDecoder().decode(T.self, from: response.data ?? Data())), nil)
                 case .failure(let error):
-                    completionHandler(.failure(error), "couldn't fetch data")
+                    completionHandler(.failure(error), "Alamofire couldn't get the data from api")
                 }
             } catch let error {
-                completionHandler(.failure(error), "failed fetching")
+                completionHandler(.failure(error), "Alamofire failed fetching action")
             }
         })
     }
+    
     
     func executePostQuery<T>(completion: @escaping (Result<T, Error>) -> Void) where T: Codable {
         AF.request(url, method: .post, parameters: parameters, encoding: encoding, headers: headers).responseData(completionHandler: { response in

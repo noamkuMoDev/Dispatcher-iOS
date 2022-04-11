@@ -19,17 +19,17 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
         initiateUIElements()
         checkUserSettingsPreferences()
         viewModel.getSavedArticles() {
-            self.fetchInitialResults()
+            self.fetchInitialNewsResults()
         }
     }
     
+    // 11/4/22 V
     func defineNotificationCenterListeners() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.favoritesToHomepage), object: nil)
     }
     
+    // 11/4/22 V
     @objc func refreshTableViewContent(_ notification: NSNotification) {
-        print(notification.userInfo!["articleID"] as! String)
-        print("notification reached homepage")
         viewModel.updateArticleToNotFavoriteLocally(articleID: notification.userInfo!["articleID"] as! String)
         DispatchQueue.main.async {
             self.dataSource.models = self.viewModel.newsArray
@@ -37,12 +37,14 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
         }
     }
     
+    // 11/4/22 V
     func initiateUIElements() {
         customHeader.initView(delegate: self, apperanceType: .fullAppearance)
         loadingView.initView(delegate: self)
         setupTableView()
     }
     
+    // 11/4/22 V
     func setupTableView() {
         tableView.register(UINib(nibName: Constants.NibNames.HOMEPAGE, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE)
         self.dataSource = TableViewDataSourceManager(
@@ -78,27 +80,26 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
         tableView.delegate = self
     }
 
-    
+    // 11/4/22 V
     func checkUserSettingsPreferences() {
         print("SAVE_FILTERS app setting is: \(viewModel.getUserAppSetting(of: Constants.UserDefaults.SAVE_FILTERS))")
         print("SEND_NOTIFICATIONS app setting is: \(viewModel.getUserAppSetting(of: Constants.UserDefaults.SEND_NOTIFICATIONS))")
-        print("SAVE_SEARCH_RESULTS app setting is: \(viewModel.getUserAppSetting(of: Constants.UserDefaults.SAVE_SEARCH_RESULTS))")
     }
     
-    
-    @objc func fetchInitialResults() {
+    // 11/4/22 V
+    @objc func fetchInitialNewsResults() {
         DispatchQueue.main.async {
             self.loadingView.isHidden = false
             self.loadingView.loadIndicator.startAnimating()
         }
         viewModel.fetchNewsFromAPI(pageSizeToFetch: .articlesList) { error in
-            if error == nil {
+            if let error = error {
+                print("Error fetching News: \(error)")
+            } else {
                 DispatchQueue.main.async {
                     self.dataSource.models = self.viewModel.newsArray
                     self.tableView.reloadData()
                 }
-            } else {
-                print(error!)
             }
             DispatchQueue.main.async {
                 self.loadingView.loadIndicator.stopAnimating()
@@ -107,7 +108,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
         }
     }
 
-    
+    // 11/4/22 V
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
@@ -119,10 +120,12 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
 
 extension HomepageViewController: CustomHeaderViewDelegate {
     
+    // 11/4/22 V
     func notificationsButtonPressed() {
         self.performSegue(withIdentifier: Constants.Segues.HOMEPAGE_TO_NOTIFICATIONS, sender: self)
     }
     
+    // 11/4/22 V
     func searchButtonPressed() {
         self.performSegue(withIdentifier: Constants.Segues.HOMEPAGE_TO_SEARCH, sender: self)
     }
@@ -133,6 +136,7 @@ extension HomepageViewController: CustomHeaderViewDelegate {
 
 extension HomepageViewController: UIScrollViewDelegate {
     
+    // 11/4/22 V
     func createSpinnerFooter() -> UIView {
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
         let spinner = UIActivityIndicatorView()
@@ -143,21 +147,21 @@ extension HomepageViewController: UIScrollViewDelegate {
         return footerView
     }
     
+    // 11/4/22 V
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         let position = scrollView.contentOffset.y
         if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) && !isPaginating {
             
             isPaginating = true
             viewModel.fetchNewsFromAPI(pageSizeToFetch: .articlesList) { error in
-                if error == nil {
+                if let error = error {
+                    print(error)
+                } else {
                     self.dataSource.models = self.viewModel.newsArray
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                         self.tableView.tableFooterView = nil
                     }
-                } else {
-                    print(error!)
                 }
                 self.isPaginating = false
             }
@@ -170,51 +174,25 @@ extension HomepageViewController: UIScrollViewDelegate {
 
 extension HomepageViewController: NewsCellDelegate {
     
+    // 11/4/22 V
     func favoriteIconDidPress(forArticle article: Article) {
         if article.isFavorite {
-            viewModel.removeArticleFromFavorites(articleID: article.id) { error in
-                if let error = error {
-                    print(error)
-                } else {
-                    DispatchQueue.main.async {
-                        self.dataSource.models = self.viewModel.newsArray
-                        self.tableView.reloadData()
-                    }
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.homepageToFavorites), object: nil)
-                }
-            }
+            viewModel.removeArticleFromFavorites(articleID: article.id, completionHandler: handleFavoritesUpdate)
         } else {
-            viewModel.addArticleToFavorites(article) { error in
-                if let error = error {
-                    print(error)
-                } else {
-                    DispatchQueue.main.async {
-                        self.dataSource.models = self.viewModel.newsArray
-                        self.tableView.reloadData()
-                    }
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.homepageToFavorites), object: nil)
-                }
-            }
+            viewModel.addArticleToFavorites(article, completionHandler: handleFavoritesUpdate)
         }
     }
-}
-
-
-// MARK: - UIImage Extension to use URL
-
-extension UIImage {
-
-    public static func loadFrom(url: URL, completion: @escaping (_ image: UIImage?) -> ()) {
-        DispatchQueue.global().async {
-            if let data = try? Data(contentsOf: url) {
-                DispatchQueue.main.async {
-                    completion(UIImage(data: data))
-                }
-            } else {
-                DispatchQueue.main.async {
-                    completion(nil)
-                }
+    
+    // 11/4/22 V
+    func handleFavoritesUpdate(error: String?) {
+        if let error = error {
+            print(error)
+        } else {
+            DispatchQueue.main.async {
+                self.dataSource.models = self.viewModel.newsArray
+                self.tableView.reloadData()
             }
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.homepageToFavorites), object: nil)
         }
     }
 }

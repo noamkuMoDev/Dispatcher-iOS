@@ -4,30 +4,33 @@ class BaseArticlesViewModel {
     
     private let repository = BaseArticlesRepository()
     
-    private var currentPaginationPage = 1
-    private var totalPaginationPages = 1
-    
     var savedArticles: [String:FavoriteArticle] = [:]
     var newsArray: [Article] = []
     
+    private var currentPaginationPage = 1
+    private var totalPaginationPages = 1
     
+    
+    // 11/4/22 V
     func fetchNewsFromAPI(searchWords: String = "news", pageSizeToFetch: PageSizeForFetching, completionHandler: @escaping (String?) -> ()) {
-        
-        repository.fetchNewsFromAPI(searchWords: searchWords, pageSizeType: pageSizeToFetch, savedArticles: savedArticles, currentPage: currentPaginationPage) { articles, totalPages, statusMsg in
-            if statusMsg == nil {
+        repository.fetchNewsFromAPI(searchWords: searchWords, pageSizeType: pageSizeToFetch, savedArticles: savedArticles, currentPage: currentPaginationPage) {
+            articles, totalPages, statusMsg in
+            
+            if let statusMsg = statusMsg {
+                self.newsArray = []
+                completionHandler(statusMsg)
+            } else {
                 self.currentPaginationPage += 1
                 if let totalPages = totalPages {
                     self.totalPaginationPages = totalPages
                 }
                 self.newsArray.append(contentsOf: articles!)
                 completionHandler(nil)
-            } else {
-                completionHandler(statusMsg)
             }
         }
     }
     
-    
+    // 11/4/22 V
     func getSavedArticles(completionHandler: @escaping () -> ()) {
         repository.getSavedArticles() { articlesArray in
             self.savedArticles = articlesArray
@@ -35,19 +38,17 @@ class BaseArticlesViewModel {
         }
     }
     
-    
+    // 11/4/22 V
     func getUserAppSetting(of settingName: String) -> SwitchStatus {
         return repository.getUserAppSetting(of: settingName)
     }
     
-    
+    // 11/4/22 V
     func addArticleToFavorites(_ article: Article, completionHandler: @escaping (String?) -> ()) {
-        // update CoreData & Firestore
         repository.saveArticleToFavorites(article) { error, newFavorite in
             if let error = error {
                 completionHandler(error)
             } else {
-                //add to local favorites array & newsArray
                 self.savedArticles[article.id] = newFavorite
                 if let index = self.newsArray.firstIndex(where: { $0.id == article.id }) {
                     self.newsArray[index].isFavorite = true
@@ -57,14 +58,12 @@ class BaseArticlesViewModel {
         }
     }
     
-    
+    // 11/4/22 V
     func removeArticleFromFavorites(articleID: String, completionHandler: @escaping (String?) -> ()) {
-        // remove from CoreData & Firestore
         repository.removeArticleFromFavorites(withID: articleID, from: savedArticles.map({$0.value})) { error in
             if let error = error {
                 completionHandler(error)
             } else {
-                // remove from local favorites & newsArray
                 self.updateArticleToNotFavoriteLocally(articleID: articleID)
                 completionHandler(nil)
             }
@@ -72,17 +71,11 @@ class BaseArticlesViewModel {
     }
     
     
+    // 11/4/22 V
     func updateArticleToNotFavoriteLocally(articleID: String) {
         self.savedArticles[articleID] = nil
         if let index = self.newsArray.firstIndex(where: {$0.id == articleID}) {
             self.newsArray[index].isFavorite = false
         }
     }
-    
-    func updateArticleIntoFavoritesLocally() {
-        
-    }
-    
-    
-    
 }

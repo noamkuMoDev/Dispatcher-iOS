@@ -7,43 +7,49 @@ enum userType {
 
 class AuthRepository {
     
-    let firebaseAuthManager = FirebaseAuthManager()
-    let firestoreManager = FirestoreManager()
     let keychainManager = KeychainManager()
     let userDefaultsManager = UserDefaultsManager()
+    let firebaseAuthManager = FirebaseAuthManager()
+    let firestoreManager = FirestoreManager()
     
-    // LOGIN FLOW - V
+    
+    // 11/4/22 V
     func checkIfLoggedIn() -> userType {
-        print("Auth REPOSITORY - trying to read from KEYCHAIN")
         do {
             _ = try keychainManager.fetchFromKeychain(
                 service: Constants.Keychain.SERVICE,
                 account: Constants.Keychain.ACCOUNT_USER_EMAIL,
                 secClass: kSecClassGenericPassword as String
             )
-            print("KEYCHAIN WORKED, calling FIREBASE to check if login")
             if firebaseAuthManager.isUserLoggedIn() {
-                print("firebase auth confirmed login")
                 return .loggedIn
             }
-        } catch { // can't find email in keychain
-            print(error)
+        } catch (let error) {
+            print("couldn't find email in keychain: \(error)")
         }
         return .loggedOut
     }
     
     
-    // LOGIN FLOW - V
+    // 11/4/22 V   // FETCH & SAVE MORE THINGS ????
     func fetchCurrentUserDetails(completionHandler: @escaping (String?) -> ()) {
         let uid = firebaseAuthManager.getCurrentUserUID()
         if uid != nil {
-            firestoreManager.fetchCurrentUserDetails(uid: uid!) { error, data in
+            let docPath = "\(Constants.Firestore.USERS_COLLECTION)/\(uid!)"
+            firestoreManager.fetchDocumentFromFirestore(documentPath: docPath) { error, data in
                 if let error = error {
-                    completionHandler(error)
+                    completionHandler("Error fetching user data from firestore: \(error)")
                 } else {
                     self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.CURRENT_USER_NAME, data: data!["name"])
+                    self.saveDefaultAppSettingsToUserDefaults()
+                    // FETCH & SAVE MORE THINGS ????
+                    
                     self.saveUserEmailToKeychain(data!["email"] as! String) { error in
-                        completionHandler(error)
+                        if let error = error {
+                            completionHandler("Error saving email to keychain: \(error)")
+                        } else {
+                            completionHandler(nil)
+                        }
                     }
                 }
             }
@@ -53,9 +59,9 @@ class AuthRepository {
     }
     
     
-    // LOGIN FLOW - V
+    // 11/4/22 V
     func logUserToApp(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
-        
+
         firebaseAuthManager.loginUser(email: email, password: password) { error in
             var errorDescription = ""
             if let error = error {
@@ -66,34 +72,42 @@ class AuthRepository {
                 } else {
                     errorDescription = error
                 }
-                completionHandler("Unexpected error: \(errorDescription)")
+                completionHandler("Unexpected error signing in: \(errorDescription)")
             } else {
                 self.fetchCurrentUserDetails() { error in
-                    self.saveDefaultAppSettingsToUserDefaults()
-                    completionHandler(error)
+                    if let error = error {
+                        completionHandler("Error fetching user details: \(error)")
+                    } else {
+                        completionHandler(error)
+                    }
                 }
             }
         }
     }
     
     
-    // SIGNUP FLOW - V
+    // 11/4/22 V
     func signUserToApp(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
         firebaseAuthManager.signupUser(email: email, password: password) {error, userName, userUID in
-            if let error = error { // something went wrong
-                completionHandler(error)
+            if let error = error {
+                completionHandler("Error signing up to firebase: \(error)")
             } else {
-                self.saveDefaultAppSettingsToUserDefaults()
                 self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.CURRENT_USER_UID, data: userUID)
                 self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.CURRENT_USER_NAME, data: userName)
+                self.saveDefaultAppSettingsToUserDefaults()
                 self.saveUserEmailToKeychain(email) { error in
-                    completionHandler(error)
+                    if let error = error {
+                        completionHandler("Error saving email to keychain: \(error)")
+                    } else {
+                        completionHandler(nil)
+                    }
                 }
             }
         }
     }
     
     
+    // 11/4/22 V
     func isValidEmailAddress(_ email: String) -> Bool {
         var isValidEmail = true
         let emailRegex = "[A-Z0-9a-z.-_]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}"
@@ -110,12 +124,12 @@ class AuthRepository {
             print("invalid regex: \(error.localizedDescription)")
             isValidEmail = false
         }
-        
         return  isValidEmail
     }
     
+    
+    // 11/4/22 V
     func isStrongPassword(_ password: String) -> Bool {
-        
         var isStrongPassword = true
         //Minimum 8 characters - at least 1 Uppercase, 1 Lowercase, 1 Number, 1 Special Character
         let strongPasswoedRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[d$@$!%*?&#])[A-Za-z\\dd$@$!%*?&#]{8,}"
@@ -132,11 +146,11 @@ class AuthRepository {
             print("invalid regex: \(error.localizedDescription)")
             isStrongPassword = false
         }
-        
         return  isStrongPassword
     }
     
-    // V
+    
+    // 11/4/22 V
     private func saveUserEmailToKeychain(_ email: String, completionHandler: @escaping (String?) -> ()) {
         do {
             try self.keychainManager.addToKeychain(
@@ -152,7 +166,8 @@ class AuthRepository {
         }
     }
     
-    // LOGIN & SIGNUP FLOW - V
+    
+    // 11/4/22 V
     private func saveDefaultAppSettingsToUserDefaults() {
         self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.SAVE_FILTERS, data: 1)
         self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.SEND_NOTIFICATIONS, data: 1)

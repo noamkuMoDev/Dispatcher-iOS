@@ -9,10 +9,13 @@ enum PageSizeForFetching {
 class BaseArticlesRepository {
     
     let userDefaultsManager = UserDefaultsManager()
-    let coreDataManager = CoreDataManager()
+    let coreDataManager = FavoriteArticleCoreDataManager()
     let firestoreManager = FirestoreManager()
+    let firebaseAuthManager = FirebaseAuthManager()
     
-    func fetchNewsFromAPI(searchWords: String, pageSizeType: PageSizeForFetching, savedArticles:[String:FavoriteArticle], currentPage: Int, completionHandler: @escaping ([Article]?,Int?, String?) -> ()) {
+    
+    // 11/4/22 V
+    func fetchNewsFromAPI(searchWords: String, pageSizeType: PageSizeForFetching, savedArticles: [String:FavoriteArticle], currentPage: Int, completionHandler: @escaping ([Article]?, Int?, String?) -> ()) {
         var pageSize: Int
         switch pageSizeType {
         case .articlesList:
@@ -21,7 +24,7 @@ class BaseArticlesRepository {
             pageSize = Constants.pageSizeToFetch.SAVED_ARTICLES
         }
         
-        let url: String = "\(Constants.apiCalls.NEWS_URL)?q=\(searchWords)&page_size=\(pageSize)&page=\(currentPage)"
+        let url = "\(Constants.apiCalls.NEWS_URL)?q=\(searchWords)&page_size=\(pageSize)&page=\(currentPage)"
         let alamofireQuery = AlamofireManager(from: url)
             alamofireQuery.executeGetQuery() {
                 ( response: Result<ArticleApiObject,Error>, statusMsg ) in
@@ -31,7 +34,6 @@ class BaseArticlesRepository {
                     var articles: [Article] = []
                     for article in dataResult.articles {
                         var article = Article(id: article.id, articleTitle: article.articleTitle, date: article.date, url: article.url, content: article.content, author: article.author, topic: article.topic, imageUrl: article.imageUrl, isFavorite: false)
-                        
                         if savedArticles[article.id] != nil {
                             article.isFavorite = true
                         }
@@ -46,32 +48,48 @@ class BaseArticlesRepository {
     }
     
 
+    // 11/4/22 V
     func getSavedArticles(completionHandler: @escaping ([String:FavoriteArticle]) -> ()) {
         
-        // check CoreData for savedArticles
         let favoritesArray = coreDataManager.fetchFavoritesArrayFromCoreData()
-        if favoritesArray.count != 0 { // found
-            var favoritesDictionary: [String:FavoriteArticle] = [:]
-            for article in favoritesArray {
-                favoritesDictionary[article.id!] = article
+        if favoritesArray.count != 0 {
+            let favoritesDictionary = favoritesArray.reduce(into: [String:FavoriteArticle]()) {
+                $0[$1.id!] = $1
             }
             completionHandler(favoritesDictionary)
-        } else { // nothing on CoreData
-            // fetch Firestore
-            let uid = userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.CURRENT_USER_UID)
+            
+        } else {
+            let uid = firebaseAuthManager.getCurrentUserUID()
             if uid == nil {
-                print("Couldn't get current user uid to fetch saved articles")
+                print("Error - Couldn't get current user's uid")
                 completionHandler([:])
             } else {
-                firestoreManager.fetchUserDataCollection(uid: uid as! String) { error, savedArticles in
+                let colPath = "\(Constants.Firestore.USERS_COLLECTION)/\(uid!)/\(Constants.Firestore.FAVORITES_COLLECTION)"
+                firestoreManager.fetchCollectionDataFromFirestore(collectionPath: colPath) { error, dataDictionary in
                     if error != nil {
+                        print("Error fetching saved articles from firestore")
                         completionHandler([:])
                     } else {
-                        self.coreDataManager.saveFavoriteArticlesArrayToCoreData(articles: savedArticles!.map({$0.value})) { error in
+                        var savedArticles: [String: FavoriteArticle] = [:]
+                        for item in dataDictionary! as! [String: FavoriteArticle] {
+                            let favoriteArticle = FavoriteArticle(context: (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext)
+                            favoriteArticle.title =  item.value.title
+                            favoriteArticle.isFavorite = item.value.isFavorite
+                            favoriteArticle.author = item.value.author
+                            favoriteArticle.topic = item.value.topic
+                            favoriteArticle.imageUrl = item.value.imageUrl
+                            favoriteArticle.content = item.value.content
+                            favoriteArticle.url = item.value.url
+                            favoriteArticle.date = item.value.date
+                            favoriteArticle.id = item.key
+                            savedArticles[item.key] = favoriteArticle
+                        }
+
+                        self.coreDataManager.saveFavoriteArticlesArrayToCoreData(articles: savedArticles.map({$0.value})) { error in
                             if let error = error {
-                                print("error saving all saved articles to CoreData: \(error)")
+                                print("Error saving all favorites to CoreData: \(error)")
                             }
-                            completionHandler(savedArticles!)
+                            completionHandler(savedArticles)
                         }
                     }
                 }
@@ -80,59 +98,65 @@ class BaseArticlesRepository {
     }
     
     
-    func saveArticleToFavorites(_ article: Article, completionHandler: @escaping (String?,FavoriteArticle?) -> ()) {
-        // add to CoreData
-        coreDataManager.saveArticleToCoreData(article: article) { (error, favoriteArticle) in
+    // 11/4/22 V
+    func saveArticleToFavorites(_ article: Article, completionHandler: @escaping (String?, FavoriteArticle?) -> ()) {
+
+        coreDataManager.saveArticleToCoreData(article) { error, favoriteArticle in
             if let error = error {
-                completionHandler(error, nil)
+                completionHandler("Error saving article to CoreData: \(error)", nil)
             } else {
-                // add to Firestore
-                let uid = self.userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.CURRENT_USER_UID)
+                let uid = self.firebaseAuthManager.getCurrentUserUID()
                 if uid != nil {
-                    self.firestoreManager.saveDataIntoCollection(uid: uid as! String, data: favoriteArticle!) { error in
+                    let dataDict: [String: Any] = [
+                        "author" : article.author ?? "", "content" : article.content,
+                        "date" : article.date, "imageUrl": article.imageUrl ?? "",
+                        "isFavorite" : true, "title" : article.articleTitle,
+                        "topic" : article.topic, "url" : article.url
+                    ]
+                    let colPath = "\(Constants.Firestore.USERS_COLLECTION)/\(uid!)/\(Constants.Firestore.FAVORITES_COLLECTION)"
+                    
+                    self.firestoreManager.saveDocumentToFirestore(collectionPath: colPath, customID: article.id, dataDictionary: dataDict) { error in
                         if let error = error {
-                            completionHandler("error saving into user's collection in firestore: \(error)",nil)
+                            completionHandler("Error saving into user's favorites in firestore: \(error)", nil)
                         } else {
-                            // update local arrays
                             completionHandler(nil, favoriteArticle)
                         }
                     }
                 } else {
-                    completionHandler("couldn't get user uid",nil)
+                    completionHandler("Couldn't get current user's uid", nil)
                 }
             }
         }
     }
     
     
+    // 11/4/22 V
     func removeArticleFromFavorites(withID articleID: String, from savedArticles: [FavoriteArticle], completionHandler: @escaping (String?) -> ()) {
-        // remove from CoreData
-        coreDataManager.deleteFromCoreData(removeID: articleID, savedArticles: savedArticles) { error in
+        
+        coreDataManager.deleteFromCoreData(removeID: articleID, fromArray: savedArticles) { error in
             if let error = error {
-                completionHandler(error)
+                completionHandler("Error removing from CoreData: \(error)")
             } else {
-                // remove from Firestore
-                let uid = self.userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.CURRENT_USER_UID)
+                let uid = self.firebaseAuthManager.getCurrentUserUID()
                 if uid != nil {
-                    self.firestoreManager.removeDataFromCollection(uid: uid as! String, articleID: articleID) { error in
+                    let docPath = "\(Constants.Firestore.USERS_COLLECTION)/\(uid!)/\(Constants.Firestore.FAVORITES_COLLECTION)/\(articleID)"
+                    self.firestoreManager.removeDataFromCollection(documentPath: docPath) { error in
                         if let error = error {
-                            completionHandler("error removing from firestore: \(error)")
+                            completionHandler("Error removing from firestore: \(error)")
                         } else {
-                            // update local arrays
                             completionHandler(nil)
                         }
                     }
                 } else {
-                    completionHandler("couldn't get user uid")
+                    completionHandler("Couldn't get current user's uid")
                 }
             }
         }
     }
     
     
-
+    // 11/4/22 V
     func getUserAppSetting(of settingName: String) -> SwitchStatus {
-        
         var status: SwitchStatus = .off
         switch settingName {
         case Constants.UserDefaults.SAVE_SEARCH_RESULTS:

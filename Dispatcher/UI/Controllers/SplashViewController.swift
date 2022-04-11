@@ -4,6 +4,7 @@ class SplashViewController: UIViewController {
 
     let viewModel = AuthViewModel()
     
+    // 11/4/22 V
     override func viewDidLoad() {
         super.viewDidLoad()
 

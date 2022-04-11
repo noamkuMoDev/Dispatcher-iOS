@@ -7,24 +7,33 @@ class FirebaseAuthManager {
     let firestoreManager = FirestoreManager()
     let database = Firestore.firestore()
     
+    
+    // 11/4/22 V
+    func isUserLoggedIn() -> Bool {
+        return Auth.auth().currentUser != nil
+    }
+    
+    // 11/4/22 V
     func getCurrentUserUID() -> String? {
         return Auth.auth().currentUser?.uid
     }
     
-    // SIGNUP FLOW - V
+    
+    // 11/4/22 V
     func signupUser(email: String, password: String, completionHandler: @escaping (String?, String?, String?) -> ()) {
-        print("FIREBASE STARTING TO WORK - AUTH")
-        Auth.auth().createUser(withEmail: email, password: password) {
-            authResult, error in
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
-                completionHandler(error.localizedDescription, nil, nil)
+                completionHandler("Failed signing up: \(error.localizedDescription)", nil, nil)
             } else {
-                print("AUTH succedded. Registerign in db")
                 let uid = authResult!.user.uid
-                let userName = email[...email.firstIndex(of: "@")!]
-                self.firestoreManager.saveUserToFirestore(uid: uid, email: email, userName: String(userName)) { error in
+                let userName = String(email.prefix(upTo: email.firstIndex(of: "@")!))
+                let dataDict: [String:Any] = [ "email": email as Any, "name": userName as Any ]
+                let colPath = Constants.Firestore.USERS_COLLECTION
+                
+                self.firestoreManager.saveDocumentToFirestore(collectionPath: colPath, customID: uid, dataDictionary: dataDict) { error in
                     if let error = error {
-                        completionHandler(error, nil, nil)
+                        completionHandler("Error saving registered user to firestore: \(error)", nil, nil)
+                        // TO DO - remove from Firebase Auth ?
                     } else {
                         completionHandler(nil, String(userName), uid)
                     }
@@ -34,13 +43,7 @@ class FirebaseAuthManager {
     }
     
     
-    // LOGIN FLOW - V
-    func isUserLoggedIn() -> Bool {
-        return Auth.auth().currentUser != nil
-    }
-    
-    
-    // LOGIN FLOW - V
+    // 11/4/22 V
     func loginUser(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if let error = error {
@@ -52,7 +55,7 @@ class FirebaseAuthManager {
     }
     
     
-    // LOGUOT FLOW - V
+    // 11/4/22 V
     func logoutUser(completionHandler: @escaping (String?) -> ()) {
         do {
             try Auth.auth().signOut()

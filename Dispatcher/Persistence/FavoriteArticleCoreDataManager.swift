@@ -1,25 +1,32 @@
 import UIKit
 import CoreData
 
-class CoreDataManager {
+class FavoriteArticleCoreDataManager {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-
-    func saveArticleToCoreData(article: Article, completionHandler: @escaping (String?, FavoriteArticle?) -> ()) {
+    // 11/4/22 V
+    func saveArticleToCoreData(_ article: Article, completionHandler: @escaping (String?, FavoriteArticle?) -> ()) {
         let favorite = adaptArticleToFavoriteArticle(article)
         if let error = saveCoreDataChanges() {
-            completionHandler(error,nil)
+            completionHandler(error, nil)
         } else {
-            completionHandler(nil,favorite)
+            completionHandler(nil, favorite)
         }
     }
     
+    
+    // 11/4/22 V
     func saveFavoriteArticlesArrayToCoreData(articles: [FavoriteArticle], completionHandler: @escaping (String?) -> ()) {
-        let error = saveCoreDataChanges()
-        completionHandler(error)
+        if let error = saveCoreDataChanges() {
+            completionHandler(error)
+        } else {
+            completionHandler(nil)
+        }
     }
     
+    
+    // 11/4/22 V
     func fetchFavoritesArrayFromCoreData() -> [FavoriteArticle] {
         
         let request: NSFetchRequest<FavoriteArticle> = FavoriteArticle.fetchRequest()
@@ -33,11 +40,12 @@ class CoreDataManager {
     }
     
     
-    func deleteFromCoreData(removeID: String, savedArticles: [FavoriteArticle], completionHandler: @escaping (String?) -> ()) {
+    // 11/4/22 V
+    func deleteFromCoreData(removeID: String, fromArray savedArticles: [FavoriteArticle], completionHandler: @escaping (String?) -> ()) {
 
         var index: Int = -1
-        for (i,item) in savedArticles.enumerated() {
-            if item.id == removeID {
+        for (i,article) in savedArticles.enumerated() {
+            if article.id == removeID {
                 index = i
             }
         }
@@ -46,16 +54,15 @@ class CoreDataManager {
             if let error = saveCoreDataChanges() {
                 completionHandler(error)
             } else {
-                // remove from the local array !!
                 completionHandler(nil)
             }
         } else {
-            completionHandler("couldn't find article id in saved articles array")
+            completionHandler("Couldn't find article id in saved articles array")
         }
     }
     
     
-    
+    // 11/4/22 V
     private func saveCoreDataChanges() -> String? {
         do {
             try context.save()
@@ -66,6 +73,7 @@ class CoreDataManager {
     }
     
     
+    // 11/4/22 V
     private func adaptArticleToFavoriteArticle(_ article: Article) -> FavoriteArticle {
         
         let favoriteArticle = FavoriteArticle(context: context)
@@ -83,20 +91,23 @@ class CoreDataManager {
     }
     
     
+    // 11/4/22 V
     func clearCoreDataMemory() {
         let entities = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.managedObjectModel.entities
         for entity in entities {
             delete(entityName: entity.name!)
         }
     }
-  
-     func delete(entityName: String) {
-         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-         do {
-             try (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext.execute(deleteRequest)
-         } catch let error as NSError {
-             debugPrint(error)
-         }
-     }
+    
+    
+    // 11/4/22 V
+    private func delete(entityName: String) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        do {
+            try (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext.execute(deleteRequest)
+        } catch let error as NSError {
+            debugPrint(error)
+        }
+    }
 }

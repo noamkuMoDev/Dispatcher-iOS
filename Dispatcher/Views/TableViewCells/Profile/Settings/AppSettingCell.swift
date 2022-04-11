@@ -12,6 +12,7 @@ class AppSettingCell: UITableViewCell {
     
     var delegate: AppSettingCellDelegate?
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -23,13 +24,9 @@ class AppSettingCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
+
     
-    func setCellColorDesign() {
-        let bgColorView = UIView()
-        bgColorView.backgroundColor = UIColor.clear
-        self.selectedBackgroundView = bgColorView
-    }
-    
+    // 11/4/22 V
     func setTextLineSpacing() {
         let attributedString = NSMutableAttributedString(string: settingDescription.text!)
         let paragraphStyle = NSMutableParagraphStyle()
@@ -38,6 +35,16 @@ class AppSettingCell: UITableViewCell {
         settingDescription.attributedText = attributedString
     }
     
+    
+    // 11/4/22 V
+    func setCellColorDesign() {
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor.clear
+        self.selectedBackgroundView = bgColorView
+    }
+    
+    
+    // 11/4/22 V
     func setGestureRecognizer() {
         settingSwitchImageView.addGestureRecognizer(UITapGestureRecognizer(target: settingSwitchImageView, action: #selector(switchWasPressed)))
         settingSwitchImageView.isUserInteractionEnabled = true
@@ -45,6 +52,8 @@ class AppSettingCell: UITableViewCell {
         settingSwitchImageView.addGestureRecognizer(tapGestureRecognizer)
     }
     
+    
+    // 11/4/22 V
     @objc func switchWasPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.settingCellDidPress(settingText: settingTitle.text!)
     }
