@@ -4,7 +4,7 @@ class AuthViewModel {
     
     let repository = AuthRepository()
     
-    
+
     func checkIfLoggedIn() -> userType {
         if repository.checkIfLoggedIn() == .loggedIn {
             repository.fetchCurrentUserDetails() { error in

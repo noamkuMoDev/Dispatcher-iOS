@@ -1,7 +1,7 @@
 import UIKit
 
 protocol FormInputViewDelegate {
-    func textFieldDidChange(textFieldId: String, currentText: String?)
+    func textFieldDidChange(inputView: FormInputView, textFieldId: String, currentText: String?)
 }
 
 
@@ -23,7 +23,7 @@ class FormInputView: UIView {
     var eyeIconStatus: eyeIconStatus = .conseal
     
     
-    func initView(id: String, delegate: FormInputViewDelegate? = nil, labelText: String = "", placeholderText: String = "", showIcon: Bool = false) {
+    func initView(id: String, delegate: FormInputViewDelegate? = nil, labelText: String = "", placeholderText: String = "", hideIcon: Bool = true) {
         
         commonInit()
         
@@ -33,7 +33,7 @@ class FormInputView: UIView {
         }
         textField.placeholder = placeholderText
         textField.addTarget(self, action: #selector(FormInputView.textFieldDidChange(_:)), for: .editingChanged)
-        textfieldIcon.isHidden = showIcon
+        textfieldIcon.isHidden = hideIcon
         warningLabel.text = labelText
         warningLabel.isHidden = true
     }
@@ -81,17 +81,31 @@ class FormInputView: UIView {
     
 
     func displayWarning() {
+        print("displayWarning from FormInput")
         textField.layer.borderWidth = 1.0
         warningLabel.isHidden = false
     }
     
-
     func hideWarning() {
+        if id != Constants.TextFieldsIDs.NAME && id != Constants.TextFieldsIDs.USRE_EMAIL {
+            textField.layer.borderWidth = 0.0
+        }
+        warningLabel.isHidden = true
+    }
+
+    
+    func displayEditMode() {
+        textField.layer.borderWidth = 1.0
+        textField.layer.borderColor = UIColor.black.cgColor
+    }
+    
+    // XXXXXXX same as hideWarning
+    func dismissEditMode() {
         textField.layer.borderWidth = 0.0
         warningLabel.isHidden = true
     }
     
-
+    
     func resetElements() {
         eyeIconStatus = .conseal
         textfieldIcon.image = UIImage(named: "eye-icon-conseal")
@@ -108,10 +122,11 @@ class FormInputView: UIView {
 extension FormInputView: UITextFieldDelegate {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
-        if textField.text == "" {
+        
+        if textField.text == "" && id != Constants.TextFieldsIDs.NAME && id != Constants.TextFieldsIDs.USRE_EMAIL {
             hideWarning()
         } else {
-            delegate?.textFieldDidChange(textFieldId: id , currentText: textField.text)
+            delegate?.textFieldDidChange(inputView: self, textFieldId: id, currentText: textField.text)
         }
     }
     

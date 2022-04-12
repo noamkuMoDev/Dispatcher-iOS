@@ -60,4 +60,11 @@ class FirebaseAuthManager {
             completionHandler(error.localizedDescription)
         }
     }
+    
+    
+    func updateUserEmail(to email: String, completionHandler: @escaping (String?) -> ()) {
+        Auth.auth().currentUser?.updateEmail(to: email) { error in
+            completionHandler(error?.localizedDescription)
+        }
+    }
 }

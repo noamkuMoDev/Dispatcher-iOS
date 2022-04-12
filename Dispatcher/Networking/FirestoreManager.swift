@@ -34,17 +34,29 @@ class FirestoreManager {
     
 
     func fetchCollectionDataFromFirestore(collectionPath: String, completionHandler: @escaping(String?,[String : Any]?) -> ()) {
-        
         let docRef = database.collection(collectionPath)
         docRef.getDocuments { (querySnapshot, error) in
             if let error = error {
-                completionHandler("Error getting documents: \(error)",nil)
+                completionHandler("Error getting documents: \(error)", nil)
             } else {
                 var resultsDictionary: [String: Any] = [:]
                 for document in querySnapshot!.documents {
                     resultsDictionary[document.documentID] = document.data()
                 }
-                completionHandler(nil,resultsDictionary)
+                completionHandler(nil, resultsDictionary)
+            }
+        }
+    }
+    
+    func updateDocumentInFirestore(docuemntPath: String, property: String, value: Any, completionHandler: @escaping (String?) -> ()) {
+        let docRef = database.document(docuemntPath)
+        docRef.updateData([
+            property: value
+        ]) { error in
+            if let error = error {
+                completionHandler("Error updating document: \(error)")
+            } else {
+                completionHandler(nil)
             }
         }
     }

@@ -18,9 +18,13 @@ struct Constants {
     }
     
     struct TextFieldsIDs {
+        //Signup
         static let EMAIL = "email"
         static let PASSWORD = "password"
         static let PASSWORD_AGAIN = "re-password"
+        //User profile
+        static let NAME = "name"
+        static let USRE_EMAIL = "userEmail"
     }
     
     struct Segues {

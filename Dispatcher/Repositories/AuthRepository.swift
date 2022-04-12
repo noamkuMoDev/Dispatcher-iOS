@@ -29,7 +29,7 @@ class AuthRepository {
         return .loggedOut
     }
     
-    
+
     func fetchCurrentUserDetails(completionHandler: @escaping (String?) -> ()) {
         let uid = firebaseAuthManager.getCurrentUserUID()
         if uid != nil {
@@ -39,6 +39,9 @@ class AuthRepository {
                     completionHandler("Error fetching user data from firestore: \(error)")
                 } else {
                     self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.CURRENT_USER_NAME, data: data!["name"])
+                    if data!["image"] != nil {
+                        self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.CURRENT_USER_IMAGE, data: data!["image"])
+                    }
                     self.saveDefaultAppSettingsToUserDefaults()
                     self.saveUserEmailToKeychain(data!["email"] as! String) { error in
                         if let error = error {
@@ -91,7 +94,7 @@ class AuthRepository {
                 self.saveDefaultAppSettingsToUserDefaults()
                 self.saveUserEmailToKeychain(email) { error in
                     if let error = error {
-                        completionHandler("======== Error saving email to keychain: \(error)")
+                        completionHandler("Error saving email to keychain: \(error)")
                     } else {
                         completionHandler(nil)
                     }

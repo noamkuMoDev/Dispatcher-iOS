@@ -29,6 +29,10 @@
 		4311F62327F9CC5500C28F3C /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F62227F9CC5500C28F3C /* KeychainManager.swift */; };
 		4311F62527FA279C00C28F3C /* SettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4311F62427FA279C00C28F3C /* SettingsRepository.swift */; };
 		433D64282802BF2E002BBE92 /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433D64272802BF2E002BBE92 /* FirestoreManager.swift */; };
+		433D642D280573A2002BBE92 /* ActionPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433D642C280573A2002BBE92 /* ActionPopupView.swift */; };
+		433D642F280573B2002BBE92 /* ActionPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 433D642E280573B2002BBE92 /* ActionPopupView.xib */; };
+		433D643228057D89002BBE92 /* ViewProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433D643128057D89002BBE92 /* ViewProfileViewModel.swift */; };
+		433D643428057E19002BBE92 /* ViewProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433D643328057E19002BBE92 /* ViewProfileRepository.swift */; };
 		437AB14627FB498B002A13F4 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 437AB14427FB498B002A13F4 /* DataModel.xcdatamodeld */; };
 		437AB14827FB4B04002A13F4 /* FavoriteArticleCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AB14727FB4B04002A13F4 /* FavoriteArticleCoreDataManager.swift */; };
 		437AB15828004BC1002A13F4 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AB15728004BC1002A13F4 /* SettingsViewController.swift */; };
@@ -138,6 +142,10 @@
 		4311F62227F9CC5500C28F3C /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		4311F62427FA279C00C28F3C /* SettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRepository.swift; sourceTree = "<group>"; };
 		433D64272802BF2E002BBE92 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
+		433D642C280573A2002BBE92 /* ActionPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionPopupView.swift; sourceTree = "<group>"; };
+		433D642E280573B2002BBE92 /* ActionPopupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActionPopupView.xib; sourceTree = "<group>"; };
+		433D643128057D89002BBE92 /* ViewProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewProfileViewModel.swift; sourceTree = "<group>"; };
+		433D643328057E19002BBE92 /* ViewProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewProfileRepository.swift; sourceTree = "<group>"; };
 		437AB14527FB498B002A13F4 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		437AB14727FB4B04002A13F4 /* FavoriteArticleCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArticleCoreDataManager.swift; sourceTree = "<group>"; };
 		437AB15728004BC1002A13F4 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -244,6 +252,7 @@
 				4311F5EB27EB1D5800C28F3C /* SearchRepository.swift */,
 				4311F61627F31F1300C28F3C /* ProfileRepository.swift */,
 				4311F62427FA279C00C28F3C /* SettingsRepository.swift */,
+				433D643328057E19002BBE92 /* ViewProfileRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -340,6 +349,7 @@
 		4311F5D027E9E5DF00C28F3C /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				433D6430280574F2002BBE92 /* ActionPopups */,
 				4311F61527F31E7200C28F3C /* Forms */,
 				4311F5F727EB332100C28F3C /* Header */,
 				4311F5F927EB335600C28F3C /* Sort By */,
@@ -371,6 +381,7 @@
 			isa = PBXGroup;
 			children = (
 				43C1B5E827D0BCE800AB0D3B /* ViewProfileViewController.swift */,
+				433D643128057D89002BBE92 /* ViewProfileViewModel.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
@@ -506,6 +517,15 @@
 				4311F61327F2F0B700C28F3C /* FormInputView.swift */,
 			);
 			path = Forms;
+			sourceTree = "<group>";
+		};
+		433D6430280574F2002BBE92 /* ActionPopups */ = {
+			isa = PBXGroup;
+			children = (
+				433D642E280573B2002BBE92 /* ActionPopupView.xib */,
+				433D642C280573A2002BBE92 /* ActionPopupView.swift */,
+			);
+			path = ActionPopups;
 			sourceTree = "<group>";
 		};
 		43C1B5C927D0A66500AB0D3B /* fonts */ = {
@@ -782,6 +802,7 @@
 				43C1B66A27DE4EE900AB0D3B /* SettingSectionCell.xib in Resources */,
 				43F08D4A27C7C9C3003FFA7D /* Assets.xcassets in Resources */,
 				43F08D4827C7C9A6003FFA7D /* Main.storyboard in Resources */,
+				433D642F280573B2002BBE92 /* ActionPopupView.xib in Resources */,
 				43C1B64927D9DC6700AB0D3B /* Poppins-SemiBold.ttf in Resources */,
 				43C1B62327D9DB2200AB0D3B /* Roboto-Thin.ttf in Resources */,
 				43C1B62C27D9DB2200AB0D3B /* Roboto-MediumItalic.ttf in Resources */,
@@ -904,6 +925,8 @@
 				43DCB39E27E1FA7500A1A779 /* RecentSearchModel.swift in Sources */,
 				437AB15828004BC1002A13F4 /* SettingsViewController.swift in Sources */,
 				4311F5EC27EB1D5800C28F3C /* SearchRepository.swift in Sources */,
+				433D643228057D89002BBE92 /* ViewProfileViewModel.swift in Sources */,
+				433D643428057E19002BBE92 /* ViewProfileRepository.swift in Sources */,
 				4311F61727F31F1300C28F3C /* ProfileRepository.swift in Sources */,
 				43C1B5ED27D0BF7300AB0D3B /* TextFieldOverride.swift in Sources */,
 				4311F5E827EB130200C28F3C /* ArticleResponse.swift in Sources */,
@@ -912,6 +935,7 @@
 				43C1B60227D24EBD00AB0D3B /* UISupport.swift in Sources */,
 				4311F60A27F056D600C28F3C /* AuthViewModel.swift in Sources */,
 				4311F62327F9CC5500C28F3C /* KeychainManager.swift in Sources */,
+				433D642D280573A2002BBE92 /* ActionPopupView.swift in Sources */,
 				43C1B66527DE379600AB0D3B /* AppSettingCell.swift in Sources */,
 				4311F61427F2F0B700C28F3C /* FormInputView.swift in Sources */,
 				43C1B5F027D0C60000AB0D3B /* SavedArticleCell.swift in Sources */,
@@ -1029,6 +1053,8 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Dispatcher/Supporting Files/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "App needs your permission to take photos";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App needs your premission to choose photos from library";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -1113,6 +1139,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Dispatcher/Supporting Files/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "App needs your permission to take photos";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "App needs your premission to choose photos from library";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
