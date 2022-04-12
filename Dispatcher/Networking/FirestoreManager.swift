@@ -1,12 +1,13 @@
 import Foundation
+import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class FirestoreManager {
-    
+
     let database = Firestore.firestore()
     
-    // 11/4/22 V
+
     func saveDocumentToFirestore(collectionPath: String, customID:String, dataDictionary:[String:Any], completionHandler: @escaping (String?) -> ()) {
         let colRef = database.collection(collectionPath)
         colRef.document(customID).setData(dataDictionary) { error in
@@ -19,7 +20,6 @@ class FirestoreManager {
     }
     
     
-    // 11/4/22 V
     func fetchDocumentFromFirestore(documentPath: String, completionHandler: @escaping (String?, [String : Any]?) -> ()) {
         let docRef = database.document(documentPath)
         docRef.getDocument { (document, error) in
@@ -32,7 +32,7 @@ class FirestoreManager {
         }
     }
     
-    // 11/4/22 V
+
     func fetchCollectionDataFromFirestore(collectionPath: String, completionHandler: @escaping(String?,[String : Any]?) -> ()) {
         
         let docRef = database.collection(collectionPath)
@@ -49,7 +49,7 @@ class FirestoreManager {
         }
     }
     
-    // 11/4/22 V
+
     func removeDataFromCollection(documentPath: String, completionHandler: @escaping(String?) -> ()) {
         let docRef = database.document(documentPath)
         docRef.delete() { error in

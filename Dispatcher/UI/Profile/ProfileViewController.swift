@@ -17,7 +17,7 @@ class ProfileViewController: UIViewController {
         initiateUIElements()
     }
     
-    // 11/4/22 V
+
     func initiateUIElements() {
         addShadowsToHeader()
         setupTableView()
@@ -32,7 +32,6 @@ class ProfileViewController: UIViewController {
     }
     
     
-    // 11/4/22 V
     func addShadowsToHeader() {
         userProfileShadowView.layer.masksToBounds = false
         userProfileShadowView.layer.shadowColor = UIColor.black.cgColor
@@ -42,7 +41,6 @@ class ProfileViewController: UIViewController {
     }
     
     
-    // 11/4/22 V
     func setupTableView() {
         tableView.register(UINib(nibName: Constants.NibNames.PROFILE_OPTION, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.PROFILE_OPTION)
         self.dataSource = TableViewDataSourceManager(
@@ -58,13 +56,11 @@ class ProfileViewController: UIViewController {
     }
     
     
-    // 11/4/22 V
     @IBAction func editProfileButtonPressed(_ sender: Any) {
         self.performSegue(withIdentifier: Constants.Segues.GO_TO_UPDATE_PROFILE, sender: self)
     }
     
     
-    // 11/4/22 V
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
@@ -73,10 +69,8 @@ class ProfileViewController: UIViewController {
 
 
 //MARK: - UITableViewDelegate
-
 extension ProfileViewController: UITableViewDelegate {
     
-    // 11/4/22 V
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         

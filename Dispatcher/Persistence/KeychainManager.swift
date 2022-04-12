@@ -9,7 +9,6 @@ enum KeychainError: Error {
 
 class KeychainManager {
 
-    // 11/4/22 V
     func fetchFromKeychain(service: String, account: String, secClass: String) throws -> Data? {
 
         let query: [String: AnyObject] = [
@@ -37,7 +36,6 @@ class KeychainManager {
     }
     
     
-    // 11/4/22 V
     func addToKeychain(data: Data, service: String, account: String, secClass: String, completionHandler: @escaping () -> ()) throws {
         
         let query: [String: AnyObject] = [
@@ -61,7 +59,6 @@ class KeychainManager {
     }
 
     
-    // 11/4/22 V
     func removeFromKeychain(service: String, account: String, secClass: String, completionHandler: @escaping () -> ()) throws {
         
         let query: [String: AnyObject] = [

@@ -4,13 +4,12 @@ class ProfileRepository: AuthRepository {
     
     let coreDataManager = FavoriteArticleCoreDataManager()
     
-    // 11/4/22 V
+    
     func fetchUserData(with key: String) -> Any? {
         return userDefaultsManager.getFromUserDefaults(key: key)
     }
     
     
-    // 11/4/22 V
     func logoutUserFromApp(completionHandler: @escaping (String?) -> ()) {
         do {
             try keychainManager.removeFromKeychain(

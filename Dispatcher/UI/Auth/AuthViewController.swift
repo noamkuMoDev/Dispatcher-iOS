@@ -32,7 +32,7 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         defineConstraints()
     }
     
-    // 11/4/22 V
+
     func initiateUIElements() {
         
         emailFormView.initView(id: Constants.TextFieldsIDs.EMAIL, delegate: self, labelText: "Invalid email adress", placeholderText: "Your Email", showIcon: true)
@@ -52,20 +52,20 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         }
     }
     
-    // 11/4/22 V
+
     func defineGestureRecognizers() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
     }
     
-    // 11/4/22 V
+
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
         emailFormView.textField.resignFirstResponder()
         passwordFormView.textField.resignFirstResponder()
         reenterPasswordFormView.textField.resignFirstResponder()
     }
 
-    // 11/4/22 V
+
     func setActionButtons() {
         topButton.delegate = self
         bottomButton.delegate = self
@@ -75,7 +75,7 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         bottomButton.entireButton.backgroundColor = UIColor.lightGray
     }
 
-    // 11/4/22 V
+
     func defineConstraints() {
         separatorConstraintSignup = separatorLine.topAnchor.constraint(equalTo: reenterPasswordFormView.bottomAnchor, constant: 25.0)
         separatorConstraintSignup?.isActive = true
@@ -84,7 +84,7 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         separatorConstraintLogin?.isActive = false
     }
 
-    // 11/4/22 V
+
     func setSignupPageLook() {
         clearAllUIElements()
         currentPageType = .signup
@@ -96,7 +96,7 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         bottomButton.buttonLabel.text = Constants.ButtonsText.LOGIN
     }
     
-    // 11/4/22 V
+
     func setLoginPageLook() {
         clearAllUIElements()
         currentPageType = .login
@@ -109,14 +109,13 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     }
     
     
-    // 11/4/22 V
     func clearAllUIElements() {
         emailFormView.resetElements()
         passwordFormView.resetElements()
         reenterPasswordFormView.resetElements()
     }
     
-    // 11/4/22 V
+
     func signupNewUser() {
         startLoadingAnimation()
         let currentPassword = passwordFormView.textField.text, passwordReenter = passwordFormView.textField.text
@@ -146,7 +145,6 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     }
     
     
-    // 11/4/22 V
     func loginExistingUser() {
         startLoadingAnimation()
         let email = emailFormView.textField.text, password = passwordFormView.textField.text
@@ -177,14 +175,12 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     }
     
     
-    // 11/4/22 V
     func navigateIntoApp() {
         let homepage = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MyTabBarController")
         self.present(homepage, animated: true, completion: nil)
     }
     
     
-    // 11/4/22 V
     func startLoadingAnimation() {
         DispatchQueue.main.async {
             self.loadingView.isHidden = false
@@ -193,7 +189,6 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     }
     
     
-    // 11/4/22 V
     func stopLoadingAnimation() {
         DispatchQueue.main.async {
             self.loadingView.loadIndicator.stopAnimating()
@@ -206,7 +201,6 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
 // MARK: - FormInputViewDelegate
 extension AuthViewController: FormInputViewDelegate {
     
-    // 11/4/22 V
     func textFieldDidChange(textFieldId: String, currentText: String?) {
         
         if currentPageType == .signup {
@@ -240,12 +234,9 @@ extension AuthViewController: FormInputViewDelegate {
     }
 }
 
-
-
 // MARK: - MainActionButtonDelegate
 extension AuthViewController: MainActionButtonDelegate {
     
-    // 11/4/22 V
     func actionButtonDidPress(btnText: String) {
 
         switch btnText {

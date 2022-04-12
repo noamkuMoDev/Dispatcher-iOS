@@ -11,7 +11,6 @@ class BaseArticlesViewModel {
     private var totalPaginationPages = 1
     
     
-    // 11/4/22 V
     func fetchNewsFromAPI(searchWords: String = "news", pageSizeToFetch: PageSizeForFetching, completionHandler: @escaping (String?) -> ()) {
         repository.fetchNewsFromAPI(searchWords: searchWords, pageSizeType: pageSizeToFetch, savedArticles: savedArticles, currentPage: currentPaginationPage) {
             articles, totalPages, statusMsg in
@@ -30,7 +29,7 @@ class BaseArticlesViewModel {
         }
     }
     
-    // 11/4/22 V
+
     func getSavedArticles(completionHandler: @escaping () -> ()) {
         repository.getSavedArticles() { articlesArray in
             self.savedArticles = articlesArray
@@ -38,12 +37,12 @@ class BaseArticlesViewModel {
         }
     }
     
-    // 11/4/22 V
+
     func getUserAppSetting(of settingName: String) -> SwitchStatus {
         return repository.getUserAppSetting(of: settingName)
     }
     
-    // 11/4/22 V
+
     func addArticleToFavorites(_ article: Article, completionHandler: @escaping (String?) -> ()) {
         repository.saveArticleToFavorites(article) { error, newFavorite in
             if let error = error {
@@ -58,7 +57,7 @@ class BaseArticlesViewModel {
         }
     }
     
-    // 11/4/22 V
+
     func removeArticleFromFavorites(articleID: String, completionHandler: @escaping (String?) -> ()) {
         repository.removeArticleFromFavorites(withID: articleID, from: savedArticles.map({$0.value})) { error in
             if let error = error {
@@ -71,7 +70,6 @@ class BaseArticlesViewModel {
     }
     
     
-    // 11/4/22 V
     func updateArticleToNotFavoriteLocally(articleID: String) {
         self.savedArticles[articleID] = nil
         if let index = self.newsArray.firstIndex(where: {$0.id == articleID}) {

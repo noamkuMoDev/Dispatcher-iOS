@@ -23,7 +23,6 @@ enum HeaderTypes {
     case confirmCancelAppearance
 }
 
-
 class CustomHeaderView: UIView {
 
     @IBOutlet weak var rightNotificationsImageView: UIImageView!
@@ -46,14 +45,15 @@ class CustomHeaderView: UIView {
         }
     }
     
-    // 11/4/22 V
+
+    
     private func commonInit() {
         Bundle.main.loadNibNamed("CustomHeaderView", owner: self, options: nil)
         contentView.frame = self.bounds
         self.addSubview(contentView)
     }
     
-    // 11/4/22 V
+
     private func hideAllElements() {
         rightNotificationsImageView.isHidden = true
         rightSearchImageView.isHidden = true
@@ -63,7 +63,7 @@ class CustomHeaderView: UIView {
         leftCancelImageView.isHidden = true
     }
     
-    // 11/4/22 V
+
     private func determineHeaderAppearance(_ apperanceType: HeaderTypes) {
         switch apperanceType {
         case .fullAppearance:
@@ -75,7 +75,7 @@ class CustomHeaderView: UIView {
         }
     }
     
-    // 11/4/22 V
+
     func setLogoAndRightButtons() {
         //logo          search  notifications
         rightNotificationsImageView.isHidden = false
@@ -94,7 +94,7 @@ class CustomHeaderView: UIView {
         leftLogoImageView.isHidden = false
     }
     
-    // 11/4/22 V
+
     func setBackButtonOnly() {
         //back
         leftGoBackImageView.isHidden = false
@@ -104,7 +104,7 @@ class CustomHeaderView: UIView {
         leftGoBackImageView.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    // 11/4/22 V
+
     func setCheckAndCancelButtons() {
         //cancel            confirm
         rightConfirmImageView.image = UIImage(named: "checkmark")
@@ -122,29 +122,29 @@ class CustomHeaderView: UIView {
         leftCancelImageView.addGestureRecognizer(tapGestureRecognizer2)
     }
     
-    // 11/4/22 V
+
     func updateHeaderAppearanceType(to appearanceType: HeaderTypes) {
         hideAllElements()
         determineHeaderAppearance(appearanceType)
     }
     
-    // 11/4/22 V
+ 
     @objc func notificationsButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.notificationsButtonPressed()
     }
-    // 11/4/22 V
+  
     @objc func searchButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.searchButtonPressed()
     }
-    // 11/4/22 V
+
     @objc func backButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.backButtonPressed()
     }
-    // 11/4/22 V
+
     @objc func checkmarkButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.checkmarkButtonPressed()
     }
-    // 11/4/22 V
+
     @objc func cancelButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.cancelButtonPressed()
     }

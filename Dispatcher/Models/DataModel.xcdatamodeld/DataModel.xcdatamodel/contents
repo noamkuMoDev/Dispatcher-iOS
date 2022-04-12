@@ -7,11 +7,12 @@
         <attribute name="id" attributeType="String"/>
         <attribute name="imageUrl" optional="YES" attributeType="String"/>
         <attribute name="isFavorite" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="title" attributeType="String"/>
         <attribute name="topic" attributeType="String"/>
         <attribute name="url" attributeType="String"/>
     </entity>
     <elements>
-        <element name="FavoriteArticle" positionX="-63" positionY="-18" width="128" height="164"/>
+        <element name="FavoriteArticle" positionX="-63" positionY="-18" width="128" height="179"/>
     </elements>
 </model>

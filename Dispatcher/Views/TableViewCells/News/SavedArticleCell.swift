@@ -38,7 +38,7 @@ class SavedArticleCell: UITableViewCell {
     }
 
     
-    // 11/4/22 V
+    
     func setCellBorder() {
         savedArticleCell.layer.borderWidth = 2
         let borderColor = UIColor( red: 243/255, green: 243/255, blue:255/255, alpha: 1.0 )
@@ -47,7 +47,6 @@ class SavedArticleCell: UITableViewCell {
     }
     
     
-    // 11/4/22 V
     func setCellColorsDesign() {
         let bgColorView = UIView()
         bgColorView.backgroundColor = UIColor.clear
@@ -55,7 +54,6 @@ class SavedArticleCell: UITableViewCell {
     }
     
     
-    // 11/4/22 V
     func setImageRounded() {
         articleImage.clipsToBounds = true
         articleImage.layer.cornerRadius = 4
@@ -67,7 +65,7 @@ class SavedArticleCell: UITableViewCell {
         ]
     }
     
-    // 11/4/22 V
+
     func setGestureRecognizer() {
         favoriteIcon.addGestureRecognizer(UITapGestureRecognizer(target: favoriteIcon, action: #selector(favoriteIconPressed)))
         favoriteIcon.isUserInteractionEnabled = true
@@ -75,7 +73,7 @@ class SavedArticleCell: UITableViewCell {
         favoriteIcon.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    // 11/4/22 V
+
     @objc func favoriteIconPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.favoriteIconDidPress(forArticle: articleID)
     }

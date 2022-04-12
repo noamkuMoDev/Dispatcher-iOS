@@ -13,7 +13,7 @@ class NotificationCell: UITableViewCell {
     
     var delegate: NotificationCellDelegate?
     
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -25,14 +25,15 @@ class NotificationCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    // 11/4/22 V
+
+    
     func setCellColorDesign() {
         let bgColorView = UIView()
         bgColorView.backgroundColor = UIColor.clear
         self.selectedBackgroundView = bgColorView
     }
     
-    // 11/4/22 V
+
     func setGestureRecognizers() {
         entireCell.addGestureRecognizer(UITapGestureRecognizer(target: entireCell, action: #selector(notificationCellTapped)))
         entireCell.isUserInteractionEnabled = true
@@ -40,7 +41,7 @@ class NotificationCell: UITableViewCell {
         entireCell.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    // 11/4/22 V
+
     @objc func notificationCellTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.notificationDidPress(notificationText: label.text!)
     }

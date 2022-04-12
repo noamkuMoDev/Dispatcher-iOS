@@ -23,12 +23,12 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
         }
     }
     
-    // 11/4/22 V
+    
     func defineNotificationCenterListeners() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.favoritesToHomepage), object: nil)
     }
     
-    // 11/4/22 V
+
     @objc func refreshTableViewContent(_ notification: NSNotification) {
         viewModel.updateArticleToNotFavoriteLocally(articleID: notification.userInfo!["articleID"] as! String)
         DispatchQueue.main.async {
@@ -37,14 +37,14 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
         }
     }
     
-    // 11/4/22 V
+
     func initiateUIElements() {
         customHeader.initView(delegate: self, apperanceType: .fullAppearance)
         loadingView.initView(delegate: self)
         setupTableView()
     }
     
-    // 11/4/22 V
+
     func setupTableView() {
         tableView.register(UINib(nibName: Constants.NibNames.HOMEPAGE, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE)
         self.dataSource = TableViewDataSourceManager(
@@ -80,13 +80,13 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
         tableView.delegate = self
     }
 
-    // 11/4/22 V
+
     func checkUserSettingsPreferences() {
         print("SAVE_FILTERS app setting is: \(viewModel.getUserAppSetting(of: Constants.UserDefaults.SAVE_FILTERS))")
         print("SEND_NOTIFICATIONS app setting is: \(viewModel.getUserAppSetting(of: Constants.UserDefaults.SEND_NOTIFICATIONS))")
     }
     
-    // 11/4/22 V
+
     @objc func fetchInitialNewsResults() {
         DispatchQueue.main.async {
             self.loadingView.isHidden = false
@@ -108,7 +108,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
         }
     }
 
-    // 11/4/22 V
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
@@ -117,26 +117,21 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
 
 
 // MARK: - CustomHeaderViewDelegate
-
 extension HomepageViewController: CustomHeaderViewDelegate {
     
-    // 11/4/22 V
     func notificationsButtonPressed() {
         self.performSegue(withIdentifier: Constants.Segues.HOMEPAGE_TO_NOTIFICATIONS, sender: self)
     }
     
-    // 11/4/22 V
+
     func searchButtonPressed() {
         self.performSegue(withIdentifier: Constants.Segues.HOMEPAGE_TO_SEARCH, sender: self)
     }
 }
 
-
 // MARK: - UIScrollViewDelegate
-
 extension HomepageViewController: UIScrollViewDelegate {
     
-    // 11/4/22 V
     func createSpinnerFooter() -> UIView {
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
         let spinner = UIActivityIndicatorView()
@@ -147,7 +142,7 @@ extension HomepageViewController: UIScrollViewDelegate {
         return footerView
     }
     
-    // 11/4/22 V
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y
         if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) && !isPaginating {
@@ -169,12 +164,9 @@ extension HomepageViewController: UIScrollViewDelegate {
     }
 }
 
-
 // MARK: - NewsCellDelegate
-
 extension HomepageViewController: NewsCellDelegate {
     
-    // 11/4/22 V
     func favoriteIconDidPress(forArticle article: Article) {
         if article.isFavorite {
             viewModel.removeArticleFromFavorites(articleID: article.id, completionHandler: handleFavoritesUpdate)
@@ -183,7 +175,7 @@ extension HomepageViewController: NewsCellDelegate {
         }
     }
     
-    // 11/4/22 V
+
     func handleFavoritesUpdate(error: String?) {
         if let error = error {
             print(error)

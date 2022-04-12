@@ -13,7 +13,6 @@ class AuthRepository {
     let firestoreManager = FirestoreManager()
     
     
-    // 11/4/22 V
     func checkIfLoggedIn() -> userType {
         do {
             _ = try keychainManager.fetchFromKeychain(
@@ -31,7 +30,6 @@ class AuthRepository {
     }
     
     
-    // 11/4/22 V   // FETCH & SAVE MORE THINGS ????
     func fetchCurrentUserDetails(completionHandler: @escaping (String?) -> ()) {
         let uid = firebaseAuthManager.getCurrentUserUID()
         if uid != nil {
@@ -42,8 +40,6 @@ class AuthRepository {
                 } else {
                     self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.CURRENT_USER_NAME, data: data!["name"])
                     self.saveDefaultAppSettingsToUserDefaults()
-                    // FETCH & SAVE MORE THINGS ????
-                    
                     self.saveUserEmailToKeychain(data!["email"] as! String) { error in
                         if let error = error {
                             completionHandler("Error saving email to keychain: \(error)")
@@ -59,7 +55,6 @@ class AuthRepository {
     }
     
     
-    // 11/4/22 V
     func logUserToApp(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
 
         firebaseAuthManager.loginUser(email: email, password: password) { error in
@@ -86,7 +81,6 @@ class AuthRepository {
     }
     
     
-    // 11/4/22 V
     func signUserToApp(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
         firebaseAuthManager.signupUser(email: email, password: password) {error, userName, userUID in
             if let error = error {
@@ -97,7 +91,7 @@ class AuthRepository {
                 self.saveDefaultAppSettingsToUserDefaults()
                 self.saveUserEmailToKeychain(email) { error in
                     if let error = error {
-                        completionHandler("Error saving email to keychain: \(error)")
+                        completionHandler("======== Error saving email to keychain: \(error)")
                     } else {
                         completionHandler(nil)
                     }
@@ -107,7 +101,6 @@ class AuthRepository {
     }
     
     
-    // 11/4/22 V
     func isValidEmailAddress(_ email: String) -> Bool {
         var isValidEmail = true
         let emailRegex = "[A-Z0-9a-z.-_]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}"
@@ -128,7 +121,6 @@ class AuthRepository {
     }
     
     
-    // 11/4/22 V
     func isStrongPassword(_ password: String) -> Bool {
         var isStrongPassword = true
         //Minimum 8 characters - at least 1 Uppercase, 1 Lowercase, 1 Number, 1 Special Character
@@ -150,7 +142,6 @@ class AuthRepository {
     }
     
     
-    // 11/4/22 V
     private func saveUserEmailToKeychain(_ email: String, completionHandler: @escaping (String?) -> ()) {
         do {
             try self.keychainManager.addToKeychain(
@@ -167,7 +158,6 @@ class AuthRepository {
     }
     
     
-    // 11/4/22 V
     private func saveDefaultAppSettingsToUserDefaults() {
         self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.SAVE_FILTERS, data: 1)
         self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.SEND_NOTIFICATIONS, data: 1)

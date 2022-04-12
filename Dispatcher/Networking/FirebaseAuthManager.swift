@@ -8,18 +8,16 @@ class FirebaseAuthManager {
     let database = Firestore.firestore()
     
     
-    // 11/4/22 V
     func isUserLoggedIn() -> Bool {
         return Auth.auth().currentUser != nil
     }
     
-    // 11/4/22 V
+
     func getCurrentUserUID() -> String? {
         return Auth.auth().currentUser?.uid
     }
     
     
-    // 11/4/22 V
     func signupUser(email: String, password: String, completionHandler: @escaping (String?, String?, String?) -> ()) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
@@ -43,7 +41,6 @@ class FirebaseAuthManager {
     }
     
     
-    // 11/4/22 V
     func loginUser(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if let error = error {
@@ -55,7 +52,6 @@ class FirebaseAuthManager {
     }
     
     
-    // 11/4/22 V
     func logoutUser(completionHandler: @escaping (String?) -> ()) {
         do {
             try Auth.auth().signOut()

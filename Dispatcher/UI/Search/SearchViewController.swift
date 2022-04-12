@@ -43,7 +43,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         defineGestureRecognizers()
     }
     
-    // 11/4/22 V
+
     func checkUserPreference() {
         if viewModel.isSaveRecentSearches() {
             fetchSearchHistory()
@@ -53,7 +53,6 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     }
 
     
-    // 11/4/22 V
     func fetchSearchHistory() {
         viewModel.getSavedRecentSearchesFromUserDefaults() { error in
             if let error = error {
@@ -62,20 +61,20 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         }
     }
     
-    // 11/4/22 V
+
     func initiateUIElements() {
         setupTextField()
         setupTableViews()
         initialHideShowElements()
     }
     
-    // 11/4/22 V
+
     func setupTextField() {
         searchTextField.delegate = self
         searchTextField.addTarget(self, action: #selector(SearchViewController.textFieldDidChange(_:)), for: .editingChanged)
     }
     
-    // 11/4/22 V
+
     func setupTableViews() {
         recentSearchesTableView.register(UINib(nibName: Constants.NibNames.RECENT_SEARCH, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.RECENT_SEARCH)
         self.recentSearchesDataSource = TableViewDataSourceManager(
@@ -105,7 +104,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         searchResultsTableView.delegate = self
     }
     
-    // 11/4/22 V
+ 
     func initialHideShowElements() {
         loadingView.initView(delegate: self)
         loadingView.isHidden = true
@@ -115,7 +114,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         hideNoSearchResults()
     }
     
-    // 11/4/22 V
+
     func defineGestureRecognizers() {
         goBackButton.addGestureRecognizer(UITapGestureRecognizer(target: goBackButton, action: #selector(goBackButtonPressed)))
         goBackButton.isUserInteractionEnabled = true
@@ -128,7 +127,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         searchClearIcon.addGestureRecognizer(tapGestureRecognizer2)
     }
     
-    // 11/4/22 V
+
     func fetchInitialSearchResults(of keywords: String) {
         displayLoadingAnimation()
         self.recentSearchesView.isHidden = true
@@ -163,12 +162,12 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         }
     }
     
-    // 11/4/22 V
+
     @objc func goBackButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         navigationController?.popViewController(animated: true)
     }
     
-    // 11/4/22 V
+
     @IBAction func clearRecentSearchesPressed(_ sender: UIButton) {
         displayLoadingAnimation()
         viewModel.clearRecentSearchesHistory() {
@@ -180,19 +179,19 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         }
     }
     
-    // 11/4/22 V
+
     func displayNoSearchResults() {
         self.noResultsLabel.isHidden = false
         self.noResultsImageView.isHidden = false
     }
     
-    // 11/4/22 V
+
     func hideNoSearchResults() {
         self.noResultsLabel.isHidden = true
         self.noResultsImageView.isHidden = true
     }
     
-    // 11/4/22 V
+
     func displayLoadingAnimation() {
         DispatchQueue.main.async {
             self.loadingView.isHidden = false
@@ -200,7 +199,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         }
     }
     
-    // 11/4/22 V
+
     func removeLoadingAnimation() {
         DispatchQueue.main.async {
             self.loadingView.isHidden = true
@@ -213,7 +212,6 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
 // MARK: - UITextFieldDelegate
 extension SearchViewController: UITextFieldDelegate {
     
-    // 11/4/22 V
     func textFieldDidBeginEditing(_ textField: UITextField) {
         searchResultsTableView.isHidden = true
         recentSearchesView.isHidden = false
@@ -221,7 +219,6 @@ extension SearchViewController: UITextFieldDelegate {
     }
     
     
-    // 11/4/22 V
     @objc func textFieldDidChange(_ textField: UITextField) {
         if searchClearImageName == .search {
             searchClearIcon.image = UIImage(named: "remove")
@@ -230,7 +227,6 @@ extension SearchViewController: UITextFieldDelegate {
     }
     
     
-    // 11/4/22 V
     @objc func searchClearButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         if searchClearImageName == .search {
             if searchTextField.text == "" {
@@ -246,14 +242,12 @@ extension SearchViewController: UITextFieldDelegate {
     }
     
     
-    // 11/4/22 V
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchTextField.endEditing(true)
         return true
     }
     
     
-    // 11/4/22 V
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         if searchTextField.text == "" {
             searchTextField.placeholder = "Enter search keywords"
@@ -264,7 +258,6 @@ extension SearchViewController: UITextFieldDelegate {
     }
     
     
-    // 11/4/22 V
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let searchText = searchTextField.text {
             fetchInitialSearchResults(of: searchText)
@@ -276,7 +269,6 @@ extension SearchViewController: UITextFieldDelegate {
 // MARK: - RecentSearchCellDelegate
 extension SearchViewController: RecentSearchCellDelegate {
     
-    // 11/4/22 V
     func recentSearchPressed(called searchName: String) {
         searchTextField.text = searchName
         searchTextField.endEditing(true)
@@ -295,7 +287,7 @@ extension SearchViewController: RecentSearchCellDelegate {
         }
     }
     
-    // 11/4/22 V
+
     func removeCellButtonDidPress(called searchName: String) {
         if isSaveSearches {
             viewModel.removeItemFromRecentSearchesHistory(searchToRemove: searchName) {
@@ -308,21 +300,17 @@ extension SearchViewController: RecentSearchCellDelegate {
     }
 }
 
-
-// MARK: - SortbyViewDelegate    // NOT WORKING ???????
+// MARK: - SortbyViewDelegate
 extension SearchViewController: SortbyViewDelegate {
     
-    // NOT WORKING ???????
     func filterIconDidPress() {
-        print("OPEN FILTERS PANE")
+        
     }
 }
-
 
 // MARK: - UITableViewDelegate
 extension SearchViewController: UITableViewDelegate {
     
-    // 11/4/22 V
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == searchResultsTableView {
             tableView.deselectRow(at: indexPath, animated: true)
@@ -330,11 +318,9 @@ extension SearchViewController: UITableViewDelegate {
     }
 }
 
-
 // MARK: - UIScrollViewDelegate
 extension SearchViewController: UIScrollViewDelegate {
     
-    // 11/4/22 V
     func createSpinnerFooter() -> UIView {
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
         let spinner = UIActivityIndicatorView()
@@ -345,7 +331,7 @@ extension SearchViewController: UIScrollViewDelegate {
         return footerView
     }
     
-    // 11/4/22 V
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y
         if position > (searchResultsTableView.contentSize.height - 100 - scrollView.frame.size.height) && !isPaginating {

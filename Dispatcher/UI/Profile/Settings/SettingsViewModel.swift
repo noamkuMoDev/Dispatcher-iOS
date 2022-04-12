@@ -37,7 +37,6 @@ class SettingsViewModel {
     ]
     
     
-    // 11/4/22 V
     func getUserSettingsPreferences() {
         appSettings[Constants.AppSettingsSectionTitles.SEARCH]?.options[Constants.AppSettings.SAVE_FILTERS]?.status = repository.getSaveFiltersSetting()
         appSettings[Constants.AppSettingsSectionTitles.SEARCH]?.options[Constants.AppSettings.SEARCH_RESULTS]?.status = repository.getSaveSearchResultsSetting()
@@ -45,7 +44,6 @@ class SettingsViewModel {
     }
     
     
-    // 11/4/22 V
     func updateSetting(settingTitle: String, completionHandler: @escaping () -> ()) {
         
         var sectionTitle: String? = nil

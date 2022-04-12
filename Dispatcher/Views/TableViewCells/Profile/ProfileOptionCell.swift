@@ -8,7 +8,6 @@ class ProfileOptionCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         setCellColorDesign()
     }
 
@@ -16,7 +15,7 @@ class ProfileOptionCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    // 11/4/22 V
+
     func setCellColorDesign() {
         let bgColorView = UIView()
         bgColorView.backgroundColor = UIColor.clear

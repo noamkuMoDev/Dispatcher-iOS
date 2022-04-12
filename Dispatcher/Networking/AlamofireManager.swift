@@ -9,7 +9,6 @@ class AlamofireManager: NSObject {
     let encoding: ParameterEncoding = JSONEncoding.default
     
     
-    
     init( data: [String:Any]? = nil, from url: String) {
         super.init()
         
@@ -21,7 +20,6 @@ class AlamofireManager: NSObject {
     }
     
     
-    // 11/4/22 V
     func executeGetQuery<T>(completionHandler: @escaping (Result<T, Error>, String?) -> Void) where T: Codable {
         AF.request(url, method: .get, headers: headers).responseData(completionHandler: { response in
             do {

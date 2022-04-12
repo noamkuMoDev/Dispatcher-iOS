@@ -11,13 +11,11 @@ class ProfileViewModel {
     ]
 
     
-    // 11/4/22 V
     func fetchUserData(dataKey: String) -> Any? {
         return repository.fetchUserData(with: dataKey)
     }
 
     
-    // 11/4/22 V
     func logUserOut(completionHandler: @escaping (String?) -> ()) {
         repository.logoutUserFromApp() { error in
             completionHandler(error)

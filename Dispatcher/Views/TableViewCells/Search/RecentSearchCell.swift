@@ -26,14 +26,14 @@ class RecentSearchCell: UITableViewCell {
     }
     
     
-    // 11/4/22 V
+
     func setCellColorDesign() {
         let bgColorView = UIView()
         bgColorView.backgroundColor = UIColor.clear
         self.selectedBackgroundView = bgColorView
     }
     
-    // 11/4/22 V
+
     func setGestureRecognizers() {
         entireCell.addGestureRecognizer(UITapGestureRecognizer(target: label, action: #selector(recentSearchCellPressed)))
         entireCell.isUserInteractionEnabled = true
@@ -47,12 +47,11 @@ class RecentSearchCell: UITableViewCell {
     }
     
     
-    // 11/4/22 V
     @objc func recentSearchCellPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.recentSearchPressed(called: label.text ?? "")
     }
     
-    // 11/4/22 V
+
     @objc func removeItemPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.removeCellButtonDidPress(called: label.text ?? "")
     }

@@ -14,7 +14,6 @@ class BaseArticlesRepository {
     let firebaseAuthManager = FirebaseAuthManager()
     
     
-    // 11/4/22 V
     func fetchNewsFromAPI(searchWords: String, pageSizeType: PageSizeForFetching, savedArticles: [String:FavoriteArticle], currentPage: Int, completionHandler: @escaping ([Article]?, Int?, String?) -> ()) {
         var pageSize: Int
         switch pageSizeType {
@@ -48,7 +47,6 @@ class BaseArticlesRepository {
     }
     
 
-    // 11/4/22 V
     func getSavedArticles(completionHandler: @escaping ([String:FavoriteArticle]) -> ()) {
         
         let favoritesArray = coreDataManager.fetchFavoritesArrayFromCoreData()
@@ -71,17 +69,31 @@ class BaseArticlesRepository {
                         completionHandler([:])
                     } else {
                         var savedArticles: [String: FavoriteArticle] = [:]
-                        for item in dataDictionary! as! [String: FavoriteArticle] {
+                        for item in dataDictionary! {
+                            let dict = item.value as! [String:String]
                             let favoriteArticle = FavoriteArticle(context: (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext)
-                            favoriteArticle.title =  item.value.title
-                            favoriteArticle.isFavorite = item.value.isFavorite
-                            favoriteArticle.author = item.value.author
-                            favoriteArticle.topic = item.value.topic
-                            favoriteArticle.imageUrl = item.value.imageUrl
-                            favoriteArticle.content = item.value.content
-                            favoriteArticle.url = item.value.url
-                            favoriteArticle.date = item.value.date
+                            favoriteArticle.title =  dict["title"]
+                            favoriteArticle.isFavorite = true
+                            favoriteArticle.author = dict["author"]
+                            favoriteArticle.topic = dict["topic"]
+                            favoriteArticle.imageUrl = dict["imageUrl"]
+                            favoriteArticle.content = dict["content"]
+                            favoriteArticle.url = dict["url"]
+                            favoriteArticle.date = dict["date"]
                             favoriteArticle.id = item.key
+                            
+                            
+                            let isoDate = "\(dict["timestamp"]!)+0000".replacingOccurrences(of: " ", with: "T")
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                            if let date = dateFormatter.date(from: isoDate) {
+                                print(date)
+                                favoriteArticle.timestamp = date
+                            } else {
+                                favoriteArticle.timestamp = Date()
+                            }
+                            
                             savedArticles[item.key] = favoriteArticle
                         }
 
@@ -98,7 +110,6 @@ class BaseArticlesRepository {
     }
     
     
-    // 11/4/22 V
     func saveArticleToFavorites(_ article: Article, completionHandler: @escaping (String?, FavoriteArticle?) -> ()) {
 
         coreDataManager.saveArticleToCoreData(article) { error, favoriteArticle in
@@ -106,12 +117,16 @@ class BaseArticlesRepository {
                 completionHandler("Error saving article to CoreData: \(error)", nil)
             } else {
                 let uid = self.firebaseAuthManager.getCurrentUserUID()
+                let date = Date()
+                let format = DateFormatter()
+                format.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                let timestamp = format.string(from: date)
                 if uid != nil {
                     let dataDict: [String: Any] = [
                         "author" : article.author ?? "", "content" : article.content,
                         "date" : article.date, "imageUrl": article.imageUrl ?? "",
-                        "isFavorite" : true, "title" : article.articleTitle,
-                        "topic" : article.topic, "url" : article.url
+                        "title" : article.articleTitle, "topic" : article.topic,
+                        "url" : article.url, "timestamp": "\(timestamp)"
                     ]
                     let colPath = "\(Constants.Firestore.USERS_COLLECTION)/\(uid!)/\(Constants.Firestore.FAVORITES_COLLECTION)"
                     
@@ -130,7 +145,6 @@ class BaseArticlesRepository {
     }
     
     
-    // 11/4/22 V
     func removeArticleFromFavorites(withID articleID: String, from savedArticles: [FavoriteArticle], completionHandler: @escaping (String?) -> ()) {
         
         coreDataManager.deleteFromCoreData(removeID: articleID, fromArray: savedArticles) { error in
@@ -154,8 +168,7 @@ class BaseArticlesRepository {
         }
     }
     
-    
-    // 11/4/22 V
+
     func getUserAppSetting(of settingName: String) -> SwitchStatus {
         var status: SwitchStatus = .off
         switch settingName {

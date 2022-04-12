@@ -22,15 +22,15 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
         displaySavedArticlesOnScreen()
     }
     
-    // 11/4/22 V
+
     func defineNotificationCenterListeners() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.homepageToFavorites), object: nil)
     }
     
-    // 11/4/22 V
+
     @objc func refreshTableViewContent(_ notification: NSNotification) {
         viewModel.getSavedArticles {
-            self.dataSource.models = self.viewModel.savedArticles.map({$0.value})
+            self.dataSource.models = self.viewModel.savedArticles.map({$0.value}).sorted(by: {$0.timestamp! > $1.timestamp!})
             DispatchQueue.main.async {
                 if self.viewModel.savedArticles.count == 0 {
                     self.displayNoResults()
@@ -42,7 +42,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
         }
     }
     
-    // 11/4/22 V
+
     func initiateUIElements() {
         customHeader.initView(delegate: self, apperanceType: .fullAppearance)
         loadingView.initView(delegate: self)
@@ -50,11 +50,11 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
         setupTableView()
     }
     
-    // 11/4/22 V
+
     func setupTableView() {
         tableView.register(UINib(nibName: Constants.NibNames.FAVORITES, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.FAVORITES)
         self.dataSource = TableViewDataSourceManager(
-            models: viewModel.savedArticles.map({$0.value}),
+            models: viewModel.savedArticles.map({$0.value}).sorted(by: {$0.timestamp! > $1.timestamp!}),
             reuseIdentifier: Constants.TableCellsIdentifier.FAVORITES
         ) { savedArticle, cell in
             let currentCell = cell as! SavedArticleCell
@@ -75,7 +75,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
         tableView.rowHeight = 115.0
     }
     
-    // 11/4/22 V
+
     func displaySavedArticlesOnScreen() {
         displayLoadingAnimation()
         viewModel.getSavedArticles() {
@@ -83,7 +83,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
                 self.displayNoResults()
             } else {
                 DispatchQueue.main.async {
-                    self.dataSource.models = self.viewModel.savedArticles.map({$0.value})
+                    self.dataSource.models = self.viewModel.savedArticles.map({$0.value}).sorted(by: {$0.timestamp! > $1.timestamp!})
                     self.tableView.reloadData()
                 }
             }
@@ -91,21 +91,21 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
         }
     }
     
-    // 11/4/22 V
+
     func displayNoResults() {
         self.tableView.isHidden = true
         self.noResultsLabel.isHidden = false
         self.noResultsImageView.isHidden = false
     }
     
-    // 11/4/22 V
+
     func hideNoResults() {
         self.tableView.isHidden = false
         self.noResultsLabel.isHidden = true
         self.noResultsImageView.isHidden = true
     }
     
-    // 11/4/22 V
+
     func displayLoadingAnimation() {
         DispatchQueue.main.async {
             self.loadingView.loadIndicator.startAnimating()
@@ -113,7 +113,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
         }
     }
     
-    // 11/4/22 V
+
     func removeLoadingAnimation() {
         DispatchQueue.main.async {
             self.loadingView.loadIndicator.stopAnimating()
@@ -121,23 +121,21 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
         }
     }
     
-    // 11/4/22 V
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
     }
 }
 
-
 // MARK: - CustomHeaderViewDelegate
 extension FavoritesViewController: CustomHeaderViewDelegate {
     
-    // 11/4/22 V
     func notificationsButtonPressed() {
         self.performSegue(withIdentifier: Constants.Segues.FAVORITES_TO_NOTIFICATIONS, sender: self)
     }
     
-    // 11/4/22 V
+
     func searchButtonPressed() {
         self.performSegue(withIdentifier: Constants.Segues.FAVORITES_TO_SEARCH, sender: self)
     }
@@ -146,7 +144,6 @@ extension FavoritesViewController: CustomHeaderViewDelegate {
 // MARK: - SavedArticleCellDelegate
 extension FavoritesViewController: SavedArticleCellDelegate {
     
-    // 11/4/22 V
     func favoriteIconDidPress(forArticle articleID: String) {
         displayLoadingAnimation()
         viewModel.removeArticleFromFavorites(articleID: articleID) { error in
@@ -155,7 +152,7 @@ extension FavoritesViewController: SavedArticleCellDelegate {
                 self.removeLoadingAnimation()
             } else {
                 DispatchQueue.main.async {
-                    self.dataSource.models = self.viewModel.savedArticles.map({$0.value})
+                    self.dataSource.models = self.viewModel.savedArticles.map({$0.value}).sorted(by: {$0.timestamp! > $1.timestamp!})
                     if self.viewModel.savedArticles.count == 0 {
                         self.displayNoResults()
                     } else {
