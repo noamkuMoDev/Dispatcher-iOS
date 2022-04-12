@@ -13,6 +13,7 @@ class RecentSearchCell: UITableViewCell {
     
     var delegate: RecentSearchCellDelegate?
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -24,12 +25,15 @@ class RecentSearchCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    
+
     func setCellColorDesign() {
         let bgColorView = UIView()
         bgColorView.backgroundColor = UIColor.clear
         self.selectedBackgroundView = bgColorView
     }
     
+
     func setGestureRecognizers() {
         entireCell.addGestureRecognizer(UITapGestureRecognizer(target: label, action: #selector(recentSearchCellPressed)))
         entireCell.isUserInteractionEnabled = true
@@ -42,10 +46,12 @@ class RecentSearchCell: UITableViewCell {
         removeIcon.addGestureRecognizer(tapGestureRecognizer2)
     }
     
+    
     @objc func recentSearchCellPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.recentSearchPressed(called: label.text ?? "")
     }
     
+
     @objc func removeItemPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.removeCellButtonDidPress(called: label.text ?? "")
     }

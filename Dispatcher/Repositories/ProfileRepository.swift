@@ -1,10 +1,34 @@
 import Foundation
 
-class ProfileRepository : AuthRepository {
+class ProfileRepository: AuthRepository {
+    
+    let coreDataManager = FavoriteArticleCoreDataManager()
+    
+    
+    func fetchUserData(with key: String) -> Any? {
+        return userDefaultsManager.getFromUserDefaults(key: key)
+    }
+    
     
     func logoutUserFromApp(completionHandler: @escaping (String?) -> ()) {
-        firebaseManager.logoutUser() { error in
-            return completionHandler(error)
+        do {
+            try keychainManager.removeFromKeychain(
+                service: Constants.Keychain.SERVICE,
+                account: Constants.Keychain.ACCOUNT_USER_EMAIL,
+                secClass: kSecClassGenericPassword as String
+            ) {
+                self.firebaseAuthManager.logoutUser() { error in
+                    if let error = error {
+                        completionHandler("Error logging out from firebase: \(error)")
+                    } else {
+                        self.coreDataManager.clearCoreDataMemory()
+                        self.userDefaultsManager.clearUserDefaultsMemory(keysToRemove: Constants.UserDefaults.userDefaultKeys)
+                        completionHandler(nil)
+                    }
+                }
+            }
+        } catch {
+            completionHandler("Error in deleting from keychain: \(error.localizedDescription)")
         }
     }
 }

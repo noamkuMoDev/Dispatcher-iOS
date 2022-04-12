@@ -63,7 +63,7 @@
                             </button>
                         </subviews>
                     </stackView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="favorite" translatesAutoresizingMaskIntoConstraints="NO" id="ant-Ng-Mu1">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="favoriteArticle-selected" translatesAutoresizingMaskIntoConstraints="NO" id="ant-Ng-Mu1">
                         <rect key="frame" x="8" y="8" width="33" height="33"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="33" id="Mym-rY-Wey"/>
@@ -91,13 +91,14 @@
                 <outlet property="articleMoreTags" destination="fDw-3o-iLR" id="MBh-te-WF0"/>
                 <outlet property="articleTitle" destination="GbH-al-ZPx" id="pEk-az-iZb"/>
                 <outlet property="articleTopic" destination="wu9-dB-vGI" id="baK-Pf-CBF"/>
+                <outlet property="favoriteIcon" destination="ant-Ng-Mu1" id="vAj-iu-Bu8"/>
                 <outlet property="savedArticleCell" destination="H2p-sc-9uM" id="jCo-n1-4WB"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="117.85714285714285"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="favorite" width="11" height="11.5"/>
+        <image name="favoriteArticle-selected" width="10" height="10"/>
         <image name="sampleImage" width="375" height="149"/>
         <namedColor name="Dispatch Light Gray">
             <color red="0.95294117647058818" green="0.95294117647058818" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

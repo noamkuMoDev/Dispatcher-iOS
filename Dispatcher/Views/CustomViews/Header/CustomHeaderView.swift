@@ -8,7 +8,6 @@ protocol CustomHeaderViewDelegate: AnyObject {
     func checkmarkButtonPressed()
     func cancelButtonPressed()
 }
-
 extension CustomHeaderViewDelegate {
     
     func notificationsButtonPressed() {}
@@ -25,7 +24,6 @@ enum HeaderTypes {
 }
 
 class CustomHeaderView: UIView {
-    
 
     @IBOutlet weak var rightNotificationsImageView: UIImageView!
     @IBOutlet weak var rightSearchImageView: UIImageView!
@@ -39,7 +37,6 @@ class CustomHeaderView: UIView {
 
     
     func initView(delegate: CustomHeaderViewDelegate? = nil, apperanceType: HeaderTypes) {
-        
         commonInit()
         hideAllElements()
         determineHeaderAppearance(apperanceType)
@@ -48,12 +45,15 @@ class CustomHeaderView: UIView {
         }
     }
     
+
+    
     private func commonInit() {
         Bundle.main.loadNibNamed("CustomHeaderView", owner: self, options: nil)
         contentView.frame = self.bounds
         self.addSubview(contentView)
     }
     
+
     private func hideAllElements() {
         rightNotificationsImageView.isHidden = true
         rightSearchImageView.isHidden = true
@@ -63,6 +63,7 @@ class CustomHeaderView: UIView {
         leftCancelImageView.isHidden = true
     }
     
+
     private func determineHeaderAppearance(_ apperanceType: HeaderTypes) {
         switch apperanceType {
         case .fullAppearance:
@@ -74,6 +75,7 @@ class CustomHeaderView: UIView {
         }
     }
     
+
     func setLogoAndRightButtons() {
         //logo          search  notifications
         rightNotificationsImageView.isHidden = false
@@ -92,7 +94,7 @@ class CustomHeaderView: UIView {
         leftLogoImageView.isHidden = false
     }
     
-    
+
     func setBackButtonOnly() {
         //back
         leftGoBackImageView.isHidden = false
@@ -102,9 +104,9 @@ class CustomHeaderView: UIView {
         leftGoBackImageView.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    
+
     func setCheckAndCancelButtons() {
-        //cancel        confirm
+        //cancel            confirm
         rightConfirmImageView.image = UIImage(named: "checkmark")
         rightConfirmImageView.isHidden = false
         rightConfirmImageView.addGestureRecognizer(UITapGestureRecognizer(target: rightConfirmImageView, action: #selector(checkmarkButtonPressed)))
@@ -120,29 +122,29 @@ class CustomHeaderView: UIView {
         leftCancelImageView.addGestureRecognizer(tapGestureRecognizer2)
     }
     
-    
+
     func updateHeaderAppearanceType(to appearanceType: HeaderTypes) {
         hideAllElements()
         determineHeaderAppearance(appearanceType)
     }
     
-    
+ 
     @objc func notificationsButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.notificationsButtonPressed()
     }
-    
+  
     @objc func searchButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.searchButtonPressed()
     }
-    
+
     @objc func backButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.backButtonPressed()
     }
-    
+
     @objc func checkmarkButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.checkmarkButtonPressed()
     }
-    
+
     @objc func cancelButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.cancelButtonPressed()
     }

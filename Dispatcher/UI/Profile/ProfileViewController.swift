@@ -3,6 +3,8 @@ import UIKit
 class ProfileViewController: UIViewController {
 
     @IBOutlet weak var userProfileShadowView: UIView!
+    @IBOutlet weak var helloUserLabel: UILabel!
+    @IBOutlet weak var userProfileImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
     let viewModel = ProfileViewModel()
@@ -11,14 +13,24 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       
         initiateUIElements()
     }
     
+
     func initiateUIElements() {
         addShadowsToHeader()
         setupTableView()
+        
+        if let userName = viewModel.fetchUserData(dataKey: Constants.UserDefaults.CURRENT_USER_NAME) as? String {
+            helloUserLabel.text = "Hi, \(userName)"
+        }
+        
+        if let imgData = viewModel.fetchUserData(dataKey: Constants.UserDefaults.CURRENT_USER_IMAGE) as? NSData {
+            userProfileImage.image = UIImage(data: imgData as Data)
+        }
     }
+    
     
     func addShadowsToHeader() {
         userProfileShadowView.layer.masksToBounds = false
@@ -27,6 +39,7 @@ class ProfileViewController: UIViewController {
         userProfileShadowView.layer.shadowOffset = CGSize(width: 0, height: 2)
         userProfileShadowView.layer.shadowRadius = 3
     }
+    
     
     func setupTableView() {
         tableView.register(UINib(nibName: Constants.NibNames.PROFILE_OPTION, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.PROFILE_OPTION)
@@ -56,13 +69,12 @@ class ProfileViewController: UIViewController {
 
 
 //MARK: - UITableViewDelegate
-
 extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if viewModel.optionsArray[indexPath.row].text.lowercased() != "logout" {
+        if viewModel.optionsArray[indexPath.row].text.uppercased() != Constants.ButtonsText.LOGOUT {
             if viewModel.optionsArray[indexPath.row].navigateTo != nil {
                 self.performSegue(withIdentifier: viewModel.optionsArray[indexPath.row].navigateTo!, sender: self)
             }

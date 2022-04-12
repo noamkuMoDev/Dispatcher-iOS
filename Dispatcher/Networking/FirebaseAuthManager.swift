@@ -1,39 +1,56 @@
 import Foundation
 import FirebaseAuth
+import FirebaseFirestore
 
 class FirebaseAuthManager {
     
-    func checkUserLogin() -> Bool {
+    let firestoreManager = FirestoreManager()
+    let database = Firestore.firestore()
+    
+    
+    func isUserLoggedIn() -> Bool {
         return Auth.auth().currentUser != nil
     }
     
-    func signupUser(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
-        
-        Auth.auth().createUser(withEmail: email, password: password) {
-            authResult, error in
-            
+
+    func getCurrentUserUID() -> String? {
+        return Auth.auth().currentUser?.uid
+    }
+    
+    
+    func signupUser(email: String, password: String, completionHandler: @escaping (String?, String?, String?) -> ()) {
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+            if let error = error {
+                completionHandler("Failed signing up: \(error.localizedDescription)", nil, nil)
+            } else {
+                let uid = authResult!.user.uid
+                let userName = String(email.prefix(upTo: email.firstIndex(of: "@")!))
+                let dataDict: [String:Any] = [ "email": email as Any, "name": userName as Any ]
+                let colPath = Constants.Firestore.USERS_COLLECTION
+                
+                self.firestoreManager.saveDocumentToFirestore(collectionPath: colPath, customID: uid, dataDictionary: dataDict) { error in
+                    if let error = error {
+                        completionHandler("Error saving registered user to firestore: \(error)", nil, nil)
+                        // TO DO - remove from Firebase Auth ?
+                    } else {
+                        completionHandler(nil, String(userName), uid)
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    func loginUser(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
+        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 completionHandler(error.localizedDescription)
             } else {
-                let uid = authResult!.user.uid
-                // TO DO - save the user in a database
-                print(uid)
                 completionHandler(nil)
             }
         }
     }
     
-    func loginUser(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
-        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-            
-            if let error = error {
-                completionHandler(error.localizedDescription)
-            } else {
-                print(authResult!)
-                completionHandler(nil)
-            }
-        }
-    }
     
     func logoutUser(completionHandler: @escaping (String?) -> ()) {
         do {

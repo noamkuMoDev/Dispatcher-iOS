@@ -86,6 +86,13 @@
                         <color key="textColor" name="Dispatch Purple"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="favoriteArticle-notSelected" translatesAutoresizingMaskIntoConstraints="NO" id="dYu-x4-M7u">
+                        <rect key="frame" x="296" y="16" width="30" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="UM1-3B-pzE"/>
+                            <constraint firstAttribute="width" constant="30" id="vut-Cw-8Cy"/>
+                        </constraints>
+                    </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PJ3-wz-dSX" customClass="MainActionButtonView" customModule="Dispatcher_Development" customModuleProvider="target">
                         <rect key="frame" x="16" y="388" width="310" height="36"/>
                         <constraints>
@@ -96,6 +103,7 @@
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="nhC-Aw-GXS" secondAttribute="trailing" constant="16" id="0kY-gH-hb3"/>
+                    <constraint firstItem="dYu-x4-M7u" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="294-Ld-6yp"/>
                     <constraint firstItem="PJ3-wz-dSX" firstAttribute="top" secondItem="NzC-95-AJi" secondAttribute="bottom" constant="9" id="2Dc-kj-RcJ"/>
                     <constraint firstItem="lN6-xD-0Sb" firstAttribute="top" secondItem="nhC-Aw-GXS" secondAttribute="bottom" constant="9" id="44K-Cv-LBr"/>
                     <constraint firstItem="pEp-5q-ZCL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="4by-aq-whX"/>
@@ -106,6 +114,7 @@
                     <constraint firstItem="VWF-pu-E1i" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Qq5-CR-0Wx"/>
                     <constraint firstItem="nhC-Aw-GXS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="TM0-iN-ALa"/>
                     <constraint firstItem="NzC-95-AJi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="XI8-0Y-hUi"/>
+                    <constraint firstAttribute="trailing" secondItem="dYu-x4-M7u" secondAttribute="trailing" constant="16" id="Yha-92-jDh"/>
                     <constraint firstItem="lN6-xD-0Sb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="ZWo-GQ-8hk"/>
                     <constraint firstAttribute="trailing" secondItem="NzC-95-AJi" secondAttribute="trailing" constant="16" id="dJK-Yy-3it"/>
                     <constraint firstItem="VWF-pu-E1i" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ePO-Qh-uke"/>
@@ -122,6 +131,7 @@
                 <outlet property="authorLabel" destination="pEp-5q-ZCL" id="mTT-b5-2jp"/>
                 <outlet property="dateLabel" destination="hQE-EG-wuI" id="AVf-gG-qAN"/>
                 <outlet property="entireNewsCell" destination="H2p-sc-9uM" id="y0t-pM-SHg"/>
+                <outlet property="favoriteIcon" destination="dYu-x4-M7u" id="aBj-Lu-a3e"/>
                 <outlet property="moreSubjectsTag" destination="5WY-ci-UqJ" id="YIp-8b-st5"/>
                 <outlet property="newsImage" destination="VWF-pu-E1i" id="LbS-q3-QXG"/>
                 <outlet property="subjectTag" destination="tQV-uQ-TU1" id="h3C-0u-9uL"/>
@@ -132,6 +142,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="favoriteArticle-notSelected" width="10" height="10"/>
         <image name="sampleImage" width="375" height="149"/>
         <namedColor name="Dispatch Gray">
             <color red="0.85098039215686272" green="0.85882352941176465" blue="0.9137254901960784" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

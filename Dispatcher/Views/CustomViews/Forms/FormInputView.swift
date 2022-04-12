@@ -1,8 +1,9 @@
 import UIKit
 
 protocol FormInputViewDelegate {
-    func textFieldDidChange(textField: FormInputView, textFieldId: String, currentText: String?)
+    func textFieldDidChange(textFieldId: String, currentText: String?)
 }
+
 
 enum eyeIconStatus {
     case conseal
@@ -22,7 +23,7 @@ class FormInputView: UIView {
     var eyeIconStatus: eyeIconStatus = .conseal
     
     
-    func initView(id: String, delegate: FormInputViewDelegate? = nil, labelText: String = "", placeholderText: String = "", hideIcon: Bool = false) {
+    func initView(id: String, delegate: FormInputViewDelegate? = nil, labelText: String = "", placeholderText: String = "", showIcon: Bool = false) {
         
         commonInit()
         
@@ -32,13 +33,12 @@ class FormInputView: UIView {
         }
         textField.placeholder = placeholderText
         textField.addTarget(self, action: #selector(FormInputView.textFieldDidChange(_:)), for: .editingChanged)
-        textfieldIcon.isHidden = hideIcon
+        textfieldIcon.isHidden = showIcon
         warningLabel.text = labelText
         warningLabel.isHidden = true
     }
     
     private func commonInit() {
-        
         Bundle.main.loadNibNamed("FormInputView", owner: self, options: nil)
         contentView.frame = self.bounds
         self.addSubview(contentView)
@@ -47,6 +47,8 @@ class FormInputView: UIView {
         defineGestureRecognizers()
     }
     
+    
+
     private func setTextFieldDesign() {
         textField.layer.masksToBounds = true
         textField.layer.borderColor = UIColor.red.cgColor
@@ -54,6 +56,7 @@ class FormInputView: UIView {
         textField.layer.cornerRadius = 4.0
     }
     
+
     private func defineGestureRecognizers() {
         textfieldIcon.addGestureRecognizer(UITapGestureRecognizer(target: textfieldIcon, action: #selector(iconPressed)))
         textfieldIcon.isUserInteractionEnabled = true
@@ -61,6 +64,7 @@ class FormInputView: UIView {
         textfieldIcon.addGestureRecognizer(tapGestureRecognizer)
     }
     
+
     @objc func iconPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         if !textfieldIcon.isHidden {
             if eyeIconStatus == .conseal {
@@ -75,53 +79,42 @@ class FormInputView: UIView {
         }
     }
     
+
     func displayWarning() {
         textField.layer.borderWidth = 1.0
         warningLabel.isHidden = false
     }
     
+
     func hideWarning() {
-        if id != "name" && id != "userEmail" {
-            textField.layer.borderWidth = 0.0
-        }
-        warningLabel.isHidden = true
-    }
-    
-    func displayEditMode() {
-        textField.layer.borderWidth = 1.0
-        textField.layer.borderColor = UIColor.black.cgColor
-    }
-    
-    func dismissEditMode() {
         textField.layer.borderWidth = 0.0
         warningLabel.isHidden = true
     }
     
+
     func resetElements() {
         eyeIconStatus = .conseal
         textfieldIcon.image = UIImage(named: "eye-icon-conseal")
-        
         textField.text = nil
         if !textfieldIcon.isHidden {
             textField.isSecureTextEntry = true
         }
         textField.layer.borderWidth = 0.0
-        
         warningLabel.isHidden = true
     }
 }
 
-//MARK: - UITextFieldDelegate
+// MARK: - UITextFieldDelegate
 extension FormInputView: UITextFieldDelegate {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         if textField.text == "" {
             hideWarning()
         } else {
-            delegate?.textFieldDidChange(textField: self, textFieldId: id , currentText: textField.text)
+            delegate?.textFieldDidChange(textFieldId: id , currentText: textField.text)
         }
     }
-
+    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)

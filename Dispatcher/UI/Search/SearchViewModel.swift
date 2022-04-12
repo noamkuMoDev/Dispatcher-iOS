@@ -7,22 +7,30 @@ class SearchViewModel: BaseArticlesViewModel {
     var recentSearchesArray: [RecentSearchModel] = []
     
     
-    func fetchSavedRecentSearchesFromUserDefaults(completionHandler: @escaping (String?) -> ()) {
-        if let recentSearches = repository.fetchSavedRecentSearchesFromUserDefaults() {
+    
+    func isSaveRecentSearches() -> Bool {
+        switch repository.getUserAppSetting(of: Constants.UserDefaults.SAVE_SEARCH_RESULTS) {
+        case .disabled:
+            return false
+        case .on:
+            return true
+        case .off:
+            return false
+        }
+    }
+    
+
+    func getSavedRecentSearchesFromUserDefaults(completionHandler: @escaping (String?) -> ()) {
+        if let recentSearches = repository.getSavedRecentSearchesFromUserDefaults() {
             for search in recentSearches {
                 recentSearchesArray.append(RecentSearchModel(text: search))
                 completionHandler(nil)
             }
         } else {
-            completionHandler("couldn't fetch search history")
+            completionHandler("Couldn't get search history")
         }
     }
     
-    func clearRecentSearchesHistory(completionHandler: @escaping () -> ()) {
-        recentSearchesArray = []
-        repository.updateModelArrayIntoUserDefaults(recentSearchesArr: recentSearchesArray)
-        completionHandler()
-    }
     
     func saveNewRecentSearch(_ keyword: String, completionHandler: @escaping () -> ()) {
         
@@ -33,22 +41,31 @@ class SearchViewModel: BaseArticlesViewModel {
                 recentSearchesArray.remove(at: recentSearchesArray.count-1)
             }
             
-            repository.updateModelArrayIntoUserDefaults(recentSearchesArr: recentSearchesArray)
+            repository.updateRecentSearchesInUserDefaults(recentSearchesArr: recentSearchesArray)
         }
         completionHandler()
     }
+    
     
     func updateRecentSearchesHistoryOrder(selectedSearch: String, completionHandler: @escaping () -> ()) {
         let index = recentSearchesArray.firstIndex(where: { $0.text == selectedSearch })!
         recentSearchesArray.insert(recentSearchesArray[index], at: 0)
         recentSearchesArray.remove(at: index+1)
-        repository.updateModelArrayIntoUserDefaults(recentSearchesArr: recentSearchesArray)
+        repository.updateRecentSearchesInUserDefaults(recentSearchesArr: recentSearchesArray)
         completionHandler()
     }
     
+    
     func removeItemFromRecentSearchesHistory(searchToRemove: String, completionHandler: @escaping () -> ()) {
         recentSearchesArray = recentSearchesArray.filter { $0.text !=  searchToRemove}
-        repository.updateModelArrayIntoUserDefaults(recentSearchesArr: recentSearchesArray)
+        repository.updateRecentSearchesInUserDefaults(recentSearchesArr: recentSearchesArray)
+        completionHandler()
+    }
+    
+    
+    func clearRecentSearchesHistory(completionHandler: @escaping () -> ()) {
+        recentSearchesArray = []
+        repository.updateRecentSearchesInUserDefaults(recentSearchesArr: recentSearchesArray)
         completionHandler()
     }
 }
