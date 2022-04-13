@@ -2,8 +2,9 @@ import UIKit
 import CoreData
 
 class HomepageViewController: UIViewController, LoadingViewDelegate {
-    
+
     @IBOutlet weak var customHeader: CustomHeaderView!
+    @IBOutlet weak var sortbyView: SortbyView!
     @IBOutlet weak var loadingView: LoadingView!
     @IBOutlet weak var tableView: UITableView!
     
@@ -61,6 +62,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
     
     func initiateUIElements() {
         customHeader.initView(delegate: self, apperanceType: .fullAppearance)
+        sortbyView.initView(delegate: self)
         loadingView.initView(delegate: self)
         setupTableView()
     }
@@ -226,5 +228,13 @@ extension HomepageViewController: NewsCellDelegate {
             }
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.HOMEPAGE_TO_FAVORITES), object: nil)
         }
+    }
+}
+
+// MARK: - SortbyViewDelegate
+extension HomepageViewController: SortbyViewDelegate {
+    
+    func filterIconDidPress() {
+        print("Filter pane pressed")
     }
 }

@@ -158,6 +158,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
                     }
                 }
                 self.removeLoadingAnimation()
+                self.searchTextField.text = "\"\(self.searchTextField.text!.uppercased())\""
             }
         }
     }
