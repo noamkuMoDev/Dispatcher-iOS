@@ -32,10 +32,13 @@ class FormInputView: UIView {
             self.delegate = safeDelegate
         }
         textField.placeholder = placeholderText
+        textField.horizontalPadding(leftInset: 10, rightInset: 10)
         textField.addTarget(self, action: #selector(FormInputView.textFieldDidChange(_:)), for: .editingChanged)
         textfieldIcon.isHidden = hideIcon
         warningLabel.text = labelText
         warningLabel.isHidden = true
+        
+        
     }
     
     private func commonInit() {
