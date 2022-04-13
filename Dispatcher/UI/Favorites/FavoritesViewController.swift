@@ -12,7 +12,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     let viewModel = BaseArticlesViewModel()
     var dataSource: TableViewDataSourceManager<FavoriteArticle>!
     var isPaginating: Bool = false
-    
+    var selectedArticle: Article? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,12 +24,21 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     
 
     func defineNotificationCenterListeners() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.homepageToFavorites), object: nil)
+        // alerts from HomepageVC
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.HOMEPAGE_TO_FAVORITES), object: nil)
+        
+        // alerts from ArticleVC
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.ARTICLE_TO_FAVORITES), object: nil)
+        
+        print("Got notification from ArticleVC")
     }
     
 
     @objc func refreshTableViewContent(_ notification: NSNotification) {
+        print("Went to refresh my table view")
         viewModel.getSavedArticles {
+            print("GOT UPDATED saved articles list:")
+            print(self.viewModel.savedArticles)
             self.dataSource.models = self.viewModel.savedArticles.map({$0.value}).sorted(by: {$0.timestamp! > $1.timestamp!})
             DispatchQueue.main.async {
                 if self.viewModel.savedArticles.count == 0 {
@@ -70,7 +79,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
                 }
             }
         }
-        tableView.delegate = self
+        //tableView.delegate = self
         tableView.dataSource = self.dataSource
         tableView.rowHeight = 115.0
     }
@@ -144,6 +153,24 @@ extension FavoritesViewController: CustomHeaderViewDelegate {
 // MARK: - SavedArticleCellDelegate
 extension FavoritesViewController: SavedArticleCellDelegate {
     
+    func cellDidPress(articleID: String) {
+        let favorite = viewModel.savedArticles[articleID]
+        if let favorite = favorite {
+            selectedArticle = Article(id: favorite.id!, articleTitle: favorite.title!, date: favorite.date!, url: favorite.url!, content: favorite.content!, author: favorite.author!, topic: favorite.topic!, imageUrl: favorite.imageUrl!, isFavorite: true)
+            self.performSegue(withIdentifier: Constants.Segues.FAVORITES_TO_ARTICLE, sender: self)
+        }
+    }
+    
+    override func prepare( for segue: UIStoryboardSegue, sender: Any? ) {
+        if let selectedArticle = selectedArticle {
+            if segue.identifier == Constants.Segues.FAVORITES_TO_ARTICLE {
+                let destinationVC = segue.destination as! ArticleViewController
+                destinationVC.currentArticle = selectedArticle
+            }
+        }
+    }
+    
+    
     func favoriteIconDidPress(forArticle articleID: String) {
         displayLoadingAnimation()
         viewModel.removeArticleFromFavorites(articleID: articleID) { error in
@@ -158,8 +185,11 @@ extension FavoritesViewController: SavedArticleCellDelegate {
                     } else {
                         self.tableView.reloadData()
                     }
-                    let dataDict:[String: String] = [Constants.NotificationCenter.ARTICLE_ID: articleID]
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.favoritesToHomepage), object: nil, userInfo: dataDict)
+                    let dataDict:[String: String] = [
+                        Constants.NotificationCenter.ARTICLE_ID: articleID,
+                        Constants.NotificationCenter.SENDER: "FavoritesViewController"
+                    ]
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.FAVORITES_TO_HOMEPAGE), object: nil, userInfo: dataDict)
                     self.removeLoadingAnimation()
                 }
             }

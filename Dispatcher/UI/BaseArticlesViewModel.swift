@@ -49,9 +49,13 @@ class BaseArticlesViewModel {
                 completionHandler(error)
             } else {
                 self.savedArticles[article.id] = newFavorite
-                if let index = self.newsArray.firstIndex(where: { $0.id == article.id }) {
-                    self.newsArray[index].isFavorite = true
+                if self.newsArray.count == 0 {
                     completionHandler(nil)
+                } else {
+                    if let index = self.newsArray.firstIndex(where: { $0.id == article.id }) {
+                        self.newsArray[index].isFavorite = true
+                        completionHandler(nil)
+                    }
                 }
             }
         }
@@ -63,17 +67,27 @@ class BaseArticlesViewModel {
             if let error = error {
                 completionHandler(error)
             } else {
-                self.updateArticleToNotFavoriteLocally(articleID: articleID)
-                completionHandler(nil)
+                self.updateArticleToNotFavoriteLocally(articleID: articleID) {
+                    completionHandler(nil)
+                }
             }
         }
     }
     
     
-    func updateArticleToNotFavoriteLocally(articleID: String) {
+    func updateArticleToNotFavoriteLocally(articleID: String, completionHandler: @escaping () -> ()) {
         self.savedArticles[articleID] = nil
         if let index = self.newsArray.firstIndex(where: {$0.id == articleID}) {
             self.newsArray[index].isFavorite = false
+        }
+        completionHandler()
+    }
+    
+    
+    func updateArticleToYesFavoriteLocally(articleID: String, completionHandler: @escaping () -> ()) {
+        if let index = self.newsArray.firstIndex(where: {$0.id == articleID}) {
+            self.newsArray[index].isFavorite = true
+            completionHandler()
         }
     }
 }

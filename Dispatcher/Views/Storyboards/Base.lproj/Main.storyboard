@@ -48,79 +48,127 @@
             </objects>
             <point key="canvasLocation" x="1371" y="-244"/>
         </scene>
-        <!--View Controller-->
+        <!--Article View Controller-->
         <scene sceneID="Gdi-pP-XCH">
             <objects>
-                <viewController id="hE9-6G-rlH" sceneMemberID="viewController">
+                <viewController id="hE9-6G-rlH" customClass="ArticleViewController" customModule="Dispatcher_Development" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aOA-v3-EVc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s1b-i7-Naq">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s1b-i7-Naq" customClass="CustomHeaderView" customModule="Dispatcher_Development" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44" width="414" height="64"/>
                                 <color key="backgroundColor" red="0.14901960780000001" green="0.12941176469999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="aMU-xh-SM2"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5D1-jA-TWw">
-                                <rect key="frame" x="20" y="266" width="42" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dj2-fD-ENp">
-                                <rect key="frame" x="327" y="266" width="67" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Button"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LBG-7t-6AI">
-                                <rect key="frame" x="252" y="266" width="67" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Button"/>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="China's renewed crypto crackdown wipes nearly $300 billion off the market as bitcoin slides" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g6n-5R-3Nj">
-                                <rect key="frame" x="20" y="327" width="374" height="53"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="16n-rI-8C0">
-                                <rect key="frame" x="20" y="388" width="42" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sampleImage" translatesAutoresizingMaskIntoConstraints="NO" id="Kj8-N4-mEb">
+                                <rect key="frame" x="0.0" y="107" width="414" height="149"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="149" id="Uj4-U2-Rsb"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="favoriteArticle-notSelected" translatesAutoresizingMaskIntoConstraints="NO" id="xCO-cm-XMV">
+                                <rect key="frame" x="368" y="124" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="hce-FY-zqc"/>
+                                    <constraint firstAttribute="width" constant="30" id="xYF-Qe-hIw"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" Friday Jun 25, 2021" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5D1-jA-TWw">
+                                <rect key="frame" x="16" y="280" width="125" height="17"/>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                 <color key="textColor" name="Dispatch Gray"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="woc-zZ-kb4">
-                                <rect key="frame" x="20" y="438" width="374" height="129"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <string key="text">On Friday, Chinese Vice Premier Liu He said it is necessary to “crack down on Bitcoin mining and trading behavior” to prevent risks to the “social field.” For a long time, Chinese authorities have been concerned about the speculative nature of cryptocurrencies.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dj2-fD-ENp">
+                                <rect key="frame" x="352" y="281" width="46" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="AZs-0P-LXZ"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="+ 3">
+                                    <color key="baseForegroundColor" name="Dispatch Purple"/>
+                                    <color key="baseBackgroundColor" name="Dispatch Light Gray"/>
+                                </buttonConfiguration>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LBG-7t-6AI">
+                                <rect key="frame" x="277" y="281" width="65" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="k8d-EI-ykJ"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Crypto">
+                                    <fontDescription key="titleFontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
+                                    <color key="baseForegroundColor" name="Dispatch Purple"/>
+                                    <color key="baseBackgroundColor" name="Dispatch Light Gray"/>
+                                </buttonConfiguration>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="China's renewed crypto crackdown wipes nearly $300 billion off the market as bitcoin slides" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g6n-5R-3Nj">
+                                <rect key="frame" x="16" y="312" width="382" height="63.333333333333314"/>
+                                <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kj8-N4-mEb">
-                                <rect key="frame" x="0.0" y="107" width="414" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Arjun Kharpal, CNBC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="16n-rI-8C0">
+                                <rect key="frame" x="16" y="385.33333333333331" width="382" height="17"/>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                                <color key="textColor" name="Dispatch Gray"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="woc-zZ-kb4">
+                                <rect key="frame" x="16" y="412.33333333333326" width="382" height="439.66666666666674"/>
+                                <mutableString key="text">On Friday, Chinese Vice Premier Liu He said it is necessary to “crack down on Bitcoin mining and trading behavior” to prevent risks to the “social field.” For a long time, Chinese authorities have been concerned about the speculative nature of cryptocurrencies. On Friday, Chinese Vice Premier Liu He said it is necessary to “crack down on Bitcoin mining and trading behavior” to prevent risks to the “social field.” For a long time, Chinese authorities have been concerned about the speculative nature of cryptocurrencies. On Friday, Chinese Vice Premier Liu He said it is necessary to “crack down on Bitcoin mining and trading behavior” to prevent risks to the “social field.” For a long time, Chinese authorities have been concerned about the speculative nature of cryptocurrencies. On Friday, Chinese Vice Premier Liu He said it is necessary to “crack down on Bitcoin mining and trading behavior” to prevent risks to the “social field.” For a long time, Chinese authorities have been concerned about the speculative nature of cryptocurrencies. On Friday, Chinese Vice Premier Liu He said it is necessary to “crack down on Bitcoin mining and trading behavior” to prevent risks to the “social field.” For a long time, Chinese authorities have been concerned about the speculative nature of cryptocurrencies. On Friday, Chinese Vice Premier Liu He said it is necessary to “crack down on Bitcoin mining and trading behavior” to prevent risks to the “social field.” For a long time, Chinese authorities have been concerned about the speculative nature of cryptocurrencies.</mutableString>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                                <color key="textColor" name="Dispatch Purple"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nn4-WU-FEi"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="s1b-i7-Naq" firstAttribute="leading" secondItem="aOA-v3-EVc" secondAttribute="leading" id="4da-Hg-FnB"/>
+                            <constraint firstItem="dj2-fD-ENp" firstAttribute="leading" secondItem="LBG-7t-6AI" secondAttribute="trailing" constant="10" id="6VI-R0-VHR"/>
+                            <constraint firstItem="g6n-5R-3Nj" firstAttribute="trailing" secondItem="aOA-v3-EVc" secondAttribute="trailing" constant="-16" id="6rT-Wi-fjc"/>
+                            <constraint firstItem="g6n-5R-3Nj" firstAttribute="leading" secondItem="aOA-v3-EVc" secondAttribute="leading" constant="16" id="9Bc-zd-nhf"/>
+                            <constraint firstItem="5D1-jA-TWw" firstAttribute="top" secondItem="Kj8-N4-mEb" secondAttribute="bottom" constant="24" id="ABw-D1-9SJ"/>
+                            <constraint firstAttribute="trailing" secondItem="dj2-fD-ENp" secondAttribute="trailing" constant="16" id="AGr-Rh-gXV"/>
+                            <constraint firstItem="woc-zZ-kb4" firstAttribute="top" secondItem="16n-rI-8C0" secondAttribute="bottom" constant="10" id="Dmd-j4-iWk"/>
+                            <constraint firstItem="5D1-jA-TWw" firstAttribute="leading" secondItem="aOA-v3-EVc" secondAttribute="leading" constant="16" id="Hge-68-fCD"/>
+                            <constraint firstItem="Kj8-N4-mEb" firstAttribute="top" secondItem="nn4-WU-FEi" secondAttribute="top" constant="63" id="LVa-ke-G2S"/>
                             <constraint firstAttribute="trailing" secondItem="s1b-i7-Naq" secondAttribute="trailing" id="Lg3-6J-DnW"/>
+                            <constraint firstItem="LBG-7t-6AI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="5D1-jA-TWw" secondAttribute="trailing" constant="8" symbolic="YES" id="PRC-Gt-GQg"/>
+                            <constraint firstItem="Kj8-N4-mEb" firstAttribute="leading" secondItem="aOA-v3-EVc" secondAttribute="leading" id="SPi-ZB-H8G"/>
+                            <constraint firstAttribute="trailing" secondItem="16n-rI-8C0" secondAttribute="trailing" constant="16" id="UsQ-8f-RQ2"/>
+                            <constraint firstItem="LBG-7t-6AI" firstAttribute="top" secondItem="Kj8-N4-mEb" secondAttribute="bottom" constant="25" id="dPd-oe-B4r"/>
+                            <constraint firstItem="dj2-fD-ENp" firstAttribute="top" secondItem="Kj8-N4-mEb" secondAttribute="bottom" constant="25" id="g41-xT-Yay"/>
                             <constraint firstItem="s1b-i7-Naq" firstAttribute="top" secondItem="nn4-WU-FEi" secondAttribute="top" id="gWQ-TJ-xyP"/>
+                            <constraint firstAttribute="trailing" secondItem="xCO-cm-XMV" secondAttribute="trailing" constant="16" id="jrH-fM-LT2"/>
+                            <constraint firstItem="16n-rI-8C0" firstAttribute="top" secondItem="g6n-5R-3Nj" secondAttribute="bottom" constant="10" id="nlf-Vr-v3S"/>
+                            <constraint firstItem="xCO-cm-XMV" firstAttribute="top" secondItem="s1b-i7-Naq" secondAttribute="bottom" constant="16" id="o7g-EH-Wz7"/>
+                            <constraint firstItem="woc-zZ-kb4" firstAttribute="trailing" secondItem="aOA-v3-EVc" secondAttribute="trailing" constant="-16" id="rRY-h8-wGE"/>
+                            <constraint firstItem="g6n-5R-3Nj" firstAttribute="top" secondItem="LBG-7t-6AI" secondAttribute="bottom" constant="11" id="rii-GW-prb"/>
+                            <constraint firstItem="16n-rI-8C0" firstAttribute="leading" secondItem="aOA-v3-EVc" secondAttribute="leading" constant="16" id="u4h-4X-fI1"/>
+                            <constraint firstAttribute="trailing" secondItem="Kj8-N4-mEb" secondAttribute="trailing" id="v0D-JY-a9r"/>
+                            <constraint firstItem="nn4-WU-FEi" firstAttribute="bottom" secondItem="woc-zZ-kb4" secondAttribute="bottom" constant="10" id="ybm-wi-6CO"/>
+                            <constraint firstItem="woc-zZ-kb4" firstAttribute="leading" secondItem="aOA-v3-EVc" secondAttribute="leading" constant="16" id="zV6-0i-kVd"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="articleImage" destination="Kj8-N4-mEb" id="CgX-Rt-yvK"/>
+                        <outlet property="authorLabel" destination="16n-rI-8C0" id="AMX-yj-32s"/>
+                        <outlet property="contentLabel" destination="woc-zZ-kb4" id="Ufo-MK-lwR"/>
+                        <outlet property="customHeader" destination="s1b-i7-Naq" id="4rc-9C-7Xi"/>
+                        <outlet property="dateLabel" destination="5D1-jA-TWw" id="b6F-cd-Nbr"/>
+                        <outlet property="favoriteIcon" destination="xCO-cm-XMV" id="mfE-PF-URa"/>
+                        <outlet property="titleLabel" destination="g6n-5R-3Nj" id="OxO-M0-li0"/>
+                        <outlet property="topicButton" destination="LBG-7t-6AI" id="OBb-86-btv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NUe-9u-Fl2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3213" y="1213"/>
+            <point key="canvasLocation" x="4196" y="1213"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="I2y-lf-UV8">
@@ -373,13 +421,15 @@
                         <outlet property="customHeader" destination="JcK-oH-Xc9" id="vvv-3a-ulr"/>
                         <outlet property="loadingView" destination="a9Z-vr-heP" id="VOK-A2-BLd"/>
                         <outlet property="tableView" destination="yBY-FC-8kL" id="WnK-wx-T7O"/>
+                        <outlet property="view" destination="Dr3-0T-q0m" id="YwB-W4-sWW"/>
                         <segue destination="tUC-ru-eE1" kind="show" identifier="homepageToNotifications" id="f5P-ad-VVd"/>
                         <segue destination="Qi2-cd-MPv" kind="show" identifier="homepageToSearch" id="U37-Fe-alY"/>
+                        <segue destination="hE9-6G-rlH" kind="presentation" identifier="homepageToArticle" modalPresentationStyle="fullScreen" id="kEm-zR-HgR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NmD-95-HIW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1369.5652173913045" y="1212.7232142857142"/>
+            <point key="canvasLocation" x="1371" y="1213"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="oQp-Aa-Y9u">
@@ -972,6 +1022,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                         <outlet property="tableView" destination="XjW-ao-P3U" id="iBU-Fx-QOu"/>
                         <segue destination="tUC-ru-eE1" kind="show" identifier="favoritesToNotifications" id="Tvg-NK-Rg2"/>
                         <segue destination="Qi2-cd-MPv" kind="show" identifier="favoritesToSearch" id="SwU-X3-8Hj"/>
+                        <segue destination="hE9-6G-rlH" kind="presentation" identifier="favoritesToArticle" modalPresentationStyle="fullScreen" id="Auy-Jy-EV5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fhH-oy-gqj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -982,6 +1033,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
     <inferredMetricsTieBreakers>
         <segue reference="SwU-X3-8Hj"/>
         <segue reference="Tvg-NK-Rg2"/>
+        <segue reference="Auy-Jy-EV5"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Favorites" width="25" height="25"/>
@@ -989,9 +1041,11 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
         <image name="Profile" width="25" height="25"/>
         <image name="back" width="8" height="8"/>
         <image name="dropdown" width="6" height="5.3333334922790527"/>
-        <image name="filter" width="9.3333330154418945" height="9.3333330154418945"/>
+        <image name="favoriteArticle-notSelected" width="10" height="10"/>
+        <image name="filter" width="6.6666665077209473" height="6.3333334922790527"/>
         <image name="large-missing-profile-pic" width="33.666667938232422" height="33.666667938232422"/>
         <image name="no-results-found-image" width="44.333332061767578" height="44.333332061767578"/>
+        <image name="sampleImage" width="375" height="149"/>
         <image name="search" width="8.3333330154418945" height="8"/>
         <image name="small-missing-profile-pic" width="16.333333969116211" height="16.333333969116211"/>
         <namedColor name="Dispatch Dark Blue">

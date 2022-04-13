@@ -50,6 +50,8 @@ class BaseArticlesRepository {
     func getSavedArticles(completionHandler: @escaping ([String:FavoriteArticle]) -> ()) {
         
         let favoritesArray = coreDataManager.fetchFavoritesArrayFromCoreData()
+        print("CURRENTLY got this many articles in CORE DATA:")
+        print(favoritesArray.count)
         if favoritesArray.count != 0 {
             let favoritesDictionary = favoritesArray.reduce(into: [String:FavoriteArticle]()) {
                 $0[$1.id!] = $1
@@ -148,7 +150,6 @@ class BaseArticlesRepository {
     
     
     func removeArticleFromFavorites(withID articleID: String, from savedArticles: [FavoriteArticle], completionHandler: @escaping (String?) -> ()) {
-        
         coreDataManager.deleteFromCoreData(removeID: articleID, fromArray: savedArticles) { error in
             if let error = error {
                 completionHandler("Error removing from CoreData: \(error)")

@@ -29,6 +29,8 @@ struct Constants {
     }
     
     struct Segues {
+        static let HOMEPAGE_TO_ARTICLE = "homepageToArticle"
+        static let FAVORITES_TO_ARTICLE = "favoritesToArticle"
         static let HOMEPAGE_TO_NOTIFICATIONS = "homepageToNotifications"
         static let HOMEPAGE_TO_SEARCH = "homepageToSearch"
         static let FAVORITES_TO_NOTIFICATIONS = "favoritesToNotifications"
@@ -71,9 +73,13 @@ struct Constants {
     }
     
     struct NotificationCenter {
-        static let homepageToFavorites = "favoritesChangedInHomepageNotif"
-        static let favoritesToHomepage = "favoritesChangedInFavoritesNotif"
+        static let HOMEPAGE_TO_FAVORITES = "favoritesChangedInHomepageNotif"
+        static let FAVORITES_TO_HOMEPAGE = "favoritesChangedInFavoritesNotif"
         static let ARTICLE_ID = "articleID"
+        static let IS_FAVORITE = "isFavorite"
+        static let ARTICLE_TO_HOMEPAGE = "favoritesChangedInArticleFromHomepage"
+        static let ARTICLE_TO_FAVORITES = "favoritesChangedInArticleFromFavorites"
+        static let SENDER = "senderViewController"
     }
     
     struct UserDefaults {

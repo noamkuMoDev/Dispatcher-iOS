@@ -34,6 +34,8 @@
 		433D643228057D89002BBE92 /* ViewProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433D643128057D89002BBE92 /* ViewProfileViewModel.swift */; };
 		433D643428057E19002BBE92 /* ViewProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433D643328057E19002BBE92 /* ViewProfileRepository.swift */; };
 		433D64362806048B002BBE92 /* BaseCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433D64352806048B002BBE92 /* BaseCoreDataManager.swift */; };
+		433D64392806B6BA002BBE92 /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433D64382806B6BA002BBE92 /* ArticleViewController.swift */; };
+		433D643B2806EE0C002BBE92 /* ArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433D643A2806EE0C002BBE92 /* ArticleViewModel.swift */; };
 		437AB14627FB498B002A13F4 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 437AB14427FB498B002A13F4 /* DataModel.xcdatamodeld */; };
 		437AB14827FB4B04002A13F4 /* FavoriteArticleCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AB14727FB4B04002A13F4 /* FavoriteArticleCoreDataManager.swift */; };
 		437AB15828004BC1002A13F4 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AB15728004BC1002A13F4 /* SettingsViewController.swift */; };
@@ -148,6 +150,8 @@
 		433D643128057D89002BBE92 /* ViewProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewProfileViewModel.swift; sourceTree = "<group>"; };
 		433D643328057E19002BBE92 /* ViewProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewProfileRepository.swift; sourceTree = "<group>"; };
 		433D64352806048B002BBE92 /* BaseCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoreDataManager.swift; sourceTree = "<group>"; };
+		433D64382806B6BA002BBE92 /* ArticleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewController.swift; sourceTree = "<group>"; };
+		433D643A2806EE0C002BBE92 /* ArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewModel.swift; sourceTree = "<group>"; };
 		437AB14527FB498B002A13F4 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		437AB14727FB4B04002A13F4 /* FavoriteArticleCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArticleCoreDataManager.swift; sourceTree = "<group>"; };
 		437AB15728004BC1002A13F4 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -267,6 +271,7 @@
 				4311F5C627E9D03D00C28F3C /* Profile */,
 				4311F5C427E9D01000C28F3C /* Homepage */,
 				4311F5C527E9D02900C28F3C /* Favorites */,
+				433D64372806B69A002BBE92 /* Article */,
 				4311F5C727E9D0A500C28F3C /* Notifications */,
 				4311F5C827E9D0C100C28F3C /* Search */,
 				43F08D5627C7C9F5003FFA7D /* Controllers */,
@@ -529,6 +534,15 @@
 				433D642C280573A2002BBE92 /* ActionPopupView.swift */,
 			);
 			path = ActionPopups;
+			sourceTree = "<group>";
+		};
+		433D64372806B69A002BBE92 /* Article */ = {
+			isa = PBXGroup;
+			children = (
+				433D64382806B6BA002BBE92 /* ArticleViewController.swift */,
+				433D643A2806EE0C002BBE92 /* ArticleViewModel.swift */,
+			);
+			path = Article;
 			sourceTree = "<group>";
 		};
 		43C1B5C927D0A66500AB0D3B /* fonts */ = {
@@ -911,6 +925,7 @@
 				43C1B5E727D0B69100AB0D3B /* NotificationsViewController.swift in Sources */,
 				4311F5E327EB11CD00C28F3C /* ArticleModel.swift in Sources */,
 				4311F5DB27EA049A00C28F3C /* NotificationsViewModel.swift in Sources */,
+				433D64392806B6BA002BBE92 /* ArticleViewController.swift in Sources */,
 				43C1B66C27DF312100AB0D3B /* SearchViewController.swift in Sources */,
 				43DCB3A227E72B4200A1A779 /* LoadingView.swift in Sources */,
 				43C1B65827DE13D000AB0D3B /* ProfileOptionModel.swift in Sources */,
@@ -953,6 +968,7 @@
 				43F08D4327C7C9A6003FFA7D /* SceneDelegate.swift in Sources */,
 				4311F60827F0568700C28F3C /* AuthViewController.swift in Sources */,
 				4311F62527FA279C00C28F3C /* SettingsRepository.swift in Sources */,
+				433D643B2806EE0C002BBE92 /* ArticleViewModel.swift in Sources */,
 				43C1B5F327D0E64800AB0D3B /* TableViewDataSourceManager.swift in Sources */,
 				4311F5EE27EB26AF00C28F3C /* UserDefaultsManager.swift in Sources */,
 				43C1B5C627CF63F300AB0D3B /* MyTabBarController.swift in Sources */,
