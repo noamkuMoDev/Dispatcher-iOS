@@ -25,37 +25,29 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
     
     
     func defineNotificationCenterListeners() {
-        // alerts from FavoriteVC
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.FAVORITES_TO_HOMEPAGE), object: nil)
-        
-        // alerts from ArticleVC
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.ARTICLE_TO_HOMEPAGE), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.ARTICLE_TO_TABLES), object: nil)
     }
     
     
     @objc func refreshTableViewContent(_ notification: NSNotification) {
 
-        if notification.userInfo![Constants.NotificationCenter.SENDER] as! String == "FavoritesViewController" {
+        if notification.userInfo![Constants.NotificationCenter.SENDER] as! String == Constants.NotificationCenter.SENDER_FAVORITES {
             viewModel.updateArticleToNotFavoriteLocally(articleID: notification.userInfo![Constants.NotificationCenter.ARTICLE_ID] as! String) {
                 DispatchQueue.main.async {
                     self.dataSource.models = self.viewModel.newsArray
                     self.tableView.reloadData()
                 }
             }
-            
-        } else { // sender == ArticleViewController
-            
-            if notification.userInfo![Constants.NotificationCenter.IS_FAVORITE] as! String == "true" { // pressed article IS favorite
-                
+        } else {
+            if notification.userInfo![Constants.NotificationCenter.IS_FAVORITE] as! String == "true" {
                 viewModel.updateArticleToNotFavoriteLocally(articleID: notification.userInfo![Constants.NotificationCenter.ARTICLE_ID] as! String) {
                     DispatchQueue.main.async {
                         self.dataSource.models = self.viewModel.newsArray
                         self.tableView.reloadData()
                     }
                 }
-                
-            } else { // pressed article is NOT favorite
-                
+            } else {
                 viewModel.updateArticleToYesFavoriteLocally(articleID: notification.userInfo![Constants.NotificationCenter.ARTICLE_ID] as! String) {
                     DispatchQueue.main.async {
                         self.dataSource.models = self.viewModel.newsArray

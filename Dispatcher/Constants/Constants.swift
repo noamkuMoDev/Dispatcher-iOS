@@ -75,11 +75,14 @@ struct Constants {
     struct NotificationCenter {
         static let HOMEPAGE_TO_FAVORITES = "favoritesChangedInHomepageNotif"
         static let FAVORITES_TO_HOMEPAGE = "favoritesChangedInFavoritesNotif"
+        static let ARTICLE_TO_TABLES = "articleChangedSoUpdateTableViews"
+        
         static let ARTICLE_ID = "articleID"
         static let IS_FAVORITE = "isFavorite"
-        static let ARTICLE_TO_HOMEPAGE = "favoritesChangedInArticleFromHomepage"
-        static let ARTICLE_TO_FAVORITES = "favoritesChangedInArticleFromFavorites"
+        
         static let SENDER = "senderViewController"
+        static let SENDER_FAVORITES = "FavoritesViewController"
+        static let SENDER_ARTICLE = "ArticleViewController"
     }
     
     struct UserDefaults {

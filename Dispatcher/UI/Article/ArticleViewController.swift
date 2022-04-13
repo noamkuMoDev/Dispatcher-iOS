@@ -54,41 +54,28 @@ class ArticleViewController: UIViewController {
     
     @objc func favoriteIconPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         
-        if currentArticle.isFavorite { // current article IS Favorite
-            
-            // remove from CoreData + Firestore
-            articleVM.removeArticleFromFavorites(articleID: currentArticle.id) { // works!
-                
+        if currentArticle.isFavorite {
+            articleVM.removeArticleFromFavorites(articleID: currentArticle.id) {
                 self.currentArticle.isFavorite = false
-                
-                // send Notifications to: HomepageVC + FavoritesVC
                 let dataDict:[String: String] = [
                     Constants.NotificationCenter.ARTICLE_ID: self.currentArticle.id,
-                    Constants.NotificationCenter.IS_FAVORITE: "true",
-                    Constants.NotificationCenter.SENDER: "ArticleViewController"
+                    Constants.NotificationCenter.IS_FAVORITE: "\(!self.currentArticle.isFavorite)",
+                    Constants.NotificationCenter.SENDER: Constants.NotificationCenter.SENDER_ARTICLE
                 ]
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.ARTICLE_TO_HOMEPAGE), object: nil, userInfo: dataDict) // works!
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.ARTICLE_TO_FAVORITES), object: nil, userInfo: dataDict) // works!
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.ARTICLE_TO_TABLES), object: nil, userInfo: dataDict)
                 DispatchQueue.main.async {
                     self.favoriteIcon.image = UIImage(named: "favoriteArticle-notSelected")
                 }
             }
-           
-        } else { // current article is NOT Favorite
-            
+        } else {
             self.currentArticle.isFavorite = true
-            
-            // add to CoreData + Firestore
-            articleVM.addArticleToFavorites(newArticle: currentArticle) { // works!
-                
-                // send Notifications to: HomepageVC + FavoritesVC
+            articleVM.addArticleToFavorites(newArticle: currentArticle) {
                 let dataDict:[String: String] = [
                     Constants.NotificationCenter.ARTICLE_ID: self.currentArticle.id,
-                    Constants.NotificationCenter.IS_FAVORITE: "false",
-                    Constants.NotificationCenter.SENDER: "ArticleViewController"
+                    Constants.NotificationCenter.IS_FAVORITE: "\(!self.currentArticle.isFavorite)",
+                    Constants.NotificationCenter.SENDER: Constants.NotificationCenter.SENDER_ARTICLE
                 ]
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.ARTICLE_TO_HOMEPAGE), object: nil, userInfo: dataDict) // works!
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.ARTICLE_TO_FAVORITES), object: nil, userInfo: dataDict) // works!
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.ARTICLE_TO_TABLES), object: nil, userInfo: dataDict)
                 DispatchQueue.main.async {
                     self.favoriteIcon.image = UIImage(named: "favoriteArticle-selected")
                 }

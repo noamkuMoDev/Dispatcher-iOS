@@ -24,21 +24,13 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     
 
     func defineNotificationCenterListeners() {
-        // alerts from HomepageVC
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.HOMEPAGE_TO_FAVORITES), object: nil)
-        
-        // alerts from ArticleVC
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.ARTICLE_TO_FAVORITES), object: nil)
-        
-        print("Got notification from ArticleVC")
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.ARTICLE_TO_TABLES), object: nil)
     }
     
 
     @objc func refreshTableViewContent(_ notification: NSNotification) {
-        print("Went to refresh my table view")
         viewModel.getSavedArticles {
-            print("GOT UPDATED saved articles list:")
-            print(self.viewModel.savedArticles)
             self.dataSource.models = self.viewModel.savedArticles.map({$0.value}).sorted(by: {$0.timestamp! > $1.timestamp!})
             DispatchQueue.main.async {
                 if self.viewModel.savedArticles.count == 0 {
@@ -79,7 +71,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
                 }
             }
         }
-        //tableView.delegate = self
         tableView.dataSource = self.dataSource
         tableView.rowHeight = 115.0
     }
@@ -187,7 +178,7 @@ extension FavoritesViewController: SavedArticleCellDelegate {
                     }
                     let dataDict:[String: String] = [
                         Constants.NotificationCenter.ARTICLE_ID: articleID,
-                        Constants.NotificationCenter.SENDER: "FavoritesViewController"
+                        Constants.NotificationCenter.SENDER: Constants.NotificationCenter.SENDER_FAVORITES
                     ]
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.FAVORITES_TO_HOMEPAGE), object: nil, userInfo: dataDict)
                     self.removeLoadingAnimation()
