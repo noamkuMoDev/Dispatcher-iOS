@@ -72,23 +72,21 @@ class BaseArticlesRepository {
                         for item in dataDictionary! {
                             let dict = item.value as! [String:String]
                             let favoriteArticle = FavoriteArticle(context: (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext)
-                            favoriteArticle.title =  dict["title"]
+                            favoriteArticle.title =  dict[Constants.FirestoreProperties.TITLE]
                             favoriteArticle.isFavorite = true
-                            favoriteArticle.author = dict["author"]
-                            favoriteArticle.topic = dict["topic"]
-                            favoriteArticle.imageUrl = dict["imageUrl"]
-                            favoriteArticle.content = dict["content"]
-                            favoriteArticle.url = dict["url"]
-                            favoriteArticle.date = dict["date"]
+                            favoriteArticle.author = dict[Constants.FirestoreProperties.AUTHOR]
+                            favoriteArticle.topic = dict[Constants.FirestoreProperties.TOPIC]
+                            favoriteArticle.imageUrl = dict[Constants.FirestoreProperties.IMAGE_URL]
+                            favoriteArticle.content = dict[Constants.FirestoreProperties.CONTENT]
+                            favoriteArticle.url = dict[Constants.FirestoreProperties.URL]
+                            favoriteArticle.date = dict[Constants.FirestoreProperties.DATE]
                             favoriteArticle.id = item.key
                             
-                            
-                            let isoDate = "\(dict["timestamp"]!)+0000".replacingOccurrences(of: " ", with: "T")
+                            let isoDate = "\(dict[Constants.FirestoreProperties.TIMESTAMP]!)+0000".replacingOccurrences(of: " ", with: "T")
                             let dateFormatter = DateFormatter()
                             dateFormatter.locale = Locale(identifier: "en_US_POSIX")
                             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
                             if let date = dateFormatter.date(from: isoDate) {
-                                print(date)
                                 favoriteArticle.timestamp = date
                             } else {
                                 favoriteArticle.timestamp = Date()
@@ -97,7 +95,7 @@ class BaseArticlesRepository {
                             savedArticles[item.key] = favoriteArticle
                         }
 
-                        self.coreDataManager.saveFavoriteArticlesArrayToCoreData(articles: savedArticles.map({$0.value})) { error in
+                        self.coreDataManager.saveFavoriteArticlesArrayToCoreData(articles: savedArticles.map({$0.value}).sorted(by: {$0.timestamp! > $1.timestamp!})) { error in
                             if let error = error {
                                 print("Error saving all favorites to CoreData: \(error)")
                             }
@@ -123,10 +121,14 @@ class BaseArticlesRepository {
                 let timestamp = format.string(from: date)
                 if uid != nil {
                     let dataDict: [String: Any] = [
-                        "author" : article.author ?? "", "content" : article.content,
-                        "date" : article.date, "imageUrl": article.imageUrl ?? "",
-                        "title" : article.articleTitle, "topic" : article.topic,
-                        "url" : article.url, "timestamp": "\(timestamp)"
+                        Constants.FirestoreProperties.AUTHOR : article.author ?? "",
+                        Constants.FirestoreProperties.CONTENT : article.content,
+                        Constants.FirestoreProperties.DATE : article.date,
+                        Constants.FirestoreProperties.IMAGE_URL: article.imageUrl ?? "",
+                        Constants.FirestoreProperties.TITLE : article.articleTitle,
+                        Constants.FirestoreProperties.TOPIC : article.topic,
+                        Constants.FirestoreProperties.URL: article.url,
+                        Constants.FirestoreProperties.TIMESTAMP: "\(timestamp)"
                     ]
                     let colPath = "\(Constants.Firestore.USERS_COLLECTION)/\(uid!)/\(Constants.Firestore.FAVORITES_COLLECTION)"
                     
@@ -154,7 +156,7 @@ class BaseArticlesRepository {
                 let uid = self.firebaseAuthManager.getCurrentUserUID()
                 if uid != nil {
                     let docPath = "\(Constants.Firestore.USERS_COLLECTION)/\(uid!)/\(Constants.Firestore.FAVORITES_COLLECTION)/\(articleID)"
-                    self.firestoreManager.removeDataFromCollection(documentPath: docPath) { error in
+                    self.firestoreManager.removeDocumentFromCollection(documentPath: docPath) { error in
                         if let error = error {
                             completionHandler("Error removing from firestore: \(error)")
                         } else {

@@ -5,8 +5,10 @@ class ProfileRepository: AuthRepository {
     let coreDataManager = FavoriteArticleCoreDataManager()
     
     
-    func fetchUserData(with key: String) -> Any? {
-        return userDefaultsManager.getFromUserDefaults(key: key)
+    func getUserData(completionHandler: @escaping (String?,Any?) -> ()) {
+        let userName = userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.CURRENT_USER_NAME) as? String
+        let userImage = userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.CURRENT_USER_IMAGE)
+        completionHandler(userName, userImage)
     }
     
     

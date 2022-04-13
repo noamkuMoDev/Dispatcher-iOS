@@ -15,6 +15,7 @@ struct Constants {
         static let LOGIN = "LOGIN"
         static let SIGNUP = "SIGNUP"
         static let LOGOUT = "LOGOUT"
+        static let OK = "OK"
     }
     
     struct TextFieldsIDs {
@@ -72,6 +73,7 @@ struct Constants {
     struct NotificationCenter {
         static let homepageToFavorites = "favoritesChangedInHomepageNotif"
         static let favoritesToHomepage = "favoritesChangedInFavoritesNotif"
+        static let ARTICLE_ID = "articleID"
     }
     
     struct UserDefaults {
@@ -95,6 +97,20 @@ struct Constants {
     struct Firestore {
         static let USERS_COLLECTION = "Users"
         static let FAVORITES_COLLECTION = "savedArticles"
+    }
+    
+    struct FirestoreProperties {
+        static let NAME = "name"
+        static let IMAGE = "image"
+        static let EMAIL = "email"
+        static let AUTHOR = "author"
+        static let CONTENT = "content"
+        static let DATE = "date"
+        static let IMAGE_URL = "imageUrl"
+        static let TITLE = "title"
+        static let TOPIC = "topic"
+        static let URL = "url"
+        static let TIMESTAMP = "timestamp"
     }
     
     struct apiCalls {

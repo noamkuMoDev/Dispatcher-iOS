@@ -30,7 +30,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate, UITableView
     
 
     @objc func refreshTableViewContent(_ notification: NSNotification) {
-        viewModel.updateArticleToNotFavoriteLocally(articleID: notification.userInfo!["articleID"] as! String)
+        viewModel.updateArticleToNotFavoriteLocally(articleID: notification.userInfo![Constants.NotificationCenter.ARTICLE_ID] as! String)
         DispatchQueue.main.async {
             self.dataSource.models = self.viewModel.newsArray
             self.tableView.reloadData()

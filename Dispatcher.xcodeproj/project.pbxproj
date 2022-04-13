@@ -33,6 +33,7 @@
 		433D642F280573B2002BBE92 /* ActionPopupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 433D642E280573B2002BBE92 /* ActionPopupView.xib */; };
 		433D643228057D89002BBE92 /* ViewProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433D643128057D89002BBE92 /* ViewProfileViewModel.swift */; };
 		433D643428057E19002BBE92 /* ViewProfileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433D643328057E19002BBE92 /* ViewProfileRepository.swift */; };
+		433D64362806048B002BBE92 /* BaseCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433D64352806048B002BBE92 /* BaseCoreDataManager.swift */; };
 		437AB14627FB498B002A13F4 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 437AB14427FB498B002A13F4 /* DataModel.xcdatamodeld */; };
 		437AB14827FB4B04002A13F4 /* FavoriteArticleCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AB14727FB4B04002A13F4 /* FavoriteArticleCoreDataManager.swift */; };
 		437AB15828004BC1002A13F4 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437AB15728004BC1002A13F4 /* SettingsViewController.swift */; };
@@ -146,6 +147,7 @@
 		433D642E280573B2002BBE92 /* ActionPopupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActionPopupView.xib; sourceTree = "<group>"; };
 		433D643128057D89002BBE92 /* ViewProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewProfileViewModel.swift; sourceTree = "<group>"; };
 		433D643328057E19002BBE92 /* ViewProfileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewProfileRepository.swift; sourceTree = "<group>"; };
+		433D64352806048B002BBE92 /* BaseCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoreDataManager.swift; sourceTree = "<group>"; };
 		437AB14527FB498B002A13F4 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		437AB14727FB4B04002A13F4 /* FavoriteArticleCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArticleCoreDataManager.swift; sourceTree = "<group>"; };
 		437AB15728004BC1002A13F4 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 			children = (
 				4311F5ED27EB26AF00C28F3C /* UserDefaultsManager.swift */,
 				4311F62227F9CC5500C28F3C /* KeychainManager.swift */,
+				433D64352806048B002BBE92 /* BaseCoreDataManager.swift */,
 				437AB14727FB4B04002A13F4 /* FavoriteArticleCoreDataManager.swift */,
 			);
 			path = Persistence;
@@ -920,6 +923,7 @@
 				43C1B66F27DF35D000AB0D3B /* RecentSearchCell.swift in Sources */,
 				43C1B61527D8D79F00AB0D3B /* NewsCell.swift in Sources */,
 				43C1B65E27DE2C8700AB0D3B /* TermsAndPrivacyViewController.swift in Sources */,
+				433D64362806048B002BBE92 /* BaseCoreDataManager.swift in Sources */,
 				4311F60C27F056FE00C28F3C /* FirebaseAuthManager.swift in Sources */,
 				433D64282802BF2E002BBE92 /* FirestoreManager.swift in Sources */,
 				43DCB39E27E1FA7500A1A779 /* RecentSearchModel.swift in Sources */,

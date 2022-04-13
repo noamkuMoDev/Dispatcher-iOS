@@ -134,31 +134,26 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="79"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="bdD-u8-DwU">
-                                        <rect key="frame" x="16.000000000000007" y="16" width="112.66666666666669" height="49"/>
+                                        <rect key="frame" x="16" y="16" width="88.666666666666671" height="49"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hi there" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="56s-rD-vzH">
-                                                <rect key="frame" x="0.0" y="0.0" width="83.333333333333329" height="23.666666666666668"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="83.333333333333329" height="31"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="24"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DhH-lb-DXK">
-                                                <rect key="frame" x="0.0" y="23.666666666666671" width="112.66666666666667" height="25.333333333333329"/>
-                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" title="Edit my profile" titleAlignment="leading">
-                                                    <fontDescription key="titleFontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
-                                                </buttonConfiguration>
-                                                <connections>
-                                                    <action selector="editProfileButtonPressed:" destination="yxn-cW-Zh2" eventType="touchUpInside" id="p3u-09-hIk"/>
-                                                </connections>
-                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit my profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJE-18-p61">
+                                                <rect key="frame" x="0.0" y="31" width="88.666666666666671" height="18"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="49" id="xEI-y8-DS1"/>
                                         </constraints>
                                     </stackView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="small-missing-profile-pic" translatesAutoresizingMaskIntoConstraints="NO" id="Msw-se-dUX">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="small-missing-profile-pic" translatesAutoresizingMaskIntoConstraints="NO" id="Msw-se-dUX">
                                         <rect key="frame" x="349" y="16" width="49" height="49"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="49" id="1ce-lv-jfE"/>
@@ -206,6 +201,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="cIJ-y6-Eiv"/>
                     <connections>
+                        <outlet property="editProfileLabel" destination="bJE-18-p61" id="Xa1-TS-D69"/>
                         <outlet property="helloUserLabel" destination="56s-rD-vzH" id="Bkx-hW-5au"/>
                         <outlet property="tableView" destination="N1C-ur-zap" id="Q9l-af-pXq"/>
                         <outlet property="userProfileImage" destination="Msw-se-dUX" id="fQx-35-4nY"/>

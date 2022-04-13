@@ -13,59 +13,78 @@ class ViewProfileRepository {
     }
     
     
-    func getUserDetails(completionHandler: @escaping (String?,String?,String?) -> ()) {
-        do {
-            let userName = userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.CURRENT_USER_NAME) as! String
-            let userImage = userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.CURRENT_USER_IMAGE) as? String
-            let userEmail = try keychainManager.fetchFromKeychain(
-                service: Constants.Keychain.SERVICE,
-                account: Constants.Keychain.ACCOUNT_USER_EMAIL,
-                secClass: kSecClassGenericPassword as String
-            )
-            completionHandler(userName, userEmail as? String, userImage)
-        } catch (let error) {
-            print(error)
-        }
+    func getDataOnUser(subject dataKey: String, completionHandler: @escaping (Any?) -> ()) {
         
+        switch dataKey {
+        case Constants.UserDefaults.CURRENT_USER_NAME:
+            completionHandler(userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.CURRENT_USER_NAME))
+            
+        case Constants.TextFieldsIDs.USRE_EMAIL:
+            do {
+                completionHandler( try keychainManager.fetchFromKeychain(
+                    service: Constants.Keychain.SERVICE,
+                    account: Constants.Keychain.ACCOUNT_USER_EMAIL,
+                    secClass: kSecClassGenericPassword as String
+                ))
+            } catch (let error) {
+                print("Error getting email from keychain - \(error)")
+                completionHandler(nil)
+            }
+            
+        case Constants.UserDefaults.CURRENT_USER_IMAGE:
+            completionHandler(userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.CURRENT_USER_IMAGE))
+            
+        default:
+            print("invalid option")
+        }
     }
     
     
-    func updateUserDetail(detailType: String, data: String) {
+    func updateUserDetail(detailType: String, data: Any) {
         
         let uid = firebaseAuthManager.getCurrentUserUID()
         if let uid = uid {
             let docPath = "\(Constants.Firestore.USERS_COLLECTION)/\(uid)"
             
             switch detailType {
+                
             case Constants.UserDefaults.CURRENT_USER_NAME:
-                firestoreManager.updateDocumentInFirestore(docuemntPath: docPath, property: "name", value: data) { error in
+                firestoreManager.updateDocumentInFirestore(docuemntPath: docPath, property: Constants.FirestoreProperties.NAME, value: data) { error in
                     if let error = error {
                         print("Faild updating name in Firestore - \(error)")
                     } else {
                         self.userDefaultsManager.setItemToUserDefaults(key: detailType, data: data)
                     }
                 }
+                
             case Constants.TextFieldsIDs.USRE_EMAIL:
-                firebaseAuthManager.updateUserEmail(to: data) { error in
+                let email = data as! String
+                firebaseAuthManager.updateUserEmail(to: email) { error in
                     if let error = error {
                         print("Faild updating email in Firebase Auth - \(error)")
                     } else {
-                        do {
-                            try self.keychainManager.updateInKeychain(
-                                data: Data(data.utf8),
-                                service: Constants.Keychain.SERVICE,
-                                account: Constants.Keychain.ACCOUNT_USER_EMAIL,
-                                secClass: kSecClassGenericPassword as String
-                            ){
-                                
+                        self.firestoreManager.updateDocumentInFirestore(docuemntPath: docPath, property: Constants.FirestoreProperties.EMAIL, value: email) { error in
+                            if let error = error {
+                                print("Faild updating email in Firestore - \(error)")
                             }
-                        } catch (let error) {
-                            print("Error updating keychain - \(error)")
+                            do {
+                                try self.keychainManager.updateInKeychain(
+                                    data: Data(email.utf8),
+                                    service: Constants.Keychain.SERVICE,
+                                    account: Constants.Keychain.ACCOUNT_USER_EMAIL,
+                                    secClass: kSecClassGenericPassword as String
+                                ){
+                                    
+                                }
+                            } catch (let error) {
+                                print("Error updating keychain - \(error)")
+                            }
                         }
                     }
                 }
+                
             case Constants.UserDefaults.CURRENT_USER_IMAGE:
-                firestoreManager.updateDocumentInFirestore(docuemntPath: docPath, property: "image", value: data) { error in
+                firestoreManager.updateDocumentInFirestore(docuemntPath: docPath, property: Constants.FirestoreProperties.IMAGE, value: data) { error in
                     if let error = error {
                         print("Faild updating image in Firestore - \(error)")
                     } else {
@@ -75,7 +94,6 @@ class ViewProfileRepository {
             default:
                 print("invalide option")
             }
-            
         } else {
             print("couldn't get current user's uid")
         }

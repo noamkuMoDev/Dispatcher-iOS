@@ -1,7 +1,6 @@
 import Foundation
 import Firebase
 import FirebaseFirestore
-import FirebaseFirestoreSwift
 
 class FirestoreManager {
 
@@ -48,6 +47,7 @@ class FirestoreManager {
         }
     }
     
+    
     func updateDocumentInFirestore(docuemntPath: String, property: String, value: Any, completionHandler: @escaping (String?) -> ()) {
         let docRef = database.document(docuemntPath)
         docRef.updateData([
@@ -62,7 +62,7 @@ class FirestoreManager {
     }
     
 
-    func removeDataFromCollection(documentPath: String, completionHandler: @escaping(String?) -> ()) {
+    func removeDocumentFromCollection(documentPath: String, completionHandler: @escaping(String?) -> ()) {
         let docRef = database.document(documentPath)
         docRef.delete() { error in
             if let error = error {

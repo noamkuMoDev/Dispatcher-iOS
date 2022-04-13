@@ -35,9 +35,9 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
 
     func initiateUIElements() {
         
-        emailFormView.initView(id: Constants.TextFieldsIDs.EMAIL, delegate: self, labelText: "Invalid email adress", placeholderText: "Your Email", hideIcon: false)
-        passwordFormView.initView(id: Constants.TextFieldsIDs.PASSWORD, delegate: self, labelText: "Weak password", placeholderText: "Password")
-        reenterPasswordFormView.initView(id: Constants.TextFieldsIDs.PASSWORD_AGAIN, delegate: self, labelText: "Input doesn't match previous password", placeholderText: "Re-Enter Password")
+        emailFormView.initView(id: Constants.TextFieldsIDs.EMAIL, delegate: self, labelText: "Invalid email adress", placeholderText: "Your Email")
+        passwordFormView.initView(id: Constants.TextFieldsIDs.PASSWORD, delegate: self, labelText: "Weak password", placeholderText: "Password", hideIcon: false)
+        reenterPasswordFormView.initView(id: Constants.TextFieldsIDs.PASSWORD_AGAIN, delegate: self, labelText: "Input doesn't match previous password", placeholderText: "Re-Enter Password", hideIcon: false)
         loadingView.initView(delegate: self)
         loadingView.isHidden = true
 
@@ -95,8 +95,6 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         topButton.buttonLabel.text = Constants.ButtonsText.SIGNUP
         bottomButton.buttonLabel.text = Constants.ButtonsText.LOGIN
     }
-    
-
     func setLoginPageLook() {
         clearAllUIElements()
         currentPageType = .login

@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 enum userType {
     case loggedOut
@@ -38,10 +39,21 @@ class AuthRepository {
                 if let error = error {
                     completionHandler("Error fetching user data from firestore: \(error)")
                 } else {
-                    self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.CURRENT_USER_NAME, data: data!["name"])
-                    if data!["image"] != nil {
-                        self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.CURRENT_USER_IMAGE, data: data!["image"])
+                    if let imageUrl = data!["image"] as? String {
+                        let task = URLSession.shared.dataTask(with: URL(string: imageUrl)!, completionHandler: { data, _, error in
+                            if let error = error {
+                                print("Failed - \(error)")
+                            } else {
+                                DispatchQueue.main.async {
+                                    let image = UIImage(data: data!)
+                                    let data = image!.pngData()
+                                    self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.CURRENT_USER_IMAGE, data: data)
+                                }
+                            }
+                        })
+                        task.resume()
                     }
+                    self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.CURRENT_USER_NAME, data: data!["name"])
                     self.saveDefaultAppSettingsToUserDefaults()
                     self.saveUserEmailToKeychain(data!["email"] as! String) { error in
                         if let error = error {

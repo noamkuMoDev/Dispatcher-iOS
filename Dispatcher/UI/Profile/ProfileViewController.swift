@@ -4,31 +4,48 @@ class ProfileViewController: UIViewController {
 
     @IBOutlet weak var userProfileShadowView: UIView!
     @IBOutlet weak var helloUserLabel: UILabel!
+    @IBOutlet weak var editProfileLabel: UILabel!
     @IBOutlet weak var userProfileImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     
     let viewModel = ProfileViewModel()
     var dataSource: TableViewDataSourceManager<ProfileOptionModel>!
     
+    var userImage: Data? = nil
+    var userName: String? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
        
+        getUserDetails()
         initiateUIElements()
+        defineGestureRecognizers()
     }
     
+    func getUserDetails() {
+        viewModel.fetchUserData() { userName, userImage in
+            if let userName = userName {
+                self.helloUserLabel.text = "Hi, \(userName)"
+            }
+            if let imgData = userImage as? NSData {
+                self.userProfileImage.image = UIImage(data: imgData as Data)
+            }
+        }
+    }
 
     func initiateUIElements() {
         addShadowsToHeader()
+        userProfileImage.layer.cornerRadius = userProfileImage.frame.width / 2
+        userProfileImage.layer.masksToBounds = true
         setupTableView()
-        
-        if let userName = viewModel.fetchUserData(dataKey: Constants.UserDefaults.CURRENT_USER_NAME) as? String {
-            helloUserLabel.text = "Hi, \(userName)"
-        }
-        
-        if let imgData = viewModel.fetchUserData(dataKey: Constants.UserDefaults.CURRENT_USER_IMAGE) as? NSData {
-            userProfileImage.image = UIImage(data: imgData as Data)
-        }
+    }
+    
+    
+    func defineGestureRecognizers() {
+        editProfileLabel.addGestureRecognizer(UITapGestureRecognizer(target: editProfileLabel, action: #selector(editProfileButtonPressed)))
+        editProfileLabel.isUserInteractionEnabled = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editProfileButtonPressed(tapGestureRecognizer:)))
+        editProfileLabel.addGestureRecognizer(tapGestureRecognizer)
     }
     
     
@@ -56,9 +73,23 @@ class ProfileViewController: UIViewController {
     }
     
     
-    @IBAction func editProfileButtonPressed(_ sender: Any) {
+    @objc func editProfileButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         self.performSegue(withIdentifier: Constants.Segues.GO_TO_UPDATE_PROFILE, sender: self)
     }
+    
+    
+    override func prepare( for segue: UIStoryboardSegue, sender: Any? ) {
+        if segue.identifier == Constants.Segues.GO_TO_UPDATE_PROFILE {
+            let destinationVC = segue.destination as! ViewProfileViewController
+            if let userImage = userImage {
+                destinationVC.existingProfilePicture = UIImage(data: userImage)
+            }
+            if let userName = userName {
+                destinationVC.userName = userName
+            }
+        }
+    }
+    
     
     
     override func viewWillAppear(_ animated: Bool) {

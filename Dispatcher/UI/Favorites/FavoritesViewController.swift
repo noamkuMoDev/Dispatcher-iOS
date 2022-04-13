@@ -158,7 +158,7 @@ extension FavoritesViewController: SavedArticleCellDelegate {
                     } else {
                         self.tableView.reloadData()
                     }
-                    let dataDict:[String: String] = ["articleID": articleID]
+                    let dataDict:[String: String] = [Constants.NotificationCenter.ARTICLE_ID: articleID]
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.favoritesToHomepage), object: nil, userInfo: dataDict)
                     self.removeLoadingAnimation()
                 }

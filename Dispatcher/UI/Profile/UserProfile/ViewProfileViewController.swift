@@ -25,8 +25,8 @@ class ViewProfileViewController: UIViewController {
     var newEmail: String?
     
     var existingProfilePicture: UIImage? = nil
-    var userName: String = ""
-    var userEmail: String = ""
+    var userName: String?
+    var userEmail: String?
     
     
     let viewModel = ViewProfileViewModel()
@@ -38,37 +38,40 @@ class ViewProfileViewController: UIViewController {
         initializeUIElements()
     }
     
-    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
-        emailInputView.textField.resignFirstResponder()
-        nameInputView.textField.resignFirstResponder()
-    }
-     
+    
     func fetchUserDetails() {
         
-        viewModel.getUserDetails() { userName, userEmail, userImage in
-            if let userName = userName {
-                self.userName = userName
+        if userName == nil {
+            viewModel.getDataOnUser(subject: Constants.UserDefaults.CURRENT_USER_NAME) { userName in
+                if let userName = userName as? String {
+                    self.userName = userName
+                } else {
+                    print("couldn't get user name from user details")
+                }
             }
-            if let userEmail = userEmail {
-                self.userEmail = userEmail
+        }
+        
+        if existingProfilePicture == nil {
+            viewModel.getDataOnUser(subject: Constants.UserDefaults.CURRENT_USER_IMAGE) { image in
+                if let image = image as? NSData {
+                    self.userPicture.image = UIImage(data: image as Data)
+                } else {
+                    print("couldn't get user image from user details")
+                }
             }
-            if let userImage = userImage {
-                let task = URLSession.shared.dataTask(with: URL(string: userImage)!, completionHandler: { data, _, error in
-                    if let error = error {
-                        print("Failed - \(error)")
-                    } else {
-                        DispatchQueue.main.async {
-                            let image = UIImage(data: data!)
-                            self.userPicture.image = image
-                        }
-                    }
-                })
-                task.resume()
+        }
+        
+        viewModel.getDataOnUser(subject: Constants.TextFieldsIDs.USRE_EMAIL) { email in
+            if let email = email as? NSData {
+                let emailAsString : String = NSString(data: email as Data, encoding: String.Encoding.utf8.rawValue)! as String
+                self.userEmail = emailAsString
+            } else {
+                print("couldn't get user email from keychain")
             }
         }
     }
     
-    // V
+
     func initializeUIElements() {
         customHeader.initView(delegate: self, apperanceType: .backOnlyAppearance)
         popupView.initView(delegate: self)
@@ -78,7 +81,7 @@ class ViewProfileViewController: UIViewController {
         stopEditingProfileUI()
         hideAlert()
     }
-    // V
+
     func initTextInputs() {
         nameInputView.initView(id: Constants.TextFieldsIDs.NAME, delegate: self, labelText: "Invalid name", placeholderText: "")
         emailInputView.initView(id: Constants.TextFieldsIDs.USRE_EMAIL, delegate: self, labelText: "Invalid email", placeholderText: "")
@@ -87,16 +90,8 @@ class ViewProfileViewController: UIViewController {
         nameInputView.contentView.backgroundColor = .white
         emailInputView.contentView.backgroundColor = .white
     }
+
     
-    
-    // Only image that is shown to the user on screen
-    func setupDisplayedProfilePicture(image: UIImage?) {
-        if let image = image {
-            userPicture.image = image
-        }
-    }
-    
-    // V
     @IBAction func editProfileButtonPressed(_ sender: Any) {
         customHeader.updateHeaderAppearanceType(to: .confirmCancelAppearance)
         startEditingProfileUI()
@@ -105,7 +100,7 @@ class ViewProfileViewController: UIViewController {
         defineGestureRecognizers()
     }
     
-    // V
+
     func defineGestureRecognizers() {
         changePictureLabel.addGestureRecognizer(UITapGestureRecognizer(target: changePictureLabel, action: #selector(changePicturePressed)))
         changePictureLabel.isUserInteractionEnabled = true
@@ -121,29 +116,36 @@ class ViewProfileViewController: UIViewController {
         self.view.addGestureRecognizer(tapGesture)
     }
     
-    // V
+    
+    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+        emailInputView.textField.resignFirstResponder()
+        nameInputView.textField.resignFirstResponder()
+    }
+    
+    
     @objc func changePicturePressed(tapGestureRecognizer: UITapGestureRecognizer) {
         popupView.reArrangePopupView(toState: .selectPictureFrom)
         displayAlert()
     }
     
-    // V
+
     func displayImagePicker(sourceType: UIImagePickerController.SourceType) -> UIImagePickerController {
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = sourceType
         return imagePicker
     }
    
-    // V
+
     func displayAlert() {
         darkBackgroundView.isHidden = false
         popupView.isHidden = false
     }
+    
     func hideAlert() {
         darkBackgroundView.isHidden = true
         popupView.isHidden = true
     }
-    // V
+
     func startEditingProfileUI() {
         screenTitle.isHidden = true
         editProfileButton.isHidden = true
@@ -151,6 +153,7 @@ class ViewProfileViewController: UIViewController {
         nameInputView.textField.isEnabled = true
         emailInputView.textField.isEnabled = true
     }
+    
     func stopEditingProfileUI() {
         screenTitle.isHidden = false
         editProfileButton.isHidden = false
@@ -160,11 +163,13 @@ class ViewProfileViewController: UIViewController {
         nameInputView.dismissEditMode()
         emailInputView.dismissEditMode()
     }
-    // V
+
+    
     @objc func dismissPopup(tapGestureRecognizer: UITapGestureRecognizer) {
         hideAlert()
     }
-    // V
+
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
@@ -175,12 +180,11 @@ class ViewProfileViewController: UIViewController {
 //MARK: - CustomHeaderViewDelegate
 extension ViewProfileViewController: CustomHeaderViewDelegate {
     
-    // V
     func backButtonPressed() {
         navigationController?.popViewController(animated: true)
     }
     
-    // V
+
     func checkmarkButtonPressed() {
 
         if newName != nil || newEmail != nil || newProfilePicture != nil {
@@ -211,7 +215,10 @@ extension ViewProfileViewController: CustomHeaderViewDelegate {
                         if let error = error {
                             print("Error - \(error)")
                         } else {
-                            self.viewModel.updateUserDetail(detailType: Constants.UserDefaults.CURRENT_USER_IMAGE, data: url!)
+                            let data = newProfilePicture.pngData()
+                            if let data = data {
+                                self.viewModel.updateUserDetail(detailType: Constants.UserDefaults.CURRENT_USER_IMAGE, data: data)
+                            }
                         }
                     }
                 }
@@ -225,10 +232,13 @@ extension ViewProfileViewController: CustomHeaderViewDelegate {
         }
     }
     
+
     func cancelButtonPressed() {
         nameInputView.textField.text = userName
         emailInputView.textField.text = userEmail
-        setupDisplayedProfilePicture(image: existingProfilePicture)
+        if let existingProfilePicture = existingProfilePicture {
+            userPicture.image = existingProfilePicture
+        }
         customHeader.updateHeaderAppearanceType(to: .backOnlyAppearance)
         stopEditingProfileUI()
     }
@@ -236,7 +246,6 @@ extension ViewProfileViewController: CustomHeaderViewDelegate {
 
 //MARK: - FormInputViewDelegate
 extension ViewProfileViewController: FormInputViewDelegate {
-    
     
     func textFieldDidChange(inputView: FormInputView, textFieldId: String, currentText: String?) {
         if currentText!.count > 0 {
@@ -250,11 +259,10 @@ extension ViewProfileViewController: FormInputViewDelegate {
     }
 }
 
-// V
+
 //MARK: - ActionPopupViewDelegate
 extension ViewProfileViewController: ActionPopupViewDelegate {
     
-    // V
     func cameraButtonPressed() {
         let cameraImagePicker = self.displayImagePicker(sourceType: .camera)
         cameraImagePicker.delegate = self
@@ -262,7 +270,7 @@ extension ViewProfileViewController: ActionPopupViewDelegate {
         hideAlert()
     }
     
-    // V
+
     func galleryButtonPressed() {
         let libraryImagePicker = self.displayImagePicker(sourceType: .photoLibrary)
         libraryImagePicker.delegate = self
@@ -270,7 +278,7 @@ extension ViewProfileViewController: ActionPopupViewDelegate {
         hideAlert()
     }
     
-    // V
+
     func okButtonPressed() {
         hideAlert()
         customHeader.updateHeaderAppearanceType(to: .backOnlyAppearance)
@@ -280,11 +288,10 @@ extension ViewProfileViewController: ActionPopupViewDelegate {
 //MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 extension ViewProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    // V
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         let image = info[.originalImage] as! UIImage
-        userPicture.image = image // display image on screen
+        userPicture.image = image
         newProfilePicture = image
         
         self.dismiss(animated: true, completion: nil)

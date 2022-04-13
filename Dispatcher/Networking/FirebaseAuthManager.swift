@@ -1,11 +1,9 @@
 import Foundation
 import FirebaseAuth
-import FirebaseFirestore
 
 class FirebaseAuthManager {
     
     let firestoreManager = FirestoreManager()
-    let database = Firestore.firestore()
     
     
     func isUserLoggedIn() -> Bool {
