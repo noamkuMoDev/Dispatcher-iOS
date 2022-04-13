@@ -25,6 +25,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
     }
     
     
+    
     func defineNotificationCenterListeners() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.FAVORITES_TO_HOMEPAGE), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.ARTICLE_TO_TABLES), object: nil)
@@ -100,7 +101,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
             }
         }
         tableView.dataSource = dataSource
-        //tableView.delegate = self
+        tableView.delegate = self
     }
     
     
@@ -134,7 +135,9 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         navigationController?.isNavigationBarHidden = true
+        setStatusBarColor(viewController: self)
     }
 }
 
@@ -236,5 +239,13 @@ extension HomepageViewController: SortbyViewDelegate {
     
     func filterIconDidPress() {
         print("Filter pane pressed")
+    }
+}
+
+// MARK: - UITableViewDelegate
+extension HomepageViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

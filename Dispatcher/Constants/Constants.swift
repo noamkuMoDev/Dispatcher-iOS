@@ -76,6 +76,8 @@ struct Constants {
         static let HOMEPAGE_TO_FAVORITES = "favoritesChangedInHomepageNotif"
         static let FAVORITES_TO_HOMEPAGE = "favoritesChangedInFavoritesNotif"
         static let ARTICLE_TO_TABLES = "articleChangedSoUpdateTableViews"
+        static let PICTURE_UPDATE = "userIconImageChanged"
+        static let RECENT_SEARCHES_EMPTIED = "recentSearchesClearedInUserDefaults"
         
         static let ARTICLE_ID = "articleID"
         static let IS_FAVORITE = "isFavorite"
@@ -87,6 +89,7 @@ struct Constants {
     
     struct UserDefaults {
         static let RECENT_SEARCHES = "recentSearches"
+        
         static let SAVE_FILTERS = "saveFilters"
         static let SAVE_SEARCH_RESULTS = "saveSearchResults"
         static let SEND_NOTIFICATIONS = "sendNotifications"

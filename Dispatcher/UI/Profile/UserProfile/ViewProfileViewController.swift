@@ -172,7 +172,9 @@ class ViewProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         navigationController?.isNavigationBarHidden = true
+        setStatusBarColor(viewController: self)
     }
 }
 
@@ -204,6 +206,8 @@ extension ViewProfileViewController: CustomHeaderViewDelegate {
             if isFormCorrect {
                 if newName != nil && newName != userName {
                     viewModel.updateUserDetail(detailType: Constants.UserDefaults.CURRENT_USER_NAME, data: newName!)
+                    let dataDictionary : [String: String] = ["userName" : newName ?? userName!]
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.PICTURE_UPDATE ), object: nil, userInfo: dataDictionary)
                 }
                 
                 if newEmail != nil && newEmail != userEmail && viewModel.isValidEmailAddress(email: newEmail!) {
@@ -211,10 +215,15 @@ extension ViewProfileViewController: CustomHeaderViewDelegate {
                 }
                 
                 if let newProfilePicture = newProfilePicture {
+                    
+                    let dataDictionary : [String: UIImage] = ["userImage" : newProfilePicture]
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.PICTURE_UPDATE ), object: nil, userInfo: dataDictionary)
+                    
                     uploadPictureToCloudStorage(image: newProfilePicture) { error, url in
                         if let error = error {
                             print("Error - \(error)")
                         } else {
+                            self.viewModel.updateUserDetail(detailType: Constants.UserDefaults.CURRENT_USER_IMAGE, data: url!)
                             let data = newProfilePicture.pngData()
                             if let data = data {
                                 self.viewModel.updateUserDetail(detailType: Constants.UserDefaults.CURRENT_USER_IMAGE, data: data)
@@ -258,7 +267,6 @@ extension ViewProfileViewController: FormInputViewDelegate {
         }
     }
 }
-
 
 //MARK: - ActionPopupViewDelegate
 extension ViewProfileViewController: ActionPopupViewDelegate {
@@ -318,7 +326,7 @@ extension ViewProfileViewController: UIImagePickerControllerDelegate, UINavigati
                     }
                     let urlString = url.absoluteString
                     print("Downlod URL: \(urlString)")
-                    completionHandler(nil,urlString)
+                    completionHandler(nil, urlString)
                 })
             })
         } else {

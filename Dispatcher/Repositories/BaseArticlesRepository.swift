@@ -23,7 +23,11 @@ class BaseArticlesRepository {
             pageSize = Constants.pageSizeToFetch.SAVED_ARTICLES
         }
         
-        let url = "\(Constants.apiCalls.NEWS_URL)?q=\(searchWords)&page_size=\(pageSize)&page=\(currentPage)"
+        var cleanSearchWords = searchWords.lowercased()
+        let removeCharacters: Set<Character> = [".", "\"", ",", "?", "!", "@", "#", "$", "%", "^", "&", "*"]
+        cleanSearchWords.removeAll(where: { removeCharacters.contains($0) } )
+        
+        let url = "\(Constants.apiCalls.NEWS_URL)?q=\(cleanSearchWords)&page_size=\(pageSize)&page=\(currentPage)"
         let alamofireQuery = AlamofireManager(from: url)
             alamofireQuery.executeGetQuery() {
                 ( response: Result<ArticleApiObject,Error>, statusMsg ) in

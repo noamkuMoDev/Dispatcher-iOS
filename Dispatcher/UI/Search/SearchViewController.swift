@@ -41,23 +41,25 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         checkUserPreference()
         initiateUIElements()
         defineGestureRecognizers()
+        defineNotificationCenterListeners()
     }
     
 
     func checkUserPreference() {
         if viewModel.isSaveRecentSearches() {
-            fetchSearchHistory()
+            fetchSearchHistory() {}
         } else {
             isSaveSearches = false
         }
     }
 
     
-    func fetchSearchHistory() {
+    func fetchSearchHistory(completionHandler: @escaping () -> ()) {
         viewModel.getSavedRecentSearchesFromUserDefaults() { error in
             if let error = error {
                 print(error)
             }
+            completionHandler()
         }
     }
     
@@ -93,12 +95,17 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
             models: viewModel.newsArray,
             reuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE
         ) { article, cell in
-            let currentcell = cell as! NewsCell
-            currentcell.titleLabel.text = article.articleTitle
-            currentcell.authorLabel.text = article.author
-            currentcell.dateLabel.text = article.date
-            currentcell.subjectTag.setTitle(article.topic, for: .normal)
-            currentcell.summaryLabel.text = article.content
+            let currentCell = cell as! NewsCell
+            
+            currentCell.titleLabel.text = article.articleTitle
+            currentCell.authorLabel.text = article.author
+            currentCell.dateLabel.text = article.date
+            currentCell.subjectTag.setTitle(article.topic, for: .normal)
+            currentCell.summaryLabel.text = article.content
+            guard let url = URL(string: article.imageUrl ?? "") else { return }
+            UIImage.loadFrom(url: url) { image in
+                currentCell.newsImage.image = image
+            }
         }
         searchResultsTableView.dataSource = searchResultsDataSource
         searchResultsTableView.delegate = self
@@ -127,7 +134,28 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         searchClearIcon.addGestureRecognizer(tapGestureRecognizer2)
     }
     
+    
+    func defineNotificationCenterListeners() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshRecentSearchesTable), name: NSNotification.Name(rawValue: Constants.NotificationCenter.RECENT_SEARCHES_EMPTIED), object: nil)
+    }
 
+    @objc func refreshRecentSearchesTable() {
+        fetchSearchHistory() {
+            DispatchQueue.main.async {
+                self.recentSearchesDataSource.models = self.viewModel.recentSearchesArray
+                self.recentSearchesTableView.reloadData()
+            }
+        }
+    }
+    
+    func cleanTextFromSpecialCharacters(text: String) -> String {
+        var cleanSearchWords = text
+        let removeCharacters: Set<Character> = [".", "\"", ",", "?", "!", "@", "#", "$", "%", "^", "&", "*"]
+        cleanSearchWords.removeAll(where: { removeCharacters.contains($0) } )
+        return cleanSearchWords
+    }
+
+    
     func fetchInitialSearchResults(of keywords: String) {
         displayLoadingAnimation()
         self.recentSearchesView.isHidden = true
@@ -135,7 +163,8 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         self.sortbyView.isHidden = false
         
         viewModel.newsArray = []
-        viewModel.fetchNewsFromAPI(searchWords: keywords, pageSizeToFetch: .articlesList) { error in
+        let cleanSearchWords = cleanTextFromSpecialCharacters(text: keywords.lowercased())
+        viewModel.fetchNewsFromAPI(searchWords: cleanSearchWords, pageSizeToFetch: .articlesList) { error in
             if let error = error {
                 print(error)
             }
@@ -143,6 +172,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
             if self.viewModel.newsArray.count == 0 {
                 self.searchResultsTableView.isHidden = true
                 self.displayNoSearchResults()
+                self.removeLoadingAnimation()
             } else {
                 self.hideNoSearchResults()
                 self.searchResultsTableView.isHidden = false
@@ -150,7 +180,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
                 self.searchResultsTableView.reloadData()
                 
                 if self.isSaveSearches {
-                    self.viewModel.saveNewRecentSearch(keywords) {
+                    self.viewModel.saveNewRecentSearch(self.cleanTextFromSpecialCharacters(text: keywords.lowercased())) {
                         DispatchQueue.main.async {
                             self.recentSearchesDataSource.models = self.viewModel.recentSearchesArray
                             self.recentSearchesTableView.reloadData()
@@ -158,7 +188,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
                     }
                 }
                 self.removeLoadingAnimation()
-                self.searchTextField.text = "\"\(self.searchTextField.text!.uppercased())\""
+                self.searchTextField.text = "\"\(self.cleanTextFromSpecialCharacters(text: self.searchTextField.text!.uppercased()))\""
             }
         }
     }
@@ -266,7 +296,6 @@ extension SearchViewController: UITextFieldDelegate {
     }
 }
 
-
 // MARK: - RecentSearchCellDelegate
 extension SearchViewController: RecentSearchCellDelegate {
     
@@ -305,7 +334,7 @@ extension SearchViewController: RecentSearchCellDelegate {
 extension SearchViewController: SortbyViewDelegate {
     
     func filterIconDidPress() {
-        
+        print("Filter Icon Pressed")
     }
 }
 

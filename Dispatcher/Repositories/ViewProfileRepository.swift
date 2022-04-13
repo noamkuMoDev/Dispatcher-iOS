@@ -87,8 +87,6 @@ class ViewProfileRepository {
                 firestoreManager.updateDocumentInFirestore(docuemntPath: docPath, property: Constants.FirestoreProperties.IMAGE, value: data) { error in
                     if let error = error {
                         print("Faild updating image in Firestore - \(error)")
-                    } else {
-                        self.userDefaultsManager.setItemToUserDefaults(key: detailType, data: data)
                     }
                 }
             default:

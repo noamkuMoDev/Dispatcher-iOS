@@ -20,6 +20,7 @@ class ProfileViewController: UIViewController {
         getUserDetails()
         initiateUIElements()
         defineGestureRecognizers()
+        defineNotificationCenterListeners()
     }
     
     func getUserDetails() {
@@ -33,6 +34,7 @@ class ProfileViewController: UIViewController {
         }
     }
 
+    
     func initiateUIElements() {
         addShadowsToHeader()
         userProfileImage.layer.cornerRadius = userProfileImage.frame.width / 2
@@ -46,6 +48,20 @@ class ProfileViewController: UIViewController {
         editProfileLabel.isUserInteractionEnabled = true
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editProfileButtonPressed(tapGestureRecognizer:)))
         editProfileLabel.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    
+    func defineNotificationCenterListeners() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateDisplayOfUserDetails), name: NSNotification.Name(rawValue:  Constants.NotificationCenter.PICTURE_UPDATE ), object: nil)
+    }
+    
+    @objc func updateDisplayOfUserDetails(_ notification: NSNotification) {
+        if let userName = notification.userInfo!["userName"] as? String {
+            helloUserLabel.text = "Hi, \(userName)"
+        }
+        if let userImage = notification.userInfo!["userImage"] as? UIImage {
+            self.userProfileImage.image = userImage
+        }
     }
     
     

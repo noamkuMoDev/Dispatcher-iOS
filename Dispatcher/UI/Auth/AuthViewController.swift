@@ -30,6 +30,7 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         initiateUIElements()
         defineGestureRecognizers()
         defineConstraints()
+        setStatusBarColor(viewController: self)
     }
     
 
