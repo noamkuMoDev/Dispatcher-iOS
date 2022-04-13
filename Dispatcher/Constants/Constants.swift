@@ -6,6 +6,21 @@ struct Constants {
         static let HOMEPAGE = "Homepage"
         static let PROFILE = "Profile"
         static let FAVORITES = "Favorites"
+        static let SETTINGS = "Setting"
+        static let PRIVACY = "Terms & privacy"
+        static let LOGOUT = "Logout"
+    }
+    
+    struct ButtonsText {
+        static let LOGIN = "LOGIN"
+        static let SIGNUP = "SIGNUP"
+        static let LOGOUT = "LOGOUT"
+    }
+    
+    struct TextFieldsIDs {
+        static let EMAIL = "email"
+        static let PASSWORD = "password"
+        static let PASSWORD_AGAIN = "re-password"
     }
     
     struct Segues {
@@ -39,9 +54,43 @@ struct Constants {
         static let RECENT_SEARCH = "RecentSearchCell"
     }
     
+    struct AppSettingsSectionTitles {
+        static let SEARCH = "Search results"
+        static let PREFERENCES = "App preferences"
+    }
+    
+    struct AppSettings {
+        static let SAVE_FILTERS = "Save filters"
+        static let SEARCH_RESULTS = "Save search results"
+        static let NOTIFICATION = "Notification"
+    }
+    
+    struct NotificationCenter {
+        static let homepageToFavorites = "favoritesChangedInHomepageNotif"
+        static let favoritesToHomepage = "favoritesChangedInFavoritesNotif"
+    }
+    
     struct UserDefaults {
         static let RECENT_SEARCHES = "recentSearches"
-        static let IS_USER_LOGGED_IN = "isLoggedIn"
+        static let SAVE_FILTERS = "saveFilters"
+        static let SAVE_SEARCH_RESULTS = "saveSearchResults"
+        static let SEND_NOTIFICATIONS = "sendNotifications"
+        
+        static let CURRENT_USER_UID = "currentUserUID"
+        static let CURRENT_USER_NAME = "currentUserName"
+        static let CURRENT_USER_IMAGE = "currentUserImage"
+        
+        static let userDefaultKeys = ["CURRENT_USER_UID","RECENT_SEARCHES","SAVE_FILTERS","SAVE_SEARCH_RESULTS","SEND_NOTIFICATIONS","CURRENT_USER_NAME", "CURRENT_USER_IMAGE"]
+    }
+    
+    struct Keychain {
+        static let SERVICE = "dispatcher.moveo"
+        static let ACCOUNT_USER_EMAIL = "currentUserEmail"
+    }
+    
+    struct Firestore {
+        static let USERS_COLLECTION = "Users"
+        static let FAVORITES_COLLECTION = "savedArticles"
     }
     
     struct apiCalls {

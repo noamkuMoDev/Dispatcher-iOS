@@ -2,12 +2,12 @@ import UIKit
 
 class SplashViewController: UIViewController {
 
-    let repository = AuthRepository()
+    let viewModel = AuthViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if repository.checkIfLoggedIn() == .loggedIn {
+        if viewModel.checkIfLoggedIn() == .loggedIn {
             DispatchQueue.main.async {
                 let homepage = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MyTabBarController")
                 self.present(homepage, animated: true, completion: nil)

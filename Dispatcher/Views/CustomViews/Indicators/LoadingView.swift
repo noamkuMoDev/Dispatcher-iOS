@@ -9,16 +9,14 @@ class LoadingView: UIView {
     
     var delegate: LoadingViewDelegate?
     
-    
+
     func initView(delegate: LoadingViewDelegate? = nil) {
-        
         self.delegate = delegate
         commonInit()
     }
     
-    
+
     private func commonInit() {
-        
         Bundle.main.loadNibNamed("LoadingView", owner: self, options: nil)
         contentView.frame = self.bounds
         self.addSubview(contentView)

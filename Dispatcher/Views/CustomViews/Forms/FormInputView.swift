@@ -39,7 +39,6 @@ class FormInputView: UIView {
     }
     
     private func commonInit() {
-        
         Bundle.main.loadNibNamed("FormInputView", owner: self, options: nil)
         contentView.frame = self.bounds
         self.addSubview(contentView)
@@ -48,6 +47,8 @@ class FormInputView: UIView {
         defineGestureRecognizers()
     }
     
+    
+
     private func setTextFieldDesign() {
         textField.layer.masksToBounds = true
         textField.layer.borderColor = UIColor.red.cgColor
@@ -55,6 +56,7 @@ class FormInputView: UIView {
         textField.layer.cornerRadius = 4.0
     }
     
+
     private func defineGestureRecognizers() {
         textfieldIcon.addGestureRecognizer(UITapGestureRecognizer(target: textfieldIcon, action: #selector(iconPressed)))
         textfieldIcon.isUserInteractionEnabled = true
@@ -62,6 +64,7 @@ class FormInputView: UIView {
         textfieldIcon.addGestureRecognizer(tapGestureRecognizer)
     }
     
+
     @objc func iconPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         if !textfieldIcon.isHidden {
             if eyeIconStatus == .conseal {
@@ -76,30 +79,32 @@ class FormInputView: UIView {
         }
     }
     
+
     func displayWarning() {
         textField.layer.borderWidth = 1.0
         warningLabel.isHidden = false
     }
     
+
     func hideWarning() {
         textField.layer.borderWidth = 0.0
         warningLabel.isHidden = true
     }
     
+
     func resetElements() {
         eyeIconStatus = .conseal
         textfieldIcon.image = UIImage(named: "eye-icon-conseal")
-        
         textField.text = nil
         if !textfieldIcon.isHidden {
             textField.isSecureTextEntry = true
         }
         textField.layer.borderWidth = 0.0
-        
         warningLabel.isHidden = true
     }
 }
 
+// MARK: - UITextFieldDelegate
 extension FormInputView: UITextFieldDelegate {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
@@ -109,6 +114,7 @@ extension FormInputView: UITextFieldDelegate {
             delegate?.textFieldDidChange(textFieldId: id , currentText: textField.text)
         }
     }
+    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)

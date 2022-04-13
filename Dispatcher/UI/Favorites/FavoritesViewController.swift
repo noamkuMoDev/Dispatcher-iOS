@@ -9,72 +9,124 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     @IBOutlet weak var noResultsImageView: UIImageView!
     @IBOutlet weak var noResultsLabel: UILabel!
     
-    
     let viewModel = BaseArticlesViewModel()
-    var dataSource: TableViewDataSourceManager<Article>!
+    var dataSource: TableViewDataSourceManager<FavoriteArticle>!
     var isPaginating: Bool = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        defineNotificationCenterListeners()
         initiateUIElements()
         displaySavedArticlesOnScreen()
     }
     
+
+    func defineNotificationCenterListeners() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.homepageToFavorites), object: nil)
+    }
+    
+
+    @objc func refreshTableViewContent(_ notification: NSNotification) {
+        viewModel.getSavedArticles {
+            self.dataSource.models = self.viewModel.savedArticles.map({$0.value}).sorted(by: {$0.timestamp! > $1.timestamp!})
+            DispatchQueue.main.async {
+                if self.viewModel.savedArticles.count == 0 {
+                    self.displayNoResults()
+                } else {
+                    self.hideNoResults()
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
+
     func initiateUIElements() {
         customHeader.initView(delegate: self, apperanceType: .fullAppearance)
         loadingView.initView(delegate: self)
-        noResultsLabel.isHidden = true
-        noResultsImageView.isHidden = true
+        hideNoResults()
         setupTableView()
     }
     
+
     func setupTableView() {
         tableView.register(UINib(nibName: Constants.NibNames.FAVORITES, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.FAVORITES)
         self.dataSource = TableViewDataSourceManager(
-            models: viewModel.newsArray,
+            models: viewModel.savedArticles.map({$0.value}).sorted(by: {$0.timestamp! > $1.timestamp!}),
             reuseIdentifier: Constants.TableCellsIdentifier.FAVORITES
         ) { savedArticle, cell in
             let currentCell = cell as! SavedArticleCell
-            currentCell.articleTitle.text = savedArticle.articleTitle
+            currentCell.delegate = self
+            
+            currentCell.articleID = savedArticle.id!
+            currentCell.articleTitle.text = savedArticle.title
             currentCell.articleTopic.setTitle(savedArticle.topic, for: .normal)
+            if let imageUrl = savedArticle.imageUrl {
+                guard let url = URL(string: imageUrl) else { return }
+                UIImage.loadFrom(url: url) { image in
+                    currentCell.articleImage.image = image
+                }
+            }
         }
         tableView.delegate = self
         tableView.dataSource = self.dataSource
         tableView.rowHeight = 115.0
     }
     
+
     func displaySavedArticlesOnScreen() {
-        DispatchQueue.main.async {
-            self.loadingView.isHidden = false
-            self.loadingView.loadIndicator.startAnimating()
-        }
-        viewModel.fetchNewsFromAPI(pageSizeToFetch: .savedArticles) { error in
-            if error == nil {
-                DispatchQueue.main.async {
-                    self.dataSource.models = self.viewModel.newsArray
-                    self.tableView.reloadData()
-                    self.loadingView.loadIndicator.stopAnimating()
-                    self.loadingView.isHidden = true
-                }
+        displayLoadingAnimation()
+        viewModel.getSavedArticles() {
+            if self.viewModel.savedArticles.count == 0 {
+                self.displayNoResults()
             } else {
-                print(error!)
+                DispatchQueue.main.async {
+                    self.dataSource.models = self.viewModel.savedArticles.map({$0.value}).sorted(by: {$0.timestamp! > $1.timestamp!})
+                    self.tableView.reloadData()
+                }
             }
-            
-            if self.viewModel.newsArray.count == 0 {
-                self.tableView.isHidden = true
-                self.noResultsLabel.isHidden = false
-                self.noResultsImageView.isHidden = false
-            }
+            self.removeLoadingAnimation()
         }
     }
     
+
+    func displayNoResults() {
+        self.tableView.isHidden = true
+        self.noResultsLabel.isHidden = false
+        self.noResultsImageView.isHidden = false
+    }
+    
+
+    func hideNoResults() {
+        self.tableView.isHidden = false
+        self.noResultsLabel.isHidden = true
+        self.noResultsImageView.isHidden = true
+    }
+    
+
+    func displayLoadingAnimation() {
+        DispatchQueue.main.async {
+            self.loadingView.loadIndicator.startAnimating()
+            self.loadingView.isHidden = false
+        }
+    }
+    
+
+    func removeLoadingAnimation() {
+        DispatchQueue.main.async {
+            self.loadingView.loadIndicator.stopAnimating()
+            self.loadingView.isHidden = true
+        }
+    }
+    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
     }
 }
-
 
 // MARK: - CustomHeaderViewDelegate
 extension FavoritesViewController: CustomHeaderViewDelegate {
@@ -83,42 +135,34 @@ extension FavoritesViewController: CustomHeaderViewDelegate {
         self.performSegue(withIdentifier: Constants.Segues.FAVORITES_TO_NOTIFICATIONS, sender: self)
     }
     
+
     func searchButtonPressed() {
         self.performSegue(withIdentifier: Constants.Segues.FAVORITES_TO_SEARCH, sender: self)
     }
 }
 
-
-// MARK: - UIScrollViewDelegate
-extension FavoritesViewController: UIScrollViewDelegate {
+// MARK: - SavedArticleCellDelegate
+extension FavoritesViewController: SavedArticleCellDelegate {
     
-    func createSpinnerFooter() -> UIView {
-        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
-        let spinner = UIActivityIndicatorView()
-        spinner.center = footerView.center
-        footerView.addSubview(spinner)
-        spinner.startAnimating()
-        
-        return footerView
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let position = scrollView.contentOffset.y
-        if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) && !isPaginating {
-            isPaginating = true
-            viewModel.fetchNewsFromAPI(pageSizeToFetch: .savedArticles) { error in
-                if error == nil {
-                    self.dataSource.models = self.viewModel.newsArray
-                    DispatchQueue.main.async {
+    func favoriteIconDidPress(forArticle articleID: String) {
+        displayLoadingAnimation()
+        viewModel.removeArticleFromFavorites(articleID: articleID) { error in
+            if let error = error {
+                print(error)
+                self.removeLoadingAnimation()
+            } else {
+                DispatchQueue.main.async {
+                    self.dataSource.models = self.viewModel.savedArticles.map({$0.value}).sorted(by: {$0.timestamp! > $1.timestamp!})
+                    if self.viewModel.savedArticles.count == 0 {
+                        self.displayNoResults()
+                    } else {
                         self.tableView.reloadData()
-                        self.tableView.tableFooterView = nil
                     }
-                } else {
-                    print(error!)
+                    let dataDict:[String: String] = ["articleID": articleID]
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.favoritesToHomepage), object: nil, userInfo: dataDict)
+                    self.removeLoadingAnimation()
                 }
-                self.isPaginating = false
             }
         }
     }
 }
-

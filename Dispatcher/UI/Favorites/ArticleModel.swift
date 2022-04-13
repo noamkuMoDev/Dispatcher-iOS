@@ -1,6 +1,6 @@
 import Foundation
 
-struct Article: Codable {
+struct Article {
     
     let id: String
     let articleTitle: String
@@ -10,15 +10,5 @@ struct Article: Codable {
     let author: String?
     let topic: String
     let imageUrl: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case id = "_id"
-        case articleTitle = "title"
-        case content = "summary"
-        case author = "author"
-        case url = "link"
-        case date = "published_date"
-        case topic = "topic"
-        case imageUrl = "media"
-    }
+    var isFavorite: Bool
 }
