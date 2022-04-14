@@ -394,8 +394,26 @@
                                     <constraint firstAttribute="height" constant="44" id="iWx-Us-YFS"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Login:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ys-mP-4io">
+                                <rect key="frame" x="15.999999999999996" y="114" width="59.666666666666657" height="14.333333333333343"/>
+                                <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="12"/>
+                                <color key="textColor" name="Dispatch Purple"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="03:50 PM, 09.03.2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bpV-Qh-pAf">
+                                <rect key="frame" x="82.666666666666686" y="114" width="117" height="14"/>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
+                                <color key="textColor" name="Dispatch Purple"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top Headlines in News" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31M-4r-r0g">
+                                <rect key="frame" x="16" y="140.33333333333334" width="382" height="28.333333333333343"/>
+                                <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="yBY-FC-8kL">
-                                <rect key="frame" x="16" y="108" width="382" height="617"/>
+                                <rect key="frame" x="16" y="183.66666666666669" width="382" height="541.33333333333326"/>
                                 <color key="backgroundColor" name="Dispatch Light Gray"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a9Z-vr-heP" customClass="LoadingView" customModule="Dispatcher_Development" customModuleProvider="target">
@@ -406,9 +424,12 @@
                         <viewLayoutGuide key="safeArea" id="gq8-pT-seX"/>
                         <color key="backgroundColor" name="Dispatch Light Gray"/>
                         <constraints>
+                            <constraint firstItem="bpV-Qh-pAf" firstAttribute="leading" secondItem="7Ys-mP-4io" secondAttribute="trailing" constant="7" id="0Ft-h5-xCd"/>
                             <constraint firstItem="2s5-Rj-vDx" firstAttribute="top" secondItem="JcK-oH-Xc9" secondAttribute="bottom" id="1wH-vb-H5h"/>
                             <constraint firstItem="JcK-oH-Xc9" firstAttribute="centerX" secondItem="Dr3-0T-q0m" secondAttribute="centerX" id="7QH-ZU-OEI"/>
                             <constraint firstItem="JcK-oH-Xc9" firstAttribute="top" secondItem="gq8-pT-seX" secondAttribute="top" id="9Ab-Pt-Cdq"/>
+                            <constraint firstAttribute="trailing" secondItem="31M-4r-r0g" secondAttribute="trailing" constant="16" id="9z4-GZ-MrV"/>
+                            <constraint firstItem="gq8-pT-seX" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bpV-Qh-pAf" secondAttribute="trailing" symbolic="YES" id="BuI-lE-tSa"/>
                             <constraint firstItem="JcK-oH-Xc9" firstAttribute="leading" secondItem="Dr3-0T-q0m" secondAttribute="leading" id="Hym-bt-oYG"/>
                             <constraint firstAttribute="trailing" secondItem="JcK-oH-Xc9" secondAttribute="trailing" id="MpP-zO-BQ9"/>
                             <constraint firstAttribute="trailing" secondItem="2s5-Rj-vDx" secondAttribute="trailing" id="N6H-4w-xPE"/>
@@ -416,20 +437,28 @@
                             <constraint firstAttribute="bottomMargin" secondItem="a9Z-vr-heP" secondAttribute="bottom" id="XlT-EM-0fZ"/>
                             <constraint firstItem="yBY-FC-8kL" firstAttribute="leading" secondItem="gq8-pT-seX" secondAttribute="leading" constant="16" id="bpx-8W-P4b"/>
                             <constraint firstItem="yBY-FC-8kL" firstAttribute="bottom" secondItem="gq8-pT-seX" secondAttribute="bottom" id="cXb-vb-0h7"/>
+                            <constraint firstItem="7Ys-mP-4io" firstAttribute="leading" secondItem="Dr3-0T-q0m" secondAttribute="leading" constant="16" id="cok-wb-AOR"/>
                             <constraint firstAttribute="trailing" secondItem="a9Z-vr-heP" secondAttribute="trailing" id="eGc-un-QfY"/>
                             <constraint firstItem="a9Z-vr-heP" firstAttribute="leading" secondItem="Dr3-0T-q0m" secondAttribute="leading" id="eJL-Uy-jRq"/>
-                            <constraint firstItem="yBY-FC-8kL" firstAttribute="top" secondItem="2s5-Rj-vDx" secondAttribute="bottom" id="fC7-6l-TER"/>
+                            <constraint firstItem="yBY-FC-8kL" firstAttribute="top" secondItem="31M-4r-r0g" secondAttribute="bottom" constant="15" id="fC7-6l-TER"/>
                             <constraint firstItem="a9Z-vr-heP" firstAttribute="top" secondItem="Dr3-0T-q0m" secondAttribute="topMargin" id="g2W-1a-Py1"/>
+                            <constraint firstItem="7Ys-mP-4io" firstAttribute="top" secondItem="2s5-Rj-vDx" secondAttribute="bottom" constant="6" id="jSr-1H-1uN"/>
+                            <constraint firstItem="31M-4r-r0g" firstAttribute="top" secondItem="7Ys-mP-4io" secondAttribute="bottom" constant="12" id="jaR-Uq-Wl0"/>
                             <constraint firstItem="yBY-FC-8kL" firstAttribute="centerX" secondItem="Dr3-0T-q0m" secondAttribute="centerX" id="qf1-2v-q7f"/>
                             <constraint firstItem="gq8-pT-seX" firstAttribute="trailing" secondItem="yBY-FC-8kL" secondAttribute="trailing" constant="16" id="vlp-Ug-4nD"/>
+                            <constraint firstItem="bpV-Qh-pAf" firstAttribute="top" secondItem="2s5-Rj-vDx" secondAttribute="bottom" constant="6" id="wN8-f3-EdO"/>
+                            <constraint firstItem="31M-4r-r0g" firstAttribute="leading" secondItem="Dr3-0T-q0m" secondAttribute="leading" constant="16" id="xg9-u1-ZKw"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="A7l-Lu-1H7"/>
                     <connections>
                         <outlet property="customHeader" destination="JcK-oH-Xc9" id="vvv-3a-ulr"/>
+                        <outlet property="lastLoginLabel" destination="7Ys-mP-4io" id="Hxl-3d-rzj"/>
+                        <outlet property="lastLoginTimestampLabel" destination="bpV-Qh-pAf" id="60H-D3-dCE"/>
                         <outlet property="loadingView" destination="a9Z-vr-heP" id="VOK-A2-BLd"/>
                         <outlet property="sortbyView" destination="2s5-Rj-vDx" id="9Q3-Xh-L1N"/>
                         <outlet property="tableView" destination="yBY-FC-8kL" id="WnK-wx-T7O"/>
+                        <outlet property="topHeadlinesLabel" destination="31M-4r-r0g" id="6Bw-j6-bN1"/>
                         <outlet property="view" destination="Dr3-0T-q0m" id="YwB-W4-sWW"/>
                         <segue destination="tUC-ru-eE1" kind="show" identifier="homepageToNotifications" id="f5P-ad-VVd"/>
                         <segue destination="Qi2-cd-MPv" kind="show" identifier="homepageToSearch" animates="NO" id="U37-Fe-alY"/>

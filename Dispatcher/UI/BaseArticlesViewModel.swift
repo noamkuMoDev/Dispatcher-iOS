@@ -42,6 +42,11 @@ class BaseArticlesViewModel {
         return repository.getUserAppSetting(of: settingName)
     }
     
+    
+    func getUserLastLoginTimestamp() -> String? {
+        return repository.getUserLastLoginTimestamp()
+    }
+    
 
     func addArticleToFavorites(_ article: Article, completionHandler: @escaping (String?) -> ()) {
         repository.saveArticleToFavorites(article) { error, newFavorite in

@@ -15,6 +15,9 @@ class FirebaseAuthManager {
         return Auth.auth().currentUser?.uid
     }
     
+    func getlastUserLoginTimestamp() -> String? {
+        return Auth.auth().currentUser?.metadata.lastSignInDate?.description
+    }
     
     func signupUser(email: String, password: String, completionHandler: @escaping (String?, String?, String?) -> ()) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in

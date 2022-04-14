@@ -173,6 +173,10 @@ class BaseArticlesRepository {
         }
     }
     
+    
+    func getUserLastLoginTimestamp() -> String? {
+        return userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.LAST_LOGIN_TIMESTAMP) as? String
+    }
 
     func getUserAppSetting(of settingName: String) -> SwitchStatus {
         var status: SwitchStatus = .off

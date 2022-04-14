@@ -5,19 +5,24 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
 
     @IBOutlet weak var customHeader: CustomHeaderView!
     @IBOutlet weak var sortbyView: SortbyView!
-    @IBOutlet weak var loadingView: LoadingView!
+    @IBOutlet weak var lastLoginLabel: UILabel!
+    @IBOutlet weak var lastLoginTimestampLabel: UILabel!
+    @IBOutlet weak var topHeadlinesLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var loadingView: LoadingView!
     
     let viewModel = BaseArticlesViewModel()
     var dataSource: TableViewDataSourceManager<Article>!
     var isPaginating: Bool = false
     var selectedArticle: Article? = nil
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         defineNotificationCenterListeners()
         initiateUIElements()
+        getLastLoginTimestamp()
         checkUserSettingsPreferences()
         viewModel.getSavedArticles() {
             self.fetchInitialNewsResults()
@@ -66,6 +71,16 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
         sortbyView.initView(delegate: self)
         loadingView.initView(delegate: self)
         setupTableView()
+    }
+    
+    
+    func getLastLoginTimestamp() {
+        if let lastLogin = viewModel.getUserLastLoginTimestamp() {
+            lastLoginTimestampLabel.text = lastLogin
+        } else {
+            lastLoginLabel.isHidden = true
+            lastLoginTimestampLabel.isHidden = true
+        }
     }
     
     
