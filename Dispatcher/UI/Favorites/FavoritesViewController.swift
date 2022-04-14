@@ -12,7 +12,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     let viewModel = BaseArticlesViewModel()
     var dataSource: TableViewDataSourceManager<FavoriteArticle>!
     var isPaginating: Bool = false
-    
+    var selectedArticle: Article? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,8 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
     
 
     func defineNotificationCenterListeners() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.homepageToFavorites), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.HOMEPAGE_TO_FAVORITES), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableViewContent), name: NSNotification.Name(rawValue: Constants.NotificationCenter.ARTICLE_TO_TABLES), object: nil)
     }
     
 
@@ -70,7 +71,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
                 }
             }
         }
-        tableView.delegate = self
         tableView.dataSource = self.dataSource
         tableView.rowHeight = 115.0
     }
@@ -124,7 +124,9 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         navigationController?.isNavigationBarHidden = true
+        setStatusBarColor(viewController: self)
     }
 }
 
@@ -144,6 +146,24 @@ extension FavoritesViewController: CustomHeaderViewDelegate {
 // MARK: - SavedArticleCellDelegate
 extension FavoritesViewController: SavedArticleCellDelegate {
     
+    func cellDidPress(articleID: String) {
+        let favorite = viewModel.savedArticles[articleID]
+        if let favorite = favorite {
+            selectedArticle = Article(id: favorite.id!, articleTitle: favorite.title!, date: favorite.date!, url: favorite.url!, content: favorite.content!, author: favorite.author!, topic: favorite.topic!, imageUrl: favorite.imageUrl!, isFavorite: true)
+            self.performSegue(withIdentifier: Constants.Segues.FAVORITES_TO_ARTICLE, sender: self)
+        }
+    }
+    
+    override func prepare( for segue: UIStoryboardSegue, sender: Any? ) {
+        if let selectedArticle = selectedArticle {
+            if segue.identifier == Constants.Segues.FAVORITES_TO_ARTICLE {
+                let destinationVC = segue.destination as! ArticleViewController
+                destinationVC.currentArticle = selectedArticle
+            }
+        }
+    }
+    
+    
     func favoriteIconDidPress(forArticle articleID: String) {
         displayLoadingAnimation()
         viewModel.removeArticleFromFavorites(articleID: articleID) { error in
@@ -158,8 +178,11 @@ extension FavoritesViewController: SavedArticleCellDelegate {
                     } else {
                         self.tableView.reloadData()
                     }
-                    let dataDict:[String: String] = [Constants.NotificationCenter.ARTICLE_ID: articleID]
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.favoritesToHomepage), object: nil, userInfo: dataDict)
+                    let dataDict:[String: String] = [
+                        Constants.NotificationCenter.ARTICLE_ID: articleID,
+                        Constants.NotificationCenter.SENDER: Constants.NotificationCenter.SENDER_FAVORITES
+                    ]
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.FAVORITES_TO_HOMEPAGE), object: nil, userInfo: dataDict)
                     self.removeLoadingAnimation()
                 }
             }

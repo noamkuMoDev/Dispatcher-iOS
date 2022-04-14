@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -29,7 +29,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="63"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="zMi-hm-mxw">
-                            <rect key="frame" x="329" y="0.0" width="64" height="63"/>
+                            <rect key="frame" x="326" y="0.0" width="64" height="63"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search" translatesAutoresizingMaskIntoConstraints="NO" id="cOJ-sd-vaa" userLabel="search icon">
                                     <rect key="frame" x="0.0" y="21.5" width="20" height="20"/>
@@ -52,11 +52,12 @@
                                 <constraint firstAttribute="width" constant="64" id="o47-Lz-5BU"/>
                             </constraints>
                         </stackView>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="Wj3-Yu-Iby">
-                            <rect key="frame" x="16" y="0.0" width="63" height="63"/>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headerLogo" translatesAutoresizingMaskIntoConstraints="NO" id="Wj3-Yu-Iby">
+                            <rect key="frame" x="13" y="15" width="63" height="33"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="63" id="iVk-HK-zJi"/>
                             </constraints>
+                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                         </imageView>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BackButton" translatesAutoresizingMaskIntoConstraints="NO" id="y5N-nl-1Kf">
                             <rect key="frame" x="16" y="0.0" width="63" height="63"/>
@@ -87,14 +88,14 @@
                         <constraint firstItem="zMi-hm-mxw" firstAttribute="top" secondItem="3D1-tN-CGz" secondAttribute="top" id="AEu-vG-h6e"/>
                         <constraint firstItem="y5N-nl-1Kf" firstAttribute="leading" secondItem="3D1-tN-CGz" secondAttribute="leading" constant="16" id="BID-ft-oYJ"/>
                         <constraint firstItem="QC4-94-k8I" firstAttribute="centerY" secondItem="3D1-tN-CGz" secondAttribute="centerY" id="Lw9-Db-eUa"/>
-                        <constraint firstItem="Wj3-Yu-Iby" firstAttribute="top" secondItem="3D1-tN-CGz" secondAttribute="top" id="UE4-J5-0Aq"/>
+                        <constraint firstItem="Wj3-Yu-Iby" firstAttribute="top" secondItem="3D1-tN-CGz" secondAttribute="top" constant="15" id="UE4-J5-0Aq"/>
                         <constraint firstItem="ZGV-S5-Kuw" firstAttribute="leading" secondItem="3D1-tN-CGz" secondAttribute="leading" constant="16" id="bQw-Lz-mSb"/>
-                        <constraint firstItem="Wj3-Yu-Iby" firstAttribute="leading" secondItem="3D1-tN-CGz" secondAttribute="leading" constant="16" id="fBc-yH-6x5"/>
+                        <constraint firstItem="Wj3-Yu-Iby" firstAttribute="leading" secondItem="3D1-tN-CGz" secondAttribute="leading" constant="13" id="fBc-yH-6x5"/>
                         <constraint firstItem="zMi-hm-mxw" firstAttribute="leading" secondItem="Wj3-Yu-Iby" secondAttribute="trailing" constant="250" id="fT9-Wd-um3"/>
                         <constraint firstAttribute="bottom" secondItem="y5N-nl-1Kf" secondAttribute="bottom" id="j0D-7K-sp4"/>
                         <constraint firstAttribute="trailing" secondItem="QC4-94-k8I" secondAttribute="trailing" constant="16" id="on3-oI-Qwx"/>
                         <constraint firstAttribute="height" constant="63" id="se6-qN-Juf"/>
-                        <constraint firstAttribute="bottom" secondItem="Wj3-Yu-Iby" secondAttribute="bottom" id="vBk-HN-v7a"/>
+                        <constraint firstAttribute="bottom" secondItem="Wj3-Yu-Iby" secondAttribute="bottom" constant="15" id="vBk-HN-v7a"/>
                     </constraints>
                 </view>
             </subviews>
@@ -114,7 +115,7 @@
         <image name="BackButton" width="25.5" height="6"/>
         <image name="checkmark" width="6" height="4"/>
         <image name="close" width="4.5" height="4.5"/>
-        <image name="logo" width="168" height="168"/>
+        <image name="headerLogo" width="54" height="42.5"/>
         <image name="notifications" width="8" height="8"/>
         <image name="search" width="8" height="8"/>
         <namedColor name="Dispatch Dark Blue">

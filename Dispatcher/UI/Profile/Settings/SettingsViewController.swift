@@ -30,7 +30,14 @@ class SettingsViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         navigationController?.isNavigationBarHidden = true
+        setStatusBarColor(viewController: self)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        navigationController?.popViewController(animated: false)
     }
 }
 
@@ -91,15 +98,12 @@ extension SettingsViewController: UITableViewDataSource {
     }
 }
 
-
 // MARK: - UITableViewDelegate
 extension SettingsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: Constants.TableCellsIdentifier.SETTING_SECTION) as! SettingSectionCell
-        
         view.sectionLabel.text = viewModel.sectionsSortedKeys[section]
-        
         return view
     }
     

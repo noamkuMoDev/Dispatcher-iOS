@@ -32,6 +32,7 @@ class FormInputView: UIView {
             self.delegate = safeDelegate
         }
         textField.placeholder = placeholderText
+        textField.horizontalPadding(leftInset: 10, rightInset: 10)
         textField.addTarget(self, action: #selector(FormInputView.textFieldDidChange(_:)), for: .editingChanged)
         textfieldIcon.isHidden = hideIcon
         warningLabel.text = labelText
@@ -81,7 +82,6 @@ class FormInputView: UIView {
     
 
     func displayWarning() {
-        print("displayWarning from FormInput")
         textField.layer.borderWidth = 1.0
         warningLabel.isHidden = false
     }
@@ -99,7 +99,7 @@ class FormInputView: UIView {
         textField.layer.borderColor = UIColor.black.cgColor
     }
     
-    // XXXXXXX same as hideWarning
+
     func dismissEditMode() {
         textField.layer.borderWidth = 0.0
         warningLabel.isHidden = true

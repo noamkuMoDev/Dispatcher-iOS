@@ -11,7 +11,7 @@ class ProfileViewController: UIViewController {
     let viewModel = ProfileViewModel()
     var dataSource: TableViewDataSourceManager<ProfileOptionModel>!
     
-    var userImage: Data? = nil
+    var userImage: UIImage? = nil
     var userName: String? = nil
     
     override func viewDidLoad() {
@@ -20,6 +20,7 @@ class ProfileViewController: UIViewController {
         getUserDetails()
         initiateUIElements()
         defineGestureRecognizers()
+        defineNotificationCenterListeners()
     }
     
     func getUserDetails() {
@@ -28,11 +29,14 @@ class ProfileViewController: UIViewController {
                 self.helloUserLabel.text = "Hi, \(userName)"
             }
             if let imgData = userImage as? NSData {
-                self.userProfileImage.image = UIImage(data: imgData as Data)
+                self.userImage = UIImage(data: imgData as Data)
+                self.userProfileImage.image = self.userImage
+                
             }
         }
     }
 
+    
     func initiateUIElements() {
         addShadowsToHeader()
         userProfileImage.layer.cornerRadius = userProfileImage.frame.width / 2
@@ -46,6 +50,23 @@ class ProfileViewController: UIViewController {
         editProfileLabel.isUserInteractionEnabled = true
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editProfileButtonPressed(tapGestureRecognizer:)))
         editProfileLabel.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    
+    func defineNotificationCenterListeners() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateDisplayOfUserDetails), name: NSNotification.Name(rawValue:  Constants.NotificationCenter.PICTURE_UPDATE ), object: nil)
+    }
+    
+    
+    @objc func updateDisplayOfUserDetails(_ notification: NSNotification) {
+        print("I GOT NOTIFIED ON CHANGE IN USER DETAILS")
+        if let userName = notification.userInfo!["userName"] as? String {
+            helloUserLabel.text = "Hi, \(userName)"
+        }
+        if let userImage = notification.userInfo!["userImage"] as? UIImage {
+            userProfileImage.image = userImage
+            self.userImage = userImage
+        }
     }
     
     
@@ -82,7 +103,7 @@ class ProfileViewController: UIViewController {
         if segue.identifier == Constants.Segues.GO_TO_UPDATE_PROFILE {
             let destinationVC = segue.destination as! ViewProfileViewController
             if let userImage = userImage {
-                destinationVC.existingProfilePicture = UIImage(data: userImage)
+                destinationVC.existingProfilePicture = userImage
             }
             if let userName = userName {
                 destinationVC.userName = userName

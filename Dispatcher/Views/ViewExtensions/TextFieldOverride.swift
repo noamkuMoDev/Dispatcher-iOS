@@ -1,30 +1,25 @@
 import UIKit
 
-class TextFieldOverride: UITextField {
-    
-    let padding = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
-    
-    override open func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding)
-    }
-    
-    override open func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding)
-    }
-    
-    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.inset(by: padding)
-    }
-    
-    override var isEnabled: Bool {
-        willSet {
-            backgroundColor = newValue ? UIColor.white : UIColor.white
-        }
-    }
-}
-
-
 extension UITextField {
+    
+    func paddingLeft(inset: CGFloat) {
+        self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: inset, height: self.frame.height))
+        self.leftViewMode = UITextField.ViewMode.always
+    }
+    
+    func paddingRight(inset: CGFloat) {
+        self.rightView = UIView(frame: CGRect(x: 0, y: 0, width: inset, height: self.frame.height))
+        self.rightViewMode = UITextField.ViewMode.always
+    }
+    
+    func horizontalPadding(leftInset: CGFloat, rightInset: CGFloat) {
+        self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: leftInset, height: self.frame.height))
+        self.leftViewMode = UITextField.ViewMode.always
+        
+        self.rightView = UIView(frame: CGRect(x: 0, y: 0, width: rightInset, height: self.frame.height))
+        self.rightViewMode = UITextField.ViewMode.always
+    }
+    
     func disableAutoFill() {
         if #available(iOS 12, *) {
             textContentType = .oneTimeCode

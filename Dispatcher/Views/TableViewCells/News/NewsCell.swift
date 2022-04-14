@@ -2,6 +2,7 @@ import UIKit
 
 protocol NewsCellDelegate {
     func favoriteIconDidPress(forArticle article: Article)
+    func actionButtonDidPress(articleID: String)
 }
 
 enum ArticleFavoriteMark {
@@ -9,7 +10,7 @@ enum ArticleFavoriteMark {
     case notSelected
 }
 
-class NewsCell: UITableViewCell {
+class NewsCell: UITableViewCell, MainActionButtonDelegate{
 
     @IBOutlet weak var entireNewsCell: UIView!
     @IBOutlet weak var newsImage: UIImageView!
@@ -22,6 +23,8 @@ class NewsCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var summaryLabel: UILabel!
+    
+    @IBOutlet weak var actionButton: MainActionButtonView!
     
     var delegate: NewsCellDelegate?
     var articleUrl = ""
@@ -38,6 +41,8 @@ class NewsCell: UITableViewCell {
         setImageRounded()
         setTagsRounded()
         setGestureRecognizer()
+        
+        actionButton.delegate = self
     }
     
     override func layoutSubviews() {
@@ -89,5 +94,10 @@ class NewsCell: UITableViewCell {
     @objc func favoriteIconPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         let currentArticle = Article(id: articleID, articleTitle: titleLabel.text!, date: dateLabel.text ?? "", url: articleUrl, content: summaryLabel.text!, author: authorLabel.text ?? "", topic: subjectTag.currentTitle!, imageUrl: articleImageUrl , isFavorite: isFavorite)
         delegate?.favoriteIconDidPress(forArticle: currentArticle)
+    }
+    
+    
+    func actionButtonDidPress(btnText: String) {
+        delegate?.actionButtonDidPress(articleID: articleID)
     }
 }
