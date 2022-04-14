@@ -6,14 +6,17 @@ class ArticleViewController: UIViewController {
     @IBOutlet weak var customHeader: CustomHeaderView!
     
     @IBOutlet weak var articleImage: UIImageView!
+    @IBOutlet weak var inarticleImage: UIImageView!
+    
     @IBOutlet weak var favoriteIcon: UIImageView!
+    @IBOutlet weak var topicButton: UIButton!
     
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
-    @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var topContentLabel: UILabel!
+    @IBOutlet weak var bottomContentLabel: UILabel!
     
-    @IBOutlet weak var topicButton: UIButton!
     
     let articleVM = ArticleViewModel()
     let cameFrom: String! = Constants.ScreenNames.HOMEPAGE
@@ -32,7 +35,8 @@ class ArticleViewController: UIViewController {
         dateLabel.text = currentArticle.date
         titleLabel.text = currentArticle.articleTitle
         authorLabel.text = currentArticle.author
-        contentLabel.text = currentArticle.content
+        topContentLabel.text = currentArticle.content
+        bottomContentLabel.text = currentArticle.content
         topicButton.setTitle(currentArticle.topic, for: .normal)
         if currentArticle.isFavorite {
             favoriteIcon.image = UIImage(named: "favoriteArticle-selected")
@@ -40,6 +44,7 @@ class ArticleViewController: UIViewController {
         guard let url = URL(string: currentArticle.imageUrl!) else { return }
         UIImage.loadFrom(url: url) { image in
             self.articleImage.image = image
+            self.inarticleImage.image = image
         }
     }
     
