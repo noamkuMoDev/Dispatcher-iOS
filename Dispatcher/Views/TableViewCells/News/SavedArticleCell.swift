@@ -29,6 +29,7 @@ class SavedArticleCell: UITableViewCell {
         setCellBorder()
         setCellColorsDesign()
         setImageRounded()
+        setTagsRounded()
         setGestureRecognizer()
     }
     
@@ -64,6 +65,14 @@ class SavedArticleCell: UITableViewCell {
             .layerMaxXMaxYCorner,
             .layerMaxXMinYCorner
         ]
+    }
+    
+    
+    func setTagsRounded() {
+        articleTopic.layer.cornerRadius = articleTopic.frame.size.height / 2
+        articleTopic.clipsToBounds = true
+        articleMoreTags.layer.cornerRadius = articleMoreTags.frame.size.height / 2
+        articleMoreTags.clipsToBounds = true
     }
     
 
