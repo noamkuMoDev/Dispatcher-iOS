@@ -103,10 +103,14 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
             }
             currentCell.titleLabel.text = article.articleTitle
             currentCell.authorLabel.text = article.author
-            currentCell.dateLabel.text = article.date
             currentCell.summaryLabel.text = article.content
             currentCell.subjectTag.setTitle(article.topic, for: .normal)
             currentCell.articleUrl = article.url
+            if let date = adaptDateTimeFormat(currentFormat: "yyyy-MM-dd HH:mm:ss", desiredFormat: "EEEE MMM d, yyyy", timestampToAdapt: article.date) {
+                currentCell.dateLabel.text = date
+            } else {
+                currentCell.dateLabel.text = article.date
+            }
             if article.isFavorite {
                 currentCell.isFavorite = true
                 currentCell.favoriteIcon.image = UIImage(named: "favoriteArticle-selected")
@@ -118,6 +122,8 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
         tableView.dataSource = dataSource
         tableView.delegate = self
     }
+    
+
     
     
     func checkUserSettingsPreferences() {

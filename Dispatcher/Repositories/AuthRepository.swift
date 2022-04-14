@@ -59,14 +59,10 @@ class AuthRepository {
                     self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.CURRENT_USER_NAME, data: data!["name"])
                     self.saveDefaultAppSettingsToUserDefaults()
                     if let lastLogin = self.getLastLoginTimestamp() {
-                        let dateFormatterGet = DateFormatter()
-                        dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                        let dateFormatterPrint = DateFormatter()
-                        dateFormatterPrint.dateFormat = "h:mm a, dd.MM.yyyy"
-                        if let date = dateFormatterGet.date(from: String(lastLogin.prefix(19))) {
-                            self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.LAST_LOGIN_TIMESTAMP, data: dateFormatterPrint.string(from: date))
+                        if let date = adaptDateTimeFormat(currentFormat: "yyyy-MM-dd HH:mm:ss", desiredFormat: "h:mm a, dd.MM.yyyy", timestampToAdapt: String(lastLogin.prefix(19))) {
+                            self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.LAST_LOGIN_TIMESTAMP, data: date)
                         } else {
-                           print("There was an error decoding the string")
+                            print("There was an error decoding the string")
                         }
                     }
                     self.saveUserEmailToKeychain(data!["email"] as! String) { error in

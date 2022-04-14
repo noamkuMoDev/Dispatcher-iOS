@@ -23,6 +23,21 @@ func hexStringToUIColor (hex:String) -> UIColor {
     )
 }
 
+func adaptDateTimeFormat(currentFormat: String, desiredFormat: String, timestampToAdapt: String) -> String? {
+    
+    let dateFormatterGet = DateFormatter()
+    dateFormatterGet.dateFormat = currentFormat
+
+    let dateFormatterPrint = DateFormatter()
+    dateFormatterPrint.dateFormat = desiredFormat
+    
+    if let date = dateFormatterGet.date(from: timestampToAdapt) {
+        return dateFormatterPrint.string(from: date)
+    } else {
+        return nil
+    }
+}
+
 
 func setStatusBarColor(viewController: UIViewController, hexColor: String) {
     if #available(iOS 13.0, *) {
