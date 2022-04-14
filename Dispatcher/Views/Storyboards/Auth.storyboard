@@ -26,15 +26,23 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="5Gf-Hf-1Uy">
-                                <rect key="frame" x="0.0" y="364" width="414" height="168"/>
+                                <rect key="frame" x="0.0" y="105" width="414" height="168"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dispatcher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HrW-6a-akV">
+                                <rect key="frame" x="129.5" y="719.5" width="155.5" height="37.5"/>
+                                <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="32"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nBr-6u-zwr"/>
                         <color key="backgroundColor" name="Dispatch Dark Blue"/>
                         <constraints>
                             <constraint firstItem="5Gf-Hf-1Uy" firstAttribute="leading" secondItem="nBr-6u-zwr" secondAttribute="leading" id="Idu-Ir-qa4"/>
-                            <constraint firstItem="5Gf-Hf-1Uy" firstAttribute="centerY" secondItem="MkD-GU-gJ2" secondAttribute="centerY" id="jYz-0p-Nf9"/>
+                            <constraint firstItem="HrW-6a-akV" firstAttribute="centerX" secondItem="MkD-GU-gJ2" secondAttribute="centerX" id="b9I-OX-brk"/>
+                            <constraint firstItem="nBr-6u-zwr" firstAttribute="bottom" secondItem="HrW-6a-akV" secondAttribute="bottom" constant="105" id="kBG-0l-LK3"/>
                             <constraint firstItem="5Gf-Hf-1Uy" firstAttribute="trailing" secondItem="nBr-6u-zwr" secondAttribute="trailing" id="kqm-Ln-zuZ"/>
+                            <constraint firstItem="5Gf-Hf-1Uy" firstAttribute="top" secondItem="nBr-6u-zwr" secondAttribute="top" constant="61" id="n6X-bd-f2j"/>
                         </constraints>
                     </view>
                     <connections>
@@ -61,34 +69,34 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Signup" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WHE-b8-eZ2">
-                                <rect key="frame" x="36" y="334" width="338" height="28"/>
+                                <rect key="frame" x="36" y="334" width="338" height="28.5"/>
                                 <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="24"/>
                                 <color key="textColor" name="Dispatch Purple"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R6i-Pf-kZo" customClass="FormInputView" customModule="Dispatcher_Development" customModuleProvider="target">
-                                <rect key="frame" x="20" y="388" width="374" height="55"/>
+                                <rect key="frame" x="20" y="388.5" width="374" height="55"/>
                                 <color key="backgroundColor" systemColor="systemIndigoColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="hzv-sC-qeI"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbX-Sp-OVT" customClass="FormInputView" customModule="Dispatcher_Development" customModuleProvider="target">
-                                <rect key="frame" x="20" y="469" width="374" height="55"/>
+                                <rect key="frame" x="20" y="469.5" width="374" height="55"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="I1u-HD-V9U"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oVF-YK-S2Z" customClass="FormInputView" customModule="Dispatcher_Development" customModuleProvider="target">
-                                <rect key="frame" x="20" y="550" width="374" height="55"/>
+                                <rect key="frame" x="20" y="550.5" width="374" height="55"/>
                                 <color key="backgroundColor" systemColor="systemPurpleColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="bvB-kc-9PN"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0bx-3a-tya">
-                                <rect key="frame" x="20" y="631" width="374" height="1"/>
+                                <rect key="frame" x="20" y="631.5" width="374" height="1"/>
                                 <color key="backgroundColor" name="Dispatch Gray"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="BJ0-2g-6az"/>
@@ -98,16 +106,16 @@
                                 <rect key="frame" x="20" y="746" width="374" height="36"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Rxn-W8-5oO">
-                                        <rect key="frame" x="150.5" y="10" width="73" height="16"/>
+                                        <rect key="frame" x="152" y="10" width="70" height="16"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SIGNUP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFR-2L-2zT">
-                                                <rect key="frame" x="0.0" y="0.0" width="53" height="16"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="16"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Arrow-Right" translatesAutoresizingMaskIntoConstraints="NO" id="wxa-he-cfl">
-                                                <rect key="frame" x="61" y="0.0" width="12" height="16"/>
+                                                <rect key="frame" x="58" y="0.0" width="12" height="16"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="16" id="BC7-qS-21G"/>
                                                     <constraint firstAttribute="width" constant="12.050000000000001" id="zHF-0n-qay"/>
