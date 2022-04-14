@@ -126,7 +126,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
         super.viewWillAppear(animated)
         
         navigationController?.isNavigationBarHidden = true
-        setStatusBarColor(viewController: self)
+        setStatusBarColor(viewController: self, hexColor: "262146")
     }
 }
 

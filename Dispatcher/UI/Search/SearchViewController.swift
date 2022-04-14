@@ -65,6 +65,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     
 
     func initiateUIElements() {
+        setStatusBarColor(viewController: self, hexColor: "FFFFFF")
         setupTextField()
         setupTableViews()
         initialHideShowElements()

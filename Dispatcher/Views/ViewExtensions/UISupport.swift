@@ -24,13 +24,13 @@ func hexStringToUIColor (hex:String) -> UIColor {
 }
 
 
-func setStatusBarColor(viewController: UIViewController) {
+func setStatusBarColor(viewController: UIViewController, hexColor: String) {
     if #available(iOS 13.0, *) {
         let app = UIApplication.shared
         let statusBarHeight: CGFloat = app.statusBarFrame.size.height
         
         let statusbarView = UIView()
-        statusbarView.backgroundColor = hexStringToUIColor(hex: "#262146")
+        statusbarView.backgroundColor = hexStringToUIColor(hex: "#\(hexColor)")
         viewController.view.addSubview(statusbarView)
       
         statusbarView.translatesAutoresizingMaskIntoConstraints = false

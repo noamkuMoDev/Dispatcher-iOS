@@ -47,7 +47,7 @@
                                 <buttonConfiguration key="configuration" style="filled" title="Crypto">
                                     <fontDescription key="titleFontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                     <color key="baseForegroundColor" name="Dispatch Purple"/>
-                                    <color key="baseBackgroundColor" name="Dispatch Gray"/>
+                                    <color key="baseBackgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </buttonConfiguration>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5WY-ci-UqJ">
@@ -59,7 +59,7 @@
                                 <buttonConfiguration key="configuration" style="filled" title="+ 3">
                                     <fontDescription key="titleFontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
                                     <color key="baseForegroundColor" name="Dispatch Purple"/>
-                                    <color key="baseBackgroundColor" name="Dispatch Gray"/>
+                                    <color key="baseBackgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </buttonConfiguration>
                             </button>
                         </subviews>

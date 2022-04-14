@@ -1,5 +1,11 @@
 import UIKit
 
+class ActionButtonTapGesture: UITapGestureRecognizer {
+    var sender = String()
+}
+
+
+
 enum SignupLoginPageCurrentView {
     case signup
     case login
@@ -14,8 +20,12 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     @IBOutlet weak var passwordFormView: FormInputView!
     @IBOutlet weak var reenterPasswordFormView: FormInputView!
     @IBOutlet weak var separatorLine: UIView!
-    @IBOutlet weak var topButton: MainActionButtonView!
-    @IBOutlet weak var bottomButton: MainActionButtonView!
+    
+    @IBOutlet weak var topButton: UIView!
+    @IBOutlet weak var topButtonLabel: UILabel!
+    @IBOutlet weak var bottomButton: UIView!
+    @IBOutlet weak var bottomButtonLabel: UILabel!
+    
     
     let viewModel = AuthViewModel()
     var currentPageType: SignupLoginPageCurrentView = .login
@@ -23,16 +33,13 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     var separatorConstraintLogin: NSLayoutConstraint? = nil
     var separatorConstraintSignup: NSLayoutConstraint? = nil
     
-    var textInputsSpacingLogin: NSLayoutConstraint? = nil
-    var textInputsSpacingSignup: NSLayoutConstraint? = nil
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         initiateUIElements()
         defineGestureRecognizers()
         defineConstraints()
-        setStatusBarColor(viewController: self)
+        setStatusBarColor(viewController: self, hexColor: "262146")
     }
     
 
@@ -43,8 +50,10 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         reenterPasswordFormView.initView(id: Constants.TextFieldsIDs.PASSWORD_AGAIN, delegate: self, labelText: "Input doesn't match previous password", placeholderText: "Re-Enter Password", hideIcon: false)
         loadingView.initView(delegate: self)
         loadingView.isHidden = true
-
-        setActionButtons()
+        
+        // round buttons corners 10px
+        topButton.layer.cornerRadius = 10.0
+        bottomButton.layer.cornerRadius = 10.0
 
         if currentPageType == .login {
             setLoginPageLook()
@@ -53,11 +62,39 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         }
     }
     
-
+    
     func defineGestureRecognizers() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
+        
+        let buttonPress1 = ActionButtonTapGesture(target: self, action: #selector(self.actionButtonPressed))
+        buttonPress1.sender = "topButton"
+        topButton.isUserInteractionEnabled = true
+        topButton.addGestureRecognizer(buttonPress1)
+        
+        let buttonPress2 = ActionButtonTapGesture(target: self, action: #selector(self.actionButtonPressed))
+        buttonPress2.sender = "bottomButton"
+        bottomButton.isUserInteractionEnabled = true
+        bottomButton.addGestureRecognizer(buttonPress2)
     }
+    
+    
+    @objc func actionButtonPressed(sender : ActionButtonTapGesture) {
+        if sender.sender == "topButton" {
+            if currentPageType == .login {
+                loginExistingUser()
+            } else {
+                signupNewUser()
+            }
+        } else {
+            if currentPageType == .login {
+                setSignupPageLook()
+            } else {
+                setLoginPageLook()
+            }
+        }
+    }
+    
     
 
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
@@ -67,15 +104,6 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     }
 
 
-    func setActionButtons() {
-        topButton.delegate = self
-        bottomButton.delegate = self
-        
-        topButton.buttonIcon.isHidden = false
-        bottomButton.buttonIcon.isHidden = true
-        bottomButton.entireButton.backgroundColor = UIColor.lightGray
-    }
-
 
     func defineConstraints() {
         separatorConstraintSignup = separatorLine.topAnchor.constraint(equalTo: reenterPasswordFormView.bottomAnchor, constant: 26.0)
@@ -83,13 +111,6 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         
         separatorConstraintLogin = separatorLine.topAnchor.constraint(equalTo: passwordFormView.bottomAnchor, constant: 26.0)
         separatorConstraintLogin?.isActive = false
-        
-        
-        textInputsSpacingSignup = passwordFormView.topAnchor.constraint(equalTo: emailFormView.bottomAnchor, constant: 26.0)
-        textInputsSpacingSignup?.isActive = false
-        
-        textInputsSpacingLogin = passwordFormView.topAnchor.constraint(equalTo: emailFormView.bottomAnchor, constant: 60.0)
-        textInputsSpacingLogin?.isActive = false
     }
 
 
@@ -101,10 +122,9 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
             self.reenterPasswordFormView.isHidden = false
             self.separatorConstraintLogin?.isActive = false
             self.separatorConstraintSignup?.isActive = true
-            self.textInputsSpacingSignup?.isActive = true
-            self.textInputsSpacingLogin?.isActive = false
-            self.topButton.buttonLabel.text = Constants.ButtonsText.SIGNUP
-            self.bottomButton.buttonLabel.text = Constants.ButtonsText.LOGIN
+            
+            self.topButtonLabel.text = Constants.ButtonsText.SIGNUP
+            self.bottomButtonLabel.text = Constants.ButtonsText.LOGIN
         }
     }
     func setLoginPageLook() {
@@ -115,10 +135,9 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
             self.reenterPasswordFormView.isHidden = true
             self.separatorConstraintSignup?.isActive = false
             self.separatorConstraintLogin?.isActive = true
-            self.textInputsSpacingSignup?.isActive = false
-            self.textInputsSpacingLogin?.isActive = true
-            self.topButton.buttonLabel.text = Constants.ButtonsText.LOGIN
-            self.bottomButton.buttonLabel.text = Constants.ButtonsText.SIGNUP
+            
+            self.topButtonLabel.text = Constants.ButtonsText.LOGIN
+            self.bottomButtonLabel.text = Constants.ButtonsText.SIGNUP
         }
     }
     

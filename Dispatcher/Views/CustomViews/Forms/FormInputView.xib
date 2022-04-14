@@ -48,7 +48,7 @@
                 </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" name="Dispatch Light Gray"/>
+            <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="LvZ-LL-eYv" firstAttribute="top" secondItem="NH4-SQ-E2c" secondAttribute="bottom" constant="5" id="HnU-xl-Kfl"/>
                 <constraint firstItem="LvZ-LL-eYv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="LFs-SF-SfS"/>
@@ -65,9 +65,6 @@
     <resources>
         <image name="eye-icon-conseal" width="10" height="9"/>
         <image name="white-background" width="246.5" height="54.5"/>
-        <namedColor name="Dispatch Light Gray">
-            <color red="0.95294117647058818" green="0.95294117647058818" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="Dispatch Purple">
             <color red="0.35294117647058826" green="0.35294117647058826" blue="0.53725490196078429" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
