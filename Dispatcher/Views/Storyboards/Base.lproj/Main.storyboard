@@ -69,7 +69,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OCo-hA-dGJ" userLabel="ContentView">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="890"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sampleImage" translatesAutoresizingMaskIntoConstraints="NO" id="Kj8-N4-mEb">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="light-gray-background" translatesAutoresizingMaskIntoConstraints="NO" id="Kj8-N4-mEb">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="149"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="149" id="Uj4-U2-Rsb"/>
@@ -130,7 +130,7 @@
                                                 <color key="textColor" name="Dispatch Purple"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sampleImage" translatesAutoresizingMaskIntoConstraints="NO" id="dLb-uz-zBt">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="light-gray-background" translatesAutoresizingMaskIntoConstraints="NO" id="dLb-uz-zBt">
                                                 <rect key="frame" x="16" y="531.66666666666663" width="382" height="135"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="135" id="sGe-xk-Gh3"/>
@@ -432,7 +432,7 @@
                         <outlet property="tableView" destination="yBY-FC-8kL" id="WnK-wx-T7O"/>
                         <outlet property="view" destination="Dr3-0T-q0m" id="YwB-W4-sWW"/>
                         <segue destination="tUC-ru-eE1" kind="show" identifier="homepageToNotifications" id="f5P-ad-VVd"/>
-                        <segue destination="Qi2-cd-MPv" kind="show" identifier="homepageToSearch" id="U37-Fe-alY"/>
+                        <segue destination="Qi2-cd-MPv" kind="show" identifier="homepageToSearch" animates="NO" id="U37-Fe-alY"/>
                         <segue destination="hE9-6G-rlH" kind="show" identifier="homepageToArticle" id="kEm-zR-HgR"/>
                     </connections>
                 </viewController>
@@ -984,7 +984,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved articles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="InJ-L5-VKA">
-                                <rect key="frame" x="16" y="81" width="382" height="28.333333333333329"/>
+                                <rect key="frame" x="16" y="81" width="382" height="28"/>
                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -997,13 +997,13 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No saved articles were found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JSg-cc-jjP">
-                                <rect key="frame" x="90.666666666666671" y="427" width="232.66666666666663" height="21.333333333333314"/>
+                                <rect key="frame" x="90.666666666666671" y="427" width="232.66666666666663" height="21"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="XjW-ao-P3U">
-                                <rect key="frame" x="8" y="119.33333333333331" width="398" height="605.66666666666674"/>
+                                <rect key="frame" x="8" y="119" width="398" height="606"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="84b-yh-Gq1" customClass="LoadingView" customModule="Dispatcher_Development" customModuleProvider="target">
@@ -1042,7 +1042,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                         <outlet property="noResultsLabel" destination="JSg-cc-jjP" id="wsA-2H-reb"/>
                         <outlet property="tableView" destination="XjW-ao-P3U" id="iBU-Fx-QOu"/>
                         <segue destination="tUC-ru-eE1" kind="show" identifier="favoritesToNotifications" id="Tvg-NK-Rg2"/>
-                        <segue destination="Qi2-cd-MPv" kind="show" identifier="favoritesToSearch" id="SwU-X3-8Hj"/>
+                        <segue destination="Qi2-cd-MPv" kind="show" identifier="favoritesToSearch" animates="NO" id="SwU-X3-8Hj"/>
                         <segue destination="hE9-6G-rlH" kind="show" identifier="favoritesToArticle" id="Auy-Jy-EV5"/>
                     </connections>
                 </viewController>
@@ -1064,8 +1064,8 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
         <image name="dropdown" width="6" height="5.3333334922790527"/>
         <image name="favoriteArticle-notSelected" width="10" height="10"/>
         <image name="large-missing-profile-pic" width="33.666667938232422" height="33.666667938232422"/>
+        <image name="light-gray-background" width="640" height="360"/>
         <image name="no-results-found-image" width="44.333332061767578" height="44.333332061767578"/>
-        <image name="sampleImage" width="375" height="149"/>
         <image name="search" width="8.3333330154418945" height="8"/>
         <image name="small-missing-profile-pic" width="16.333333969116211" height="16.333333969116211"/>
         <namedColor name="Dispatch Dark Blue">

@@ -59,6 +59,8 @@ class ViewProfileViewController: UIViewController {
                     print("couldn't get user image from user details")
                 }
             }
+        } else {
+            self.userPicture.image = existingProfilePicture
         }
         
         viewModel.getDataOnUser(subject: Constants.TextFieldsIDs.USRE_EMAIL) { email in
@@ -176,6 +178,11 @@ class ViewProfileViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
         setStatusBarColor(viewController: self)
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        navigationController?.popViewController(animated: false)
+    }
 }
 
 
@@ -216,14 +223,18 @@ extension ViewProfileViewController: CustomHeaderViewDelegate {
                 
                 if let newProfilePicture = newProfilePicture {
                     
+                    // Notify ProfileVC (UIImage)
                     let dataDictionary : [String: UIImage] = ["userImage" : newProfilePicture]
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.PICTURE_UPDATE ), object: nil, userInfo: dataDictionary)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.PICTURE_UPDATE), object: nil, userInfo: dataDictionary)
                     
+                    // Upload to Storage
                     uploadPictureToCloudStorage(image: newProfilePicture) { error, url in
                         if let error = error {
                             print("Error - \(error)")
                         } else {
+                            // Update Firestore (url)
                             self.viewModel.updateUserDetail(detailType: Constants.UserDefaults.CURRENT_USER_IMAGE, data: url!)
+                            // Update UD: Image (png)
                             let data = newProfilePicture.pngData()
                             if let data = data {
                                 self.viewModel.updateUserDetail(detailType: Constants.UserDefaults.CURRENT_USER_IMAGE, data: data)

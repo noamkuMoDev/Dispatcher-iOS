@@ -84,6 +84,8 @@ class ViewProfileRepository {
                 }
                 
             case Constants.UserDefaults.CURRENT_USER_IMAGE:
+                print("DATA to update usr IMAGE in FIRESTORE")
+                print(data)
                 firestoreManager.updateDocumentInFirestore(docuemntPath: docPath, property: Constants.FirestoreProperties.IMAGE, value: data) { error in
                     if let error = error {
                         print("Faild updating image in Firestore - \(error)")

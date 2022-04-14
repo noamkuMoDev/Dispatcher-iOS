@@ -140,13 +140,16 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     }
 
     @objc func refreshRecentSearchesTable() {
+        print("GOT NOTIFIED ON change in APP SETTINGS")
         fetchSearchHistory() {
             DispatchQueue.main.async {
+                print("REFRESHING TABLE VIEW")
                 self.recentSearchesDataSource.models = self.viewModel.recentSearchesArray
                 self.recentSearchesTableView.reloadData()
             }
         }
     }
+    
     
     func cleanTextFromSpecialCharacters(text: String) -> String {
         var cleanSearchWords = text
@@ -195,7 +198,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     
 
     @objc func goBackButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
-        navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: false)
     }
     
 
@@ -236,6 +239,11 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
             self.loadingView.isHidden = true
             self.loadingView.loadIndicator.stopAnimating()
         }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        navigationController?.popViewController(animated: false)
     }
 }
 

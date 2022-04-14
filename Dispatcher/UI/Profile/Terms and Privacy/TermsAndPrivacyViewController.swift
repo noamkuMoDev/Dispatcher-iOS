@@ -23,6 +23,11 @@ class TermsAndPrivacyViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
         setStatusBarColor(viewController: self)
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        navigationController?.popViewController(animated: false)
+    }
 }
 
 // MARK: - CustomHeaderViewDelegate

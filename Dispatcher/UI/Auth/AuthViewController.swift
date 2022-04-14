@@ -46,8 +46,6 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
 
         setActionButtons()
 
-        logoImageView.heightAnchor.constraint(equalToConstant: CGFloat(UIScreen.main.bounds.height / 2 )).isActive = true
-
         if currentPageType == .login {
             setLoginPageLook()
         } else {
@@ -80,10 +78,10 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
 
 
     func defineConstraints() {
-        separatorConstraintSignup = separatorLine.topAnchor.constraint(equalTo: reenterPasswordFormView.bottomAnchor, constant: 25.0)
+        separatorConstraintSignup = separatorLine.topAnchor.constraint(equalTo: reenterPasswordFormView.bottomAnchor, constant: 26.0)
         separatorConstraintSignup?.isActive = true
         
-        separatorConstraintLogin = separatorLine.topAnchor.constraint(equalTo: passwordFormView.bottomAnchor, constant: 70.0)
+        separatorConstraintLogin = separatorLine.topAnchor.constraint(equalTo: passwordFormView.bottomAnchor, constant: 26.0)
         separatorConstraintLogin?.isActive = false
         
         
@@ -96,28 +94,32 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
 
 
     func setSignupPageLook() {
-        clearAllUIElements()
-        currentPageType = .signup
-        titleLabel.text = "Signup"
-        reenterPasswordFormView.isHidden = false
-        separatorConstraintLogin?.isActive = false
-        separatorConstraintSignup?.isActive = true
-        textInputsSpacingSignup?.isActive = true
-        textInputsSpacingLogin?.isActive = false
-        topButton.buttonLabel.text = Constants.ButtonsText.SIGNUP
-        bottomButton.buttonLabel.text = Constants.ButtonsText.LOGIN
+        DispatchQueue.main.async {
+            self.clearAllUIElements()
+            self.currentPageType = .signup
+            self.titleLabel.text = "Signup"
+            self.reenterPasswordFormView.isHidden = false
+            self.separatorConstraintLogin?.isActive = false
+            self.separatorConstraintSignup?.isActive = true
+            self.textInputsSpacingSignup?.isActive = true
+            self.textInputsSpacingLogin?.isActive = false
+            self.topButton.buttonLabel.text = Constants.ButtonsText.SIGNUP
+            self.bottomButton.buttonLabel.text = Constants.ButtonsText.LOGIN
+        }
     }
     func setLoginPageLook() {
-        clearAllUIElements()
-        currentPageType = .login
-        titleLabel.text = "Login"
-        reenterPasswordFormView.isHidden = true
-        separatorConstraintSignup?.isActive = false
-        separatorConstraintLogin?.isActive = true
-        textInputsSpacingSignup?.isActive = false
-        textInputsSpacingLogin?.isActive = true
-        topButton.buttonLabel.text = Constants.ButtonsText.LOGIN
-        bottomButton.buttonLabel.text = Constants.ButtonsText.SIGNUP
+        DispatchQueue.main.async {
+            self.clearAllUIElements()
+            self.currentPageType = .login
+            self.titleLabel.text = "Login"
+            self.reenterPasswordFormView.isHidden = true
+            self.separatorConstraintSignup?.isActive = false
+            self.separatorConstraintLogin?.isActive = true
+            self.textInputsSpacingSignup?.isActive = false
+            self.textInputsSpacingLogin?.isActive = true
+            self.topButton.buttonLabel.text = Constants.ButtonsText.LOGIN
+            self.bottomButton.buttonLabel.text = Constants.ButtonsText.SIGNUP
+        }
     }
     
     
