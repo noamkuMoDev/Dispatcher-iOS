@@ -37,8 +37,6 @@ class FormInputView: UIView {
         textfieldIcon.isHidden = hideIcon
         warningLabel.text = labelText
         warningLabel.isHidden = true
-        
-        
     }
     
     private func commonInit() {
@@ -102,7 +100,7 @@ class FormInputView: UIView {
         textField.layer.borderColor = UIColor.black.cgColor
     }
     
-    // XXXXXXX same as hideWarning
+
     func dismissEditMode() {
         textField.layer.borderWidth = 0.0
         warningLabel.isHidden = true

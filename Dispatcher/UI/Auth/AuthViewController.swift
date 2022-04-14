@@ -23,6 +23,8 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     var separatorConstraintLogin: NSLayoutConstraint? = nil
     var separatorConstraintSignup: NSLayoutConstraint? = nil
     
+    var textInputsSmallSpacingConstraint: NSLayoutConstraint? = nil
+    var textInputsBigSpacingConstraint: NSLayoutConstraint? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,6 +85,21 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         
         separatorConstraintLogin = separatorLine.topAnchor.constraint(equalTo: passwordFormView.bottomAnchor, constant: 50.0)
         separatorConstraintLogin?.isActive = false
+        
+        
+        textInputsSmallSpacingConstraint = passwordFormView.topAnchor.constraint(equalTo: emailFormView.bottomAnchor, constant: 26.0)
+        textInputsSmallSpacingConstraint?.isActive = false
+        
+        textInputsBigSpacingConstraint = passwordFormView.topAnchor.constraint(equalTo: emailFormView.bottomAnchor, constant: 52.0)
+        textInputsBigSpacingConstraint?.isActive = false
+        
+        if currentPageType == .login {
+            textInputsSmallSpacingConstraint?.isActive = true
+            textInputsBigSpacingConstraint?.isActive = false
+        } else {
+            textInputsSmallSpacingConstraint?.isActive = false
+            textInputsBigSpacingConstraint?.isActive = true
+        }
     }
 
 
@@ -93,6 +110,8 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         reenterPasswordFormView.isHidden = false
         separatorConstraintLogin?.isActive = false
         separatorConstraintSignup?.isActive = true
+        textInputsSmallSpacingConstraint?.isActive = false
+        textInputsBigSpacingConstraint?.isActive = true
         topButton.buttonLabel.text = Constants.ButtonsText.SIGNUP
         bottomButton.buttonLabel.text = Constants.ButtonsText.LOGIN
     }
@@ -103,6 +122,8 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         reenterPasswordFormView.isHidden = true
         separatorConstraintSignup?.isActive = false
         separatorConstraintLogin?.isActive = true
+        textInputsSmallSpacingConstraint?.isActive = true
+        textInputsBigSpacingConstraint?.isActive = false
         topButton.buttonLabel.text = Constants.ButtonsText.LOGIN
         bottomButton.buttonLabel.text = Constants.ButtonsText.SIGNUP
     }

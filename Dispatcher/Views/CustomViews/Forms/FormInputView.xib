@@ -27,7 +27,7 @@
             <rect key="frame" x="0.0" y="0.0" width="374" height="63"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NH4-SQ-E2c">
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your email" textAlignment="natural" minimumFontSize="17" background="white-background" disabledBackground="white-background" translatesAutoresizingMaskIntoConstraints="NO" id="NH4-SQ-E2c">
                     <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="QUg-gY-VWL"/>
@@ -64,6 +64,7 @@
     </objects>
     <resources>
         <image name="eye-icon-conseal" width="10" height="9"/>
+        <image name="white-background" width="246.5" height="54.5"/>
         <namedColor name="Dispatch Light Gray">
             <color red="0.95294117647058818" green="0.95294117647058818" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
