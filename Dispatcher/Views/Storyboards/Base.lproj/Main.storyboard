@@ -53,18 +53,18 @@
             <objects>
                 <viewController id="hE9-6G-rlH" customClass="ArticleViewController" customModule="Dispatcher_Development" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aOA-v3-EVc">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="1000"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="829"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s1b-i7-Naq" customClass="CustomHeaderView" customModule="Dispatcher_Development" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="414" height="64"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
                                 <color key="backgroundColor" red="0.14901960780000001" green="0.12941176469999999" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="aMU-xh-SM2"/>
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WJD-0w-io9">
-                                <rect key="frame" x="0.0" y="108" width="414" height="858"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="765"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OCo-hA-dGJ" userLabel="ContentView">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="890"/>
@@ -83,7 +83,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" Friday Jun 25, 2021" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5D1-jA-TWw">
-                                                <rect key="frame" x="16" y="174" width="125" height="17"/>
+                                                <rect key="frame" x="16" y="175" width="125" height="17"/>
                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
                                                 <color key="textColor" name="Dispatch Gray"/>
                                                 <nil key="highlightedColor"/>
@@ -173,7 +173,7 @@
                                             <constraint firstItem="woc-zZ-kb4" firstAttribute="leading" secondItem="OCo-hA-dGJ" secondAttribute="leading" constant="16" id="wo2-ek-xo1"/>
                                             <constraint firstItem="16n-rI-8C0" firstAttribute="leading" secondItem="OCo-hA-dGJ" secondAttribute="leading" constant="16" id="xux-Iw-kIO"/>
                                             <constraint firstItem="16n-rI-8C0" firstAttribute="top" secondItem="g6n-5R-3Nj" secondAttribute="bottom" constant="10" id="zHO-GX-WhU"/>
-                                            <constraint firstItem="5D1-jA-TWw" firstAttribute="top" secondItem="Kj8-N4-mEb" secondAttribute="bottom" constant="25" id="zIN-nA-Dc1"/>
+                                            <constraint firstItem="5D1-jA-TWw" firstAttribute="top" secondItem="Kj8-N4-mEb" secondAttribute="bottom" constant="26" id="zIN-nA-Dc1"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -200,6 +200,7 @@
                             <constraint firstItem="nn4-WU-FEi" firstAttribute="bottom" secondItem="WJD-0w-io9" secondAttribute="bottom" id="vvj-P1-eOF"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="VsY-lK-UZZ"/>
                     <size key="freeformSize" width="414" height="1000"/>
                     <connections>
                         <outlet property="articleImage" destination="Kj8-N4-mEb" id="CgX-Rt-yvK"/>
@@ -216,7 +217,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NUe-9u-Fl2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4195.652173913044" y="1212.7232142857142"/>
+            <point key="canvasLocation" x="3238" y="1247"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="I2y-lf-UV8">
@@ -432,7 +433,7 @@
                         <outlet property="view" destination="Dr3-0T-q0m" id="YwB-W4-sWW"/>
                         <segue destination="tUC-ru-eE1" kind="show" identifier="homepageToNotifications" id="f5P-ad-VVd"/>
                         <segue destination="Qi2-cd-MPv" kind="show" identifier="homepageToSearch" id="U37-Fe-alY"/>
-                        <segue destination="hE9-6G-rlH" kind="presentation" identifier="homepageToArticle" modalPresentationStyle="fullScreen" id="kEm-zR-HgR"/>
+                        <segue destination="hE9-6G-rlH" kind="show" identifier="homepageToArticle" id="kEm-zR-HgR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NmD-95-HIW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1042,7 +1043,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                         <outlet property="tableView" destination="XjW-ao-P3U" id="iBU-Fx-QOu"/>
                         <segue destination="tUC-ru-eE1" kind="show" identifier="favoritesToNotifications" id="Tvg-NK-Rg2"/>
                         <segue destination="Qi2-cd-MPv" kind="show" identifier="favoritesToSearch" id="SwU-X3-8Hj"/>
-                        <segue destination="hE9-6G-rlH" kind="presentation" identifier="favoritesToArticle" modalPresentationStyle="fullScreen" id="Auy-Jy-EV5"/>
+                        <segue destination="hE9-6G-rlH" kind="show" identifier="favoritesToArticle" id="Auy-Jy-EV5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fhH-oy-gqj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

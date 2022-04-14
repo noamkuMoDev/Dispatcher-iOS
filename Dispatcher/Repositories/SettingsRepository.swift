@@ -28,7 +28,6 @@ class SettingsRepository {
         case Constants.AppSettings.SEARCH_RESULTS:
             userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.SAVE_SEARCH_RESULTS, data: newStatus.rawValue)
             if newStatus == .off {
-                print("SAID TO CLEAR RECENT SEARCHES")
                 userDefaultsManager.clearUserDefaultsMemory(keysToRemove: [Constants.UserDefaults.RECENT_SEARCHES])
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.RECENT_SEARCHES_EMPTIED), object: nil)
             }

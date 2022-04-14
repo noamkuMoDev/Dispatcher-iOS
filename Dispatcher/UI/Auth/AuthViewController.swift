@@ -23,8 +23,8 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     var separatorConstraintLogin: NSLayoutConstraint? = nil
     var separatorConstraintSignup: NSLayoutConstraint? = nil
     
-    var textInputsSmallSpacingConstraint: NSLayoutConstraint? = nil
-    var textInputsBigSpacingConstraint: NSLayoutConstraint? = nil
+    var textInputsSpacingLogin: NSLayoutConstraint? = nil
+    var textInputsSpacingSignup: NSLayoutConstraint? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,23 +83,15 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         separatorConstraintSignup = separatorLine.topAnchor.constraint(equalTo: reenterPasswordFormView.bottomAnchor, constant: 25.0)
         separatorConstraintSignup?.isActive = true
         
-        separatorConstraintLogin = separatorLine.topAnchor.constraint(equalTo: passwordFormView.bottomAnchor, constant: 50.0)
+        separatorConstraintLogin = separatorLine.topAnchor.constraint(equalTo: passwordFormView.bottomAnchor, constant: 70.0)
         separatorConstraintLogin?.isActive = false
         
         
-        textInputsSmallSpacingConstraint = passwordFormView.topAnchor.constraint(equalTo: emailFormView.bottomAnchor, constant: 26.0)
-        textInputsSmallSpacingConstraint?.isActive = false
+        textInputsSpacingSignup = passwordFormView.topAnchor.constraint(equalTo: emailFormView.bottomAnchor, constant: 26.0)
+        textInputsSpacingSignup?.isActive = false
         
-        textInputsBigSpacingConstraint = passwordFormView.topAnchor.constraint(equalTo: emailFormView.bottomAnchor, constant: 52.0)
-        textInputsBigSpacingConstraint?.isActive = false
-        
-        if currentPageType == .login {
-            textInputsSmallSpacingConstraint?.isActive = true
-            textInputsBigSpacingConstraint?.isActive = false
-        } else {
-            textInputsSmallSpacingConstraint?.isActive = false
-            textInputsBigSpacingConstraint?.isActive = true
-        }
+        textInputsSpacingLogin = passwordFormView.topAnchor.constraint(equalTo: emailFormView.bottomAnchor, constant: 60.0)
+        textInputsSpacingLogin?.isActive = false
     }
 
 
@@ -110,8 +102,8 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         reenterPasswordFormView.isHidden = false
         separatorConstraintLogin?.isActive = false
         separatorConstraintSignup?.isActive = true
-        textInputsSmallSpacingConstraint?.isActive = false
-        textInputsBigSpacingConstraint?.isActive = true
+        textInputsSpacingSignup?.isActive = true
+        textInputsSpacingLogin?.isActive = false
         topButton.buttonLabel.text = Constants.ButtonsText.SIGNUP
         bottomButton.buttonLabel.text = Constants.ButtonsText.LOGIN
     }
@@ -122,8 +114,8 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         reenterPasswordFormView.isHidden = true
         separatorConstraintSignup?.isActive = false
         separatorConstraintLogin?.isActive = true
-        textInputsSmallSpacingConstraint?.isActive = true
-        textInputsBigSpacingConstraint?.isActive = false
+        textInputsSpacingSignup?.isActive = false
+        textInputsSpacingLogin?.isActive = true
         topButton.buttonLabel.text = Constants.ButtonsText.LOGIN
         bottomButton.buttonLabel.text = Constants.ButtonsText.SIGNUP
     }

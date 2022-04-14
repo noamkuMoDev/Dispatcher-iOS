@@ -82,7 +82,6 @@ class FormInputView: UIView {
     
 
     func displayWarning() {
-        print("displayWarning from FormInput")
         textField.layer.borderWidth = 1.0
         warningLabel.isHidden = false
     }
