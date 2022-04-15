@@ -113,7 +113,6 @@ class BaseArticlesRepository {
     
     
     func saveArticleToFavorites(_ article: Article, completionHandler: @escaping (String?, FavoriteArticle?) -> ()) {
-
         coreDataManager.saveArticleToCoreData(article) { error, favoriteArticle in
             if let error = error {
                 completionHandler("Error saving article to CoreData: \(error)", nil)
@@ -135,7 +134,6 @@ class BaseArticlesRepository {
                         Constants.FirestoreProperties.TIMESTAMP: "\(timestamp)"
                     ]
                     let colPath = "\(Constants.Firestore.USERS_COLLECTION)/\(uid!)/\(Constants.Firestore.FAVORITES_COLLECTION)"
-                    
                     self.firestoreManager.saveDocumentToFirestore(collectionPath: colPath, customID: article.id, dataDictionary: dataDict) { error in
                         if let error = error {
                             completionHandler("Error saving into user's favorites in firestore: \(error)", nil)

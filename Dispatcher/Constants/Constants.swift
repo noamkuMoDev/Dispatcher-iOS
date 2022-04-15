@@ -35,6 +35,7 @@ struct Constants {
         static let HOMEPAGE_TO_SEARCH = "homepageToSearch"
         static let FAVORITES_TO_NOTIFICATIONS = "favoritesToNotifications"
         static let FAVORITES_TO_SEARCH = "favoritesToSearch"
+        static let SEARCH_TO_ARTICLE = "searchToArticle"
         static let GO_TO_UPDATE_PROFILE = "goToUpdateProfile"
         static let GO_TO_TERMS_AND_PRIVACY = "goToTermsAndPrivacy"
         static let GO_TO_SETTINGS = "goToSettings"

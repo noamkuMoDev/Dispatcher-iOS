@@ -993,6 +993,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                         <outlet property="searchTextField" destination="8S0-ez-Ld8" id="vYH-4w-tLP"/>
                         <outlet property="searchView" destination="5YH-wN-LcL" id="Eqh-cc-fT4"/>
                         <outlet property="sortbyView" destination="wcr-kK-dSY" id="7L3-4n-bR3"/>
+                        <segue destination="hE9-6G-rlH" kind="show" identifier="searchToArticle" id="gSo-X6-bCG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9bZ-FH-Klt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

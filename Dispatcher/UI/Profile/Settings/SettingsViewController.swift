@@ -49,12 +49,10 @@ extension SettingsViewController: UITableViewDataSource {
         return viewModel.appSettings.count
     }
 
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionKey = viewModel.sectionsSortedKeys[section]!
         return viewModel.appSettings[sectionKey]!.options.count
     }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
@@ -117,9 +115,12 @@ extension SettingsViewController: UITableViewDelegate {
 extension SettingsViewController: AppSettingCellDelegate {
 
     func settingCellDidPress(settingText: String) {
-        
+        print("CURRENT APP SETTINGS ARRAY:")
+        print(self.viewModel.appSettings)
         viewModel.updateSetting(settingTitle: settingText) {
             DispatchQueue.main.async {
+                print("UPDATED APP SETTINGS ARRAY:")
+                print(self.viewModel.appSettings)
                 self.tableView.reloadData()
             }
         }

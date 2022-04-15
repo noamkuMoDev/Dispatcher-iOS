@@ -2,7 +2,7 @@ import UIKit
 
 protocol NewsCellDelegate {
     func favoriteIconDidPress(forArticle article: Article)
-    func actionButtonDidPress(articleID: String)
+    func actionButtonDidPress(inside article: Article)
 }
 
 enum ArticleFavoriteMark {
@@ -98,6 +98,17 @@ class NewsCell: UITableViewCell, MainActionButtonDelegate{
     
     
     func actionButtonDidPress(btnText: String) {
-        delegate?.actionButtonDidPress(articleID: articleID)
+        let currentArticle = Article(
+            id: articleID,
+            articleTitle: titleLabel.text ?? "",
+            date: dateLabel.text ?? "",
+            url: articleUrl,
+            content: summaryLabel.text ?? "",
+            author: authorLabel.text ?? "",
+            topic: subjectTag.currentTitle ?? "",
+            imageUrl: articleImageUrl,
+            isFavorite: self.isFavorite)
+        
+        delegate?.actionButtonDidPress(inside: currentArticle)
     }
 }

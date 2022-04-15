@@ -214,12 +214,11 @@ extension HomepageViewController: UIScrollViewDelegate {
 // MARK: - NewsCellDelegate
 extension HomepageViewController: NewsCellDelegate {
     
-    func actionButtonDidPress(articleID: String) {
-        let index = viewModel.newsArray.firstIndex(where: { $0.id == articleID })
-        if let index = index {
-            selectedArticle = viewModel.newsArray[index]
-            self.performSegue(withIdentifier: Constants.Segues.HOMEPAGE_TO_ARTICLE, sender: self)
-        }
+    func actionButtonDidPress(inside article: Article) {
+        selectedArticle = article
+        print("SELECTED ARTICLE IN HOMEPAGE:")
+        print(article)
+        self.performSegue(withIdentifier: Constants.Segues.HOMEPAGE_TO_ARTICLE, sender: self)
     }
     
     

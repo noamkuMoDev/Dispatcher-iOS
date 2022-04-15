@@ -28,6 +28,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     
     let viewModel = SearchViewModel()
     
+    var selectedArticle: Article? = nil
     var searchClearImageName: iconImageName = .search
     var isPaginating: Bool = false
     var isSaveSearches: Bool = true
@@ -38,6 +39,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        viewModel.getSavedArticles() {}
         checkUserPreference()
         initiateUIElements()
         defineGestureRecognizers()
@@ -97,16 +99,28 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
             reuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE
         ) { article, cell in
             let currentCell = cell as! NewsCell
+            currentCell.delegate = self
             
+            currentCell.articleID = article.id
             currentCell.titleLabel.text = article.articleTitle
             currentCell.authorLabel.text = article.author
             currentCell.dateLabel.text = article.date
+            currentCell.articleUrl = article.url
+            currentCell.articleImageUrl = article.imageUrl ?? ""
             currentCell.subjectTag.setTitle(article.topic, for: .normal)
             currentCell.summaryLabel.text = article.content
             guard let url = URL(string: article.imageUrl ?? "") else { return }
             UIImage.loadFrom(url: url) { image in
                 currentCell.newsImage.image = image
             }
+            if article.isFavorite {
+                currentCell.isFavorite = true
+                currentCell.favoriteIcon.image = UIImage(named: "favoriteArticle-selected")
+            } else {
+                currentCell.isFavorite = false
+                currentCell.favoriteIcon.image = UIImage(named: "favoriteArticle-notSelected")
+            }
+              
         }
         searchResultsTableView.dataSource = searchResultsDataSource
         searchResultsTableView.delegate = self
@@ -141,10 +155,8 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     }
 
     @objc func refreshRecentSearchesTable() {
-        print("GOT NOTIFIED ON change in APP SETTINGS")
         fetchSearchHistory() {
             DispatchQueue.main.async {
-                print("REFRESHING TABLE VIEW")
                 self.recentSearchesDataSource.models = self.viewModel.recentSearchesArray
                 self.recentSearchesTableView.reloadData()
             }
@@ -182,6 +194,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
                 self.searchResultsTableView.isHidden = false
                 self.searchResultsDataSource.models = self.viewModel.newsArray
                 self.searchResultsTableView.reloadData()
+                self.searchResultsTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
                 
                 if self.isSaveSearches {
                     self.viewModel.saveNewRecentSearch(self.cleanTextFromSpecialCharacters(text: keywords.lowercased())) {
@@ -333,6 +346,56 @@ extension SearchViewController: RecentSearchCellDelegate {
                 self.recentSearchesDataSource.models = self.viewModel.recentSearchesArray
                 DispatchQueue.main.async {
                     self.recentSearchesTableView.reloadData()
+                }
+            }
+        }
+    }
+}
+
+// MARK: - NewsCellDelegate
+extension SearchViewController: NewsCellDelegate {
+    
+    func actionButtonDidPress(inside article: Article) {
+        selectedArticle = article
+        print("SELECTED ARTICLE IN SEARCH:")
+        print(article)
+        self.performSegue(withIdentifier: Constants.Segues.SEARCH_TO_ARTICLE, sender: self)
+    }
+    
+    override func prepare( for segue: UIStoryboardSegue, sender: Any? ) {
+        if let selectedArticle = selectedArticle {
+            if segue.identifier == Constants.Segues.SEARCH_TO_ARTICLE {
+                let destinationVC = segue.destination as! ArticleViewController
+                destinationVC.currentArticle = selectedArticle
+            }
+        }
+    }
+    
+    
+    
+    func favoriteIconDidPress(forArticle article: Article) {
+        if article.isFavorite {
+            viewModel.removeArticleFromFavorites(articleID: article.id) { error in //works
+                if let error = error {
+                    print("Couldn't add to favorites - \(error)")
+                } else {
+                    DispatchQueue.main.async {
+                        self.searchResultsDataSource.models = self.viewModel.newsArray
+                        self.searchResultsTableView.reloadData()
+                    }
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.HOMEPAGE_TO_FAVORITES), object: nil)
+                }
+            }
+        } else {
+            viewModel.addArticleToFavorites(article) { error in // works
+                if let error = error {
+                    print("Couldn't add to favorites - \(error)")
+                } else {
+                    DispatchQueue.main.async {
+                        self.searchResultsDataSource.models = self.viewModel.newsArray
+                        self.searchResultsTableView.reloadData()
+                    }
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.HOMEPAGE_TO_FAVORITES), object: nil)
                 }
             }
         }

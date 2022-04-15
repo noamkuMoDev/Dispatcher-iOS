@@ -7,7 +7,7 @@ struct SettingModel {
 
 struct SingleSetting {
     var title: String
-    var description: String?
+    var description: String
     var status: SwitchStatus
 }
 

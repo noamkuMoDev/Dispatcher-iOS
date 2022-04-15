@@ -25,6 +25,7 @@ class SettingsViewModel {
             options: [
                 Constants.AppSettings.NOTIFICATION: SingleSetting (
                     title: Constants.AppSettings.NOTIFICATION,
+                    description: "",
                     status: .on
                 )
             ]
@@ -58,10 +59,10 @@ class SettingsViewModel {
             var newStatus: SwitchStatus = .off
             if currentStatus != .disabled {
                 if currentStatus == .on {
-                    appSettings[sectionTitle]?.options[settingTitle]?.status = newStatus
+                    appSettings[sectionTitle]?.options[settingTitle]?.status = newStatus // update local array
                 } else {
                     newStatus = .on
-                    appSettings[sectionTitle]?.options[settingTitle]?.status = newStatus
+                    appSettings[sectionTitle]?.options[settingTitle]?.status = newStatus // update local array
                 }
                 
                 repository.updateSavedSetting(settingTitle: settingTitle, newStatus: newStatus) {

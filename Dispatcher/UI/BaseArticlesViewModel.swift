@@ -14,7 +14,6 @@ class BaseArticlesViewModel {
     func fetchNewsFromAPI(searchWords: String = "news", pageSizeToFetch: PageSizeForFetching, completionHandler: @escaping (String?) -> ()) {
         repository.fetchNewsFromAPI(searchWords: searchWords, pageSizeType: pageSizeToFetch, savedArticles: savedArticles, currentPage: currentPaginationPage) {
             articles, totalPages, statusMsg in
-            
             if let statusMsg = statusMsg {
                 self.newsArray = []
                 completionHandler(statusMsg)
