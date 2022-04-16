@@ -37,10 +37,13 @@ class UserDefaultsManager: NSObject {
         defaults.set(dataArray, forKey: key)
     }
     
+    func clearSingleKeyValuePairFromUserDefaults(keyToRemove: String) {
+        defaults.removeObject(forKey: keyToRemove)
+    }
     
-    func clearUserDefaultsMemory(keysToRemove: [String]) {
-        for keyName in keysToRemove {
-            defaults.removeObject(forKey: keyName)
+    func clearUserDefaultsMemory() {
+        if let bundleID = Bundle.main.bundleIdentifier {
+            defaults.removePersistentDomain(forName: bundleID)
         }
     }
 }

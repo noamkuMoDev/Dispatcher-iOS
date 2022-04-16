@@ -137,7 +137,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
             self.loadingView.isHidden = false
             self.loadingView.loadIndicator.startAnimating()
         }
-        viewModel.fetchNewsFromAPI(pageSizeToFetch: .articlesList) { error in
+        viewModel.fetchNewsFromAPI(pageSizeToFetch: .articlesList) { error, _ in
             if let error = error {
                 print("Error fetching News: \(error)")
             } else {
@@ -195,13 +195,23 @@ extension HomepageViewController: UIScrollViewDelegate {
         if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) && !isPaginating {
             
             isPaginating = true
-            viewModel.fetchNewsFromAPI(pageSizeToFetch: .articlesList) { error in
+            viewModel.fetchNewsFromAPI(pageSizeToFetch: .articlesList) { error, numArticlesFetched in
                 if let error = error {
                     print(error)
                 } else {
                     self.dataSource.models = self.viewModel.newsArray
                     DispatchQueue.main.async {
-                        self.tableView.reloadData()
+                        if numArticlesFetched != 0 {
+                            self.tableView.beginUpdates()
+                            var indexPaths = [IndexPath]()
+                            let originalLastIndex = self.viewModel.newsArray.count - 1 - numArticlesFetched!
+                            let newLastIndex = self.viewModel.newsArray.count - 1
+                            for i in originalLastIndex...(newLastIndex - 1) {
+                                indexPaths.append(IndexPath(row: i + 1, section: 0))
+                            }
+                            self.tableView.insertRows(at: indexPaths, with: UITableView.RowAnimation.none)
+                            self.tableView.endUpdates()
+                        }
                         self.tableView.tableFooterView = nil
                     }
                 }
@@ -216,8 +226,6 @@ extension HomepageViewController: NewsCellDelegate {
     
     func actionButtonDidPress(inside article: Article) {
         selectedArticle = article
-        print("SELECTED ARTICLE IN HOMEPAGE:")
-        print(article)
         self.performSegue(withIdentifier: Constants.Segues.HOMEPAGE_TO_ARTICLE, sender: self)
     }
     

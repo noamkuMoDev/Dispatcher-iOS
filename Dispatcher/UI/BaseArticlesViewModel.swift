@@ -11,19 +11,20 @@ class BaseArticlesViewModel {
     private var totalPaginationPages = 1
     
     
-    func fetchNewsFromAPI(searchWords: String = "news", pageSizeToFetch: PageSizeForFetching, completionHandler: @escaping (String?) -> ()) {
+    func fetchNewsFromAPI(searchWords: String = "news", pageSizeToFetch: PageSizeForFetching, completionHandler: @escaping (String?, Int?) -> ()) {
         repository.fetchNewsFromAPI(searchWords: searchWords, pageSizeType: pageSizeToFetch, savedArticles: savedArticles, currentPage: currentPaginationPage) {
             articles, totalPages, statusMsg in
             if let statusMsg = statusMsg {
                 self.newsArray = []
-                completionHandler(statusMsg)
+                completionHandler(statusMsg, nil)
             } else {
+                print("TOTAL RESULTS: \(totalPages!)")
                 self.currentPaginationPage += 1
                 if let totalPages = totalPages {
                     self.totalPaginationPages = totalPages
                 }
                 self.newsArray.append(contentsOf: articles!)
-                completionHandler(nil)
+                completionHandler(nil, articles?.count)
             }
         }
     }

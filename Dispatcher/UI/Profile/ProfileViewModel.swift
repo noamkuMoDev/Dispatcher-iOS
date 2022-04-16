@@ -11,7 +11,7 @@ class ProfileViewModel {
     ]
 
     
-    func fetchUserData(completionHandler: @escaping (String?,Any?) -> ()) {
+    func fetchUserData(completionHandler: @escaping (String?, Any?) -> ()) {
         repository.getUserData() { userName, userImage in
             completionHandler(userName, userImage)
         }

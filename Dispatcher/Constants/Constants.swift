@@ -99,8 +99,6 @@ struct Constants {
         static let CURRENT_USER_NAME = "currentUserName"
         static let CURRENT_USER_IMAGE = "currentUserImage"
         static let LAST_LOGIN_TIMESTAMP = "lastTimeUserLoggedIntoApp"
-        
-        static let userDefaultKeys = ["CURRENT_USER_UID","RECENT_SEARCHES","SAVE_FILTERS","SAVE_SEARCH_RESULTS","SEND_NOTIFICATIONS","CURRENT_USER_NAME", "CURRENT_USER_IMAGE", "LAST_LOGIN_TIMESTAMP"]
     }
     
     struct Keychain {

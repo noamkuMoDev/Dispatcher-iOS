@@ -180,7 +180,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         
         viewModel.newsArray = []
         let cleanSearchWords = cleanTextFromSpecialCharacters(text: keywords.lowercased())
-        viewModel.fetchNewsFromAPI(searchWords: cleanSearchWords, pageSizeToFetch: .articlesList) { error in
+        viewModel.fetchNewsFromAPI(searchWords: cleanSearchWords, pageSizeToFetch: .articlesList) { error, _ in
             if let error = error {
                 print(error)
             }
@@ -266,6 +266,13 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
 extension SearchViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        if textField.text != nil && textField.text != "" {
+            var cleanSearchWords = textField.text!.lowercased()
+            let removeCharacters: Set<Character> = [".", "\"", ",", "?", "!", "@", "#", "$", "%", "^", "&", "*"]
+            cleanSearchWords.removeAll(where: { removeCharacters.contains($0) } )
+            textField.text = cleanSearchWords
+        }
         searchResultsTableView.isHidden = true
         recentSearchesView.isHidden = false
         recentSearchesTableView.isHidden = false
@@ -339,7 +346,7 @@ extension SearchViewController: RecentSearchCellDelegate {
         }
     }
     
-
+    
     func removeCellButtonDidPress(called searchName: String) {
         if isSaveSearches {
             viewModel.removeItemFromRecentSearchesHistory(searchToRemove: searchName) {
@@ -357,8 +364,6 @@ extension SearchViewController: NewsCellDelegate {
     
     func actionButtonDidPress(inside article: Article) {
         selectedArticle = article
-        print("SELECTED ARTICLE IN SEARCH:")
-        print(article)
         self.performSegue(withIdentifier: Constants.Segues.SEARCH_TO_ARTICLE, sender: self)
     }
     
@@ -370,7 +375,6 @@ extension SearchViewController: NewsCellDelegate {
             }
         }
     }
-    
     
     
     func favoriteIconDidPress(forArticle article: Article) {
@@ -438,11 +442,21 @@ extension SearchViewController: UIScrollViewDelegate {
         let position = scrollView.contentOffset.y
         if position > (searchResultsTableView.contentSize.height - 100 - scrollView.frame.size.height) && !isPaginating {
             isPaginating = true
-            viewModel.fetchNewsFromAPI(searchWords: searchTextField.text!, pageSizeToFetch: .articlesList) { error in
+            viewModel.fetchNewsFromAPI(searchWords: searchTextField.text!, pageSizeToFetch: .articlesList) { error, numArticlesFetched in
                 if error == nil {
                     DispatchQueue.main.async {
                         self.searchResultsDataSource.models = self.viewModel.newsArray
-                        self.searchResultsTableView.reloadData()
+                        if numArticlesFetched != 0 {
+                            self.searchResultsTableView.beginUpdates()
+                            var indexPaths = [IndexPath]()
+                            let originalLastIndex = self.viewModel.newsArray.count - 1 - numArticlesFetched!
+                            let newLastIndex = self.viewModel.newsArray.count - 1
+                            for i in originalLastIndex...(newLastIndex - 1) {
+                                indexPaths.append(IndexPath(row: i + 1, section: 0))
+                            }
+                            self.searchResultsTableView.insertRows(at: indexPaths, with: UITableView.RowAnimation.none)
+                            self.searchResultsTableView.endUpdates()
+                        }
                         self.searchResultsTableView.tableFooterView = nil
                     }
                 } else {
