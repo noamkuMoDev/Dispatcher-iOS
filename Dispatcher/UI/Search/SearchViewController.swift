@@ -104,11 +104,17 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
             currentCell.articleID = article.id
             currentCell.titleLabel.text = article.articleTitle
             currentCell.authorLabel.text = article.author
-            currentCell.dateLabel.text = article.date
+            
             currentCell.articleUrl = article.url
             currentCell.articleImageUrl = article.imageUrl ?? ""
             currentCell.subjectTag.setTitle(article.topic, for: .normal)
             currentCell.summaryLabel.text = article.content
+            if let date = adaptDateTimeFormat(currentFormat: "yyyy-MM-dd HH:mm:ss", desiredFormat: "EEEE MMM d, yyyy", timestampToAdapt: article.date) {
+                currentCell.dateLabel.text = date
+            } else {
+                currentCell.dateLabel.text = article.date
+            }
+            currentCell.newsImage.image = UIImage(named: "light-gray-background")
             guard let url = URL(string: article.imageUrl ?? "") else { return }
             UIImage.loadFrom(url: url) { image in
                 currentCell.newsImage.image = image
@@ -201,6 +207,9 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
                         DispatchQueue.main.async {
                             self.recentSearchesDataSource.models = self.viewModel.recentSearchesArray
                             self.recentSearchesTableView.reloadData()
+                            self.recentSearchesTableView.beginUpdates()
+                            self.recentSearchesTableView.endUpdates()
+                            self.recentSearchesTableView.layoutIfNeeded();
                         }
                     }
                 }
@@ -254,6 +263,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
             self.loadingView.loadIndicator.stopAnimating()
         }
     }
+    
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -379,25 +389,41 @@ extension SearchViewController: NewsCellDelegate {
     
     func favoriteIconDidPress(forArticle article: Article) {
         if article.isFavorite {
-            viewModel.removeArticleFromFavorites(articleID: article.id) { error in //works
+            viewModel.removeArticleFromFavorites(articleID: article.id) { error, index in
                 if let error = error {
                     print("Couldn't add to favorites - \(error)")
                 } else {
                     DispatchQueue.main.async {
                         self.searchResultsDataSource.models = self.viewModel.newsArray
-                        self.searchResultsTableView.reloadData()
+                        
+                        if let index = index {
+                            let indexPath = IndexPath(row: index, section: 0)
+                            self.recentSearchesTableView.beginUpdates()
+                            self.searchResultsTableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+                            self.recentSearchesTableView.endUpdates()
+                        } else {
+                            self.searchResultsTableView.reloadData()
+                            self.recentSearchesTableView.beginUpdates()
+                            self.recentSearchesTableView.endUpdates()
+                            self.recentSearchesTableView.layoutIfNeeded();
+                        }
                     }
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.HOMEPAGE_TO_FAVORITES), object: nil)
                 }
             }
         } else {
-            viewModel.addArticleToFavorites(article) { error in // works
+            viewModel.addArticleToFavorites(article) { error, index in
                 if let error = error {
                     print("Couldn't add to favorites - \(error)")
                 } else {
                     DispatchQueue.main.async {
                         self.searchResultsDataSource.models = self.viewModel.newsArray
-                        self.searchResultsTableView.reloadData()
+                        if let index = index {
+                            let indexPath = IndexPath(row: index, section: 0)
+                            self.searchResultsTableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+                        } else {
+                            self.searchResultsTableView.reloadData()
+                        }
                     }
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.HOMEPAGE_TO_FAVORITES), object: nil)
                 }
@@ -456,6 +482,7 @@ extension SearchViewController: UIScrollViewDelegate {
                             }
                             self.searchResultsTableView.insertRows(at: indexPaths, with: UITableView.RowAnimation.none)
                             self.searchResultsTableView.endUpdates()
+                            self.searchResultsTableView.layoutIfNeeded();
                         }
                         self.searchResultsTableView.tableFooterView = nil
                     }

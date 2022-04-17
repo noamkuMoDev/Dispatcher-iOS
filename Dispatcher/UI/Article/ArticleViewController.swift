@@ -102,5 +102,6 @@ extension ArticleViewController: CustomHeaderViewDelegate {
     
     func backButtonPressed() {
         navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
 }

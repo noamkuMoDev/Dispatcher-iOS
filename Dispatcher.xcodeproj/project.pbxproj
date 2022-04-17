@@ -1071,6 +1071,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 5LCN75KXW4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Dispatcher/Supporting Files/Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "App needs your permission to take photos";

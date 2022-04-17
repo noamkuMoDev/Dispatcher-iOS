@@ -40,18 +40,21 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
     @objc func refreshTableViewContent(_ notification: NSNotification) {
 
         if notification.userInfo![Constants.NotificationCenter.SENDER] as! String == Constants.NotificationCenter.SENDER_FAVORITES {
-            viewModel.updateArticleToNotFavoriteLocally(articleID: notification.userInfo![Constants.NotificationCenter.ARTICLE_ID] as! String) {
+            viewModel.updateArticleToNotFavoriteLocally(articleID: notification.userInfo![Constants.NotificationCenter.ARTICLE_ID] as! String) {_ in
                 DispatchQueue.main.async {
                     self.dataSource.models = self.viewModel.newsArray
                     self.tableView.reloadData()
+                    self.tableView.beginUpdates()
+                       self.tableView.endUpdates()
                 }
             }
         } else {
             if notification.userInfo![Constants.NotificationCenter.IS_FAVORITE] as! String == "true" {
-                viewModel.updateArticleToNotFavoriteLocally(articleID: notification.userInfo![Constants.NotificationCenter.ARTICLE_ID] as! String) {
+                viewModel.updateArticleToNotFavoriteLocally(articleID: notification.userInfo![Constants.NotificationCenter.ARTICLE_ID] as! String) { _ in
                     DispatchQueue.main.async {
                         self.dataSource.models = self.viewModel.newsArray
                         self.tableView.reloadData()
+
                     }
                 }
             } else {
@@ -93,6 +96,9 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
             let currentCell = cell as! NewsCell
             currentCell.delegate = self
             
+//            print("PRINTING AN ARTICLE:")
+//            print(article)
+            
             currentCell.articleID = article.id
             if let imageUrl = article.imageUrl {
                 currentCell.articleImageUrl = imageUrl
@@ -100,6 +106,8 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
                 UIImage.loadFrom(url: url) { image in
                     currentCell.newsImage.image = image
                 }
+            } else {
+                currentCell.newsImage.image = UIImage(named: "light-gray-background")
             }
             currentCell.titleLabel.text = article.articleTitle
             currentCell.authorLabel.text = article.author
@@ -144,6 +152,8 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
                 DispatchQueue.main.async {
                     self.dataSource.models = self.viewModel.newsArray
                     self.tableView.reloadData()
+                    self.tableView.beginUpdates()
+                    self.tableView.endUpdates()
                 }
             }
             DispatchQueue.main.async {
@@ -207,10 +217,13 @@ extension HomepageViewController: UIScrollViewDelegate {
                             let originalLastIndex = self.viewModel.newsArray.count - 1 - numArticlesFetched!
                             let newLastIndex = self.viewModel.newsArray.count - 1
                             for i in originalLastIndex...(newLastIndex - 1) {
-                                indexPaths.append(IndexPath(row: i + 1, section: 0))
+                                indexPaths.append(IndexPath(row: i, section: 0))
                             }
                             self.tableView.insertRows(at: indexPaths, with: UITableView.RowAnimation.none)
                             self.tableView.endUpdates()
+//                            self.tableView.reloadData()
+//                            self.tableView.beginUpdates()
+//                               self.tableView.endUpdates()
                         }
                         self.tableView.tableFooterView = nil
                     }
@@ -249,13 +262,24 @@ extension HomepageViewController: NewsCellDelegate {
     }
     
     
-    func handleFavoritesUpdate(error: String?) {
+    func handleFavoritesUpdate(error: String?, index: Int?) {
         if let error = error {
             print(error)
         } else {
             DispatchQueue.main.async {
                 self.dataSource.models = self.viewModel.newsArray
-                self.tableView.reloadData()
+                if let index = index {
+                    self.tableView.beginUpdates()
+                    let indexPath = IndexPath(row: index, section: 0 )
+                    self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+                    self.tableView.endUpdates()
+                    self.tableView.layoutIfNeeded();
+                } else {
+                    self.tableView.beginUpdates()
+                    self.tableView.reloadData()
+                    self.tableView.endUpdates()
+                    self.tableView.layoutIfNeeded();
+                }
             }
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.HOMEPAGE_TO_FAVORITES), object: nil)
         }

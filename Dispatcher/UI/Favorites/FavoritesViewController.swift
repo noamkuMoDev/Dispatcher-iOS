@@ -38,6 +38,9 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
                 } else {
                     self.hideNoResults()
                     self.tableView.reloadData()
+                    self.tableView.beginUpdates()
+                    self.tableView.endUpdates()
+                    self.tableView.layoutIfNeeded()
                 }
             }
         }
@@ -64,6 +67,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
             currentCell.articleID = savedArticle.id!
             currentCell.articleTitle.text = savedArticle.title
             currentCell.articleTopic.setTitle(savedArticle.topic, for: .normal)
+            currentCell.articleImage.image = UIImage(named: "light-gray-background")
             if let imageUrl = savedArticle.imageUrl {
                 guard let url = URL(string: imageUrl) else { return }
                 UIImage.loadFrom(url: url) { image in
@@ -85,6 +89,9 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
                 DispatchQueue.main.async {
                     self.dataSource.models = self.viewModel.savedArticles.map({$0.value}).sorted(by: {$0.timestamp! > $1.timestamp!})
                     self.tableView.reloadData()
+                    self.tableView.beginUpdates()
+                    self.tableView.endUpdates()
+                    self.tableView.layoutIfNeeded()
                 }
             }
             self.removeLoadingAnimation()
@@ -166,7 +173,7 @@ extension FavoritesViewController: SavedArticleCellDelegate {
     
     func favoriteIconDidPress(forArticle articleID: String) {
         displayLoadingAnimation()
-        viewModel.removeArticleFromFavorites(articleID: articleID) { error in
+        viewModel.removeArticleFromFavorites(articleID: articleID) { error, _ in
             if let error = error {
                 print(error)
                 self.removeLoadingAnimation()

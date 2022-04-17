@@ -8,15 +8,17 @@ class SettingsViewModel {
         Constants.AppSettingsSectionTitles.SEARCH: SettingModel(
             sectionTitle: Constants.AppSettingsSectionTitles.SEARCH,
             options: [
-                Constants.AppSettings.SAVE_FILTERS: SingleSetting (
-                    title: Constants.AppSettings.SAVE_FILTERS,
-                    description: "Allow us to save filters when entering back to the app",
-                    status: .off
-                ),
                 Constants.AppSettings.SEARCH_RESULTS: SingleSetting (
                     title: Constants.AppSettings.SEARCH_RESULTS,
                     description: "Allow us to save your search result preferences for next search",
-                    status: .off
+                    status: .off,
+                    index: 0
+                ),
+                Constants.AppSettings.SAVE_FILTERS: SingleSetting (
+                    title: Constants.AppSettings.SAVE_FILTERS,
+                    description: "Allow us to save filters when entering back to the app",
+                    status: .off,
+                    index: 1
                 )
             ]
         ),
@@ -26,7 +28,8 @@ class SettingsViewModel {
                 Constants.AppSettings.NOTIFICATION: SingleSetting (
                     title: Constants.AppSettings.NOTIFICATION,
                     description: "",
-                    status: .on
+                    status: .on,
+                    index: 0
                 )
             ]
         )
@@ -45,13 +48,16 @@ class SettingsViewModel {
     }
     
     
-    func updateSetting(settingTitle: String, completionHandler: @escaping () -> ()) {
+    func updateSetting(settingTitle: String, completionHandler: @escaping (Int?, Int?) -> ()) {
         
         var sectionTitle: String? = nil
+        var sectionIndex: Int? = nil
         if appSettings[Constants.AppSettingsSectionTitles.SEARCH]?.options[settingTitle] != nil {
             sectionTitle = Constants.AppSettingsSectionTitles.SEARCH
+            sectionIndex = 0
         } else if appSettings[Constants.AppSettingsSectionTitles.PREFERENCES]?.options[settingTitle] != nil {
             sectionTitle = Constants.AppSettingsSectionTitles.PREFERENCES
+            sectionIndex = 1
         }
         
         if let sectionTitle = sectionTitle {
@@ -65,8 +71,10 @@ class SettingsViewModel {
                     appSettings[sectionTitle]?.options[settingTitle]?.status = newStatus // update local array
                 }
                 
+                let settingIndex = appSettings[sectionTitle]?.options[settingTitle]?.index
+                
                 repository.updateSavedSetting(settingTitle: settingTitle, newStatus: newStatus) {
-                    completionHandler()
+                    completionHandler(sectionIndex, settingIndex)
                 }
             }
         }

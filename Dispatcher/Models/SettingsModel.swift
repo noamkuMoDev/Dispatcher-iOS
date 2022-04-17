@@ -9,6 +9,7 @@ struct SingleSetting {
     var title: String
     var description: String
     var status: SwitchStatus
+    var index: Int
 }
 
 enum SwitchStatus: Int {

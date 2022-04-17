@@ -92,6 +92,9 @@ extension SettingsViewController: UITableViewDataSource {
         }
         cell.settingSwitchImageView.image = settingSwitchImage
         
+        print("CELL FOR ROW AT:")
+        print(viewModel.appSettings[sectionKey]!.options[rowKey]?.description)
+        
         return cell
     }
 }
@@ -115,13 +118,10 @@ extension SettingsViewController: UITableViewDelegate {
 extension SettingsViewController: AppSettingCellDelegate {
 
     func settingCellDidPress(settingText: String) {
-        print("CURRENT APP SETTINGS ARRAY:")
-        print(self.viewModel.appSettings)
-        viewModel.updateSetting(settingTitle: settingText) {
+        viewModel.updateSetting(settingTitle: settingText) { sectionIndex, settingIndex in
             DispatchQueue.main.async {
-                print("UPDATED APP SETTINGS ARRAY:")
-                print(self.viewModel.appSettings)
-                self.tableView.reloadData()
+                let indexPath = IndexPath(row: settingIndex ?? 0, section: sectionIndex ?? 0 )
+                self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
             }
         }
     }

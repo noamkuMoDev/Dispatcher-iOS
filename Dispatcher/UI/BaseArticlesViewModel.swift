@@ -11,14 +11,13 @@ class BaseArticlesViewModel {
     private var totalPaginationPages = 1
     
     
-    func fetchNewsFromAPI(searchWords: String = "news", pageSizeToFetch: PageSizeForFetching, completionHandler: @escaping (String?, Int?) -> ()) {
+    func fetchNewsFromAPI(searchWords: String = "new", pageSizeToFetch: PageSizeForFetching, completionHandler: @escaping (String?, Int?) -> ()) {
         repository.fetchNewsFromAPI(searchWords: searchWords, pageSizeType: pageSizeToFetch, savedArticles: savedArticles, currentPage: currentPaginationPage) {
             articles, totalPages, statusMsg in
             if let statusMsg = statusMsg {
                 self.newsArray = []
                 completionHandler(statusMsg, nil)
             } else {
-                print("TOTAL RESULTS: \(totalPages!)")
                 self.currentPaginationPage += 1
                 if let totalPages = totalPages {
                     self.totalPaginationPages = totalPages
@@ -48,18 +47,18 @@ class BaseArticlesViewModel {
     }
     
 
-    func addArticleToFavorites(_ article: Article, completionHandler: @escaping (String?) -> ()) {
+    func addArticleToFavorites(_ article: Article, completionHandler: @escaping (String?, Int?) -> ()) {
         repository.saveArticleToFavorites(article) { error, newFavorite in
             if let error = error {
-                completionHandler(error)
+                completionHandler(error,nil)
             } else {
                 self.savedArticles[article.id] = newFavorite
                 if self.newsArray.count == 0 {
-                    completionHandler(nil)
+                    completionHandler(nil,nil)
                 } else {
                     if let index = self.newsArray.firstIndex(where: { $0.id == article.id }) {
                         self.newsArray[index].isFavorite = true
-                        completionHandler(nil)
+                        completionHandler(nil, index)
                     }
                 }
             }
@@ -67,25 +66,26 @@ class BaseArticlesViewModel {
     }
     
 
-    func removeArticleFromFavorites(articleID: String, completionHandler: @escaping (String?) -> ()) {
+    func removeArticleFromFavorites(articleID: String, completionHandler: @escaping (String?, Int?) -> ()) {
         repository.removeArticleFromFavorites(withID: articleID, from: savedArticles.map({$0.value})) { error in
             if let error = error {
-                completionHandler(error)
+                completionHandler(error,nil)
             } else {
-                self.updateArticleToNotFavoriteLocally(articleID: articleID) {
-                    completionHandler(nil)
+                self.updateArticleToNotFavoriteLocally(articleID: articleID) { index in
+                    completionHandler(nil,index)
                 }
             }
         }
     }
     
     
-    func updateArticleToNotFavoriteLocally(articleID: String, completionHandler: @escaping () -> ()) {
+    func updateArticleToNotFavoriteLocally(articleID: String, completionHandler: @escaping (Int?) -> ()) {
         self.savedArticles[articleID] = nil
-        if let index = self.newsArray.firstIndex(where: {$0.id == articleID}) {
+        let index = newsArray.firstIndex(where: {$0.id == articleID}) ?? -1
+        if index != -1 {
             self.newsArray[index].isFavorite = false
         }
-        completionHandler()
+        completionHandler(index)
     }
     
     
