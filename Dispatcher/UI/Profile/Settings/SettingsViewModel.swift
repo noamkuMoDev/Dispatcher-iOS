@@ -4,19 +4,19 @@ class SettingsViewModel {
     
     let repository = SettingsRepository()
 
-    var appSettings1 : [SettingModel] = [
+    var appSettings : [SettingModel] = [
     
         SettingModel(
-            sectionTitle: Constants.AppSettingsSectionTitles.SEARCH, // search results
+            sectionTitle: Constants.AppSettingsSectionTitles.SEARCH,
             options: [
                 SingleSetting (
-                    title: Constants.AppSettings.SEARCH_RESULTS, // save search results
+                    title: Constants.AppSettings.SEARCH_RESULTS,
                     description: "Allow us to save your search result preferences for next search",
                     status: .off,
                     index: 0
                 ),
                 SingleSetting (
-                    title: Constants.AppSettings.SAVE_FILTERS, // save filters
+                    title: Constants.AppSettings.SAVE_FILTERS,
                     description: "Allow us to save filters when entering back to the app",
                     status: .off,
                     index: 1
@@ -25,10 +25,10 @@ class SettingsViewModel {
         ),
         
         SettingModel(
-            sectionTitle: Constants.AppSettingsSectionTitles.PREFERENCES, // app prefrences
+            sectionTitle: Constants.AppSettingsSectionTitles.PREFERENCES,
             options: [
                 SingleSetting (
-                    title: Constants.AppSettings.NOTIFICATION, // notifiactions
+                    title: Constants.AppSettings.NOTIFICATION,
                     description: "",
                     status: .on,
                     index: 0
@@ -40,9 +40,9 @@ class SettingsViewModel {
     
     
     func getUserSettingsPreferences() {
-        appSettings1[0].options[1].status = repository.getSaveFiltersSetting()
-        appSettings1[0].options[0].status = repository.getSaveSearchResultsSetting()
-        appSettings1[1].options[0].status = repository.getNotificationsSetting()
+        appSettings[0].options[1].status = repository.getSaveFiltersSetting()
+        appSettings[0].options[0].status = repository.getSaveSearchResultsSetting()
+        appSettings[1].options[0].status = repository.getNotificationsSetting()
     }
     
     
@@ -54,20 +54,20 @@ class SettingsViewModel {
         }
         
         var rowIndex = 0
-        for (i,item) in appSettings1[sectionIndex].options.enumerated() {
+        for (i,item) in appSettings[sectionIndex].options.enumerated() {
             if item.title == settingText {
                 rowIndex = i
             }
         }
         
-        let currentStatus = appSettings1[sectionIndex].options[rowIndex].status
+        let currentStatus = appSettings[sectionIndex].options[rowIndex].status
         var newStatus: SwitchStatus = .off
         if currentStatus != .disabled {
             if currentStatus == .on {
-                appSettings1[sectionIndex].options[rowIndex].status = newStatus
+                appSettings[sectionIndex].options[rowIndex].status = newStatus
             } else {
                 newStatus = .on
-                appSettings1[sectionIndex].options[rowIndex].status = newStatus
+                appSettings[sectionIndex].options[rowIndex].status = newStatus
             }
             
             repository.updateSavedSetting(settingTitle: settingTitle, newStatus: newStatus) {

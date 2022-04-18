@@ -47,12 +47,12 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.appSettings1.count
+        return viewModel.appSettings.count
     }
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.appSettings1[section].options.count
+        return viewModel.appSettings[section].options.count
     }
     
     
@@ -61,12 +61,12 @@ extension SettingsViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCellsIdentifier.SETTING, for: indexPath) as! AppSettingCell
         cell.delegate = self
         
-        cell.settingTitle.text = viewModel.appSettings1[indexPath.section].options[indexPath.row].title
-        cell.settingDescription.text = viewModel.appSettings1[indexPath.section].options[indexPath.row].description
+        cell.settingTitle.text = viewModel.appSettings[indexPath.section].options[indexPath.row].title
+        cell.settingDescription.text = viewModel.appSettings[indexPath.section].options[indexPath.row].description
         
         
         var settingSwitchImage: UIImage
-        switch viewModel.appSettings1[indexPath.section].options[indexPath.row].status {
+        switch viewModel.appSettings[indexPath.section].options[indexPath.row].status {
         case .on:
             settingSwitchImage = UIImage(named: "switch-on")!
             break
@@ -93,7 +93,7 @@ extension SettingsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: Constants.TableCellsIdentifier.SETTING_SECTION) as! SettingSectionCell
-        view.sectionLabel.text = viewModel.appSettings1[section].sectionTitle
+        view.sectionLabel.text = viewModel.appSettings[section].sectionTitle
         return view
     }
     
