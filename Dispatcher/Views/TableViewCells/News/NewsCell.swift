@@ -10,7 +10,7 @@ enum ArticleFavoriteMark {
     case notSelected
 }
 
-class NewsCell: UITableViewCell {
+class NewsCell: UITableViewCell, MainActionButtonDelegate {
 
     @IBOutlet weak var entireNewsCell: UIView!
     @IBOutlet weak var newsImage: UIImageView!
@@ -24,7 +24,8 @@ class NewsCell: UITableViewCell {
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var summaryLabel: UILabel!
     
-    @IBOutlet weak var actionButton: UIView!
+    @IBOutlet weak var actionButton: MainActionButtonView!
+    
     
     var delegate: NewsCellDelegate?
     var articleUrl = ""
@@ -41,6 +42,8 @@ class NewsCell: UITableViewCell {
         setImageRounded()
         setTagsRounded()
         setGestureRecognizer()
+        
+        actionButton.delegate = self
     }
     
     override func layoutSubviews() {
@@ -48,7 +51,8 @@ class NewsCell: UITableViewCell {
 
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
 
-        actionButton.layer.cornerRadius = actionButton.frame.size.height / 2
+        self.contentView.layoutIfNeeded()
+        self.layoutIfNeeded()
     }
     
     
@@ -88,11 +92,6 @@ class NewsCell: UITableViewCell {
         favoriteIcon.isUserInteractionEnabled = true
         let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(favoriteIconPressed(tapGestureRecognizer:)))
         favoriteIcon.addGestureRecognizer(tapGestureRecognizer1)
-        
-        actionButton.addGestureRecognizer(UITapGestureRecognizer(target: actionButton, action: #selector(actionButtonPressed)))
-        actionButton.isUserInteractionEnabled = true
-        let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(actionButtonPressed(tapGestureRecognizer:)))
-        actionButton.addGestureRecognizer(tapGestureRecognizer2)
     }
     
     
@@ -101,7 +100,8 @@ class NewsCell: UITableViewCell {
         delegate?.favoriteIconDidPress(forArticle: currentArticle)
     }
     
-    @objc func actionButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
+    
+    func actionButtonDidPress(btnText: String) {
         let currentArticle = Article(
             id: articleID,
             articleTitle: titleLabel.text ?? "",
@@ -112,7 +112,7 @@ class NewsCell: UITableViewCell {
             topic: subjectTag.currentTitle ?? "",
             imageUrl: articleImageUrl,
             isFavorite: self.isFavorite)
-        
+
         delegate?.actionButtonDidPress(inside: currentArticle)
     }
 }
