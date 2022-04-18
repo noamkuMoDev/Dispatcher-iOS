@@ -28,10 +28,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
         viewModel.getSavedArticles() {
             self.fetchInitialNewsResults()
         }
-        
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(UINib(nibName: Constants.NibNames.HOMEPAGE, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE)
+        setupTableView()
     }
     
     
@@ -47,25 +44,19 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
         if notification.userInfo![Constants.NotificationCenter.SENDER] as! String == Constants.NotificationCenter.SENDER_FAVORITES {
             viewModel.updateArticleToNotFavoriteLocally(articleID: notification.userInfo![Constants.NotificationCenter.ARTICLE_ID] as! String) { _ in
                 DispatchQueue.main.async {
-                    //self.dataSource.models = self.viewModel.newsArray
                     self.tableView.reloadData()
-                   // self.tableView.beginUpdates()
-                       //self.tableView.endUpdates()
                 }
             }
         } else {
             if notification.userInfo![Constants.NotificationCenter.IS_FAVORITE] as! String == "true" {
                 viewModel.updateArticleToNotFavoriteLocally(articleID: notification.userInfo![Constants.NotificationCenter.ARTICLE_ID] as! String) { _ in
                     DispatchQueue.main.async {
-                        //self.dataSource.models = self.viewModel.newsArray
                         self.tableView.reloadData()
-
                     }
                 }
             } else {
                 viewModel.updateArticleToYesFavoriteLocally(articleID: notification.userInfo![Constants.NotificationCenter.ARTICLE_ID] as! String) {
                     DispatchQueue.main.async {
-                        //self.dataSource.models = self.viewModel.newsArray
                         self.tableView.reloadData()
                     }
                 }
@@ -78,7 +69,6 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
         customHeader.initView(delegate: self, apperanceType: .fullAppearance)
         sortbyView.initView(delegate: self)
         loadingView.initView(delegate: self)
-        //setupTableView()
     }
     
     
@@ -93,47 +83,10 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
     
     
     func setupTableView() {
-        tableView.register(UINib(nibName: Constants.NibNames.HOMEPAGE, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE)
-        self.dataSource = TableViewDataSourceManager(
-            models: viewModel.newsArray,
-            reuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE
-        ) { article, cell in
-            let currentCell = cell as! NewsCell
-            currentCell.delegate = self
- 
-            currentCell.articleID = article.id
-            if let imageUrl = article.imageUrl {
-                currentCell.articleImageUrl = imageUrl
-                guard let url = URL(string: imageUrl) else { return }
-                UIImage.loadFrom(url: url) { image in
-                    currentCell.newsImage.image = image
-                }
-            } else {
-                currentCell.newsImage.image = UIImage(named: "light-gray-background")
-            }
-            currentCell.titleLabel.text = article.articleTitle
-            currentCell.authorLabel.text = article.author
-            currentCell.summaryLabel.text = article.content
-            currentCell.subjectTag.setTitle(article.topic, for: .normal)
-            currentCell.articleUrl = article.url
-            if let date = adaptDateTimeFormat(currentFormat: "yyyy-MM-dd HH:mm:ss", desiredFormat: "EEEE MMM d, yyyy", timestampToAdapt: article.date) {
-                currentCell.dateLabel.text = date
-            } else {
-                currentCell.dateLabel.text = article.date
-            }
-            if article.isFavorite {
-                currentCell.isFavorite = true
-                currentCell.favoriteIcon.image = UIImage(named: "favoriteArticle-selected")
-            } else {
-                currentCell.isFavorite = false
-                currentCell.favoriteIcon.image = UIImage(named: "favoriteArticle-notSelected")
-            }
-        }
-        tableView.dataSource = dataSource
+        tableView.dataSource = self
         tableView.delegate = self
+        tableView.register(UINib(nibName: Constants.NibNames.HOMEPAGE, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE)
     }
-    
-
     
     
     func checkUserSettingsPreferences() {
@@ -152,10 +105,7 @@ class HomepageViewController: UIViewController, LoadingViewDelegate {
                 print("Error fetching News: \(error)")
             } else {
                 DispatchQueue.main.async {
-                    //self.dataSource.models = self.viewModel.newsArray
                     self.tableView.reloadData()
-                    //self.tableView.beginUpdates()
-                    //self.tableView.endUpdates()
                 }
             }
             DispatchQueue.main.async {
@@ -211,7 +161,6 @@ extension HomepageViewController: UIScrollViewDelegate {
                 if let error = error {
                     print(error)
                 } else {
-                    //self.dataSource.models = self.viewModel.newsArray
                     DispatchQueue.main.async {
                         if numArticlesFetched != 0 {
                             self.tableView.beginUpdates()
@@ -223,9 +172,6 @@ extension HomepageViewController: UIScrollViewDelegate {
                             }
                             self.tableView.insertRows(at: indexPaths, with: UITableView.RowAnimation.none)
                             self.tableView.endUpdates()
-//                            self.tableView.reloadData()
-//                            self.tableView.beginUpdates()
-//                               self.tableView.endUpdates()
                         }
                         self.tableView.tableFooterView = nil
                     }
@@ -269,19 +215,13 @@ extension HomepageViewController: NewsCellDelegate {
             print(error)
         } else {
             DispatchQueue.main.async {
-                //self.dataSource.models = self.viewModel.newsArray
                 if let index = index {
-                    //print("UPDATING INDEX: \(index)")
                     self.tableView.beginUpdates()
                     let indexPath = IndexPath(row: index, section: 0 )
                     self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
                     self.tableView.endUpdates()
-                    //self.tableView.layoutIfNeeded();
                 } else {
-                    //self.tableView.beginUpdates()
                     self.tableView.reloadData()
-                    //self.tableView.endUpdates()
-                    //self.tableView.layoutIfNeeded();
                 }
             }
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.HOMEPAGE_TO_FAVORITES), object: nil)
@@ -305,23 +245,17 @@ extension HomepageViewController: UITableViewDelegate {
     }
 }
 
-
-
-
-
+// MARK: - UITableViewDataSource
 extension HomepageViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 436
     }
     
-    
-    // determine how many rows the tableView will have
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.newsArray.count
     }
     
-    // determine how each row in the tableView will look like
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let currentCell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCellsIdentifier.HOMEPAGE, for: indexPath) as! NewsCell
@@ -330,18 +264,12 @@ extension HomepageViewController: UITableViewDataSource {
 
         currentCell.articleID = viewModel.newsArray[indexPath.row].id
         
-        
-        
         if let imageUrl = viewModel.newsArray[indexPath.row].imageUrl {
             currentCell.articleImageUrl = imageUrl
             currentCell.newsImage.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: "light-gray-background"))
-//            UIImage.loadFrom(url: URL(string: imageUrl)!) { image in
-//                currentCell.newsImage.image = image
-//            }
         } else {
             currentCell.newsImage.image = UIImage(named: "light-gray-background")
         }
-        
         
         currentCell.titleLabel.text = viewModel.newsArray[indexPath.row].articleTitle
         currentCell.authorLabel.text = viewModel.newsArray[indexPath.row].author
@@ -363,5 +291,4 @@ extension HomepageViewController: UITableViewDataSource {
         
         return currentCell
     }
-    
 }

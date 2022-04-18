@@ -223,18 +223,14 @@ extension ViewProfileViewController: CustomHeaderViewDelegate {
                 
                 if let newProfilePicture = newProfilePicture {
                     
-                    // Notify ProfileVC (UIImage)
                     let dataDictionary : [String: UIImage] = ["userImage" : newProfilePicture]
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.PICTURE_UPDATE), object: nil, userInfo: dataDictionary)
                     
-                    // Upload to Storage
                     uploadPictureToCloudStorage(image: newProfilePicture) { error, url in
                         if let error = error {
                             print("Error - \(error)")
                         } else {
-                            // Update Firestore (url)
                             self.viewModel.updateUserDetail(detailType: Constants.UserDefaults.CURRENT_USER_IMAGE, data: url!)
-                            // Update UD: Image (png)
                             let data = newProfilePicture.pngData()
                             if let data = data {
                                 self.viewModel.updateUserDetail(detailType: Constants.UserDefaults.CURRENT_USER_IMAGE, data: data)
@@ -336,7 +332,6 @@ extension ViewProfileViewController: UIImagePickerControllerDelegate, UINavigati
                         return
                     }
                     let urlString = url.absoluteString
-                    print("Downlod URL: \(urlString)")
                     completionHandler(nil, urlString)
                 })
             })

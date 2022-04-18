@@ -31,7 +31,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
 
     @objc func refreshTableViewContent(_ notification: NSNotification) {
         viewModel.getSavedArticles {
-            self.dataSource.models = self.viewModel.savedArticles.map({$0.value}).sorted(by: {$0.timestamp! > $1.timestamp!})
             DispatchQueue.main.async {
                 if self.viewModel.savedArticles.count == 0 {
                     self.displayNoResults()
@@ -57,26 +56,8 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
 
     func setupTableView() {
         tableView.register(UINib(nibName: Constants.NibNames.FAVORITES, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.FAVORITES)
-        self.dataSource = TableViewDataSourceManager(
-            models: viewModel.savedArticles.map({$0.value}).sorted(by: {$0.timestamp! > $1.timestamp!}),
-            reuseIdentifier: Constants.TableCellsIdentifier.FAVORITES
-        ) { savedArticle, cell in
-            let currentCell = cell as! SavedArticleCell
-            currentCell.delegate = self
-            
-            currentCell.articleID = savedArticle.id!
-            currentCell.articleTitle.text = savedArticle.title
-            currentCell.articleTopic.setTitle(savedArticle.topic, for: .normal)
-            currentCell.articleImage.image = UIImage(named: "light-gray-background")
-            if let imageUrl = savedArticle.imageUrl {
-                guard let url = URL(string: imageUrl) else { return }
-                UIImage.loadFrom(url: url) { image in
-                    currentCell.articleImage.image = image
-                }
-            }
-        }
-        tableView.dataSource = self.dataSource
-        tableView.rowHeight = 115.0
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
 
@@ -87,11 +68,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, LoadingVie
                 self.displayNoResults()
             } else {
                 DispatchQueue.main.async {
-                    self.dataSource.models = self.viewModel.savedArticles.map({$0.value}).sorted(by: {$0.timestamp! > $1.timestamp!})
                     self.tableView.reloadData()
-                    self.tableView.beginUpdates()
-                    self.tableView.endUpdates()
-                    self.tableView.layoutIfNeeded()
                 }
             }
             self.removeLoadingAnimation()
@@ -179,7 +156,6 @@ extension FavoritesViewController: SavedArticleCellDelegate {
                 self.removeLoadingAnimation()
             } else {
                 DispatchQueue.main.async {
-                    self.dataSource.models = self.viewModel.savedArticles.map({$0.value}).sorted(by: {$0.timestamp! > $1.timestamp!})
                     if self.viewModel.savedArticles.count == 0 {
                         self.displayNoResults()
                     } else {
@@ -194,5 +170,43 @@ extension FavoritesViewController: SavedArticleCellDelegate {
                 }
             }
         }
+    }
+}
+
+// MARK: - UITableViewDataSource
+extension FavoritesViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 115
+    }
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.savedArticles.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let currentCell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCellsIdentifier.FAVORITES, for: indexPath) as! SavedArticleCell
+        currentCell.delegate = self
+        
+        let currentKey = viewModel.keysArray[indexPath.row]
+        let savedArticle = viewModel.savedArticles[currentKey]
+        
+        if let savedArticle = savedArticle {
+            currentCell.articleID = savedArticle.id!
+            currentCell.articleTitle.text = savedArticle.title
+            currentCell.articleTopic.setTitle(savedArticle.topic, for: .normal)
+            
+            if let imageUrl = savedArticle.imageUrl {
+                currentCell.articleImageURL = imageUrl
+                currentCell.articleImage.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: "light-gray-background"))
+            } else {
+                currentCell.articleImage.image = UIImage(named: "light-gray-background")
+            }
+        }
+        
+        return currentCell
     }
 }

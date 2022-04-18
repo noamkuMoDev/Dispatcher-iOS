@@ -17,6 +17,7 @@ class SavedArticleCell: UITableViewCell {
     var delegate: SavedArticleCellDelegate?
     var articleID = ""
     var articleUrl = ""
+    var articleImageURL = ""
     
     
     override func awakeFromNib() {

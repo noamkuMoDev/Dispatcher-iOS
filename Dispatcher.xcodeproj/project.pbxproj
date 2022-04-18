@@ -347,7 +347,6 @@
 			children = (
 				4311F5F227EB329500C28F3C /* News */,
 				4311F5F327EB32C500C28F3C /* Profile */,
-				4311F5F427EB32DF00C28F3C /* Search */,
 				4311F5F527EB32F200C28F3C /* Notifications */,
 			);
 			path = TableViewCells;
@@ -430,6 +429,7 @@
 				43C1B61327D8D79E00AB0D3B /* NewsCell.swift */,
 				43C1B5EF27D0C60000AB0D3B /* SavedArticleCell.xib */,
 				43C1B5EE27D0C60000AB0D3B /* SavedArticleCell.swift */,
+				4311F5F427EB32DF00C28F3C /* Search */,
 			);
 			path = News;
 			sourceTree = "<group>";

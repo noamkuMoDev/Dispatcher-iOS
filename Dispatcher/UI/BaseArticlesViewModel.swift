@@ -5,6 +5,7 @@ class BaseArticlesViewModel {
     private let repository = BaseArticlesRepository()
     
     var savedArticles: [String:FavoriteArticle] = [:]
+    var keysArray : [String] = []
     var newsArray: [Article] = []
     
     private var currentPaginationPage = 1
@@ -32,6 +33,7 @@ class BaseArticlesViewModel {
     func getSavedArticles(completionHandler: @escaping () -> ()) {
         repository.getSavedArticles() { articlesArray in
             self.savedArticles = articlesArray
+            self.keysArray = Array(self.savedArticles.keys)
             completionHandler()
         }
     }
@@ -53,6 +55,7 @@ class BaseArticlesViewModel {
                 completionHandler(error,nil)
             } else {
                 self.savedArticles[article.id] = newFavorite
+                self.keysArray = Array(self.savedArticles.keys)
                 if self.newsArray.count == 0 {
                     completionHandler(nil,nil)
                 } else {
@@ -81,6 +84,7 @@ class BaseArticlesViewModel {
     
     func updateArticleToNotFavoriteLocally(articleID: String, completionHandler: @escaping (Int?) -> ()) {
         self.savedArticles[articleID] = nil
+        self.keysArray = Array(self.savedArticles.keys)
         let index = newsArray.firstIndex(where: {$0.id == articleID}) ?? -1
         if index != -1 {
             self.newsArray[index].isFavorite = false
@@ -92,6 +96,7 @@ class BaseArticlesViewModel {
     func updateArticleToYesFavoriteLocally(articleID: String, completionHandler: @escaping () -> ()) {
         if let index = self.newsArray.firstIndex(where: {$0.id == articleID}) {
             self.newsArray[index].isFavorite = true
+            self.keysArray = Array(self.savedArticles.keys)
             completionHandler()
         }
     }

@@ -59,7 +59,6 @@ class ProfileViewController: UIViewController {
     
     
     @objc func updateDisplayOfUserDetails(_ notification: NSNotification) {
-        print("I GOT NOTIFIED ON CHANGE IN USER DETAILS")
         if let userName = notification.userInfo!["userName"] as? String {
             helloUserLabel.text = "Hi, \(userName)"
         }
