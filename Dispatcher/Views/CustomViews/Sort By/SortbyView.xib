@@ -26,7 +26,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sort by" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uqL-Ta-Grt">
-                    <rect key="frame" x="16" y="36" width="51" height="19"/>
+                    <rect key="frame" x="16" y="11" width="51" height="69"/>
                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
                     <color key="textColor" name="Dispatch Purple"/>
                     <nil key="highlightedColor"/>
@@ -39,22 +39,24 @@
                     </constraints>
                 </imageView>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filter" translatesAutoresizingMaskIntoConstraints="NO" id="RKL-WT-xvi">
-                    <rect key="frame" x="370" y="31.5" width="28" height="28"/>
+                    <rect key="frame" x="373" y="33" width="25" height="25"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="28" id="KYI-qm-LO6"/>
-                        <constraint firstAttribute="height" constant="28" id="P2f-oc-DGf"/>
+                        <constraint firstAttribute="height" constant="25" id="DAJ-YN-sp7"/>
+                        <constraint firstAttribute="width" constant="25" id="KYI-qm-LO6"/>
                     </constraints>
                 </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="RKL-WT-xvi" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="DYb-wY-234"/>
+                <constraint firstItem="uqL-Ta-Grt" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="11" id="6j4-0Y-JbN"/>
+                <constraint firstItem="uqL-Ta-Grt" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="NHu-Jr-IXF"/>
                 <constraint firstItem="uqL-Ta-Grt" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="Nlg-ke-5JI"/>
-                <constraint firstItem="uqL-Ta-Grt" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="c0f-dg-PeP"/>
+                <constraint firstAttribute="trailing" secondItem="RKL-WT-xvi" secondAttribute="trailing" constant="16" id="SMp-gD-VH9"/>
                 <constraint firstItem="DPu-vt-GW9" firstAttribute="leading" secondItem="uqL-Ta-Grt" secondAttribute="trailing" constant="8" id="tMA-cr-anG"/>
+                <constraint firstItem="RKL-WT-xvi" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="vFe-iJ-V1h"/>
+                <constraint firstAttribute="bottom" secondItem="uqL-Ta-Grt" secondAttribute="bottom" constant="11" id="wAS-Xw-1ki"/>
                 <constraint firstItem="DPu-vt-GW9" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="wgx-Un-Tba"/>
-                <constraint firstAttribute="trailing" secondItem="RKL-WT-xvi" secondAttribute="trailing" constant="16" id="ySt-fl-Z8l"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="137.68115942028987" y="-179.79910714285714"/>
@@ -62,7 +64,7 @@
     </objects>
     <resources>
         <image name="dropdown" width="6" height="5"/>
-        <image name="filter" width="9" height="9"/>
+        <image name="filter" width="6.5" height="6"/>
         <namedColor name="Dispatch Purple">
             <color red="0.35294117647058826" green="0.35294117647058826" blue="0.53725490196078429" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

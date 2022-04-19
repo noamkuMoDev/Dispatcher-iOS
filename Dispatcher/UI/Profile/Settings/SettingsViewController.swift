@@ -30,7 +30,15 @@ class SettingsViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         navigationController?.isNavigationBarHidden = true
+        setStatusBarColor(viewController: self, hexColor: "262146")
+    }
+
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        navigationController?.popViewController(animated: false)
     }
 }
 
@@ -44,8 +52,7 @@ extension SettingsViewController: UITableViewDataSource {
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionKey = viewModel.sectionsSortedKeys[section]!
-        return viewModel.appSettings[sectionKey]!.options.count
+        return viewModel.appSettings[section].options.count
     }
     
     
@@ -54,27 +61,12 @@ extension SettingsViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCellsIdentifier.SETTING, for: indexPath) as! AppSettingCell
         cell.delegate = self
         
-        let sectionKey = viewModel.sectionsSortedKeys[indexPath.section]!
-        var rowKey: String {
-            switch sectionKey {
-            case Constants.AppSettingsSectionTitles.SEARCH:
-                if indexPath.row == 1 {
-                    return Constants.AppSettings.SAVE_FILTERS
-                } else {
-                    return Constants.AppSettings.SEARCH_RESULTS
-                }
-            case Constants.AppSettingsSectionTitles.PREFERENCES:
-                return Constants.AppSettings.NOTIFICATION
-            default:
-                return ""
-            }
-        }
+        cell.settingTitle.text = viewModel.appSettings[indexPath.section].options[indexPath.row].title
+        cell.settingDescription.text = viewModel.appSettings[indexPath.section].options[indexPath.row].description
         
-        cell.settingTitle.text = viewModel.appSettings[sectionKey]!.options[rowKey]?.title
-        cell.settingDescription.text = viewModel.appSettings[sectionKey]!.options[rowKey]?.description
         
         var settingSwitchImage: UIImage
-        switch viewModel.appSettings[sectionKey]!.options[rowKey]?.status {
+        switch viewModel.appSettings[indexPath.section].options[indexPath.row].status {
         case .on:
             settingSwitchImage = UIImage(named: "switch-on")!
             break
@@ -91,15 +83,17 @@ extension SettingsViewController: UITableViewDataSource {
     }
 }
 
-
 // MARK: - UITableViewDelegate
 extension SettingsViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 130
+    }
+    
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: Constants.TableCellsIdentifier.SETTING_SECTION) as! SettingSectionCell
-        
-        view.sectionLabel.text = viewModel.sectionsSortedKeys[section]
-        
+        view.sectionLabel.text = viewModel.appSettings[section].sectionTitle
         return view
     }
     
@@ -112,11 +106,11 @@ extension SettingsViewController: UITableViewDelegate {
 // MARK: - AppSettingCellDelegate
 extension SettingsViewController: AppSettingCellDelegate {
 
-    func settingCellDidPress(settingText: String) {
-        
-        viewModel.updateSetting(settingTitle: settingText) {
+    func settingCellDidPress(settingTitle: String, settingText: String) {
+        viewModel.updateSetting(settingTitle: settingTitle, settingText: settingText) { sectionIndex, settingIndex in
             DispatchQueue.main.async {
-                self.tableView.reloadData()
+                let indexPath = IndexPath(row: settingIndex, section: sectionIndex )
+                self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
             }
         }
     }

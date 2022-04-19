@@ -4,69 +4,74 @@ class SettingsViewModel {
     
     let repository = SettingsRepository()
 
-    var appSettings: [String:SettingModel] = [
-        Constants.AppSettingsSectionTitles.SEARCH: SettingModel(
+    var appSettings : [SettingModel] = [
+    
+        SettingModel(
             sectionTitle: Constants.AppSettingsSectionTitles.SEARCH,
             options: [
-                Constants.AppSettings.SAVE_FILTERS: SingleSetting (
-                    title: Constants.AppSettings.SAVE_FILTERS,
-                    description: "Allow us to save filters when entering back to the app",
-                    status: .off
-                ),
-                Constants.AppSettings.SEARCH_RESULTS: SingleSetting (
+                SingleSetting (
                     title: Constants.AppSettings.SEARCH_RESULTS,
                     description: "Allow us to save your search result preferences for next search",
-                    status: .off
+                    status: .off,
+                    index: 0
+                ),
+                SingleSetting (
+                    title: Constants.AppSettings.SAVE_FILTERS,
+                    description: "Allow us to save filters when entering back to the app",
+                    status: .off,
+                    index: 1
                 )
             ]
         ),
-        Constants.AppSettingsSectionTitles.PREFERENCES: SettingModel(
+        
+        SettingModel(
             sectionTitle: Constants.AppSettingsSectionTitles.PREFERENCES,
             options: [
-                Constants.AppSettings.NOTIFICATION: SingleSetting (
+                SingleSetting (
                     title: Constants.AppSettings.NOTIFICATION,
-                    status: .on
+                    description: "",
+                    status: .on,
+                    index: 0
                 )
             ]
         )
-    ]
     
-    var sectionsSortedKeys: [Int: String] = [
-        0: Constants.AppSettingsSectionTitles.SEARCH,
-        1: Constants.AppSettingsSectionTitles.PREFERENCES
     ]
     
     
     func getUserSettingsPreferences() {
-        appSettings[Constants.AppSettingsSectionTitles.SEARCH]?.options[Constants.AppSettings.SAVE_FILTERS]?.status = repository.getSaveFiltersSetting()
-        appSettings[Constants.AppSettingsSectionTitles.SEARCH]?.options[Constants.AppSettings.SEARCH_RESULTS]?.status = repository.getSaveSearchResultsSetting()
-        appSettings[Constants.AppSettingsSectionTitles.PREFERENCES]?.options[Constants.AppSettings.NOTIFICATION]?.status = repository.getNotificationsSetting()
+        appSettings[0].options[1].status = repository.getSaveFiltersSetting()
+        appSettings[0].options[0].status = repository.getSaveSearchResultsSetting()
+        appSettings[1].options[0].status = repository.getNotificationsSetting()
     }
     
     
-    func updateSetting(settingTitle: String, completionHandler: @escaping () -> ()) {
+    func updateSetting(settingTitle:String, settingText: String, completionHandler: @escaping (Int, Int) -> ()) {
         
-        var sectionTitle: String? = nil
-        if appSettings[Constants.AppSettingsSectionTitles.SEARCH]?.options[settingTitle] != nil {
-            sectionTitle = Constants.AppSettingsSectionTitles.SEARCH
-        } else if appSettings[Constants.AppSettingsSectionTitles.PREFERENCES]?.options[settingTitle] != nil {
-            sectionTitle = Constants.AppSettingsSectionTitles.PREFERENCES
+        var sectionIndex = 0
+        if settingTitle == Constants.AppSettings.NOTIFICATION {
+            sectionIndex = 1
         }
         
-        if let sectionTitle = sectionTitle {
-            let currentStatus = appSettings[sectionTitle]?.options[settingTitle]?.status
-            var newStatus: SwitchStatus = .off
-            if currentStatus != .disabled {
-                if currentStatus == .on {
-                    appSettings[sectionTitle]?.options[settingTitle]?.status = newStatus
-                } else {
-                    newStatus = .on
-                    appSettings[sectionTitle]?.options[settingTitle]?.status = newStatus
-                }
-                
-                repository.updateSavedSetting(settingTitle: settingTitle, newStatus: newStatus) {
-                    completionHandler()
-                }
+        var rowIndex = 0
+        for (i,item) in appSettings[sectionIndex].options.enumerated() {
+            if item.title == settingText {
+                rowIndex = i
+            }
+        }
+        
+        let currentStatus = appSettings[sectionIndex].options[rowIndex].status
+        var newStatus: SwitchStatus = .off
+        if currentStatus != .disabled {
+            if currentStatus == .on {
+                appSettings[sectionIndex].options[rowIndex].status = newStatus
+            } else {
+                newStatus = .on
+                appSettings[sectionIndex].options[rowIndex].status = newStatus
+            }
+            
+            repository.updateSavedSetting(settingTitle: settingTitle, newStatus: newStatus) {
+                completionHandler(sectionIndex, rowIndex)
             }
         }
     }

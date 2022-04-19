@@ -28,7 +28,7 @@ class TableViewDataSourceManager<Model>: NSObject, UITableViewDataSource, UITabl
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
 }

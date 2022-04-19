@@ -1,5 +1,11 @@
 import UIKit
 
+class ActionButtonTapGesture: UITapGestureRecognizer {
+    var sender = String()
+}
+
+
+
 enum SignupLoginPageCurrentView {
     case signup
     case login
@@ -14,8 +20,12 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     @IBOutlet weak var passwordFormView: FormInputView!
     @IBOutlet weak var reenterPasswordFormView: FormInputView!
     @IBOutlet weak var separatorLine: UIView!
-    @IBOutlet weak var topButton: MainActionButtonView!
-    @IBOutlet weak var bottomButton: MainActionButtonView!
+    
+    @IBOutlet weak var topButton: UIView!
+    @IBOutlet weak var topButtonLabel: UILabel!
+    @IBOutlet weak var bottomButton: UIView!
+    @IBOutlet weak var bottomButtonLabel: UILabel!
+    
     
     let viewModel = AuthViewModel()
     var currentPageType: SignupLoginPageCurrentView = .login
@@ -23,27 +33,27 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     var separatorConstraintLogin: NSLayoutConstraint? = nil
     var separatorConstraintSignup: NSLayoutConstraint? = nil
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         initiateUIElements()
         defineGestureRecognizers()
         defineConstraints()
+        setStatusBarColor(viewController: self, hexColor: "262146")
     }
     
 
     func initiateUIElements() {
         
-        emailFormView.initView(id: Constants.TextFieldsIDs.EMAIL, delegate: self, labelText: "Invalid email adress", placeholderText: "Your Email", showIcon: true)
-        passwordFormView.initView(id: Constants.TextFieldsIDs.PASSWORD, delegate: self, labelText: "Weak password", placeholderText: "Password")
-        reenterPasswordFormView.initView(id: Constants.TextFieldsIDs.PASSWORD_AGAIN, delegate: self, labelText: "Input doesn't match previous password", placeholderText: "Re-Enter Password")
+        emailFormView.initView(id: Constants.TextFieldsIDs.EMAIL, delegate: self, labelText: "Invalid email adress", placeholderText: "Your Email")
+        passwordFormView.initView(id: Constants.TextFieldsIDs.PASSWORD, delegate: self, labelText: "Weak password", placeholderText: "Password", hideIcon: false)
+        reenterPasswordFormView.initView(id: Constants.TextFieldsIDs.PASSWORD_AGAIN, delegate: self, labelText: "Input doesn't match previous password", placeholderText: "Re-Enter Password", hideIcon: false)
         loadingView.initView(delegate: self)
         loadingView.isHidden = true
-
-        setActionButtons()
-
-        logoImageView.heightAnchor.constraint(equalToConstant: CGFloat(UIScreen.main.bounds.height / 2 )).isActive = true
+        
+        // round buttons corners 10px
+        topButton.layer.cornerRadius = 10.0
+        bottomButton.layer.cornerRadius = 10.0
 
         if currentPageType == .login {
             setLoginPageLook()
@@ -52,11 +62,39 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         }
     }
     
-
+    
     func defineGestureRecognizers() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
         self.view.addGestureRecognizer(tapGesture)
+        
+        let buttonPress1 = ActionButtonTapGesture(target: self, action: #selector(self.actionButtonPressed))
+        buttonPress1.sender = "topButton"
+        topButton.isUserInteractionEnabled = true
+        topButton.addGestureRecognizer(buttonPress1)
+        
+        let buttonPress2 = ActionButtonTapGesture(target: self, action: #selector(self.actionButtonPressed))
+        buttonPress2.sender = "bottomButton"
+        bottomButton.isUserInteractionEnabled = true
+        bottomButton.addGestureRecognizer(buttonPress2)
     }
+    
+    
+    @objc func actionButtonPressed(sender : ActionButtonTapGesture) {
+        if sender.sender == "topButton" {
+            if currentPageType == .login {
+                loginExistingUser()
+            } else {
+                signupNewUser()
+            }
+        } else {
+            if currentPageType == .login {
+                setSignupPageLook()
+            } else {
+                setLoginPageLook()
+            }
+        }
+    }
+    
     
 
     @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
@@ -66,46 +104,41 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
     }
 
 
-    func setActionButtons() {
-        topButton.delegate = self
-        bottomButton.delegate = self
-        
-        topButton.buttonIcon.isHidden = false
-        bottomButton.buttonIcon.isHidden = true
-        bottomButton.entireButton.backgroundColor = UIColor.lightGray
-    }
-
 
     func defineConstraints() {
-        separatorConstraintSignup = separatorLine.topAnchor.constraint(equalTo: reenterPasswordFormView.bottomAnchor, constant: 25.0)
+        separatorConstraintSignup = separatorLine.topAnchor.constraint(equalTo: reenterPasswordFormView.bottomAnchor, constant: 26.0)
         separatorConstraintSignup?.isActive = true
         
-        separatorConstraintLogin = separatorLine.topAnchor.constraint(equalTo: passwordFormView.bottomAnchor, constant: 50.0)
+        separatorConstraintLogin = separatorLine.topAnchor.constraint(equalTo: passwordFormView.bottomAnchor, constant: 26.0)
         separatorConstraintLogin?.isActive = false
     }
 
 
     func setSignupPageLook() {
-        clearAllUIElements()
-        currentPageType = .signup
-        titleLabel.text = "Signup"
-        reenterPasswordFormView.isHidden = false
-        separatorConstraintLogin?.isActive = false
-        separatorConstraintSignup?.isActive = true
-        topButton.buttonLabel.text = Constants.ButtonsText.SIGNUP
-        bottomButton.buttonLabel.text = Constants.ButtonsText.LOGIN
+        DispatchQueue.main.async {
+            self.clearAllUIElements()
+            self.currentPageType = .signup
+            self.titleLabel.text = "Signup"
+            self.reenterPasswordFormView.isHidden = false
+            self.separatorConstraintLogin?.isActive = false
+            self.separatorConstraintSignup?.isActive = true
+            
+            self.topButtonLabel.text = Constants.ButtonsText.SIGNUP
+            self.bottomButtonLabel.text = Constants.ButtonsText.LOGIN
+        }
     }
-    
-
     func setLoginPageLook() {
-        clearAllUIElements()
-        currentPageType = .login
-        titleLabel.text = "Login"
-        reenterPasswordFormView.isHidden = true
-        separatorConstraintSignup?.isActive = false
-        separatorConstraintLogin?.isActive = true
-        topButton.buttonLabel.text = Constants.ButtonsText.LOGIN
-        bottomButton.buttonLabel.text = Constants.ButtonsText.SIGNUP
+        DispatchQueue.main.async {
+            self.clearAllUIElements()
+            self.currentPageType = .login
+            self.titleLabel.text = "Login"
+            self.reenterPasswordFormView.isHidden = true
+            self.separatorConstraintSignup?.isActive = false
+            self.separatorConstraintLogin?.isActive = true
+            
+            self.topButtonLabel.text = Constants.ButtonsText.LOGIN
+            self.bottomButtonLabel.text = Constants.ButtonsText.SIGNUP
+        }
     }
     
     
@@ -201,7 +234,7 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
 // MARK: - FormInputViewDelegate
 extension AuthViewController: FormInputViewDelegate {
     
-    func textFieldDidChange(textFieldId: String, currentText: String?) {
+    func textFieldDidChange(inputView: FormInputView, textFieldId: String, currentText: String?) {
         
         if currentPageType == .signup {
             if textFieldId == Constants.TextFieldsIDs.EMAIL {

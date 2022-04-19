@@ -23,6 +23,48 @@ func hexStringToUIColor (hex:String) -> UIColor {
     )
 }
 
+func adaptDateTimeFormat(currentFormat: String, desiredFormat: String, timestampToAdapt: String) -> String? {
+    
+    let dateFormatterGet = DateFormatter()
+    dateFormatterGet.dateFormat = currentFormat
+
+    let dateFormatterPrint = DateFormatter()
+    dateFormatterPrint.dateFormat = desiredFormat
+    
+    if let date = dateFormatterGet.date(from: timestampToAdapt) {
+        return dateFormatterPrint.string(from: date)
+    } else {
+        return nil
+    }
+}
+
+
+func setStatusBarColor(viewController: UIViewController, hexColor: String) {
+    if #available(iOS 13.0, *) {
+        let app = UIApplication.shared
+        let statusBarHeight: CGFloat = app.statusBarFrame.size.height
+        
+        let statusbarView = UIView()
+        statusbarView.backgroundColor = hexStringToUIColor(hex: "#\(hexColor)")
+        viewController.view.addSubview(statusbarView)
+      
+        statusbarView.translatesAutoresizingMaskIntoConstraints = false
+        statusbarView.heightAnchor
+            .constraint(equalToConstant: statusBarHeight).isActive = true
+        statusbarView.widthAnchor
+            .constraint(equalTo: viewController.view.widthAnchor, multiplier: 1.0).isActive = true
+        statusbarView.topAnchor
+            .constraint(equalTo: viewController.view.topAnchor).isActive = true
+        statusbarView.centerXAnchor
+            .constraint(equalTo: viewController.view.centerXAnchor).isActive = true
+      
+    } else {
+        let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView
+        statusBar?.backgroundColor = UIColor.red
+    }
+}
+
+
 // MARK: - UIImage Extension to use URL
 extension UIImage {
 

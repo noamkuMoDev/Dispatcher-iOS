@@ -2,6 +2,7 @@ import UIKit
 
 protocol NewsCellDelegate {
     func favoriteIconDidPress(forArticle article: Article)
+    func actionButtonDidPress(inside article: Article)
 }
 
 enum ArticleFavoriteMark {
@@ -9,7 +10,7 @@ enum ArticleFavoriteMark {
     case notSelected
 }
 
-class NewsCell: UITableViewCell {
+class NewsCell: UITableViewCell, MainActionButtonDelegate {
 
     @IBOutlet weak var entireNewsCell: UIView!
     @IBOutlet weak var newsImage: UIImageView!
@@ -22,6 +23,9 @@ class NewsCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var summaryLabel: UILabel!
+    
+    @IBOutlet weak var actionButton: MainActionButtonView!
+    
     
     var delegate: NewsCellDelegate?
     var articleUrl = ""
@@ -38,12 +42,17 @@ class NewsCell: UITableViewCell {
         setImageRounded()
         setTagsRounded()
         setGestureRecognizer()
+        
+        actionButton.delegate = self
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
 
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0))
+
+        self.contentView.layoutIfNeeded()
+        self.layoutIfNeeded()
     }
     
     
@@ -81,13 +90,29 @@ class NewsCell: UITableViewCell {
     func setGestureRecognizer() {
         favoriteIcon.addGestureRecognizer(UITapGestureRecognizer(target: favoriteIcon, action: #selector(favoriteIconPressed)))
         favoriteIcon.isUserInteractionEnabled = true
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(favoriteIconPressed(tapGestureRecognizer:)))
-        favoriteIcon.addGestureRecognizer(tapGestureRecognizer)
+        let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(favoriteIconPressed(tapGestureRecognizer:)))
+        favoriteIcon.addGestureRecognizer(tapGestureRecognizer1)
     }
     
     
     @objc func favoriteIconPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         let currentArticle = Article(id: articleID, articleTitle: titleLabel.text!, date: dateLabel.text ?? "", url: articleUrl, content: summaryLabel.text!, author: authorLabel.text ?? "", topic: subjectTag.currentTitle!, imageUrl: articleImageUrl , isFavorite: isFavorite)
         delegate?.favoriteIconDidPress(forArticle: currentArticle)
+    }
+    
+    
+    func actionButtonDidPress(btnText: String) {
+        let currentArticle = Article(
+            id: articleID,
+            articleTitle: titleLabel.text ?? "",
+            date: dateLabel.text ?? "",
+            url: articleUrl,
+            content: summaryLabel.text ?? "",
+            author: authorLabel.text ?? "",
+            topic: subjectTag.currentTitle ?? "",
+            imageUrl: articleImageUrl,
+            isFavorite: self.isFavorite)
+
+        delegate?.actionButtonDidPress(inside: currentArticle)
     }
 }

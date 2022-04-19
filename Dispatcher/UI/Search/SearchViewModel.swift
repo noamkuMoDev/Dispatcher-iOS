@@ -27,6 +27,7 @@ class SearchViewModel: BaseArticlesViewModel {
                 completionHandler(nil)
             }
         } else {
+            recentSearchesArray = []
             completionHandler("Couldn't get search history")
         }
     }

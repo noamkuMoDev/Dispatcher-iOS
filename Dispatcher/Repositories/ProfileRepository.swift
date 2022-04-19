@@ -5,8 +5,13 @@ class ProfileRepository: AuthRepository {
     let coreDataManager = FavoriteArticleCoreDataManager()
     
     
-    func fetchUserData(with key: String) -> Any? {
-        return userDefaultsManager.getFromUserDefaults(key: key)
+    func getUserData(completionHandler: @escaping (String?, Any?) -> ()) {
+        let userName = userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.CURRENT_USER_NAME) as? String
+        var userImage: Any? = nil
+        if userDefaultsManager.checkIfKeyExists(key: Constants.UserDefaults.CURRENT_USER_IMAGE) {
+            userImage = userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.CURRENT_USER_IMAGE)
+        }
+        completionHandler(userName, userImage)
     }
     
     
@@ -22,7 +27,7 @@ class ProfileRepository: AuthRepository {
                         completionHandler("Error logging out from firebase: \(error)")
                     } else {
                         self.coreDataManager.clearCoreDataMemory()
-                        self.userDefaultsManager.clearUserDefaultsMemory(keysToRemove: Constants.UserDefaults.userDefaultKeys)
+                        self.userDefaultsManager.clearUserDefaultsMemory()
                         completionHandler(nil)
                     }
                 }

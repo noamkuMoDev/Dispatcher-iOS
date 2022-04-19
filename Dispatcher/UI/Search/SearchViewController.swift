@@ -28,6 +28,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     
     let viewModel = SearchViewModel()
     
+    var selectedArticle: Article? = nil
     var searchClearImageName: iconImageName = .search
     var isPaginating: Bool = false
     var isSaveSearches: Bool = true
@@ -38,31 +39,35 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        viewModel.getSavedArticles() {}
         checkUserPreference()
         initiateUIElements()
         defineGestureRecognizers()
+        defineNotificationCenterListeners()
     }
     
 
     func checkUserPreference() {
         if viewModel.isSaveRecentSearches() {
-            fetchSearchHistory()
+            fetchSearchHistory() {}
         } else {
             isSaveSearches = false
         }
     }
 
     
-    func fetchSearchHistory() {
+    func fetchSearchHistory(completionHandler: @escaping () -> ()) {
         viewModel.getSavedRecentSearchesFromUserDefaults() { error in
             if let error = error {
                 print(error)
             }
+            completionHandler()
         }
     }
     
 
     func initiateUIElements() {
+        setStatusBarColor(viewController: self, hexColor: "FFFFFF")
         setupTextField()
         setupTableViews()
         initialHideShowElements()
@@ -89,18 +94,7 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         
         
         searchResultsTableView.register(UINib(nibName: Constants.NibNames.HOMEPAGE, bundle: nil), forCellReuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE)
-        self.searchResultsDataSource = TableViewDataSourceManager(
-            models: viewModel.newsArray,
-            reuseIdentifier: Constants.TableCellsIdentifier.HOMEPAGE
-        ) { article, cell in
-            let currentcell = cell as! NewsCell
-            currentcell.titleLabel.text = article.articleTitle
-            currentcell.authorLabel.text = article.author
-            currentcell.dateLabel.text = article.date
-            currentcell.subjectTag.setTitle(article.topic, for: .normal)
-            currentcell.summaryLabel.text = article.content
-        }
-        searchResultsTableView.dataSource = searchResultsDataSource
+        searchResultsTableView.dataSource = self
         searchResultsTableView.delegate = self
     }
     
@@ -127,7 +121,29 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         searchClearIcon.addGestureRecognizer(tapGestureRecognizer2)
     }
     
+    
+    func defineNotificationCenterListeners() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshRecentSearchesTable), name: NSNotification.Name(rawValue: Constants.NotificationCenter.RECENT_SEARCHES_EMPTIED), object: nil)
+    }
 
+    @objc func refreshRecentSearchesTable() {
+        fetchSearchHistory() {
+            DispatchQueue.main.async {
+                self.recentSearchesDataSource.models = self.viewModel.recentSearchesArray
+                self.recentSearchesTableView.reloadData()
+            }
+        }
+    }
+    
+    
+    func cleanTextFromSpecialCharacters(text: String) -> String {
+        var cleanSearchWords = text
+        let removeCharacters: Set<Character> = [".", "\"", ",", "?", "!", "@", "#", "$", "%", "^", "&", "*"]
+        cleanSearchWords.removeAll(where: { removeCharacters.contains($0) } )
+        return cleanSearchWords
+    }
+
+    
     func fetchInitialSearchResults(of keywords: String) {
         displayLoadingAnimation()
         self.recentSearchesView.isHidden = true
@@ -135,7 +151,8 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
         self.sortbyView.isHidden = false
         
         viewModel.newsArray = []
-        viewModel.fetchNewsFromAPI(searchWords: keywords, pageSizeToFetch: .articlesList) { error in
+        let cleanSearchWords = cleanTextFromSpecialCharacters(text: keywords.lowercased())
+        viewModel.fetchNewsFromAPI(searchWords: cleanSearchWords, pageSizeToFetch: .articlesList) { error, _ in
             if let error = error {
                 print(error)
             }
@@ -143,14 +160,15 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
             if self.viewModel.newsArray.count == 0 {
                 self.searchResultsTableView.isHidden = true
                 self.displayNoSearchResults()
+                self.removeLoadingAnimation()
             } else {
                 self.hideNoSearchResults()
                 self.searchResultsTableView.isHidden = false
-                self.searchResultsDataSource.models = self.viewModel.newsArray
                 self.searchResultsTableView.reloadData()
+                self.searchResultsTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
                 
                 if self.isSaveSearches {
-                    self.viewModel.saveNewRecentSearch(keywords) {
+                    self.viewModel.saveNewRecentSearch(self.cleanTextFromSpecialCharacters(text: keywords.lowercased())) {
                         DispatchQueue.main.async {
                             self.recentSearchesDataSource.models = self.viewModel.recentSearchesArray
                             self.recentSearchesTableView.reloadData()
@@ -158,13 +176,14 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
                     }
                 }
                 self.removeLoadingAnimation()
+                self.searchTextField.text = "\"\(self.cleanTextFromSpecialCharacters(text: self.searchTextField.text!.uppercased()))\""
             }
         }
     }
     
 
     @objc func goBackButtonPressed(tapGestureRecognizer: UITapGestureRecognizer) {
-        navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: false)
     }
     
 
@@ -206,6 +225,12 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
             self.loadingView.loadIndicator.stopAnimating()
         }
     }
+    
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        navigationController?.popViewController(animated: false)
+    }
 }
 
 
@@ -213,6 +238,13 @@ class SearchViewController: UIViewController, LoadingViewDelegate {
 extension SearchViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        if textField.text != nil && textField.text != "" {
+            var cleanSearchWords = textField.text!.lowercased()
+            let removeCharacters: Set<Character> = [".", "\"", ",", "?", "!", "@", "#", "$", "%", "^", "&", "*"]
+            cleanSearchWords.removeAll(where: { removeCharacters.contains($0) } )
+            textField.text = cleanSearchWords
+        }
         searchResultsTableView.isHidden = true
         recentSearchesView.isHidden = false
         recentSearchesTableView.isHidden = false
@@ -265,7 +297,6 @@ extension SearchViewController: UITextFieldDelegate {
     }
 }
 
-
 // MARK: - RecentSearchCellDelegate
 extension SearchViewController: RecentSearchCellDelegate {
     
@@ -287,13 +318,70 @@ extension SearchViewController: RecentSearchCellDelegate {
         }
     }
     
-
+    
     func removeCellButtonDidPress(called searchName: String) {
         if isSaveSearches {
             viewModel.removeItemFromRecentSearchesHistory(searchToRemove: searchName) {
-                self.recentSearchesDataSource.models = self.viewModel.recentSearchesArray
+                //self.recentSearchesDataSource.models = self.viewModel.recentSearchesArray
                 DispatchQueue.main.async {
                     self.recentSearchesTableView.reloadData()
+                }
+            }
+        }
+    }
+}
+
+// MARK: - NewsCellDelegate
+extension SearchViewController: NewsCellDelegate {
+    
+    func actionButtonDidPress(inside article: Article) {
+        selectedArticle = article
+        self.performSegue(withIdentifier: Constants.Segues.SEARCH_TO_ARTICLE, sender: self)
+    }
+    
+    override func prepare( for segue: UIStoryboardSegue, sender: Any? ) {
+        if let selectedArticle = selectedArticle {
+            if segue.identifier == Constants.Segues.SEARCH_TO_ARTICLE {
+                let destinationVC = segue.destination as! ArticleViewController
+                destinationVC.currentArticle = selectedArticle
+            }
+        }
+    }
+    
+    
+    func favoriteIconDidPress(forArticle article: Article) {
+        if article.isFavorite {
+            viewModel.removeArticleFromFavorites(articleID: article.id) { error, index in
+                if let error = error {
+                    print("Couldn't add to favorites - \(error)")
+                } else {
+                    DispatchQueue.main.async {
+                        if let index = index {
+                            let indexPath = IndexPath(row: index, section: 0)
+                            self.recentSearchesTableView.beginUpdates()
+                            self.searchResultsTableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+                            self.recentSearchesTableView.endUpdates()
+                        } else {
+                            self.searchResultsTableView.reloadData()
+                        }
+                    }
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.HOMEPAGE_TO_FAVORITES), object: nil)
+                }
+            }
+        } else {
+            viewModel.addArticleToFavorites(article) { error, index in
+                if let error = error {
+                    print("Couldn't add to favorites - \(error)")
+                } else {
+                    DispatchQueue.main.async {
+                        if let index = index {
+                            let indexPath = IndexPath(row: index, section: 0)
+                            self.searchResultsTableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+                        } else {
+                            self.searchResultsTableView.reloadData()
+                        }
+                    }
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.HOMEPAGE_TO_FAVORITES), object: nil)
                 }
             }
         }
@@ -304,7 +392,7 @@ extension SearchViewController: RecentSearchCellDelegate {
 extension SearchViewController: SortbyViewDelegate {
     
     func filterIconDidPress() {
-        
+        print("Filter Icon Pressed")
     }
 }
 
@@ -336,11 +424,20 @@ extension SearchViewController: UIScrollViewDelegate {
         let position = scrollView.contentOffset.y
         if position > (searchResultsTableView.contentSize.height - 100 - scrollView.frame.size.height) && !isPaginating {
             isPaginating = true
-            viewModel.fetchNewsFromAPI(searchWords: searchTextField.text!, pageSizeToFetch: .articlesList) { error in
+            viewModel.fetchNewsFromAPI(searchWords: searchTextField.text!, pageSizeToFetch: .articlesList) { error, numArticlesFetched in
                 if error == nil {
                     DispatchQueue.main.async {
-                        self.searchResultsDataSource.models = self.viewModel.newsArray
-                        self.searchResultsTableView.reloadData()
+                        if numArticlesFetched != 0 {
+                            self.searchResultsTableView.beginUpdates()
+                            var indexPaths = [IndexPath]()
+                            let originalLastIndex = self.viewModel.newsArray.count - 1 - numArticlesFetched!
+                            let newLastIndex = self.viewModel.newsArray.count - 1
+                            for i in originalLastIndex...(newLastIndex - 1) {
+                                indexPaths.append(IndexPath(row: i + 1, section: 0))
+                            }
+                            self.searchResultsTableView.insertRows(at: indexPaths, with: UITableView.RowAnimation.none)
+                            self.searchResultsTableView.endUpdates()
+                        }
                         self.searchResultsTableView.tableFooterView = nil
                     }
                 } else {
@@ -349,5 +446,54 @@ extension SearchViewController: UIScrollViewDelegate {
                 self.isPaginating = false
             }
         }
+    }
+}
+
+extension SearchViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 436
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.newsArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let currentCell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCellsIdentifier.HOMEPAGE, for: indexPath) as! NewsCell
+        
+        currentCell.delegate = self
+        
+        currentCell.articleID = viewModel.newsArray[indexPath.row].id
+        currentCell.titleLabel.text = viewModel.newsArray[indexPath.row].articleTitle
+        currentCell.authorLabel.text = viewModel.newsArray[indexPath.row].author
+        
+        currentCell.articleUrl = viewModel.newsArray[indexPath.row].url
+        currentCell.articleImageUrl = viewModel.newsArray[indexPath.row].imageUrl ?? ""
+        currentCell.subjectTag.setTitle(viewModel.newsArray[indexPath.row].topic, for: .normal)
+        currentCell.summaryLabel.text = viewModel.newsArray[indexPath.row].content
+        if let date = adaptDateTimeFormat(currentFormat: "yyyy-MM-dd HH:mm:ss", desiredFormat: "EEEE MMM d, yyyy", timestampToAdapt: viewModel.newsArray[indexPath.row].date) {
+            currentCell.dateLabel.text = date
+        } else {
+            currentCell.dateLabel.text = viewModel.newsArray[indexPath.row].date
+        }
+        
+        if let imageUrl = viewModel.newsArray[indexPath.row].imageUrl {
+            currentCell.articleImageUrl = imageUrl
+            currentCell.newsImage.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: "light-gray-background"))
+        } else {
+            currentCell.newsImage.image = UIImage(named: "light-gray-background")
+        }
+        
+        if viewModel.newsArray[indexPath.row].isFavorite {
+            currentCell.isFavorite = true
+            currentCell.favoriteIcon.image = UIImage(named: "favoriteArticle-selected")
+        } else {
+            currentCell.isFavorite = false
+            currentCell.favoriteIcon.image = UIImage(named: "favoriteArticle-notSelected")
+        }
+        
+        return currentCell
     }
 }

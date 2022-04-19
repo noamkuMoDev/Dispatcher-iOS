@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 enum userType {
     case loggedOut
@@ -29,7 +30,10 @@ class AuthRepository {
         return .loggedOut
     }
     
-    
+    func getLastLoginTimestamp() -> String? {
+        return firebaseAuthManager.getlastUserLoginTimestamp()
+    }
+
     func fetchCurrentUserDetails(completionHandler: @escaping (String?) -> ()) {
         let uid = firebaseAuthManager.getCurrentUserUID()
         if uid != nil {
@@ -38,8 +42,29 @@ class AuthRepository {
                 if let error = error {
                     completionHandler("Error fetching user data from firestore: \(error)")
                 } else {
+                    if let imageUrl = data!["image"] as? String {
+                        let task = URLSession.shared.dataTask(with: URL(string: imageUrl)!, completionHandler: { data, _, error in
+                            if let error = error {
+                                print("Failed - \(error)")
+                            } else {
+                                DispatchQueue.main.async {
+                                    let image = UIImage(data: data!)
+                                    let data = image!.pngData()
+                                    self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.CURRENT_USER_IMAGE, data: data)
+                                }
+                            }
+                        })
+                        task.resume()
+                    }
                     self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.CURRENT_USER_NAME, data: data!["name"])
                     self.saveDefaultAppSettingsToUserDefaults()
+                    if let lastLogin = self.getLastLoginTimestamp() {
+                        if let date = adaptDateTimeFormat(currentFormat: "yyyy-MM-dd HH:mm:ss", desiredFormat: "h:mm a, dd.MM.yyyy", timestampToAdapt: String(lastLogin.prefix(19))) {
+                            self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.LAST_LOGIN_TIMESTAMP, data: date)
+                        } else {
+                            print("There was an error decoding the string")
+                        }
+                    }
                     self.saveUserEmailToKeychain(data!["email"] as! String) { error in
                         if let error = error {
                             completionHandler("Error saving email to keychain: \(error)")
@@ -91,7 +116,7 @@ class AuthRepository {
                 self.saveDefaultAppSettingsToUserDefaults()
                 self.saveUserEmailToKeychain(email) { error in
                     if let error = error {
-                        completionHandler("======== Error saving email to keychain: \(error)")
+                        completionHandler("Error saving email to keychain: \(error)")
                     } else {
                         completionHandler(nil)
                     }

@@ -15,19 +15,27 @@ struct Constants {
         static let LOGIN = "LOGIN"
         static let SIGNUP = "SIGNUP"
         static let LOGOUT = "LOGOUT"
+        static let OK = "OK"
     }
     
     struct TextFieldsIDs {
+        //Signup
         static let EMAIL = "email"
         static let PASSWORD = "password"
         static let PASSWORD_AGAIN = "re-password"
+        //User profile
+        static let NAME = "name"
+        static let USRE_EMAIL = "userEmail"
     }
     
     struct Segues {
+        static let HOMEPAGE_TO_ARTICLE = "homepageToArticle"
+        static let FAVORITES_TO_ARTICLE = "favoritesToArticle"
         static let HOMEPAGE_TO_NOTIFICATIONS = "homepageToNotifications"
         static let HOMEPAGE_TO_SEARCH = "homepageToSearch"
         static let FAVORITES_TO_NOTIFICATIONS = "favoritesToNotifications"
         static let FAVORITES_TO_SEARCH = "favoritesToSearch"
+        static let SEARCH_TO_ARTICLE = "searchToArticle"
         static let GO_TO_UPDATE_PROFILE = "goToUpdateProfile"
         static let GO_TO_TERMS_AND_PRIVACY = "goToTermsAndPrivacy"
         static let GO_TO_SETTINGS = "goToSettings"
@@ -66,12 +74,23 @@ struct Constants {
     }
     
     struct NotificationCenter {
-        static let homepageToFavorites = "favoritesChangedInHomepageNotif"
-        static let favoritesToHomepage = "favoritesChangedInFavoritesNotif"
+        static let HOMEPAGE_TO_FAVORITES = "favoritesChangedInHomepageNotif"
+        static let FAVORITES_TO_HOMEPAGE = "favoritesChangedInFavoritesNotif"
+        static let ARTICLE_TO_TABLES = "articleChangedSoUpdateTableViews"
+        static let PICTURE_UPDATE = "userIconImageChanged"
+        static let RECENT_SEARCHES_EMPTIED = "recentSearchesClearedInUserDefaults"
+        
+        static let ARTICLE_ID = "articleID"
+        static let IS_FAVORITE = "isFavorite"
+        
+        static let SENDER = "senderViewController"
+        static let SENDER_FAVORITES = "FavoritesViewController"
+        static let SENDER_ARTICLE = "ArticleViewController"
     }
     
     struct UserDefaults {
         static let RECENT_SEARCHES = "recentSearches"
+        
         static let SAVE_FILTERS = "saveFilters"
         static let SAVE_SEARCH_RESULTS = "saveSearchResults"
         static let SEND_NOTIFICATIONS = "sendNotifications"
@@ -79,8 +98,7 @@ struct Constants {
         static let CURRENT_USER_UID = "currentUserUID"
         static let CURRENT_USER_NAME = "currentUserName"
         static let CURRENT_USER_IMAGE = "currentUserImage"
-        
-        static let userDefaultKeys = ["CURRENT_USER_UID","RECENT_SEARCHES","SAVE_FILTERS","SAVE_SEARCH_RESULTS","SEND_NOTIFICATIONS","CURRENT_USER_NAME", "CURRENT_USER_IMAGE"]
+        static let LAST_LOGIN_TIMESTAMP = "lastTimeUserLoggedIntoApp"
     }
     
     struct Keychain {
@@ -91,6 +109,20 @@ struct Constants {
     struct Firestore {
         static let USERS_COLLECTION = "Users"
         static let FAVORITES_COLLECTION = "savedArticles"
+    }
+    
+    struct FirestoreProperties {
+        static let NAME = "name"
+        static let IMAGE = "image"
+        static let EMAIL = "email"
+        static let AUTHOR = "author"
+        static let CONTENT = "content"
+        static let DATE = "date"
+        static let IMAGE_URL = "imageUrl"
+        static let TITLE = "title"
+        static let TOPIC = "topic"
+        static let URL = "url"
+        static let TIMESTAMP = "timestamp"
     }
     
     struct apiCalls {

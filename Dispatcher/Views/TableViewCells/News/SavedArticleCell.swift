@@ -2,6 +2,7 @@ import UIKit
 
 protocol SavedArticleCellDelegate {
     func favoriteIconDidPress(forArticle: String)
+    func cellDidPress(articleID: String)
 }
 
 class SavedArticleCell: UITableViewCell {
@@ -16,6 +17,7 @@ class SavedArticleCell: UITableViewCell {
     var delegate: SavedArticleCellDelegate?
     var articleID = ""
     var articleUrl = ""
+    var articleImageURL = ""
     
     
     override func awakeFromNib() {
@@ -28,6 +30,7 @@ class SavedArticleCell: UITableViewCell {
         setCellBorder()
         setCellColorsDesign()
         setImageRounded()
+        setTagsRounded()
         setGestureRecognizer()
     }
     
@@ -65,16 +68,34 @@ class SavedArticleCell: UITableViewCell {
         ]
     }
     
+    
+    func setTagsRounded() {
+        articleTopic.layer.cornerRadius = articleTopic.frame.size.height / 2
+        articleTopic.clipsToBounds = true
+        articleMoreTags.layer.cornerRadius = articleMoreTags.frame.size.height / 2
+        articleMoreTags.clipsToBounds = true
+    }
+    
 
     func setGestureRecognizer() {
         favoriteIcon.addGestureRecognizer(UITapGestureRecognizer(target: favoriteIcon, action: #selector(favoriteIconPressed)))
         favoriteIcon.isUserInteractionEnabled = true
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(favoriteIconPressed(tapGestureRecognizer:)))
-        favoriteIcon.addGestureRecognizer(tapGestureRecognizer)
+        let tapGestureRecognizer1 = UITapGestureRecognizer(target: self, action: #selector(favoriteIconPressed(tapGestureRecognizer:)))
+        favoriteIcon.addGestureRecognizer(tapGestureRecognizer1)
+        
+        savedArticleCell.addGestureRecognizer(UITapGestureRecognizer(target: savedArticleCell, action: #selector(cellPressed)))
+        savedArticleCell.isUserInteractionEnabled = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(cellPressed(tapGestureRecognizer:)))
+        savedArticleCell.addGestureRecognizer(tapGestureRecognizer)
     }
     
 
     @objc func favoriteIconPressed(tapGestureRecognizer: UITapGestureRecognizer) {
         delegate?.favoriteIconDidPress(forArticle: articleID)
+    }
+    
+    
+    @objc func cellPressed(tapGestureRecognizer: UITapGestureRecognizer) {
+        delegate?.cellDidPress(articleID: articleID)
     }
 }

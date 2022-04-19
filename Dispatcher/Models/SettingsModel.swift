@@ -2,13 +2,15 @@ import Foundation
 
 struct SettingModel {
     var sectionTitle: String
-    var options: [String:SingleSetting]
+    //var options: [String:SingleSetting]
+    var options: [SingleSetting]
 }
 
 struct SingleSetting {
     var title: String
-    var description: String?
+    var description: String
     var status: SwitchStatus
+    var index: Int
 }
 
 enum SwitchStatus: Int {

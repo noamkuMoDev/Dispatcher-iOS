@@ -1,11 +1,9 @@
 import Foundation
 import FirebaseAuth
-import FirebaseFirestore
 
 class FirebaseAuthManager {
     
     let firestoreManager = FirestoreManager()
-    let database = Firestore.firestore()
     
     
     func isUserLoggedIn() -> Bool {
@@ -17,6 +15,9 @@ class FirebaseAuthManager {
         return Auth.auth().currentUser?.uid
     }
     
+    func getlastUserLoginTimestamp() -> String? {
+        return Auth.auth().currentUser?.metadata.lastSignInDate?.description
+    }
     
     func signupUser(email: String, password: String, completionHandler: @escaping (String?, String?, String?) -> ()) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
@@ -58,6 +59,13 @@ class FirebaseAuthManager {
             completionHandler(nil)
         } catch (let error) {
             completionHandler(error.localizedDescription)
+        }
+    }
+    
+    
+    func updateUserEmail(to email: String, completionHandler: @escaping (String?) -> ()) {
+        Auth.auth().currentUser?.updateEmail(to: email) { error in
+            completionHandler(error?.localizedDescription)
         }
     }
 }

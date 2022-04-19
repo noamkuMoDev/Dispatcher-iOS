@@ -1,7 +1,7 @@
 import UIKit
 
 protocol AppSettingCellDelegate {
-    func settingCellDidPress(settingText: String)
+    func settingCellDidPress(settingTitle: String, settingText: String)
 }
 
 class AppSettingCell: UITableViewCell {
@@ -52,6 +52,6 @@ class AppSettingCell: UITableViewCell {
     
 
     @objc func switchWasPressed(tapGestureRecognizer: UITapGestureRecognizer) {
-        delegate?.settingCellDidPress(settingText: settingTitle.text!)
+        delegate?.settingCellDidPress(settingTitle: settingTitle.text! ,settingText: settingTitle.text!)
     }
 }

@@ -6,7 +6,9 @@ class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        setStatusBarColor(viewController: self, hexColor: "262146")
+        
         if viewModel.checkIfLoggedIn() == .loggedIn {
             DispatchQueue.main.async {
                 let homepage = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MyTabBarController")

@@ -11,8 +11,10 @@ class ProfileViewModel {
     ]
 
     
-    func fetchUserData(dataKey: String) -> Any? {
-        return repository.fetchUserData(with: dataKey)
+    func fetchUserData(completionHandler: @escaping (String?, Any?) -> ()) {
+        repository.getUserData() { userName, userImage in
+            completionHandler(userName, userImage)
+        }
     }
 
     

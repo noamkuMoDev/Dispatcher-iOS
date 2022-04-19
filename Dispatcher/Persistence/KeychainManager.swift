@@ -9,7 +9,7 @@ enum KeychainError: Error {
 
 class KeychainManager {
 
-    func fetchFromKeychain(service: String, account: String, secClass: String) throws -> Data? {
+    func fetchFromKeychain(service: String, account: String, secClass: String) throws -> Any? {
 
         let query: [String: AnyObject] = [
                 kSecReturnData as String: kCFBooleanTrue,
@@ -28,7 +28,7 @@ class KeychainManager {
             guard status == errSecSuccess else {
                 throw KeychainError.unexpectedStatus(status)
             }
-            guard let data = itemCopy as? Data else {
+            guard let data = itemCopy else {
                 throw KeychainError.invalidItemFormat
             }
 
@@ -58,6 +58,29 @@ class KeychainManager {
         completionHandler()
     }
 
+    
+    func updateInKeychain(data: Data, service: String, account: String, secClass: String, completionHandler: @escaping () -> ()) throws {
+        
+        let query: [String: Any] = [kSecClass as String: secClass as AnyObject,
+                                    kSecAttrService as String: service as AnyObject]
+        let attributes: [String: Any] = [kSecAttrAccount as String: account,
+                                         kSecValueData as String: data as AnyObject]
+
+        let status = SecItemUpdate( query as CFDictionary, attributes as CFDictionary )
+        
+        
+        guard status != errSecItemNotFound else
+        {
+            throw KeychainError.itemNotFound
+            
+        }
+        guard status == errSecSuccess else {
+            throw KeychainError.unexpectedStatus(status)
+        }
+        
+        completionHandler()
+    }
+    
     
     func removeFromKeychain(service: String, account: String, secClass: String, completionHandler: @escaping () -> ()) throws {
         
