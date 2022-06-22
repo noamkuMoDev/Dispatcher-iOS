@@ -10,6 +10,7 @@ pod 'Firebase/Firestore'
 pod 'Firebase/Storage'
 pod 'FirebaseFirestoreSwift' 
 pod 'Firebase/Crashlytics'
+pod 'Firebase/Messaging'
 pod 'Alamofire', '~> 5.5'
 pod 'SDWebImage', '~> 5.0'
 
