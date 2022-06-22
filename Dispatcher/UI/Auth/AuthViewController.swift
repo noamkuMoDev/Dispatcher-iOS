@@ -54,6 +54,10 @@ class AuthViewController: UIViewController, LoadingViewDelegate {
         // round buttons corners 10px
         topButton.layer.cornerRadius = 10.0
         bottomButton.layer.cornerRadius = 10.0
+        
+        //resize the image based on screen height
+        logoImageView.translatesAutoresizingMaskIntoConstraints = true
+        logoImageView.frame.size.height = UIScreen.main.bounds.height * 0.28
 
         if currentPageType == .login {
             setLoginPageLook()

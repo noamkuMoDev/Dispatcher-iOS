@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -28,7 +29,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your email" textAlignment="natural" minimumFontSize="17" background="white-background" disabledBackground="white-background" translatesAutoresizingMaskIntoConstraints="NO" id="NH4-SQ-E2c">
-                    <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
+                    <rect key="frame" x="0.0" y="2" width="374" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="QUg-gY-VWL"/>
                     </constraints>
@@ -37,26 +38,30 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invalid email adress" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LvZ-LL-eYv">
-                    <rect key="frame" x="0.0" y="49" width="374" height="14"/>
+                    <rect key="frame" x="0.0" y="51" width="374" height="12"/>
                     <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="10"/>
                     <color key="textColor" systemColor="systemRedColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="eye-icon-conseal" id="MZf-Ud-f30">
-                    <rect key="frame" x="328" y="12" width="30" height="24"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="eye-icon-conseal" translatesAutoresizingMaskIntoConstraints="NO" id="MZf-Ud-f30">
+                    <rect key="frame" x="337" y="12" width="25" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="78i-Sc-XQ4"/>
+                        <constraint firstAttribute="width" constant="25" id="F1a-Uq-ItA"/>
+                    </constraints>
                 </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="NH4-SQ-E2c" firstAttribute="trailing" secondItem="MZf-Ud-f30" secondAttribute="trailing" constant="12" id="9pQ-l7-g57"/>
+                <constraint firstItem="MZf-Ud-f30" firstAttribute="top" secondItem="NH4-SQ-E2c" secondAttribute="top" constant="10" id="EL0-W6-KjA"/>
                 <constraint firstItem="LvZ-LL-eYv" firstAttribute="top" secondItem="NH4-SQ-E2c" secondAttribute="bottom" constant="5" id="HnU-xl-Kfl"/>
                 <constraint firstItem="LvZ-LL-eYv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="LFs-SF-SfS"/>
                 <constraint firstAttribute="trailing" secondItem="NH4-SQ-E2c" secondAttribute="trailing" id="LMt-3O-vMF"/>
                 <constraint firstItem="NH4-SQ-E2c" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Ovb-J2-F6d"/>
                 <constraint firstAttribute="bottom" secondItem="LvZ-LL-eYv" secondAttribute="bottom" id="bFR-9w-YEm"/>
                 <constraint firstAttribute="trailing" secondItem="LvZ-LL-eYv" secondAttribute="trailing" id="k5T-B6-hCe"/>
-                <constraint firstItem="LvZ-LL-eYv" firstAttribute="top" secondItem="MZf-Ud-f30" secondAttribute="bottom" constant="13" id="tPW-eH-66n"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="108.69565217391305" y="-168.41517857142856"/>
