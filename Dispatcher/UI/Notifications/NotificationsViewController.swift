@@ -13,18 +13,21 @@ class NotificationsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.initiateUIElements()
-        getUserNotifications() {
+        defineNotificationCenterListeners()
+        initiateUIElements()
+        getUserNotifications()
+    }
+    
+    func defineNotificationCenterListeners() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.getUserNotifications), name: NSNotification.Name(rawValue: Constants.NotificationCenter.NOTIFICATION_RECIVED), object: nil)
+    }
+    
+    @objc func getUserNotifications() {
+        viewModel.fetchNotificationsFromFirestore() {
             DispatchQueue.main.async {
                 self.dataSource.models = self.viewModel.notificationsArray
                 self.tableView.reloadData()
             }
-        }
-    }
-    
-    func getUserNotifications(comepletionHandler: @escaping () -> ()) {
-        viewModel.fetchNotificationsFromFirestore() {
-            comepletionHandler()
         }
     }
     
@@ -55,6 +58,8 @@ class NotificationsViewController: UIViewController {
         tableView.dataSource = dataSource
         tableView.delegate = self
     }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

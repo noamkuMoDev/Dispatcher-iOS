@@ -100,8 +100,18 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        print("Func gets called when app is in foreground and notification is recived.")
-        
+        print("Got notification in FOREGROUND")
+        handleIncomingNotification(notification) {
+            completionHandler([.alert, .sound, .badge]) // defines how to notify the user
+        }
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("Func gets called when user taps on the notification to open it")
+        completionHandler()
+    }
+    
+    func handleIncomingNotification(_ notification: UNNotification, completionHandler: @escaping () -> ()) {
         let firestoreManager = FirestoreManager()
         let firebaseAuthManager = FirebaseAuthManager()
 
@@ -133,16 +143,11 @@ extension AppDelegate : UNUserNotificationCenterDelegate {
                     
                     //Update notifications icon so user is aware
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationCenter.NOTIFICATION_RECIVED), object: nil)
+                    
+                    completionHandler()
                 }
             }
-            
-            completionHandler([.alert, .sound, .badge]) // defines how to notify the user
         }
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print("Func gets called when user taps on the notification to open it")
-        completionHandler()
     }
 }
 

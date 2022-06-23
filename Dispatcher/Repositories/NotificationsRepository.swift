@@ -42,7 +42,7 @@ class NotificationsRepository {
                                 content: dict["articleContent"] as? String ?? "article content",
                                 author: dict["articleAuthor"] as? String ?? "article author",
                                 topic: dict["articleTopic"] as? String ?? "topic",
-                                imageUrl: dict["articleImageURL"] as? String,
+                                imageUrl: dict["articleImageURL"] as? String ?? "article image url",
                                 isFavorite: false
                             )
                         }
