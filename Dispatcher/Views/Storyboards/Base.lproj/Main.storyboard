@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cdU-oW-DC1">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -801,7 +802,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nlH-V5-DS3">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nlH-V5-DS3">
                                 <rect key="frame" x="0.0" y="127" width="414" height="598"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
@@ -825,6 +826,7 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
                     <connections>
                         <outlet property="customHeader" destination="Y2f-ck-KLs" id="FkR-eo-PRl"/>
                         <outlet property="tableView" destination="nlH-V5-DS3" id="PQy-EL-bdp"/>
+                        <segue destination="hE9-6G-rlH" kind="presentation" identifier="notificationsToArticle" modalPresentationStyle="overCurrentContext" id="cts-mx-7e7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="62g-Ra-EIk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1084,9 +1086,9 @@ Pretium nunc vitae risus pulvinar augue leo nisl. Tristique ipsum imperdiet magn
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="U37-Fe-alY"/>
-        <segue reference="f5P-ad-VVd"/>
-        <segue reference="kEm-zR-HgR"/>
+        <segue reference="SwU-X3-8Hj"/>
+        <segue reference="Tvg-NK-Rg2"/>
+        <segue reference="cts-mx-7e7"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Favorites" width="25" height="25"/>

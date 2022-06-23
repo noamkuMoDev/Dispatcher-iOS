@@ -36,6 +36,7 @@ struct Constants {
         static let FAVORITES_TO_NOTIFICATIONS = "favoritesToNotifications"
         static let FAVORITES_TO_SEARCH = "favoritesToSearch"
         static let SEARCH_TO_ARTICLE = "searchToArticle"
+        static let NOTIFICATIONS_TO_ARTICLE = "notificationsToArticle"
         static let GO_TO_UPDATE_PROFILE = "goToUpdateProfile"
         static let GO_TO_TERMS_AND_PRIVACY = "goToTermsAndPrivacy"
         static let GO_TO_SETTINGS = "goToSettings"
@@ -86,6 +87,9 @@ struct Constants {
         static let SENDER = "senderViewController"
         static let SENDER_FAVORITES = "FavoritesViewController"
         static let SENDER_ARTICLE = "ArticleViewController"
+        
+        static let NOTIFICATION_RECIVED = "notificationRecived"
+        static let NO_MORE_NOTIFICATIONS = "noNotificationsLeft"
     }
     
     struct UserDefaults {
@@ -109,6 +113,7 @@ struct Constants {
     struct Firestore {
         static let USERS_COLLECTION = "Users"
         static let FAVORITES_COLLECTION = "savedArticles"
+        static let NOTIFICATIONS_COLLECTION = "notifications"
     }
     
     struct FirestoreProperties {
@@ -123,6 +128,7 @@ struct Constants {
         static let TOPIC = "topic"
         static let URL = "url"
         static let TIMESTAMP = "timestamp"
+        static let WAS_READ = "wasRead"
     }
     
     struct apiCalls {
@@ -135,6 +141,6 @@ struct Constants {
     }
     
     struct Keys {
-        static let NEWS_API_KEY = "_E1saiwKuTTM_aofezdXNrGCZsgavQ89t-bJ8Z6WlXA"
+        static let NEWS_API_KEY = "JaLZokYWhKco80EWVUdPapZGSCgDCqrEJ6Hij1kGV-Q"
     }
 }
