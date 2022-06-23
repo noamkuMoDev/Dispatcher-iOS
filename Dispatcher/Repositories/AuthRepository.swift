@@ -15,19 +15,25 @@ class AuthRepository {
     
     
     func checkIfLoggedIn() -> userType {
-        do {
-            _ = try keychainManager.fetchFromKeychain(
-                service: Constants.Keychain.SERVICE,
-                account: Constants.Keychain.ACCOUNT_USER_EMAIL,
-                secClass: kSecClassGenericPassword as String
-            )
-            if firebaseAuthManager.isUserLoggedIn() {
-                return .loggedIn
-            }
-        } catch (let error) {
-            print("couldn't find email in keychain: \(error)")
+        if firebaseAuthManager.isUserLoggedIn() {
+            return .loggedIn
+        } else {
+            return .loggedOut
         }
-        return .loggedOut
+        
+//        do {
+//            _ = try keychainManager.fetchFromKeychain(
+//                service: Constants.Keychain.SERVICE,
+//                account: Constants.Keychain.ACCOUNT_USER_EMAIL,
+//                secClass: kSecClassGenericPassword as String
+//            )
+//            if firebaseAuthManager.isUserLoggedIn() {
+//                return .loggedIn
+//            }
+//        } catch (let error) {
+//            print("couldn't find email in keychain: \(error)")
+//        }
+//        return .loggedOut
     }
     
     func getLastLoginTimestamp() -> String? {
@@ -65,13 +71,14 @@ class AuthRepository {
                             print("There was an error decoding the string")
                         }
                     }
-                    self.saveUserEmailToKeychain(data!["email"] as! String) { error in
-                        if let error = error {
-                            completionHandler("Error saving email to keychain: \(error)")
-                        } else {
-                            completionHandler(nil)
-                        }
-                    }
+                    completionHandler(nil)
+//                    self.saveUserEmailToKeychain(data!["email"] as! String) { error in
+//                        if let error = error {
+//                            completionHandler("Error saving email to keychain: \(error)")
+//                        } else {
+//                            completionHandler(nil)
+//                        }
+//                    }
                 }
             }
         } else {
@@ -114,13 +121,16 @@ class AuthRepository {
                 self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.CURRENT_USER_UID, data: userUID)
                 self.userDefaultsManager.setItemToUserDefaults(key: Constants.UserDefaults.CURRENT_USER_NAME, data: userName)
                 self.saveDefaultAppSettingsToUserDefaults()
-                self.saveUserEmailToKeychain(email) { error in
-                    if let error = error {
-                        completionHandler("Error saving email to keychain: \(error)")
-                    } else {
-                        completionHandler(nil)
-                    }
-                }
+                completionHandler(nil)
+                
+                
+//                self.saveUserEmailToKeychain(email) { error in
+//                    if let error = error {
+//                        completionHandler("Error saving email to keychain: \(error)")
+//                    } else {
+//                        completionHandler(nil)
+//                    }
+//                }
             }
         }
     }

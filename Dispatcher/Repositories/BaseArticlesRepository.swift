@@ -180,11 +180,11 @@ class BaseArticlesRepository {
         var status: SwitchStatus = .off
         switch settingName {
         case Constants.UserDefaults.SAVE_SEARCH_RESULTS:
-            status = SwitchStatus(rawValue: userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.SAVE_SEARCH_RESULTS) as! Int) ?? .off
+            status = SwitchStatus(rawValue: userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.SAVE_SEARCH_RESULTS) as? Int ?? 0) ?? .off
         case Constants.UserDefaults.SAVE_FILTERS:
-            status = SwitchStatus(rawValue: userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.SAVE_FILTERS) as! Int) ?? .off
+            status = SwitchStatus(rawValue: userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.SAVE_FILTERS) as? Int ?? 0) ?? .off
         case Constants.UserDefaults.SEND_NOTIFICATIONS:
-            status = SwitchStatus(rawValue: userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.SEND_NOTIFICATIONS) as! Int) ?? .off
+            status = SwitchStatus(rawValue: userDefaultsManager.getFromUserDefaults(key: Constants.UserDefaults.SEND_NOTIFICATIONS) as? Int ?? 0) ?? .off
         default:
             print("invalid option")
         }

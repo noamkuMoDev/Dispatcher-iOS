@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -29,7 +30,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="63"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="zMi-hm-mxw">
-                            <rect key="frame" x="326" y="0.0" width="64" height="63"/>
+                            <rect key="frame" x="337" y="0.0" width="64" height="63"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search" translatesAutoresizingMaskIntoConstraints="NO" id="cOJ-sd-vaa" userLabel="search icon">
                                     <rect key="frame" x="0.0" y="21.5" width="20" height="20"/>
@@ -91,7 +92,7 @@
                         <constraint firstItem="Wj3-Yu-Iby" firstAttribute="top" secondItem="3D1-tN-CGz" secondAttribute="top" constant="15" id="UE4-J5-0Aq"/>
                         <constraint firstItem="ZGV-S5-Kuw" firstAttribute="leading" secondItem="3D1-tN-CGz" secondAttribute="leading" constant="16" id="bQw-Lz-mSb"/>
                         <constraint firstItem="Wj3-Yu-Iby" firstAttribute="leading" secondItem="3D1-tN-CGz" secondAttribute="leading" constant="13" id="fBc-yH-6x5"/>
-                        <constraint firstItem="zMi-hm-mxw" firstAttribute="leading" secondItem="Wj3-Yu-Iby" secondAttribute="trailing" constant="250" id="fT9-Wd-um3"/>
+                        <constraint firstItem="zMi-hm-mxw" firstAttribute="leading" secondItem="3D1-tN-CGz" secondAttribute="trailing" constant="-77" id="fT9-Wd-um3"/>
                         <constraint firstAttribute="bottom" secondItem="y5N-nl-1Kf" secondAttribute="bottom" id="j0D-7K-sp4"/>
                         <constraint firstAttribute="trailing" secondItem="QC4-94-k8I" secondAttribute="trailing" constant="16" id="on3-oI-Qwx"/>
                         <constraint firstAttribute="height" constant="63" id="se6-qN-Juf"/>

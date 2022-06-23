@@ -6,17 +6,18 @@ class AuthViewModel {
     
 
     func checkIfLoggedIn() -> userType {
-        if repository.checkIfLoggedIn() == .loggedIn {
-            repository.fetchCurrentUserDetails() { error in
-                if let error = error {
-                    print("Couldn't fetch user data - \(error)")
+            if repository.checkIfLoggedIn() == .loggedIn {
+                repository.fetchCurrentUserDetails() { error in
+                    if let error = error {
+                        print("Couldn't fetch user data - \(error)")
+                        //return .loggedOut
+                    }
                 }
+                return .loggedIn
+            } else {
+                return .loggedOut
             }
-            return .loggedIn
-        } else {
-            return .loggedOut
         }
-    }
     
     
     func logUserToApp(email: String, password: String, completionHandler: @escaping (String?) -> ()) {
