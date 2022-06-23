@@ -7,12 +7,25 @@ class NotificationsViewController: UIViewController {
     
     let viewModel = NotificationsViewModel()
     var dataSource: TableViewDataSourceManager<NotificationModel>!
-
+    var selectedArticleID: String?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        initiateUIElements()
+        
+        self.initiateUIElements()
+        getUserNotifications() {
+            DispatchQueue.main.async {
+                self.dataSource.models = self.viewModel.notificationsArray
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    func getUserNotifications(comepletionHandler: @escaping () -> ()) {
+        viewModel.fetchNotificationsFromFirestore() {
+            comepletionHandler()
+        }
     }
     
     func initiateUIElements() {
@@ -28,8 +41,11 @@ class NotificationsViewController: UIViewController {
         ) { notification, cell in
             let currentCell = cell as! NotificationCell
             currentCell.delegate = self
+            currentCell.notificationID = notification.id
             currentCell.label.text = notification.text
-            if !notification.wasRead {
+            currentCell.notificationRead = notification.wasRead
+            currentCell.notifcationDate = notification.date
+            if notification.wasRead {
                 currentCell.label.textColor = UIColor.lightGray
                 currentCell.entireCell.backgroundColor = hexStringToUIColor(hex: "#FAFAFA")
                 currentCell.verticalLine.image = UIImage(named: "NotificationVerticleLine-Gray")
@@ -71,7 +87,39 @@ extension NotificationsViewController: UITableViewDelegate {
 //MARK: - NotificationCellDelegate
 extension NotificationsViewController: NotificationCellDelegate {
     
-    func notificationDidPress(notificationText: String) {
-        print("pressed notification with content: \(notificationText)")
+    func notificationDidPress(notification: NotificationModel) {
+        
+        if notification.id != "-1" {
+            //Set notification as read
+            viewModel.setNotificationAsRead(byID: notification.id) { error, stillUnreadNotificatons in
+                if let error = error {
+                    print(error)
+                }
+                DispatchQueue.main.async {
+                    self.dataSource.models = self.viewModel.notificationsArray
+                    self.tableView.reloadData()
+                }
+                if !stillUnreadNotificatons {
+                    self.customHeader.displayNoNotification()
+                }
+            }
+        } else {
+            print("invalid notification")
+        }
+        
+        //Move user to view clicked article
+        selectedArticleID = notification.id
+        //self.performSegue(withIdentifier: Constants.Segues.HOMEPAGE_TO_ARTICLE, sender: self)
+    }
+    
+    
+    // TO DO : make sure notifications contains all needed data for the article it should present !!!
+    override func prepare( for segue: UIStoryboardSegue, sender: Any? ) {
+//        if let selectedArticleID = "selectedArticle" {
+//            if segue.identifier == Constants.Segues.NOTIFICATIONS_TO_ARTICLE {
+//                let destinationVC = segue.destination as! ArticleViewController
+//                destinationVC.currentArticle = selectedArticle
+//            }
+//        }
     }
 }

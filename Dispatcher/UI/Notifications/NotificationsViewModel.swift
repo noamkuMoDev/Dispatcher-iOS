@@ -2,8 +2,37 @@ import Foundation
 
 class NotificationsViewModel {
     
-    var notificationsArray: [NotificationModel] = [
-        NotificationModel(text: "Notification text about a new article from a tag you liked, two lines of text.", wasRead: true),
-        NotificationModel(text: "Unread notification text about a new article from a tag you liked, two lines of text.", wasRead: false)
-    ]
+    private let repository = NotificationsRepository()
+    
+    var notificationsArray: [NotificationModel] = []
+    
+    
+    func fetchNotificationsFromFirestore(completionHandler: @escaping () -> ()) {
+        repository.fetchNotificationsFromFirestore() { error, notificationsArray in
+            if let error = error {
+                print(error)
+            } else {
+                self.notificationsArray = notificationsArray
+                completionHandler()
+            }
+        }
+    }
+    
+    func setNotificationAsRead(byID notificationID: String, completionHandler: @escaping (String?, Bool) -> ()) {
+        repository.setNotificationAsRead(notificationID) { error in
+            if let error = error {
+                completionHandler(error, true)
+            } else {
+                let index = self.notificationsArray.firstIndex(where: { $0.id == notificationID })
+                if let index = index {
+                    self.notificationsArray[index].wasRead = true
+                    let moreUnreadNotifications = self.notificationsArray.contains(where: { $0.wasRead == false })
+                    completionHandler(nil, moreUnreadNotifications)
+                } else {
+                    completionHandler("couldn't find notification in array", true)
+                }
+            }
+        }
+    }
+    
 }

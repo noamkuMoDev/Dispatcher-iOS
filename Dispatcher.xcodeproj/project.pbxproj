@@ -114,6 +114,7 @@
 		43F261222861D9D3004B94A8 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43F261162861D9D3004B94A8 /* Roboto-Regular.ttf */; };
 		43F261232861D9D3004B94A8 /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43F261172861D9D3004B94A8 /* Roboto-ThinItalic.ttf */; };
 		43F261252862F813004B94A8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43F261242862F813004B94A8 /* GoogleService-Info.plist */; };
+		43F2612828635C64004B94A8 /* NotificationsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2612728635C64004B94A8 /* NotificationsRepository.swift */; };
 		CB849B991A2334793DE226D6 /* Pods_Dispatcher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2928F8E52EBA08C200C027F9 /* Pods_Dispatcher.framework */; };
 /* End PBXBuildFile section */
 
@@ -235,6 +236,7 @@
 		43F261162861D9D3004B94A8 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		43F261172861D9D3004B94A8 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
 		43F261242862F813004B94A8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		43F2612728635C64004B94A8 /* NotificationsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsRepository.swift; sourceTree = "<group>"; };
 		BFBED2009C5D7989F622C9AA /* Pods-Dispatcher.debugdev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dispatcher.debugdev.xcconfig"; path = "Target Support Files/Pods-Dispatcher/Pods-Dispatcher.debugdev.xcconfig"; sourceTree = "<group>"; };
 		CBD13AC632C781AB02D5CA58 /* Pods-Dispatcher.debugprod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dispatcher.debugprod.xcconfig"; path = "Target Support Files/Pods-Dispatcher/Pods-Dispatcher.debugprod.xcconfig"; sourceTree = "<group>"; };
 		DBEC2867B26B504D5EE88D8A /* Pods-Dispatcher.releasedev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dispatcher.releasedev.xcconfig"; path = "Target Support Files/Pods-Dispatcher/Pods-Dispatcher.releasedev.xcconfig"; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				4311F61627F31F1300C28F3C /* ProfileRepository.swift */,
 				4311F62427FA279C00C28F3C /* SettingsRepository.swift */,
 				433D643328057E19002BBE92 /* ViewProfileRepository.swift */,
+				43F2612728635C64004B94A8 /* NotificationsRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -979,6 +982,7 @@
 				43C1B5C627CF63F300AB0D3B /* MyTabBarController.swift in Sources */,
 				43C1B5FA27D1154500AB0D3B /* NotificationModel.swift in Sources */,
 				437AB14627FB498B002A13F4 /* DataModel.xcdatamodeld in Sources */,
+				43F2612828635C64004B94A8 /* NotificationsRepository.swift in Sources */,
 				4311F5D927EA033D00C28F3C /* ProfileViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
