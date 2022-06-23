@@ -15,6 +15,7 @@ class NotificationCell: UITableViewCell {
     var notificationID: String?
     var notificationRead: Bool = false
     var notifcationDate: String?
+    var notificationArticle: Article?
     
 
     override func awakeFromNib() {
@@ -44,8 +45,15 @@ class NotificationCell: UITableViewCell {
         entireCell.addGestureRecognizer(tapGestureRecognizer)
     }
     
-
+    
     @objc func notificationCellTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-        delegate?.notificationDidPress(notification: NotificationModel(text: label.text ?? "", wasRead: self.notificationRead, id: self.notificationID ?? "-1", date: self.notifcationDate ?? ""))
+        delegate?.notificationDidPress(
+            notification: NotificationModel(
+                text: label.text ?? "",
+                wasRead: self.notificationRead,
+                id: self.notificationID ?? "-1",
+                date: self.notifcationDate ?? "",
+                article: self.notificationArticle)
+        )
     }
 }

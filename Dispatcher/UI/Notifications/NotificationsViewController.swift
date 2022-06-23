@@ -7,7 +7,7 @@ class NotificationsViewController: UIViewController {
     
     let viewModel = NotificationsViewModel()
     var dataSource: TableViewDataSourceManager<NotificationModel>!
-    var selectedArticleID: String?
+    var selectedArticle: Article?
     
     
     override func viewDidLoad() {
@@ -45,6 +45,7 @@ class NotificationsViewController: UIViewController {
             currentCell.label.text = notification.text
             currentCell.notificationRead = notification.wasRead
             currentCell.notifcationDate = notification.date
+            currentCell.notificationArticle = notification.article
             if notification.wasRead {
                 currentCell.label.textColor = UIColor.lightGray
                 currentCell.entireCell.backgroundColor = hexStringToUIColor(hex: "#FAFAFA")
@@ -108,18 +109,20 @@ extension NotificationsViewController: NotificationCellDelegate {
         }
         
         //Move user to view clicked article
-        selectedArticleID = notification.id
-        //self.performSegue(withIdentifier: Constants.Segues.HOMEPAGE_TO_ARTICLE, sender: self)
+        if notification.article != nil {
+            selectedArticle = notification.article
+            self.performSegue(withIdentifier: Constants.Segues.NOTIFICATIONS_TO_ARTICLE, sender: self)
+        }
     }
     
     
     // TO DO : make sure notifications contains all needed data for the article it should present !!!
     override func prepare( for segue: UIStoryboardSegue, sender: Any? ) {
-//        if let selectedArticleID = "selectedArticle" {
-//            if segue.identifier == Constants.Segues.NOTIFICATIONS_TO_ARTICLE {
-//                let destinationVC = segue.destination as! ArticleViewController
-//                destinationVC.currentArticle = selectedArticle
-//            }
-//        }
+        if let selectedArticle = selectedArticle {
+            if segue.identifier == Constants.Segues.NOTIFICATIONS_TO_ARTICLE {
+                let destinationVC = segue.destination as! ArticleViewController
+                destinationVC.currentArticle = selectedArticle
+            }
+        }
     }
 }
