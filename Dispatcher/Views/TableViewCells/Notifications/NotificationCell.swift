@@ -1,7 +1,7 @@
 import UIKit
 
 protocol NotificationCellDelegate {
-    func notificationDidPress(notificationText: String)
+    func notificationDidPress(notification: NotificationModel)
 }
 
 class NotificationCell: UITableViewCell {
@@ -12,6 +12,9 @@ class NotificationCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     
     var delegate: NotificationCellDelegate?
+    var notificationID: String?
+    var notificationRead: Bool = false
+    var notifcationDate: String?
     
 
     override func awakeFromNib() {
@@ -43,6 +46,6 @@ class NotificationCell: UITableViewCell {
     
 
     @objc func notificationCellTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-        delegate?.notificationDidPress(notificationText: label.text!)
+        delegate?.notificationDidPress(notification: NotificationModel(text: label.text ?? "", wasRead: self.notificationRead, id: self.notificationID ?? "-1", date: self.notifcationDate ?? ""))
     }
 }

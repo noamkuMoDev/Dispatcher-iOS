@@ -68,6 +68,7 @@ class CustomHeaderView: UIView {
         switch apperanceType {
         case .fullAppearance:
             setLogoAndRightButtons()
+            setNotificationsObserver()
         case .backOnlyAppearance:
             setBackButtonOnly()
         case .confirmCancelAppearance:
@@ -92,6 +93,12 @@ class CustomHeaderView: UIView {
         rightSearchImageView.addGestureRecognizer(tapGestureRecognizer2)
 
         leftLogoImageView.isHidden = false
+    }
+    
+    func setNotificationsObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.displayGotNotification), name: NSNotification.Name(rawValue: Constants.NotificationCenter.NOTIFICATION_RECIVED), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.displayNoNotification), name: NSNotification.Name(rawValue: Constants.NotificationCenter.NO_MORE_NOTIFICATIONS), object: nil)
     }
     
 
@@ -122,6 +129,20 @@ class CustomHeaderView: UIView {
         leftCancelImageView.addGestureRecognizer(tapGestureRecognizer2)
     }
     
+    
+    @objc func displayGotNotification() {
+        DispatchQueue.main.async {
+            self.rightNotificationsImageView.image = UIImage(named: "notification-with-dot")
+        }
+    }
+    
+    @objc func displayNoNotification() {
+        DispatchQueue.main.async {
+            self.rightNotificationsImageView.image = UIImage(named: "notifications")
+            UIApplication.shared.applicationIconBadgeNumber = 0
+        }
+    }
+
 
     func updateHeaderAppearanceType(to appearanceType: HeaderTypes) {
         hideAllElements()
